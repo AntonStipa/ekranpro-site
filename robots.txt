@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://antonstipa.github.io/ekranpro-site/sitemap.xml
