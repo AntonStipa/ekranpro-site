@@ -74,14 +74,13 @@
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
         opts: () => [['0', 'до 1 500', 0, 1500], ['1', '1 500–5 000', 1500, 5000], ['2', 'от 5 000', 5000, 999999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
       { key: 'price', type: 'range', title: 'Цена, ₽ с НДС', ph: ['от 50 000', 'до 2 500 000'] },
-      { key: 'series', type: 'check', title: 'Класс', opts: () => [['Стандарт', 'Стандарт'], ['Стандарт+', 'Стандарт+'], ['Профессиональный', 'Профессиональный']], test: (p, v) => p.series === v },
-      { key: 'brand', type: 'check', title: 'Бренд', opts: () => DATA.brands.map(b => [b, b]), test: (p, v) => p.brand === v },
       { key: 'svc', type: 'check', title: 'Обслуживание', opts: () => [['front', 'Переднее'], ['back', 'Заднее']], test: (p, v) => p.svc === v || p.svc === 'both' },
       { key: 'pixel', type: 'check', title: 'Тип пикселя', opts: () => DATA.pixelTypes.map(b => [b, b]), test: (p, v) => p.pixelType === v },
     ];
     const LCD_FILTERS = [
       { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
       { key: 'apps', type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
+      { key: 'brand', type: 'check', title: 'Бренд', opts: () => DATA.brands.map(b => [b, b]), test: (p, v) => p.brand === v },
       { key: 'diag', type: 'preset', title: 'Диагональ панели, ″', opts: () => [['0', 'до 43', 0, 43], ['1', '46–55', 43, 55], ['2', '65–75', 55, 75], ['3', 'от 86', 75, 999]], test: (p, v, o) => inRange(p.diag, o[2], o[3]) },
       { key: 'layout', type: 'check', title: 'Конфигурация стены', opts: () => DATA.layouts.map(l => [l, l]), test: (p, v) => p.layout === v },
       { key: 'bezel', type: 'preset', title: 'Шов видеостены, мм', hint: 'Суммарная ширина рамок между соседними панелями. До 1 мм — диспетчерские и переговорные, 1,7–3,5 — ритейл и навигация',
@@ -90,7 +89,6 @@
       { key: 'res', type: 'check', title: 'Разрешение', opts: () => [['4k', '4K'], ['fhd', 'Full HD']], test: (p, v) => v === '4k' ? /3840 × 2160/.test(p.res || '') : /1920 × 1080/.test(p.res || '') },
       { key: 'mode', type: 'check', title: 'Режим работы', opts: () => [['24/7', '24/7']], test: (p, v) => p.mode === v },
       { key: 'price', type: 'range', title: 'Цена, ₽', ph: ['от 90 000', 'до 5 000 000'] },
-      { key: 'brand', type: 'check', title: 'Бренд', opts: () => DATA.brands.map(b => [b, b]), test: (p, v) => p.brand === v },
     ];
     const FILTERS = GROUP === 'lcd' ? LCD_FILTERS : LED_FILTERS;
     const CHIP = { section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим' };
@@ -250,7 +248,7 @@
     const items = ids.map(id => ALL.find(p => p.sku === id)).filter(Boolean);
     if (!items.length) { cmpRoot.innerHTML = `<div class="ek-empty">Список сравнения пуст. Отметьте «Сравнить» на карточках в <a href="${BASE}/catalog/led-ekrany/" style="text-decoration:underline">каталоге</a>.</div>`; }
     else {
-      const lcd = items.every(p => p.diag); const rows = lcd ? [['Раздел', p => p.sectionName], ['Диагональ', p => p.diag + '″'], ['Конфигурация', p => p.layout || '—'], ['Разрешение', p => p.res || '—'], ['Шов', p => p.bezel != null ? p.bezel + ' мм' : '—'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Режим', p => p.mode || '—'], ['Бренд', p => p.brand], ['Цена', p => p.price ? fmt(p.price) + ' ₽' : 'по запросу']] : [['Раздел', p => p.sectionName], ['Шаг пикселя', p => p.pitchStr + ' мм'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Защита', p => p.ip || '—'], ['Среда', p => p.env === 'out' ? 'Улица' : 'Помещение'], ['Обслуживание', p => ({ front: 'Переднее', back: 'Заднее', both: 'Переднее и заднее' })[p.svc] || '—'], ['Тип пикселя', p => p.pixelType || '—'], ['Класс', p => p.series || '—'], ['Бренд', p => p.brand || '—'], ['Размер', p => p.size ? p.size + ' мм' : '—'], ['Цена', p => p.price ? fmt(p.price) + ' ₽ ' + (p.priceUnit === 'шт' ? 'за табло' : 'за м²') : 'по запросу']];
+      const lcd = items.every(p => p.diag); const rows = lcd ? [['Раздел', p => p.sectionName], ['Диагональ', p => p.diag + '″'], ['Конфигурация', p => p.layout || '—'], ['Разрешение', p => p.res || '—'], ['Шов', p => p.bezel != null ? p.bezel + ' мм' : '—'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Режим', p => p.mode || '—'], ['Бренд', p => p.brand], ['Цена', p => p.price ? fmt(p.price) + ' ₽' : 'по запросу']] : [['Раздел', p => p.sectionName], ['Шаг пикселя', p => p.pitchStr + ' мм'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Защита', p => p.ip || '—'], ['Среда', p => p.env === 'out' ? 'Улица' : 'Помещение'], ['Обслуживание', p => ({ front: 'Переднее', back: 'Заднее', both: 'Переднее и заднее' })[p.svc] || '—'], ['Тип пикселя', p => p.pixelType || '—'], ['Размер', p => p.size ? p.size + ' мм' : '—'], ['Цена', p => p.price ? fmt(p.price) + ' ₽ ' + (p.priceUnit === 'шт' ? 'за табло' : 'за м²') : 'по запросу']];
       cmpRoot.innerHTML = `<div style="overflow-x:auto"><table class="ek-cmp-table"><thead><tr><th></th>${items.map(p => `<th><a href="${BASE}/catalog/tovar/${p.slug}/">${p.name}</a><br><img src="${BASE}/${p.photo}" alt="" style="width:120px;margin-top:8px;mix-blend-mode:multiply"><br><button type="button" class="ek-link" data-rm="${p.sku}">убрать</button></th>`).join('')}</tr></thead><tbody>${rows.map(([l, f]) => { const vals = items.map(f); const same = vals.every(v => v === vals[0]); return `<tr><td>${l}</td>${vals.map(v => `<td class="${same ? '' : 'diff'}">${v}</td>`).join('')}</tr>`; }).join('')}</tbody></table></div><p style="margin-top:16px;color:var(--ek-muted);font-size:13.5px">Розовым выделены параметры, по которым модели различаются.</p>`;
       $$('[data-rm]', cmpRoot).forEach(b => b.addEventListener('click', () => { cmpSet(cmpGet().filter(x => x !== b.dataset.rm)); location.reload(); }));
     }
