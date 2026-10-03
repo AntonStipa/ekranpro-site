@@ -37,7 +37,7 @@
     ]
   };
 
-  var st={theme:'b',env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,pick:null,navSize:null,dbl:false};
+  var st={view:'calc',touched:false,env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,pick:null,navSize:null,dbl:false};
   var $=function(id){return document.getElementById(id)};
   var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),res:$('pb-res'),resS:$('pb-res-s'),
     money:$('pb-money'),moneyK:$('pb-money-k'),moneyS:$('pb-money-s'),mountBox:$('pb-mount-box'),mount:$('pb-mount'),mountFixed:$('pb-mount-fixed'),
@@ -110,18 +110,19 @@
   }
 
   // ——— Схема: экран привязан к зданию, опоре или стене; человек 1,8 м в том же масштабе ———
-  var THEMES={
-    a:{bg:'#ffffff',room:'#f6f7f5',ground:null,groundLine:'#171a1c',wall:'#ffffff',wallStroke:'#171a1c',wallAlt:'#ffffff',win:'none',winStroke:'#c9ccc8',metal:'#ffffff',metalStroke:'#171a1c',
-       screen:'#f36b52',onScreen:'#ffffff',dots:false,glow:false,person:'#171a1c',dim:'#171a1c',text:'#171a1c',mute:'#60656a',labelBg:'#ffffff'},
-    b:{bg:'#e8ebe8',room:'#d2d5d1',ground:'#d8dad7',groundLine:null,wall:'#d2d5d1',wallStroke:null,wallAlt:'#bfc3bf',win:'#e2e5e1',winStroke:null,metal:'#a3a8a4',metalStroke:null,
-       screen:'#171a1c',onScreen:'#ffffff',dots:true,glow:false,person:'#171a1c',dim:'#60656a',text:'#171a1c',mute:'#60656a',labelBg:'#e8ebe8'},
-    c:{bg:'#171a1c',room:'#23282b',ground:'#101213',groundLine:'#3a4145',wall:'#23282b',wallStroke:null,wallAlt:'#2f363a',win:'#2d3337',winStroke:null,metal:'#4b5358',metalStroke:null,
-       screen:'#f36b52',onScreen:'#171a1c',dots:false,glow:true,person:'#e8ebe8',dim:'#8b9296',text:'#ffffff',mute:'#9aa09c',labelBg:'#171a1c'}
-  };
+  var T={bg:'#e8ebe8',room:'#d2d5d1',ground:'#d8dad7',groundLine:null,wall:'#d2d5d1',wallStroke:null,wallAlt:'#bfc3bf',win:'#e2e5e1',winStroke:null,metal:'#a3a8a4',metalStroke:null,
+       screen:'#171a1c',onScreen:'#ffffff',dots:true,glow:false,person:'#171a1c',dim:'#60656a',text:'#171a1c',mute:'#60656a',labelBg:'#e8ebe8'}; // оформление схемы: серый фон, графитовый экран
   function postCount(w){var cab=Math.max(1,Math.round(w/0.6));return Math.max(1,Math.floor(cab/2))+1} // стойка через каждые два кабинета 600 мм
   function drawScene(){
-    var p=place(), T=THEMES[st.theme], svg=el.svg, box=svg.parentNode, VW=Math.max(320,box.clientWidth), VH=Math.max(260,box.clientHeight), narrow=VW<520;
+    var svg=el.svg, box=svg.parentNode, p=place();
+    if(!box.clientWidth) return; // вид скрыт
+    var VW=Math.max(320,box.clientWidth), VH=Math.max(200,box.clientHeight);
     svg.setAttribute('viewBox','0 0 '+VW+' '+VH);
+    svg.innerHTML=sceneSVG(VW,VH,'pb');
+    svg.setAttribute('aria-label','Схема: '+p.name.toLowerCase()+', экран '+fmt(st.w)+' на '+fmt(st.h)+' м на высоте '+fmt(st.lift)+' м, расстояние просмотра '+fmt(st.d,1)+' м, человек 1,8 м');
+  }
+  function sceneSVG(VW,VH,uid){
+    var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
     var padL=narrow?46:64, padR=narrow?30:52, top=30, gy=VH-46;
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
@@ -146,8 +147,8 @@
       for(var yy=y+h-fl+0.8*s; yy>y+0.3*s; yy-=fl) for(var q=0;q<n;q++) out+=R(ox+q*step,yy,ww,wh,T.win,T.winStroke);
       return out;
     }
-    o+='<defs><pattern id="pb-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.3" fill="#fff" fill-opacity=".3"/></pattern>'+
-       '<filter id="pb-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter></defs>';
+    o+='<defs><pattern id="'+uid+'-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.3" fill="#fff" fill-opacity=".3"/></pattern>'+
+       '<filter id="'+uid+'-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter></defs>';
     o+=R(0,0,VW,VH,T.bg);
     // помещение: стена, потолок, пол
     if(c.ctx==='room'){
@@ -221,9 +222,9 @@
       (c.nav?[0.25,0.75]:[0.08,0.36,0.64,0.92]).forEach(function(t){o+=L(sx+sw*t,hy,sx+sw*t,sy,T.metalStroke||T.metal,1.5)});
     }
     // экран
-    if(T.glow) o+=R(sx,sy,sw,sh,T.screen,null,' filter="url(#pb-glow)" opacity=".55"');
+    if(T.glow) o+=R(sx,sy,sw,sh,T.screen,null,' filter="url(#'+uid+'-glow)" opacity=".55"');
     o+=R(sx,sy,sw,sh,T.screen);
-    if(T.dots) o+=R(sx,sy,sw,sh,'url(#pb-dots)');
+    if(T.dots) o+=R(sx,sy,sw,sh,'url(#'+uid+'-dots)');
     var label=fmt(c.w)+' × '+fmt(c.h)+' м';
     if(sw>78&&sh>26&&!c.nav) o+=Tx(sx+sw/2,sy+sh/2+4,label,'middle',T.onScreen,600,13);
     else if(hung){ o+=Tx(sx+sw/2,sb+17,label,'middle',T.text,600,12); if(c.nav) o+=Tx(sx+sw/2,sb+32,st.dbl?'двустороннее':'одностороннее','middle',T.mute,400,11); }
@@ -241,8 +242,7 @@
     o+=L(sx+sw,ay,px,ay,T.dim)+L(sx+sw,ay-5,sx+sw,ay+5,T.dim)+L(px,ay-5,px,ay+5,T.dim)+R(midx-lw2/2,ay-9,lw2,18,T.ground||T.labelBg);
     if(broken) o+=L(midx-lw2/2+2,ay+5,midx-lw2/2+8,ay-5,T.dim)+L(midx+lw2/2-8,ay+5,midx+lw2/2-2,ay-5,T.dim);
     o+=Tx(midx,ay+4,fmt(c.d,1)+' м','middle',T.text,600,12);
-    svg.innerHTML=o;
-    svg.setAttribute('aria-label','Схема: '+p.name.toLowerCase()+', экран '+fmt(c.w)+' на '+fmt(c.h)+' м на высоте '+fmt(c.lift)+' м, расстояние просмотра '+fmt(c.d,1)+' м, человек 1,8 м');
+    return o;
   }
 
   // ——— Картинка «как увидит зритель»: перенос PixelTile и калибровки pixelLook из КП-системы ———
@@ -333,17 +333,17 @@
     if(!r.cards.length){
       el.recS.textContent=''; el.tiles.dataset.n='1'; $('pb-rec-body').dataset.n='0';
       el.tiles.innerHTML='<p class="pb-empty">Прозрачные экраны для помещений подбираем под проект: шаг и прозрачность зависят от остекления и расстояния просмотра. Оставьте заявку — инженер пришлёт варианты.</p>';
-      el.why.hidden=true; return;
+      el.why.hidden=true; $('pb-pdf').hidden=true; return;
     }
     el.why.hidden=false;
-    el.recS.textContent='Так экран увидит зритель с '+fmt(st.d,1)+' м. Выберите вариант — шаг и бюджет пересчитаются.';
-    el.tiles.dataset.n=String(r.cards.length); $('pb-rec-body').dataset.n=String(r.cards.length);
+    el.recS.textContent='Так экран увидит зритель с '+fmt(st.d,1)+' м. Выберите вариант — шаг и бюджет пересчитаются.'; $('pb-pdf').hidden=false;
+    el.tiles.dataset.n=String(r.cards.length); el.tiles.dataset.kind=p.nav?'board':'screen'; $('pb-rec-body').dataset.n=String(r.cards.length);
     el.tiles.innerHTML=r.cards.map(function(x){
       var on=x===c;
       return '<button type="button" class="pb-tile" data-pitch="'+x.pitch+'" aria-pressed="'+on+'">'+(x.rec?'<span class="pb-flag">Рекомендуем</span>':'')+(on?'<span class="pb-sel">Выбрано</span>':'')+
-        '<canvas data-k="'+x.k+'" role="img" aria-label="Шаг '+fmt(x.pitch)+' мм. '+LEVEL_HINT[x.level]+'"></canvas>'+
-        '<span class="pb-tile-b"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span><span class="pb-tile-p">Шаг пикселя '+fmt(x.pitch)+' мм</span>'+
-        '<span class="pb-tile-h"><span class="pb-dot" style="background:'+LEVEL_COLOR[x.level]+'"></span>'+LEVEL_HINT[x.level]+'</span>'+
+        '<span class="pb-tile-img"><canvas data-k="'+x.k+'" role="img" aria-label="Шаг '+fmt(x.pitch)+' мм. '+LEVEL_HINT[x.level]+'"></canvas></span>'+
+        '<span class="pb-tile-b"><span class="pb-tile-t"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span><span class="pb-tile-p">Шаг пикселя '+fmt(x.pitch)+'\u00a0мм</span>'+
+        '<span class="pb-tile-h"><span class="pb-dot" style="background:'+LEVEL_COLOR[x.level]+'"></span>'+LEVEL_HINT[x.level]+'</span></span>'+
         '<span class="pb-tile-m">'+(x.piece?sp(x.from)+' ₽<small>за табло, с НДС</small>':money(x.from,x.to)+'<small>только экран, с НДС</small>')+'</span></span></button>';
     }).join('');
     el.why.innerHTML=p.nav
@@ -359,38 +359,35 @@
   }
   function setNavSize(v){var a=v.split('×'); st.navSize=v; st.w=+a[0]/1000; st.h=+a[1]/1000}
   document.querySelector('.pb-seg').addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b||b.dataset.env===st.env)return;
+    var b=e.target.closest('button'); if(!b)return; touch(); if(b.dataset.env===st.env)return;
     st.env=b.dataset.env;
     document.querySelectorAll('.pb-seg button').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.env===st.env))});
     applyPlace(PLACES[st.env][0]);
   });
   el.places.addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b)return;
+    var b=e.target.closest('button'); if(!b)return; touch();
     applyPlace(PLACES[st.env].filter(function(p){return p.id===b.dataset.place})[0]);
   });
   el.mount.addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b)return;
+    var b=e.target.closest('button'); if(!b)return; touch();
     st.mount=b.dataset.mount; st.lift=st.mount==='suspended'?3:place().lift; // подвес висит выше: 3 м, как в КП-системе
     renderMount(); render();
   });
-  $('pb-style').addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b)return; st.theme=b.dataset.theme;
-    this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))}); drawScene();
-  });
-  el.navSize.addEventListener('change',function(){setNavSize(el.navSize.value);render()});
-  el.navDbl.addEventListener('change',function(){st.dbl=el.navDbl.checked;render()});
+  el.navSize.addEventListener('change',function(){touch();setNavSize(el.navSize.value);render()});
+  el.navDbl.addEventListener('change',function(){touch();st.dbl=el.navDbl.checked;render()});
   el.tiles.addEventListener('click',function(e){var b=e.target.closest('.pb-tile');if(!b)return;st.pick=+b.dataset.pitch;render()});
   ['w','h','lift','d'].forEach(function(key){
     var range=inp[key][0], num=inp[key][1];
-    range.addEventListener('input',function(){st[key]=+range.value;if(key==='d')st.pick=null;render()});
+    range.addEventListener('input',function(){touch();st[key]=+range.value;if(key==='d')st.pick=null;render()});
     num.addEventListener('input',function(){
       var v=parseFloat(String(num.value).replace(',','.')), L=LIMITS[st.env][key];
-      if(!isFinite(v))return; st[key]=Math.round(clamp(v,L[0],L[1])*100)/100; if(key==='d')st.pick=null; render();
+      if(!isFinite(v))return; touch(); st[key]=Math.round(clamp(v,L[0],L[1])*100)/100; if(key==='d')st.pick=null; render();
     });
     num.addEventListener('blur',function(){num.value=st[key]});
   });
 
   // ——— Заявка: параметры и выбранный вариант уходят вместе с контактом ———
+  function touch(){ st.touched=true; $('pb-hint').hidden=true; }
   function payload(){
     var r=last, p=place(), c=r.sel;
     return {source:'Подбор экрана',env:st.env==='out'?'На улице':'В помещении',place:p.name,mount:st.mount?MOUNT_LABEL[st.mount]:null,
@@ -398,24 +395,45 @@
       pitch_mm:c?c.pitch:null,quality:c?LEVEL_LABEL[c.level]:null,resolution:c?r.resW+'×'+r.resH:null,
       budget:c?(c.piece?sp(c.from)+' ₽ за табло':money(c.from,c.to)+' (только оборудование, с НДС)'):'по запросу',models:c?c.models:[]};
   }
-  $('pb-open').addEventListener('click',function(){
-    var d=payload();
-    el.sum.innerHTML=[['Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],['Экран',fmt(d.width_m)+' × '+fmt(d.height_m)+' м'+(d.double_sided==null?', '+fmt(d.area_m2)+' м²':d.double_sided?', двустороннее':', одностороннее')],
-      ['Высота установки',fmt(d.install_height_m)+' м'],['Расстояние',fmt(d.distance_m,1)+' м'],['Шаг пикселя',d.pitch_mm?fmt(d.pitch_mm)+' мм, '+d.quality.toLowerCase():'подберёт инженер'],['Ориентир',d.budget]]
-      .map(function(x){return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join('');
+  function summaryRows(d){
+    return [['Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],
+      ['Экран',fmt(d.width_m)+' × '+fmt(d.height_m)+' м'+(d.double_sided==null?', '+fmt(d.area_m2)+' м²':d.double_sided?', двустороннее':', одностороннее')],
+      ['Высота установки',fmt(d.install_height_m)+' м'],['Расстояние просмотра',fmt(d.distance_m,1)+' м'],
+      ['Шаг пикселя',d.pitch_mm?fmt(d.pitch_mm)+' мм, '+d.quality.toLowerCase():'подберёт инженер'],['Ориентир',d.budget]];
+  }
+  // Одно окно на два сценария: заявка на расчёт и скачивание PDF (оба просят контакт)
+  var DLG={quote:{title:'Расчёт за 24 часа',btn:'Получить расчёт',note:'Бесплатно, без обязательств. Ответит инженер, не менеджер по продажам.'},
+           pdf:{title:'Скачать расчёт в PDF',btn:'Скачать PDF',note:'В файле: параметры экрана, схема, шаг пикселя, бюджет оборудования и рекомендации. Скачивание начнётся после отправки.'}};
+  var dlgMode='quote';
+  function openDialog(mode){
+    dlgMode=mode; var m=DLG[mode];
+    $('pb-dlg-t').textContent=m.title; $('pb-f-btn').textContent=m.btn; $('pb-f-note').textContent=m.note;
+    $('pb-f-task-l').hidden=mode==='pdf';
+    el.sum.innerHTML=summaryRows(payload()).map(function(x){return '<dt>'+x[0]+'</dt><dd>'+x[1]+'</dd>'}).join('');
     el.form.hidden=false; el.done.hidden=true;
     el.dialog.showModal();
-  });
+  }
+  $('pb-open').addEventListener('click',function(){openDialog('quote')});
+  $('pb-pdf').addEventListener('click',function(){openDialog('pdf')});
   $('pb-close').addEventListener('click',function(){el.dialog.close()});
   el.dialog.addEventListener('click',function(e){if(e.target===el.dialog)el.dialog.close()});
   el.form.addEventListener('submit',function(e){
     e.preventDefault();
-    var fd=new FormData(el.form), data=payload();
-    data.name=fd.get('name');data.contact=fd.get('contact');data.task=fd.get('task');
+    var fd=new FormData(el.form), data=payload(), mode=dlgMode;
+    data.name=fd.get('name');data.contact=fd.get('contact');data.task=mode==='pdf'?'':fd.get('task');data.request=mode==='pdf'?'Скачивание PDF':'Точный расчёт';
     var ok=true;
     function finish(){
       el.form.hidden=true; el.done.hidden=false;
-      el.done.textContent=ok?'Заявка принята. Инженер пришлёт расчёт с комплектацией в течение рабочего дня.':'Не удалось отправить. Позвоните +7 (499) 350-27-45 или напишите zakaz@ekranpro.ru.';
+      if(mode==='pdf'){
+        el.done.innerHTML='<p>Готовим файл…</p>';
+        makePdf(data).then(function(blob){
+          savePdf(blob);
+          el.done.innerHTML='<p>PDF скачивается. Если загрузка не началась, нажмите кнопку ниже.</p><button type="button" class="pb-link pb-link--inline" id="pb-pdf-again"><span>Скачать ещё раз</span></button>';
+          $('pb-pdf-again').addEventListener('click',function(){savePdf(blob)});
+        },function(){ el.done.innerHTML='<p>Не удалось собрать PDF в этом браузере. Позвоните +7 (499) 350-27-45 или напишите zakaz@ekranpro.ru — пришлём расчёт письмом.</p>'; });
+      } else {
+        el.done.textContent=ok?'Заявка принята. Инженер пришлёт расчёт с комплектацией в течение рабочего дня.':'Не удалось отправить. Позвоните +7 (499) 350-27-45 или напишите zakaz@ekranpro.ru.';
+      }
       el.done.focus();
     }
     if(FORM_ENDPOINT){
@@ -425,9 +443,143 @@
     } else finish();
   });
 
+  // ——— PDF: один лист A4, собирается в браузере (шапка и реквизиты как в КП) ———
+  var COMPANY={legal:'ООО «Рекламная группа «ОнЛаб»',inn:'6658363893',site:'www.ekranpro.ru',phone:'+7 (499) 350-27-45',email:'zakaz@ekranpro.ru',address:'г. Москва, БП Румянцево, корпус Г, оф. 413'};
+  function loadImage(src){return new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im)};im.onerror=rej;im.src=src})}
+  function makePdf(lead){
+    var W=1654,H=2339,MM=W/210,M=Math.round(15*MM),CW=W-2*M; // A4 при 200 dpi, поля 15 мм
+    var r=last,p=place(),c=r.sel,d=payload();
+    var cv=document.createElement('canvas'); cv.width=W; cv.height=H; var g=cv.getContext('2d');
+    var FONT='Inter, Arial, sans-serif';
+    function font(w,s){g.font=w+' '+s+'px '+FONT}
+    function text(t,x,y,color,w,s,align){font(w,s);g.fillStyle=color;g.textAlign=align||'left';g.textBaseline='alphabetic';g.fillText(t,x,y)}
+    function wrap(t,x,y,maxW,lh,color,w,s){font(w,s);g.fillStyle=color;g.textAlign='left';var words=t.split(' '),line='';
+      words.forEach(function(wd){var tt=line?line+' '+wd:wd; if(g.measureText(tt).width>maxW&&line){g.fillText(line,x,y);y+=lh;line=wd}else line=tt});
+      if(line){g.fillText(line,x,y);y+=lh} return y}
+    var sw=1400, sh=440, svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+sw+'" height="'+sh+'" viewBox="0 0 900 '+Math.round(900*sh/sw)+'"><style>text{font-family:Arial,Helvetica,sans-serif}</style>'+sceneSVG(900,Math.round(900*sh/sw),'pdf')+'</svg>';
+    var fonts=document.fonts&&document.fonts.load?Promise.all([document.fonts.load('400 30px Inter'),document.fonts.load('500 30px Inter')]).catch(function(){}):Promise.resolve();
+    return Promise.all([loadImage('data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)),fonts]).then(function(a){
+      var scene=a[0], INK='#171a1c', MUTE='#60656a', NAVY='#14263f';
+      g.fillStyle='#fff'; g.fillRect(0,0,W,H);
+      // шапка: тёмно-синее поле, зелёная диагональ, синее поле с логотипом
+      var hh=Math.round(24*MM), sk=Math.tan(18*Math.PI/180)*hh/2;
+      function band(x1,x2,color){g.fillStyle=color;g.beginPath();g.moveTo(x1+sk,0);g.lineTo(x2+sk,0);g.lineTo(x2-sk,hh);g.lineTo(x1-sk,hh);g.closePath();g.fill()}
+      g.fillStyle=NAVY; g.fillRect(0,0,W,hh);
+      band(W-56*MM,W+10*MM,'#2757d6'); band(W-58*MM,W-50*MM,'#1fa84d');
+      text('Подбор светодиодного экрана',M,hh/2-4,'#fff','700',52);
+      text('Параметры, схема и рекомендации по шагу пикселя',M,hh/2+44,'#c7d3e5','500',28);
+      var logo=$('pb-img-logo');
+      if(logo&&logo.complete&&logo.naturalWidth){var lh=Math.round(10*MM), lw=lh*logo.naturalWidth/logo.naturalHeight, lx=W-25*MM-lw/2; g.drawImage(logo,lx,(hh-lh)/2,lw,lh)}
+      var y=hh+64;
+      // кому и когда
+      var now=new Date(), dd=('0'+now.getDate()).slice(-2)+'.'+('0'+(now.getMonth()+1)).slice(-2)+'.'+now.getFullYear();
+      text('Расчёт от '+dd+(lead&&lead.name?' · для: '+String(lead.name).slice(0,60):''),M,y,MUTE,'400',26); y+=62;
+      // параметры
+      text('Параметры экрана',M,y,INK,'700',36); y+=50;
+      var rows=summaryRows(d).slice(0,4), colW=CW/4;
+      rows.forEach(function(row,i){var x=M+i*colW; text(row[0].toUpperCase(),x,y,MUTE,'500',19); wrap(row[1],x,y+38,colW-24,32,INK,'500',25)});
+      y+=38+32*2+20;
+      // схема
+      g.drawImage(scene,M,y,CW,Math.round(CW*sh/sw)); y+=Math.round(CW*sh/sw);
+      // шаг, разрешение, бюджет
+      var bh=170; g.strokeStyle='#d8dad7'; g.lineWidth=2; g.strokeRect(M,y,CW,bh);
+      var cols=[['ШАГ ПИКСЕЛЯ',c?fmt(c.pitch)+' мм':'—',c?LEVEL_LABEL[c.level]:'Подберёт инженер',INK],
+                ['РАЗРЕШЕНИЕ',c?sp(r.resW)+' × '+sp(r.resH):'—',c?resNote(r):'',INK],
+                [c&&c.piece?'ЦЕНА ТАБЛО':'БЮДЖЕТ ОБОРУДОВАНИЯ',c?(c.piece?sp(c.from)+' ₽':money(c.from,c.to)):'По запросу',c&&c.piece?'За одно табло, с НДС. Монтаж отдельно.':'Только экран, с НДС. Монтаж и работы отдельно.','#f36b52']];
+      var cw3=[CW*0.27,CW*0.31,CW*0.42], cx=M;
+      cols.forEach(function(k,i){ if(i){g.beginPath();g.moveTo(cx,y);g.lineTo(cx,y+bh);g.stroke()}
+        text(k[0],cx+28,y+42,MUTE,'500',20); text(k[1],cx+28,y+100,k[3],'700',48); text(k[2],cx+28,y+142,MUTE,'400',22); cx+=cw3[i]; });
+      y+=bh+64;
+      // рекомендации
+      if(r.cards.length){
+        text('Рекомендации по выбору шага пикселя для дистанции '+fmt(st.d,1)+' м',M,y,INK,'700',36); y+=34;
+        var gap=30, ts=Math.round((CW-2*gap)/3), img=$(p.nav?'pb-img-board':'pb-img-screen');
+        r.cards.forEach(function(x,i){
+          var tx=M+i*(ts+gap), tc=document.createElement('canvas'); drawTile(tc,img,x.k); g.drawImage(tc,tx,y,ts,ts);
+          if(x.rec){font('500',20); var fw=g.measureText('РЕКОМЕНДУЕМ').width+28; g.fillStyle='#1fa84d'; g.fillRect(tx,y,fw,38); text('РЕКОМЕНДУЕМ',tx+14,y+27,'#fff','500',20)}
+          if(x===c){g.strokeStyle=INK; g.lineWidth=4; g.strokeRect(tx+2,y+2,ts-4,ts-4)}
+          var ty=y+ts+40;
+          text(LEVEL_LABEL[x.level].toUpperCase(),tx,ty,MUTE,'500',19); ty+=44;
+          text('Шаг пикселя '+fmt(x.pitch)+' мм',tx,ty,INK,'700',32); ty+=38;
+          g.fillStyle=LEVEL_COLOR[x.level]; g.beginPath(); g.arc(tx+9,ty-8,9,0,Math.PI*2); g.fill();
+          text(LEVEL_HINT[x.level],tx+30,ty,INK,'400',23); ty+=42;
+          text(x.piece?sp(x.from)+' ₽ за табло, с НДС':money(x.from,x.to)+', только экран',tx,ty,INK,'500',24);
+        });
+        y+=ts+40+44+38+42+44;
+        // пояснение
+        var notes=p.nav
+          ?['Изображение на табло складывается из светодиодных точек, и чем ближе зритель, тем они заметнее. Табло читают вблизи, примерно с 3 м, поэтому для них три шага:','Стандартное качество — 2,5 мм, точки видны.','Оптимальное качество — 2 мм, точки едва различимы.','Максимальное качество — 1,86 мм, картинка как у домашнего телевизора.']
+          :['Изображение на экране складывается из светодиодных точек, и чем ближе зритель, тем они заметнее. Поэтому шаг подбираем под расстояние просмотра:','Стандартное качество — шаг в миллиметрах равен расстоянию в метрах, точки видны.','Оптимальное качество — шаг в 1,4 раза мельче, точки едва различимы.','Максимальное качество — вдвое мельче, картинка как у домашнего телевизора.'];
+        var ny=y, nh=44+34*5+10; g.fillStyle='#eef1f6'; g.fillRect(M,ny,CW,nh);
+        var yy=wrap(notes[0],M+30,ny+48,CW-60,34,INK,'400',24);
+        notes.slice(1).forEach(function(n){ g.fillStyle=INK; g.beginPath(); g.arc(M+40,yy-8,4,0,Math.PI*2); g.fill(); yy=wrap(n,M+58,yy,CW-90,34,INK,'400',24); });
+        y=ny+nh+44;
+      }
+      wrap('Расчёт ориентировочный: цена только за оборудование, с НДС. Точную стоимость под ключ с монтажом и пусконаладкой рассчитает инженер по заявке.',M,y,CW,32,MUTE,'400',23);
+      // подвал с реквизитами
+      var fy=H-Math.round(13*MM); g.strokeStyle='#d8dad7'; g.lineWidth=2; g.beginPath(); g.moveTo(M,fy); g.lineTo(W-M,fy); g.stroke();
+      text(COMPANY.legal+'  (ИНН '+COMPANY.inn+')',M,fy+58,MUTE,'400',22);
+      text(COMPANY.site+'     '+COMPANY.phone,W*0.615,fy+58,MUTE,'400',22,'center');
+      text(COMPANY.email,W-M,fy+58,MUTE,'400',22,'right');
+      text(COMPANY.address,M,fy-18,MUTE,'400',20);
+      return pdfFromJpeg(cv.toDataURL('image/jpeg',0.9),W,H);
+    });
+  }
+  // Минимальный PDF: одна страница A4 с одной JPEG-картинкой, без сторонних библиотек
+  function pdfFromJpeg(dataUrl,w,h){
+    var bin=atob(dataUrl.split(',')[1]), jpg=new Uint8Array(bin.length), i;
+    for(i=0;i<bin.length;i++) jpg[i]=bin.charCodeAt(i);
+    var enc=function(s){var a=new Uint8Array(s.length);for(var k=0;k<s.length;k++)a[k]=s.charCodeAt(k)&255;return a};
+    var content='q 595.28 0 0 841.89 0 0 cm /Im0 Do Q';
+    var objs=[enc('<</Type/Catalog/Pages 2 0 R>>'),enc('<</Type/Pages/Kids[3 0 R]/Count 1>>'),
+      enc('<</Type/Page/Parent 2 0 R/MediaBox[0 0 595.28 841.89]/Resources<</XObject<</Im0 4 0 R>>>>/Contents 5 0 R>>'),
+      [enc('<</Type/XObject/Subtype/Image/Width '+w+'/Height '+h+'/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length '+jpg.length+'>>\nstream\n'),jpg,enc('\nendstream')],
+      enc('<</Length '+content.length+'>>\nstream\n'+content+'\nendstream')];
+    var parts=[enc('%PDF-1.4\n')], pos=parts[0].length, offs=[];
+    objs.forEach(function(o,n){
+      offs.push(pos);
+      var chunk=[enc((n+1)+' 0 obj\n')].concat(o instanceof Uint8Array?[o]:o,[enc('\nendobj\n')]);
+      chunk.forEach(function(x){parts.push(x);pos+=x.length});
+    });
+    var xref='xref\n0 '+(objs.length+1)+'\n0000000000 65535 f \n'+offs.map(function(o){return ('0000000000'+o).slice(-10)+' 00000 n \n'}).join('')+
+      'trailer\n<</Size '+(objs.length+1)+'/Root 1 0 R>>\nstartxref\n'+pos+'\n%%EOF';
+    parts.push(enc(xref));
+    return new Blob(parts,{type:'application/pdf'});
+  }
+  function savePdf(blob){
+    var a=document.createElement('a'), url=URL.createObjectURL(blob);
+    a.href=url; a.download='ekranpro-podbor-ekrana.pdf'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){URL.revokeObjectURL(url)},60000);
+  }
+
+  // ——— Два вида в одном экране: подбор и рекомендации по шагу ———
+  var root=$('ep-podbor'), viewCalc=$('pb-view-calc'), viewRec=$('pb-view-rec'), hintTimer;
+  function setView(v){
+    st.view=v; viewCalc.hidden=v!=='calc'; viewRec.hidden=v!=='rec';
+    if(v==='rec'){ paintTiles(); $('pb-back').focus({preventScroll:true}); } else { drawScene(); }
+    if(!root.classList.contains('is-pinned')) root.scrollIntoView({block:'start'});
+  }
+  $('pb-rec-open').addEventListener('click',function(){
+    if(!st.touched){ // экран ещё не выбирали: показываем подсказку вместо рекомендаций
+      var h=$('pb-hint'); h.hidden=false; clearTimeout(hintTimer); hintTimer=setTimeout(function(){h.hidden=true},6000); return;
+    }
+    setView('rec');
+  });
+  $('pb-back').addEventListener('click',function(){setView('calc')});
+
+  // ——— Закрепление: блок занимает ровно один экран и держится, пока не прокрутят дальше ———
+  function pin(){
+    var on=window.innerWidth>=1000&&window.innerHeight>=600;
+    root.classList.toggle('is-pinned',on);
+    root.style.setProperty('--pb-vh',window.innerHeight+'px');
+    var hdr=document.querySelector('#ekranpro-first-screen .ep1-header'); // закреплённая шапка сайта перекрывает верх экрана
+    root.style.setProperty('--pb-hdr',((hdr&&hdr.offsetHeight)||84)+'px');
+  }
+  pin();
+
   ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',paintTiles)});
   renderPlaces(); renderMount(); render();
-  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(render,120)});
+  var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){pin();render()},120)});
   if(window.ResizeObserver) new ResizeObserver(function(){drawScene()}).observe(el.svg.parentNode); // схема рисуется в пикселях контейнера
-  window.__pb={calc:calc,PLACES:PLACES,money:money};
+  window.__pb={calc:calc,PLACES:PLACES,money:money,makePdf:makePdf};
 })();

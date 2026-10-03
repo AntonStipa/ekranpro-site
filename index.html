@@ -2112,68 +2112,83 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
 
 <!-- PODBOR_START -->
 <section id="ep-podbor" aria-labelledby="pb-title">
-  <div class="pb-head">
-    <div>
-      <p class="pb-eyebrow">05 / Подбор</p>
-      <h2 id="pb-title">Подберите экран под ваш объект</h2>
-    </div>
-    <p>Укажите место, размер и расстояние просмотра — получите шаг пикселя, разрешение и бюджет оборудования.</p>
-  </div>
-
-  <div class="pb">
-    <div class="pb-controls">
+  <div class="pb-pin">
+    <div class="pb-head">
       <div>
-        <div class="pb-label"><span>Где будет экран</span></div>
-        <div class="pb-seg" role="group" aria-label="Среда">
-          <button type="button" id="pb-env-out" data-env="out" aria-pressed="true">На улице</button>
-          <button type="button" id="pb-env-in" data-env="in" aria-pressed="false">В помещении</button>
+        <p class="pb-eyebrow">05 / Подбор</p>
+        <h2 id="pb-title">Подберите экран под ваш объект</h2>
+      </div>
+      <p>Укажите место, размер и расстояние просмотра — получите шаг пикселя, разрешение и бюджет оборудования.</p>
+    </div>
+
+    <div class="pb-view" id="pb-view-calc">
+      <div class="pb">
+        <div class="pb-controls">
+          <div>
+            <div class="pb-label"><span>Где будет экран</span></div>
+            <div class="pb-seg" role="group" aria-label="Среда">
+              <button type="button" id="pb-env-out" data-env="out" aria-pressed="true">На улице</button>
+              <button type="button" id="pb-env-in" data-env="in" aria-pressed="false">В помещении</button>
+            </div>
+          </div>
+          <div>
+            <div class="pb-label"><span>Место установки</span></div>
+            <div class="pb-places" id="pb-places" role="group" aria-label="Место установки"></div>
+          </div>
+          <div id="pb-mount-box">
+            <div class="pb-label"><span>Способ установки</span></div>
+            <div class="pb-mount" id="pb-mount" role="group" aria-label="Способ установки"></div>
+            <p class="pb-fixed" id="pb-mount-fixed" hidden></p>
+          </div>
+          <div id="pb-nav-box" hidden>
+            <div class="pb-label"><span>Размер табло</span></div>
+            <select class="pb-select" id="pb-nav-size" aria-label="Размер табло"></select>
+            <label class="pb-check" for="pb-nav-dbl"><input type="checkbox" id="pb-nav-dbl"> Двустороннее</label>
+          </div>
+          <div>
+            <div class="pb-label"><span>Параметры</span><b id="pb-area"></b></div>
+            <div class="pb-params">
+              <div class="pb-row" id="pb-row-w"><label for="pb-w-r">Ширина</label><input type="range" id="pb-w-r"><div class="pb-num"><input type="number" id="pb-w" step="0.01" inputmode="decimal" aria-label="Ширина, м"><span>м</span></div></div>
+              <div class="pb-row" id="pb-row-h"><label for="pb-h-r">Высота</label><input type="range" id="pb-h-r"><div class="pb-num"><input type="number" id="pb-h" step="0.01" inputmode="decimal" aria-label="Высота, м"><span>м</span></div></div>
+              <div class="pb-row"><label for="pb-lift-r" id="pb-lift-l">Высота установки</label><input type="range" id="pb-lift-r"><div class="pb-num"><input type="number" id="pb-lift" step="0.01" inputmode="decimal" aria-label="Высота установки, м"><span>м</span></div></div>
+              <div class="pb-row pb-row--key"><label for="pb-d-r">Расстояние просмотра</label><input type="range" id="pb-d-r"><div class="pb-num"><input type="number" id="pb-d" step="0.5" inputmode="decimal" aria-label="Расстояние просмотра, м"><span>м</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pb-result">
+          <div class="pb-scene"><svg id="pb-svg" role="img" aria-label="Схема масштаба: экран, дистанция просмотра и человек"></svg></div>
+          <div class="pb-out" aria-live="polite">
+            <div class="pb-cell"><div class="pb-k">Шаг пикселя</div><div class="pb-v" id="pb-pitch"></div><div class="pb-s" id="pb-pitch-s"></div></div>
+            <div class="pb-cell"><div class="pb-k">Разрешение</div><div class="pb-v" id="pb-res"></div><div class="pb-s" id="pb-res-s"></div></div>
+            <div class="pb-cell"><div class="pb-k" id="pb-money-k">Бюджет оборудования</div><div class="pb-v pb-v--money" id="pb-money"></div><div class="pb-s" id="pb-money-s">Только экран, с НДС. Монтаж и работы считаются отдельно.</div></div>
+          </div>
+          <div class="pb-cta">
+            <button class="pb-btn" type="button" id="pb-open"><span>Получить точный расчёт</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            <div class="pb-cta-r">
+              <button class="pb-link" type="button" id="pb-rec-open"><span>Рекомендации по шагу пикселя</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <p class="pb-hint" id="pb-hint" role="status" hidden>Для получения рекомендаций выберите экран, который вам нужен.</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="pb-label"><span>Место установки</span></div>
-        <div class="pb-places" id="pb-places" role="group" aria-label="Место установки"></div>
-      </div>
-      <div id="pb-mount-box">
-        <div class="pb-label"><span>Способ установки</span></div>
-        <div class="pb-mount" id="pb-mount" role="group" aria-label="Способ установки"></div>
-        <p class="pb-fixed" id="pb-mount-fixed" hidden></p>
-      </div>
-      <div id="pb-nav-box" hidden>
-        <div class="pb-label"><span>Размер табло</span></div>
-        <select class="pb-select" id="pb-nav-size" aria-label="Размер табло"></select>
-        <label class="pb-check" for="pb-nav-dbl"><input type="checkbox" id="pb-nav-dbl"> Двустороннее</label>
-      </div>
-      <div>
-        <div class="pb-label"><span>Параметры</span><b id="pb-area"></b></div>
-        <div class="pb-params">
-          <div class="pb-row" id="pb-row-w"><label for="pb-w-r">Ширина</label><input type="range" id="pb-w-r"><div class="pb-num"><input type="number" id="pb-w" step="0.01" inputmode="decimal" aria-label="Ширина, м"><span>м</span></div></div>
-          <div class="pb-row" id="pb-row-h"><label for="pb-h-r">Высота</label><input type="range" id="pb-h-r"><div class="pb-num"><input type="number" id="pb-h" step="0.01" inputmode="decimal" aria-label="Высота, м"><span>м</span></div></div>
-          <div class="pb-row"><label for="pb-lift-r" id="pb-lift-l">Высота установки</label><input type="range" id="pb-lift-r"><div class="pb-num"><input type="number" id="pb-lift" step="0.01" inputmode="decimal" aria-label="Высота установки, м"><span>м</span></div></div>
-          <div class="pb-row"><label for="pb-d-r">Расстояние просмотра</label><input type="range" id="pb-d-r"><div class="pb-num"><input type="number" id="pb-d" step="0.5" inputmode="decimal" aria-label="Расстояние просмотра, м"><span>м</span></div></div>
+    </div>
+
+    <div class="pb-view pb-recview" id="pb-view-rec" hidden>
+      <div class="pb-rec-top">
+        <div>
+          <h3 id="pb-rec-t"></h3>
+          <p id="pb-rec-s"></p>
         </div>
+        <button class="pb-link pb-link--back" type="button" id="pb-back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Назад к подбору</span></button>
       </div>
-    </div>
-
-    <div class="pb-result">
-      <div class="pb-scene"><div class="pb-style" id="pb-style" role="group" aria-label="Стиль схемы"><span>Стиль схемы</span><button type="button" data-theme="a" aria-pressed="false">А</button><button type="button" data-theme="b" aria-pressed="true">Б</button><button type="button" data-theme="c" aria-pressed="false">В</button></div><svg id="pb-svg" role="img" aria-label="Схема масштаба: экран, дистанция просмотра и человек"></svg></div>
-      <div class="pb-out" aria-live="polite">
-        <div class="pb-cell"><div class="pb-k">Шаг пикселя</div><div class="pb-v" id="pb-pitch"></div><div class="pb-s" id="pb-pitch-s"></div></div>
-        <div class="pb-cell"><div class="pb-k">Разрешение</div><div class="pb-v" id="pb-res"></div><div class="pb-s" id="pb-res-s"></div></div>
-        <div class="pb-cell"><div class="pb-k" id="pb-money-k">Бюджет оборудования</div><div class="pb-v pb-v--money" id="pb-money"></div><div class="pb-s" id="pb-money-s">Только экран, с НДС. Монтаж и работы считаются отдельно.</div></div>
+      <div class="pb-rec-body" id="pb-rec-body">
+        <div class="pb-tiles" id="pb-tiles"></div>
       </div>
-      <div class="pb-cta">
-        <p>Точную стоимость под ключ рассчитает инженер. Бесплатно, без обязательств.</p>
-        <button class="pb-btn" type="button" id="pb-open">Получить точный расчёт <svg viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="pb-why">
+        <div id="pb-why"></div>
+        <button class="pb-btn pb-btn--ink" type="button" id="pb-pdf"><span>Скачать PDF</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M12 3V17M6 12L12 18L18 12M4 21H20" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M12 3V17M6 12L12 18L18 12M4 21H20" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
       </div>
-    </div>
-  </div>
-
-  <div class="pb-rec">
-    <h3 id="pb-rec-t"></h3>
-    <p id="pb-rec-s"></p>
-    <div class="pb-rec-body" id="pb-rec-body">
-      <div class="pb-tiles" id="pb-tiles"></div>
-      <div class="pb-why" id="pb-why"></div>
     </div>
   </div>
 </section>
@@ -2184,9 +2199,9 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
   <form class="pb-form" id="pb-form">
     <label for="pb-f-name">Ваше имя<input id="pb-f-name" name="name" autocomplete="name" placeholder="Как к вам обращаться" maxlength="100"></label>
     <label for="pb-f-contact">Телефон или почта<input id="pb-f-contact" name="contact" placeholder="+7 … или name@company.ru" required maxlength="160"></label>
-    <label for="pb-f-task">О проекте, необязательно<textarea id="pb-f-task" name="task" placeholder="Адрес объекта, сроки, особенности монтажа" maxlength="3000"></textarea></label>
-    <button class="pb-btn" type="submit">Получить расчёт <svg viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <p class="pb-note">Бесплатно, без обязательств. Ответит инженер, не менеджер по продажам.</p>
+    <label for="pb-f-task" id="pb-f-task-l">О проекте, необязательно<textarea id="pb-f-task" name="task" placeholder="Адрес объекта, сроки, особенности монтажа" maxlength="3000"></textarea></label>
+    <button class="pb-btn" type="submit"><span id="pb-f-btn">Получить расчёт</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+    <p class="pb-note" id="pb-f-note">Бесплатно, без обязательств. Ответит инженер, не менеджер по продажам.</p>
   </form>
   <div class="pb-done" id="pb-done" role="status" tabindex="-1" hidden></div>
 </div></dialog>
@@ -2194,8 +2209,9 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
 <script type="application/json" id="pb-data">[{"sku":"SPO-195-PROX-F-DMD-35K","pool":"out","pitch":1.95,"price":732852},{"sku":"SPOB-25-STD","pool":"out","pitch":2.5,"price":135218},{"sku":"SPO-26-PLUS-F-DMD-4K","pool":"out","pitch":2.6,"price":426310},{"sku":"SPO-26-PROX-F-DMD-3K","pool":"out","pitch":2.6,"price":487033},{"sku":"SPO-29-PLUS-F-DMD","pool":"out","pitch":2.9,"price":320152},{"sku":"SPO-29-PROX-F-DMD-3K","pool":"out","pitch":2.9,"price":377314},{"sku":"SPO-29-PROX-F-DMD-6K","pool":"out","pitch":2.9,"price":331668},{"sku":"SPOB-31-STD","pool":"out","pitch":3.07,"price":106771},{"sku":"SPO-39-PLUS-F-PTF-6K","pool":"out","pitch":3.9,"price":207293},{"sku":"SPO-39-PLUS-F-PTF-7K","pool":"out","pitch":3.9,"price":317430},{"sku":"SPO-39-PROX-F-PTF","pool":"out","pitch":3.9,"price":391134},{"sku":"SPO-39-STD-F-PTF-5K","pool":"out","pitch":3.9,"price":188239},{"sku":"SPOB-4-STD","pool":"out","pitch":4.0,"price":84560},{"sku":"SPOF-4-STD","pool":"out","pitch":4.0,"price":110019},{"sku":"SPO-44-PLUS-F-PT-6K","pool":"out","pitch":4.4,"price":153899},{"sku":"SPO-44-PROX-F-PT-8K","pool":"out","pitch":4.4,"price":280578},{"sku":"SPO-48-PLUS-F-PTF-6K","pool":"out","pitch":4.8,"price":182166},{"sku":"SPO-48-PROX-F-PTF","pool":"out","pitch":4.8,"price":304657},{"sku":"SPOB-5-STD","pool":"out","pitch":5.0,"price":78975},{"sku":"SPOF-5-STD","pool":"out","pitch":5.0,"price":99887},{"sku":"SPO-57-PLUS-F-PT","pool":"out","pitch":5.7,"price":163321},{"sku":"SPO-57-PLUS-F-PTA","pool":"out","pitch":5.7,"price":151176},{"sku":"SPO-57-PROX-F-PT","pool":"out","pitch":5.7,"price":232628},{"sku":"SPO-57-STD-F-PT","pool":"out","pitch":5.7,"price":165624},{"sku":"SPO-57-STD-F-PTA","pool":"out","pitch":5.7,"price":150130},{"sku":"SPO-67-PLUS-F-PT","pool":"out","pitch":6.67,"price":154528},{"sku":"SPO-67-PLUS-F-PTA-8K","pool":"out","pitch":6.67,"price":136519},{"sku":"SPO-67-PROX-F-PT","pool":"out","pitch":6.67,"price":207293},{"sku":"SPO-67-PROX-F-PTA","pool":"out","pitch":6.67,"price":162903},{"sku":"SPO-67-STD-F-PT","pool":"out","pitch":6.67,"price":156202},{"sku":"SPO-67-STD-F-PTA","pool":"out","pitch":6.67,"price":122491},{"sku":"SPOB-67-STD","pool":"out","pitch":6.67,"price":78065},{"sku":"SPO-8-PLUS-F-PT-8K","pool":"out","pitch":8.0,"price":141545},{"sku":"SPO-8-PLUS-F-PTA","pool":"out","pitch":8.0,"price":128564},{"sku":"SPO-8-PROX-F-PT","pool":"out","pitch":8.0,"price":177978},{"sku":"SPO-8-PROX-F-PTA","pool":"out","pitch":8.0,"price":142592},{"sku":"SPO-8-STD-F-PT","pool":"out","pitch":8.0,"price":142592},{"sku":"SPO-8-STD-F-PTA","pool":"out","pitch":8.0,"price":120397},{"sku":"SPOB-8-STD","pool":"out","pitch":8.0,"price":73259},{"sku":"SPO-10-PLUS-F-PT-8K","pool":"out","pitch":10.0,"price":130029},{"sku":"SPO-10-PLUS-F-PTA","pool":"out","pitch":10.0,"price":122700},{"sku":"SPO-10-PROX-F-PT","pool":"out","pitch":10.0,"price":151176},{"sku":"SPO-10-PROX-F-PTA","pool":"out","pitch":10.0,"price":128773},{"sku":"SPO-10-STD-F-PT","pool":"out","pitch":10.0,"price":130657},{"sku":"SPO-10-STD-F-PTA","pool":"out","pitch":10.0,"price":110346},{"sku":"SPI-062-PROX-R-IMFP","pool":"in","pitch":0.62,"price":2373604},{"sku":"SPI-078-PROX-R-IMF","pool":"in","pitch":0.78,"price":1099488},{"sku":"SPI-078-PROX-R-IMFP","pool":"in","pitch":0.78,"price":1244384},{"sku":"SPI-078-PROX-R-IMFPXM","pool":"in","pitch":0.78,"price":1752146},{"sku":"SPI-094-PROX-R-IMF","pool":"in","pitch":0.93,"price":500433},{"sku":"SPI-094-PROX-R-IMFHB","pool":"in","pitch":0.93,"price":578953},{"sku":"SPI-094-PROX-R-IMFP","pool":"in","pitch":0.93,"price":669199},{"sku":"SPI-094-PROX-R-IMFPHB","pool":"in","pitch":0.93,"price":771798},{"sku":"SPI-094-PROX-R-IMFPXM","pool":"in","pitch":0.93,"price":1224282},{"sku":"SP-125-PLUS","pool":"in","pitch":1.25,"price":245756},{"sku":"SP-125-PLUS-3840","pool":"in","pitch":1.25,"price":243158},{"sku":"SP-125-PLUS-COB","pool":"in","pitch":1.25,"price":285114},{"sku":"SP-125-PLUS-GOB","pool":"in","pitch":1.25,"price":259525},{"sku":"SPI-125-PROX-R-IMF","pool":"in","pitch":1.25,"price":270108},{"sku":"SPI-125-PROX-R-IMFHB","pool":"in","pitch":1.25,"price":373336},{"sku":"SPI-125-PROX-R-IMFP","pool":"in","pitch":1.25,"price":467769},{"sku":"SPI-125-PROX-R-IMFPHB","pool":"in","pitch":1.25,"price":545661},{"sku":"SPI-125-PROX-R-IMFPXM","pool":"in","pitch":1.25,"price":856809},{"sku":"SP-154-PLUS","pool":"in","pitch":1.53,"price":161716},{"sku":"SP-154-PLUS-3840","pool":"in","pitch":1.53,"price":155481},{"sku":"SP-154-PLUS-COB","pool":"in","pitch":1.53,"price":212504},{"sku":"SP-154-PLUS-GOB","pool":"in","pitch":1.53,"price":173276},{"sku":"SPI-156-PROX-R-IMF","pool":"in","pitch":1.56,"price":244982},{"sku":"SPI-156-PROX-R-IMFHB","pool":"in","pitch":1.56,"price":308845},{"sku":"SPI-156-PROX-R-IMFP","pool":"in","pitch":1.56,"price":445784},{"sku":"SPI-156-PROX-R-IMFPHB","pool":"in","pitch":1.56,"price":500015},{"sku":"SP-186-PLUS","pool":"in","pitch":1.86,"price":113006},{"sku":"SP-186-PLUS-3840","pool":"in","pitch":1.86,"price":109629},{"sku":"SP-186-PLUS-COB","pool":"in","pitch":1.86,"price":147558},{"sku":"SP-186-STD","pool":"in","pitch":1.86,"price":98458},{"sku":"SPI-188-PROX-R-IMF","pool":"in","pitch":1.87,"price":225509},{"sku":"SPI-188-PROX-R-IMFHB","pool":"in","pitch":1.87,"price":286650},{"sku":"SPI-188-PROX-R-IMFP","pool":"in","pitch":1.87,"price":400137},{"sku":"SPI-188-PROX-R-IMFPHB","pool":"in","pitch":1.87,"price":452693},{"sku":"SP-2-PLUS","pool":"in","pitch":2.0,"price":106512},{"sku":"SP-2-PLUS-3840","pool":"in","pitch":2.0,"price":99368},{"sku":"SP-2-PLUS-GOB","pool":"in","pitch":2.0,"price":118722},{"sku":"SP-2-STD","pool":"in","pitch":2.0,"price":91444},{"sku":"SP-25-PLUS","pool":"in","pitch":2.5,"price":89885},{"sku":"SP-25-PLUS-3840","pool":"in","pitch":2.5,"price":86898},{"sku":"SP-25-PLUS-GOB","pool":"in","pitch":2.5,"price":106122},{"sku":"SP-25-STD","pool":"in","pitch":2.5,"price":73779},{"sku":"SP-25-STD-3840","pool":"in","pitch":2.5,"price":70791},{"sku":"SP-31-PLUS","pool":"in","pitch":3.07,"price":83651},{"sku":"SP-31-PLUS-3840","pool":"in","pitch":3.07,"price":81832},{"sku":"SP-31-STD","pool":"in","pitch":3.07,"price":66895},{"sku":"SP-31-STD-3840","pool":"in","pitch":3.07,"price":65076},{"sku":"SP-4-PLUS","pool":"in","pitch":4.0,"price":74428},{"sku":"SP-4-PLUS-3840","pool":"in","pitch":4.0,"price":73519},{"sku":"SP-4-STD","pool":"in","pitch":4.0,"price":55204},{"sku":"SP-4-STD-3840","pool":"in","pitch":4.0,"price":54295},{"sku":"SPOR-25-STD","pool":"rent_out","pitch":2.5,"price":148077},{"sku":"SPOR-26-PLUS","pool":"rent_out","pitch":2.6,"price":202632},{"sku":"SPOR-29-PLUS","pool":"rent_out","pitch":2.9,"price":186006},{"sku":"SPOR-29-PROX-A-NT-BLACK","pool":"rent_out","pitch":2.9,"price":420238},{"sku":"SPOR-29-PROX-A-NT-MAX-BLACK","pool":"rent_out","pitch":2.9,"price":382339},{"sku":"SPOR-29-PROX-F-MST","pool":"rent_out","pitch":2.9,"price":293770},{"sku":"SPOR-29-PROX-F-MST-BLACK","pool":"rent_out","pitch":2.9,"price":347791},{"sku":"SPOR-31-STD","pool":"rent_out","pitch":3.07,"price":118981},{"sku":"SPOR-39-PLUS","pool":"rent_out","pitch":3.9,"price":154389},{"sku":"SPOR-39-PROX-A-NT","pool":"rent_out","pitch":3.9,"price":266549},{"sku":"SPOR-39-PROX-A-NT-BLACK","pool":"rent_out","pitch":3.9,"price":333762},{"sku":"SPOR-39-PROX-A-NT-MAX","pool":"rent_out","pitch":3.9,"price":231581},{"sku":"SPOR-39-PROX-A-NT-MAX-BLACK","pool":"rent_out","pitch":3.9,"price":238072},{"sku":"SPOR-39-PROX-F-MST","pool":"rent_out","pitch":3.9,"price":220484},{"sku":"SPOR-39-PROX-F-MST-BLACK-3K","pool":"rent_out","pitch":3.9,"price":240585},{"sku":"SPOR-39-PROX-F-MST-BLACK-45K","pool":"rent_out","pitch":3.9,"price":417308},{"sku":"SPOR-39-PROX-F-MST-MAX","pool":"rent_out","pitch":3.9,"price":185307},{"sku":"SPOR-39-PROX-F-MST-MAX-BLACK","pool":"rent_out","pitch":3.9,"price":219856},{"sku":"SPOR-4-STD","pool":"rent_out","pitch":4.0,"price":92224},{"sku":"SPOR-48-PROX-F-MST","pool":"rent_out","pitch":4.8,"price":206664},{"sku":"SPOR-48-PROX-F-MST-BLACK","pool":"rent_out","pitch":4.8,"price":251264},{"sku":"SPOR-48-PROX-F-MST-MAX","pool":"rent_out","pitch":4.8,"price":170650},{"sku":"SPOR-48-PROX-F-MST-MAX-BLACK","pool":"rent_out","pitch":4.8,"price":186354},{"sku":"SPN-186-1280x480","pool":"nav","pitch":1.86,"price":107452,"size":"1280×480","price2":151829},{"sku":"SPN-186-1280x640","pool":"nav","pitch":1.86,"price":128566,"size":"1280×640","price2":192810},{"sku":"SPN-186-1280x800","pool":"nav","pitch":1.86,"price":155499,"size":"1280×800","price2":240440},{"sku":"SPN-186-1280x960","pool":"nav","pitch":1.86,"price":176612,"size":"1280×960","price2":281421},{"sku":"SPN-186-1600x480","pool":"nav","pitch":1.86,"price":125106,"size":"1600×480","price2":184642},{"sku":"SPN-186-1600x640","pool":"nav","pitch":1.86,"price":151135,"size":"1600×640","price2":235452},{"sku":"SPN-186-1600x800","pool":"nav","pitch":1.86,"price":177163,"size":"1600×800","price2":286262},{"sku":"SPN-186-1600x960","pool":"nav","pitch":1.86,"price":203191,"size":"1600×960","price2":337072},{"sku":"SPN-186-1920x480","pool":"nav","pitch":1.86,"price":144942,"size":"1920×480","price2":219949},{"sku":"SPN-186-1920x640","pool":"nav","pitch":1.86,"price":176612,"size":"1920×640","price2":281421},{"sku":"SPN-186-1920x800","pool":"nav","pitch":1.86,"price":208282,"size":"1920×800","price2":342891},{"sku":"SPN-186-1920x960","pool":"nav","pitch":1.86,"price":239953,"size":"1920×960","price2":404361},{"sku":"SPN-186-2240x480","pool":"nav","pitch":1.86,"price":162595,"size":"2240×480","price2":252764},{"sku":"SPN-186-2240x640","pool":"nav","pitch":1.86,"price":199181,"size":"2240×640","price2":324063},{"sku":"SPN-186-2240x800","pool":"nav","pitch":1.86,"price":235766,"size":"2240×800","price2":395364},{"sku":"SPN-186-2240x960","pool":"nav","pitch":1.86,"price":272352,"size":"2240×960","price2":466663},{"sku":"SPN-186-2560x480","pool":"nav","pitch":1.86,"price":182431,"size":"2560×480","price2":288071},{"sku":"SPN-186-2560x640","pool":"nav","pitch":1.86,"price":224659,"size":"2560×640","price2":370032},{"sku":"SPN-186-2560x800","pool":"nav","pitch":1.86,"price":266886,"size":"2560×800","price2":451991},{"sku":"SPN-186-2560x960","pool":"nav","pitch":1.86,"price":309114,"size":"2560×960","price2":533952},{"sku":"SPN-186-2880x480","pool":"nav","pitch":1.86,"price":200085,"size":"2880×480","price2":320885},{"sku":"SPN-186-2880x640","pool":"nav","pitch":1.86,"price":247227,"size":"2880×640","price2":412674},{"sku":"SPN-186-2880x800","pool":"nav","pitch":1.86,"price":294370,"size":"2880×800","price2":504464},{"sku":"SPN-186-2880x960","pool":"nav","pitch":1.86,"price":341512,"size":"2880×960","price2":596254},{"sku":"SPN-186-3200x480","pool":"nav","pitch":1.86,"price":219921,"size":"3200×480","price2":356192},{"sku":"SPN-186-3200x640","pool":"nav","pitch":1.86,"price":272705,"size":"3200×640","price2":458642},{"sku":"SPN-186-3200x800","pool":"nav","pitch":1.86,"price":325489,"size":"3200×800","price2":561093},{"sku":"SPN-186-3200x960","pool":"nav","pitch":1.86,"price":378274,"size":"3200×960","price2":663544},{"sku":"SPN-2-1280x480","pool":"nav","pitch":2.0,"price":102584,"size":"1280×480","price2":142093},{"sku":"SPN-2-1280x640","pool":"nav","pitch":2.0,"price":122075,"size":"1280×640","price2":179828},{"sku":"SPN-2-1280x800","pool":"nav","pitch":2.0,"price":147385,"size":"1280×800","price2":224212},{"sku":"SPN-2-1280x960","pool":"nav","pitch":2.0,"price":166877,"size":"1280×960","price2":261947},{"sku":"SPN-2-1600x480","pool":"nav","pitch":2.0,"price":119020,"size":"1600×480","price2":172472},{"sku":"SPN-2-1600x640","pool":"nav","pitch":2.0,"price":143021,"size":"1600×640","price2":219224},{"sku":"SPN-2-1600x800","pool":"nav","pitch":2.0,"price":167021,"size":"1600×800","price2":265978},{"sku":"SPN-2-1600x960","pool":"nav","pitch":2.0,"price":191021,"size":"1600×960","price2":312731},{"sku":"SPN-2-1920x480","pool":"nav","pitch":2.0,"price":137639,"size":"1920×480","price2":205345},{"sku":"SPN-2-1920x640","pool":"nav","pitch":2.0,"price":166877,"size":"1920×640","price2":261947},{"sku":"SPN-2-1920x800","pool":"nav","pitch":2.0,"price":196113,"size":"1920×800","price2":318550},{"sku":"SPN-2-1920x960","pool":"nav","pitch":2.0,"price":225349,"size":"1920×960","price2":375152},{"sku":"SPN-2-2240x480","pool":"nav","pitch":2.0,"price":154077,"size":"2240×480","price2":235725},{"sku":"SPN-2-2240x640","pool":"nav","pitch":2.0,"price":187822,"size":"2240×640","price2":301345},{"sku":"SPN-2-2240x800","pool":"nav","pitch":2.0,"price":221568,"size":"2240×800","price2":366965},{"sku":"SPN-2-2240x960","pool":"nav","pitch":2.0,"price":255312,"size":"2240×960","price2":432586},{"sku":"SPN-2-2560x480","pool":"nav","pitch":2.0,"price":172696,"size":"2560×480","price2":268598},{"sku":"SPN-2-2560x640","pool":"nav","pitch":2.0,"price":211678,"size":"2560×640","price2":344068},{"sku":"SPN-2-2560x800","pool":"nav","pitch":2.0,"price":250658,"size":"2560×800","price2":419538},{"sku":"SPN-2-2560x960","pool":"nav","pitch":2.0,"price":289640,"size":"2560×960","price2":495008},{"sku":"SPN-2-2880x480","pool":"nav","pitch":2.0,"price":189132,"size":"2880×480","price2":298977},{"sku":"SPN-2-2880x640","pool":"nav","pitch":2.0,"price":232623,"size":"2880×640","price2":383465},{"sku":"SPN-2-2880x800","pool":"nav","pitch":2.0,"price":276113,"size":"2880×800","price2":467953},{"sku":"SPN-2-2880x960","pool":"nav","pitch":2.0,"price":319604,"size":"2880×960","price2":552441},{"sku":"SPN-2-3200x480","pool":"nav","pitch":2.0,"price":207751,"size":"3200×480","price2":331851},{"sku":"SPN-2-3200x640","pool":"nav","pitch":2.0,"price":256478,"size":"3200×640","price2":426188},{"sku":"SPN-2-3200x800","pool":"nav","pitch":2.0,"price":305205,"size":"3200×800","price2":520525},{"sku":"SPN-2-3200x960","pool":"nav","pitch":2.0,"price":353933,"size":"3200×960","price2":614862},{"sku":"SPN-25-1280x480","pool":"nav","pitch":2.5,"price":93167,"size":"1280×480","price2":123259},{"sku":"SPN-25-1280x640","pool":"nav","pitch":2.5,"price":109519,"size":"1280×640","price2":154715},{"sku":"SPN-25-1280x800","pool":"nav","pitch":2.5,"price":131690,"size":"1280×800","price2":192823},{"sku":"SPN-25-1280x960","pool":"nav","pitch":2.5,"price":148042,"size":"1280×960","price2":224280},{"sku":"SPN-25-1600x480","pool":"nav","pitch":2.5,"price":107249,"size":"1600×480","price2":148929},{"sku":"SPN-25-1600x640","pool":"nav","pitch":2.5,"price":127326,"size":"1600×640","price2":187835},{"sku":"SPN-25-1600x800","pool":"nav","pitch":2.5,"price":154676,"size":"1600×800","price2":226740},{"sku":"SPN-25-1600x960","pool":"nav","pitch":2.5,"price":174752,"size":"1600×960","price2":265645},{"sku":"SPN-25-1920x480","pool":"nav","pitch":2.5,"price":123515,"size":"1920×480","price2":177094},{"sku":"SPN-25-1920x640","pool":"nav","pitch":2.5,"price":148042,"size":"1920×640","price2":224280},{"sku":"SPN-25-1920x800","pool":"nav","pitch":2.5,"price":181298,"size":"1920×800","price2":271465},{"sku":"SPN-25-1920x960","pool":"nav","pitch":2.5,"price":205826,"size":"1920×960","price2":318649},{"sku":"SPN-25-2240x480","pool":"nav","pitch":2.5,"price":137596,"size":"2240×480","price2":202764},{"sku":"SPN-25-2240x640","pool":"nav","pitch":2.5,"price":165849,"size":"2240×640","price2":257398},{"sku":"SPN-25-2240x800","pool":"nav","pitch":2.5,"price":204284,"size":"2240×800","price2":312032},{"sku":"SPN-25-2240x960","pool":"nav","pitch":2.5,"price":232536,"size":"2240×960","price2":366667},{"sku":"SPN-25-2560x480","pool":"nav","pitch":2.5,"price":153861,"size":"2560×480","price2":230930},{"sku":"SPN-25-2560x640","pool":"nav","pitch":2.5,"price":186564,"size":"2560×640","price2":293844},{"sku":"SPN-25-2560x800","pool":"nav","pitch":2.5,"price":230907,"size":"2560×800","price2":356757},{"sku":"SPN-25-2560x960","pool":"nav","pitch":2.5,"price":263611,"size":"2560×960","price2":419670},{"sku":"SPN-25-2880x480","pool":"nav","pitch":2.5,"price":167943,"size":"2880×480","price2":256601},{"sku":"SPN-25-2880x640","pool":"nav","pitch":2.5,"price":204371,"size":"2880×640","price2":326962},{"sku":"SPN-25-2880x800","pool":"nav","pitch":2.5,"price":253893,"size":"2880×800","price2":397325},{"sku":"SPN-25-2880x960","pool":"nav","pitch":2.5,"price":290321,"size":"2880×960","price2":467688},{"sku":"SPN-25-3200x480","pool":"nav","pitch":2.5,"price":184208,"size":"3200×480","price2":284766},{"sku":"SPN-25-3200x640","pool":"nav","pitch":2.5,"price":225088,"size":"3200×640","price2":363408},{"sku":"SPN-25-3200x800","pool":"nav","pitch":2.5,"price":280515,"size":"3200×800","price2":442050},{"sku":"SPN-25-3200x960","pool":"nav","pitch":2.5,"price":321395,"size":"3200×960","price2":520692}]</script>
 <img id="pb-img-screen" src="/ekranpro-site/assets/podbor/viewing-screen.webp" alt="" hidden>
 <img id="pb-img-board" src="/ekranpro-site/assets/podbor/viewing-board.webp" alt="" hidden>
-<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=92f88339">
-<script src="/ekranpro-site/assets/podbor/podbor.js?v=92f88339" defer></script>
+<img id="pb-img-logo" src="/ekranpro-site/assets/podbor/logo-white.png" alt="" hidden>
+<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=5d3d9724">
+<script src="/ekranpro-site/assets/podbor/podbor.js?v=5d3d9724" defer></script>
 <!-- PODBOR_END -->
 
 <!-- BUSINESS_SOLUTIONS_START -->
