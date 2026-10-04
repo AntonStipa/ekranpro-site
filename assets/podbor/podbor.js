@@ -127,7 +127,7 @@
   function sceneSVG(VW,VH,uid){
     var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
-    var capA='Расстояние просмотра', capH='рост человека 175 см', wA=textW(capA,'500 13px Inter,Arial,sans-serif'), wH=textW(capH,'400 12px Inter,Arial,sans-serif');
+    var capA=['Расстояние','просмотра'], capH=['Рост человека','175 см'], wA=textW(capA[0],'500 13px Inter,Arial,sans-serif'), wH=textW(capH[0],'400 12px Inter,Arial,sans-serif'); // подписи у шкалы — в две строки
     var padL=narrow?46:64, padR=narrow?30:Math.max(52,wH+26), top=30, gy=VH-(narrow?74:52);
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
     var mL=0,mR=0,ctxH=c.lift+c.h;
@@ -260,8 +260,8 @@
     var dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
     if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken};
     // подписи у шкалы: слева — что она показывает, справа — рост человека; на узком экране — строкой под шкалой
-    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH+'</tspan></text>';
-    else o+=Tx(sx+sw-12,ay+4.5,capA,'end',T.text,500,13)+Tx(px+12,ay+4,capH,'start',T.mute,400,12);
+    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.join(' ').toLowerCase()+'</tspan></text>';
+    else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay-3,capH[0],'start',T.mute,400,12)+Tx(px+12,ay+12,capH[1],'start',T.mute,400,12);
     return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }
 
