@@ -110,8 +110,9 @@
   }
 
   // ——— Схема: экран привязан к зданию, опоре или стене; человек 1,8 м в том же масштабе ———
-  var T={bg:'#e8ebe8',room:'#d2d5d1',ground:'#d8dad7',groundLine:null,wall:'#d2d5d1',wallStroke:null,wallAlt:'#bfc3bf',win:'#e2e5e1',winStroke:null,metal:'#a3a8a4',metalStroke:null,
+  var T={bg:'#e8ebe8',room:'#dcdfdb',floor:'#c4c8c4',ground:'#d8dad7',groundLine:null,wall:'#d2d5d1',wallStroke:null,wallAlt:'#b0b5b0',win:'#e2e5e1',winStroke:null,metal:'#a3a8a4',metalStroke:null,
        screen:'#171a1c',onScreen:'#ffffff',dots:true,glow:false,person:'#171a1c',dim:'#60656a',text:'#171a1c',mute:'#60656a',labelBg:'#e8ebe8'}; // оформление схемы: серый фон, графитовый экран
+  var sceneGeom={k:1,broken:false};
   function postCount(w){var cab=Math.max(1,Math.round(w/0.6));return Math.max(1,Math.floor(cab/2))+1} // стойка через каждые два кабинета 600 мм
   function drawScene(){
     var svg=el.svg, box=svg.parentNode, p=place();
@@ -149,14 +150,13 @@
     }
     o+='<defs><pattern id="'+uid+'-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.3" fill="#fff" fill-opacity=".3"/></pattern>'+
        '<filter id="'+uid+'-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter></defs>';
-    o+=R(0,0,VW,VH,T.bg);
-    // помещение: стена, потолок, пол
-    if(c.ctx==='room'){
-      var cy=gy-ceilM*s;
-      o+=R(0,cy,VW,gy-cy,T.room)+R(0,0,VW,cy,T.ground||T.bg)+L(0,cy,VW,cy,T.groundLine||T.dim,1.2);
+    // фон на всю ширину схемы (не сдвигается при центровке)
+    var bg=o+R(0,0,VW,VH,T.bg), room=c.ctx==='room', floorFill=room?T.floor:T.ground; o='';
+    if(room){ // стена и пол темнее стены; линия потолка — только у навигационного указателя
+      bg+=R(0,0,VW,gy,T.room);
+      if(c.nav){ var cy=gy-ceilM*s; bg+=R(0,0,VW,cy,T.bg)+L(0,cy,VW,cy,T.dim,1.2); }
     }
-    if(T.ground) o+=R(0,gy,VW,VH-gy,T.ground);
-    if(T.groundLine) o+=L(0,gy,VW,gy,T.groundLine,1.2);
+    bg+=R(0,gy,VW,VH-gy,floorFill);
     // улица
     if(c.ctx==='facade'){
       var wy0=gy-ctxH*s;
@@ -218,7 +218,7 @@
       for(i=0;i<n;i++){var cx=sx+q/2+i*(sw-q)/(n-1); o+=R(cx-q/2,sb,q,base-sb,F,FS)+R(cx-q*1.6,base-2.5,q*3.2,2.5,F,FS)}
     }
     if(c.ctx==='room'&&hung){
-      var hy=gy-ceilM*s;
+      var hy=c.nav?gy-ceilM*s:0; // без линии потолка тросы уходят за верх схемы
       (c.nav?[0.25,0.75]:[0.08,0.36,0.64,0.92]).forEach(function(t){o+=L(sx+sw*t,hy,sx+sw*t,sy,T.metalStroke||T.metal,1.5)});
     }
     // экран
@@ -235,14 +235,23 @@
       o+=L(lx,sb,lx,gy,T.dim)+L(lx-4,sb,lx+4,sb,T.dim)+L(lx-4,gy,lx+4,gy,T.dim)+Tx(lx-6,(sb+gy)/2+4,fmt(c.lift)+' м','end',T.text,500,12);
     }
     // человек 1,8 м
-    o+='<g transform="translate('+px.toFixed(1)+','+(gy-ph).toFixed(1)+') scale('+(ph/100).toFixed(4)+')" fill="'+T.person+'"><circle cx="0" cy="9" r="9"/><path d="M-13 24h26v36h-6v40h-6V64h-2v36h-6V60h-6z"/></g>';
+    var drag=!c.nav, hw=Math.max(ph*0.13,6)+16;
+    o+='<g'+(drag?' class="pb-person"':'')+'>'+(drag?'<title>Перетащите, чтобы изменить расстояние просмотра</title>':'')+
+      R(px-hw-8,gy-ph-10,2*hw+16,ph+20,'rgba(0,0,0,0)')+
+      '<g transform="translate('+px.toFixed(1)+','+(gy-ph).toFixed(1)+') scale('+(ph/100).toFixed(4)+')" fill="'+T.person+'"><circle cx="0" cy="9" r="9"/><path d="M-13 24h26v36h-6v40h-6V64h-2v36h-6V60h-6z"/></g>';
+    if(drag){ var hyy=gy-Math.max(ph*0.5,12); // стрелки ‹ › по бокам: человека можно двигать
+      o+='<path class="pb-person-h" d="M'+(px-hw+5).toFixed(1)+' '+(hyy-5).toFixed(1)+'l-5 5 5 5M'+(px+hw-5).toFixed(1)+' '+(hyy-5).toFixed(1)+'l5 5-5 5" fill="none" stroke="'+T.mute+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'; }
+    o+='</g>';
     // линия взгляда и дистанция (с разрывом, если не помещается в масштабе)
     o+=L(sx+sw,sy+sh/2,px-ph*0.1,gy-ph*0.91,T.mute,1,'3 5');
     var ay=gy+22, midx=(sx+sw+px)/2, lw2=broken?74:54;
-    o+=L(sx+sw,ay,px,ay,T.dim)+L(sx+sw,ay-5,sx+sw,ay+5,T.dim)+L(px,ay-5,px,ay+5,T.dim)+R(midx-lw2/2,ay-9,lw2,18,T.ground||T.labelBg);
+    o+=L(sx+sw,ay,px,ay,T.dim)+L(sx+sw,ay-5,sx+sw,ay+5,T.dim)+L(px,ay-5,px,ay+5,T.dim)+R(midx-lw2/2,ay-9,lw2,18,floorFill);
     if(broken) o+=L(midx-lw2/2+2,ay+5,midx-lw2/2+8,ay-5,T.dim)+L(midx+lw2/2-8,ay+5,midx+lw2/2-2,ay-5,T.dim);
     o+=Tx(midx,ay+4,fmt(c.d,1)+' м','middle',T.text,600,12);
-    return o;
+    // центровка: вся композиция (здание или стена, экран, человек) встаёт по середине схемы
+    var x0=c.ctx==='stage'?padL-0.4*s-8:(c.lift>0?padL-56:padL-10), x1=px+hw+10, dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
+    if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken};
+    return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }
 
   // ——— Картинка «как увидит зритель»: перенос PixelTile и калибровки pixelLook из КП-системы ———
@@ -552,6 +561,21 @@
     setTimeout(function(){URL.revokeObjectURL(url)},60000);
   }
 
+  // ——— Человека на схеме можно перетаскивать: меняется расстояние просмотра ———
+  var dragP=null;
+  el.svg.addEventListener('pointerdown',function(e){
+    if(!e.target.closest||!e.target.closest('.pb-person'))return;
+    dragP={x:e.clientX,d:st.d,k:Math.max(0.5,sceneGeom.broken?sceneGeom.k:sceneGeom.k/2)}; // схема центрируется, поэтому человек смещается вдвое медленнее расстояния
+    el.svg.setPointerCapture(e.pointerId); el.svg.classList.add('is-drag'); touch(); e.preventDefault();
+  });
+  el.svg.addEventListener('pointermove',function(e){
+    if(!dragP)return;
+    var L=LIMITS[st.env].d, v=dragP.d+(e.clientX-dragP.x)/dragP.k;
+    v=clamp(Math.round(v/L[2])*L[2],L[0],L[1]);
+    if(v!==st.d){ st.d=v; st.pick=null; render(); }
+  });
+  ['pointerup','pointercancel'].forEach(function(t){el.svg.addEventListener(t,function(){dragP=null;el.svg.classList.remove('is-drag')})});
+
   // ——— Два вида в одном экране: подбор и рекомендации по шагу ———
   var root=$('ep-podbor'), viewCalc=$('pb-view-calc'), viewRec=$('pb-view-rec'), hintTimer;
   function setView(v){
@@ -574,9 +598,10 @@
     root.style.setProperty('--pb-vh',window.innerHeight+'px');
     var hdr=document.querySelector('#ekranpro-first-screen .ep1-header'); // закреплённая шапка сайта перекрывает верх экрана
     root.style.setProperty('--pb-hdr',((hdr&&hdr.offsetHeight)||84)+'px');
-    if(on&&st.view==='calc'){ // блок не помещается в окно целиком — оставляем обычную прокрутку
-      var pinBox=root.querySelector('.pb-pin'), need=viewCalc.getBoundingClientRect().bottom-pinBox.getBoundingClientRect().top+14+(el.mountBox.hidden?64:0);
-      if(need>window.innerHeight) root.classList.remove('is-pinned');
+    if(on&&st.view==='calc'){ // параметры не помещаются по высоте — оставляем обычную прокрутку
+      var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden});
+      var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*parseFloat(cs.rowGap||0)+kids.reduce(function(a,x){return a+x.offsetHeight},0);
+      if(need+(el.mountBox.hidden&&el.navBox.hidden?84:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
     }
   }
   ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',paintTiles)});

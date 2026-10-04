@@ -16,26 +16,28 @@
 /* обычный поток: телефон и низкие окна */
 .pb-pin{padding:clamp(48px,4.65%,90px) 4.8% clamp(48px,4.8%,90px)}
 .pb-eyebrow{color:var(--pb-muted);font-size:clamp(11px,.88vw,18px);font-weight:500;letter-spacing:.09em;text-transform:uppercase;margin-bottom:clamp(14px,1.4vw,28px)!important}
-.pb-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,30em);align-items:end;gap:32px;margin-bottom:clamp(24px,2.4vw,44px)}
-.pb-head h2{font-size:clamp(32px,4.02vw,80px);font-weight:500;line-height:1.07;letter-spacing:-.045em;text-wrap:balance}
+.pb-head{display:grid;grid-template-columns:auto minmax(0,28em);justify-content:space-between;align-items:end;gap:32px;margin-bottom:clamp(24px,2.4vw,44px)}
+.pb-head h2{font-size:clamp(32px,4.02vw,80px);font-weight:500;line-height:1.07;letter-spacing:-.045em}
+@media (min-width:981px){.pb-head h2{white-space:nowrap}}
 .pb-head>p{color:var(--pb-muted);font-size:clamp(15px,1.05vw,19px)}
 
 /* закрепление: блок своей высоты целиком помещается в экран и держится, пока страницу не прокрутят дальше */
 #ep-podbor.is-pinned{height:calc(var(--pb-vh,100vh) * 1.55)}
-#ep-podbor.is-pinned .pb-pin{position:sticky;top:0;height:var(--pb-vh,100vh);display:flex;flex-direction:column;overflow:hidden;padding:calc(var(--pb-hdr,84px) + 14px) 4.8% 14px}
-#ep-podbor.is-pinned .pb-head{flex:none;margin-bottom:16px}
+#ep-podbor.is-pinned .pb-pin{position:sticky;top:0;height:var(--pb-vh,100vh);display:flex;flex-direction:column;overflow:hidden;padding:calc(var(--pb-hdr,84px) + 12px) 4.8% 24px}
+#ep-podbor.is-pinned .pb-head{flex:none;margin-bottom:12px}
 #ep-podbor.is-pinned .pb-eyebrow{font-size:11px;margin-bottom:8px!important}
-#ep-podbor.is-pinned .pb-head h2{font-size:clamp(30px,3.3vw,56px)}
+#ep-podbor.is-pinned .pb-head h2{white-space:nowrap}
 #ep-podbor.is-pinned .pb-head>p{font-size:14px}
-#ep-podbor.is-pinned #pb-view-calc{flex:none}
+#ep-podbor.is-pinned #pb-view-calc{flex:1;min-height:0;max-height:610px;display:flex;flex-direction:column}
+#ep-podbor.is-pinned .pb{flex:1;min-height:0}
 #ep-podbor.is-pinned #pb-view-rec{flex:1;min-height:0;max-height:620px}
-#ep-podbor.is-pinned .pb-controls{padding:18px 22px;gap:14px}
+#ep-podbor.is-pinned .pb-controls{padding:18px 22px;gap:10px;justify-content:space-between;overflow:hidden}
 #ep-podbor.is-pinned .pb-label{margin-bottom:6px}
 #ep-podbor.is-pinned .pb-seg button{min-height:38px}
 #ep-podbor.is-pinned .pb-place{min-height:58px;padding:6px 4px 7px;gap:4px}
 #ep-podbor.is-pinned .pb-place svg{width:30px;height:24px}
 #ep-podbor.is-pinned .pb-mount button{min-height:34px}
-#ep-podbor.is-pinned .pb-params{gap:4px}
+#ep-podbor.is-pinned .pb-params{gap:8px}
 #ep-podbor.is-pinned .pb-num{height:32px}
 #ep-podbor.is-pinned .pb-row>label{font-size:12.5px}
 #ep-podbor.is-pinned .pb-scene{min-height:200px}
@@ -68,7 +70,7 @@
 .pb-place:hover{border-color:var(--pb-cta)}
 .pb-place[aria-pressed="true"]{border-color:var(--pb-cta);box-shadow:inset 0 0 0 1px var(--pb-cta);color:var(--pb-cta);font-weight:500}
 
-.pb-params{display:flex;flex-direction:column;gap:6px}
+.pb-params{display:flex;flex-direction:column;gap:10px}
 .pb-row{display:grid;grid-template-columns:92px minmax(0,1fr) 92px;gap:12px;align-items:center}
 .pb-row>label{font-size:13px;color:var(--pb-muted);line-height:1.2}
 .pb-num{display:flex;align-items:center;border:1px solid var(--pb-line);height:38px}
@@ -89,14 +91,18 @@
 #ep-podbor input[type=range]::-moz-range-thumb{width:18px;height:18px;background:var(--pb-rng);border:0;border-radius:0}
 #ep-podbor input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.15)}
 #ep-podbor input[type=range]:disabled{opacity:.35;cursor:default}
-/* расстояние просмотра — главный параметр: выделен цветом кнопки расчёта */
-.pb-row--key>label{color:var(--pb-ink);font-weight:500}
+/* расстояние просмотра — отдельный блок с заголовком, выделен цветом кнопки расчёта */
+.pb-row--key{grid-template-columns:minmax(0,1fr) 92px}
 #ep-podbor .pb-row--key input[type=range]{--pb-rng:var(--pb-cta)}
 .pb-row--key .pb-num{border-color:var(--pb-cta)}
 .pb-row--key .pb-num:focus-within{border-color:var(--pb-cta);box-shadow:inset 0 0 0 1px var(--pb-cta)}
 
 .pb-scene{position:relative;flex:1;min-height:300px;background:var(--pb-soft)}
-.pb-scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pb-scene svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
+.pb-scene .pb-person{cursor:ew-resize}
+.pb-scene .pb-person-h{opacity:.55;transition:opacity .2s ease}
+.pb-scene .pb-person:hover .pb-person-h,.pb-scene svg.is-drag .pb-person-h{opacity:1;stroke:var(--pb-cta)}
+.pb-scene svg.is-drag{cursor:ew-resize}
 .pb-scene text{font-family:var(--pb-font);font-variant-numeric:tabular-nums}
 
 .pb-out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--pb-line)}
@@ -178,17 +184,17 @@
 
 /* низкие окна: плотнее, чтобы блок помещался целиком */
 @media (max-height:780px){
-  #ep-podbor.is-pinned .pb-pin{padding-top:calc(var(--pb-hdr,84px) + 8px);padding-bottom:10px}
+  #ep-podbor.is-pinned .pb-pin{padding-top:calc(var(--pb-hdr,84px) + 8px);padding-bottom:22px}
   #ep-podbor.is-pinned .pb-head{margin-bottom:10px}
   #ep-podbor.is-pinned .pb-eyebrow{display:none}
-  #ep-podbor.is-pinned .pb-head h2{font-size:clamp(26px,2.7vw,40px)}
+  #ep-podbor.is-pinned .pb-head h2{font-size:clamp(28px,3.2vw,60px)}
   #ep-podbor.is-pinned .pb-controls{padding:12px 18px;gap:9px}
   #ep-podbor.is-pinned .pb-label{margin-bottom:4px;font-size:11px}
   #ep-podbor.is-pinned .pb-seg button{min-height:34px}
   #ep-podbor.is-pinned .pb-place{min-height:50px;font-size:11px;padding:4px 3px 5px;gap:2px}
   #ep-podbor.is-pinned .pb-place svg{width:26px;height:20px}
   #ep-podbor.is-pinned .pb-mount button{min-height:30px;font-size:12px}
-  #ep-podbor.is-pinned .pb-params{gap:2px}
+  #ep-podbor.is-pinned .pb-params{gap:5px}
   #ep-podbor.is-pinned .pb-num{height:28px}
   #ep-podbor.is-pinned input[type=range]{height:24px}
   #ep-podbor.is-pinned .pb-cell{padding:8px 18px}
@@ -238,6 +244,7 @@ dialog.pb-dialog::backdrop{background:rgba(23,26,28,.55)}
   .pb-btn{width:100%}
   .pb-tiles,.pb-tiles[data-n="2"]{grid-template-columns:1fr}
   .pb-row{grid-template-columns:78px minmax(0,1fr) 84px;gap:10px}
+  .pb-row--key{grid-template-columns:minmax(0,1fr) 84px}
   .pb-rec-top{flex-direction:column;align-items:flex-start;gap:12px}
 }
 @media (prefers-reduced-motion:reduce){
