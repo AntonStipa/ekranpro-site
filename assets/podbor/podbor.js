@@ -109,7 +109,7 @@
     return 'Крупная графика и короткие надписи';
   }
 
-  // ——— Схема: экран привязан к зданию, опоре или стене; человек 1,8 м в том же масштабе ———
+  // ——— Схема: экран привязан к зданию, опоре или стене; человек 1,75 м в том же масштабе ———
   var T={bg:'#e8ebe8',room:'#dcdfdb',floor:'#c4c8c4',ground:'#d8dad7',groundLine:null,wall:'#d2d5d1',wallStroke:null,wallAlt:'#b0b5b0',win:'#e2e5e1',winStroke:null,metal:'#a3a8a4',metalStroke:null,
        screen:'#171a1c',onScreen:'#ffffff',dots:true,glow:false,person:'#171a1c',dim:'#60656a',text:'#171a1c',mute:'#60656a',labelBg:'#e8ebe8'}; // оформление схемы: серый фон, графитовый экран
   var sceneGeom={k:1,broken:false};
@@ -122,12 +122,13 @@
     var VW=Math.max(320,box.clientWidth), VH=Math.max(200,box.clientHeight);
     svg.setAttribute('viewBox','0 0 '+VW+' '+VH);
     svg.innerHTML=sceneSVG(VW,VH,'pb');
-    svg.setAttribute('aria-label','Схема: '+p.name.toLowerCase()+', экран '+fmt(st.w)+' на '+fmt(st.h)+' м на высоте '+fmt(st.lift)+' м, расстояние просмотра '+fmt(st.d,1)+' м, человек 1,8 м');
+    svg.setAttribute('aria-label','Схема: '+p.name.toLowerCase()+', экран '+fmt(st.w)+' на '+fmt(st.h)+' м на высоте '+fmt(st.lift)+' м, расстояние просмотра '+fmt(st.d,1)+' м, человек ростом 1,75 м');
   }
   function sceneSVG(VW,VH,uid){
     var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
-    var padL=narrow?46:64, padR=narrow?30:52, top=30, gy=VH-(narrow?74:52);
+    var capA='Расстояние просмотра', capH='рост человека 175 см', wA=textW(capA,'500 13px Inter,Arial,sans-serif'), wH=textW(capH,'400 12px Inter,Arial,sans-serif');
+    var padL=narrow?46:64, padR=narrow?30:Math.max(52,wH+26), top=30, gy=VH-(narrow?74:52);
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
     var mL=0,mR=0,ctxH=c.lift+c.h;
     var floors=Math.max(2,Math.ceil((c.lift+c.h+0.6)/3)), sideCols=c.w>12?2:1;
@@ -136,12 +137,17 @@
     if(c.ctx==='stage'){mL=1.2;mR=1.2;ctxH=c.lift+c.h+0.9}
     if(c.ctx==='road'){mL=0.5;mR=0.5}
     if(c.ctx==='pylon'){ctxH=c.lift+c.h+0.9}
-    if(c.ctx==='room'){mL=c.furn==='stage'?1.5:c.nav?0.8:1.7;ctxH=ceilM}
+    if(c.ctx==='room'){mL=c.furn==='stage'?1.5:c.nav?1.2:2.4;ctxH=ceilM}
     var sceneH=Math.max(ctxH,2.1), zone=(VW-padL-padR)*0.52;
     var s=Math.min((gy-top)/sceneH,zone/(mL+c.w+mR),64);
     var sx=padL+mL*s, sw=c.w*s, sh=c.h*s, sy=gy-(c.lift+c.h)*s, sb=sy+sh, ctxR=sx+sw+mR*s;
-    var want=sx+sw+c.d*s, maxX=VW-padR, px=Math.min(Math.max(want,sx+sw+44),maxX), broken=want>maxX+1;
-    var ph=1.8*s, o='', i;
+    // размерная линия высоты: у сцены — левее помоста, в помещении — рядом с экраном, иначе у левого края
+    var lx=c.ctx==='stage'?padL-0.4*s-20:(c.ctx==='room'&&c.furn!=='stage'?sx-22:padL-18), leftMost=c.lift>0?lx-40:padL-10;
+    var plantX=c.lift>0?lx-44-0.5*s:sx-0.95*s, plant=(c.furn==='office'||c.furn==='plant')&&plantX-0.5*s>padL-40; // растение левее размерной линии
+    if(plant) leftMost=Math.min(leftMost,plantX-0.5*s);
+    var capL=sx+sw-12-wA, needL=narrow?0:Math.max(0,8-Math.min(capL-6,leftMost)); // сколько места занимает всё, что левее поля схемы
+    var want=sx+sw+c.d*s, maxX=VW-padR-needL, px=Math.min(Math.max(want,sx+sw+44),maxX), broken=want>maxX+1;
+    var ph=1.75*s, o='', i;
     function R(x,y,w,h,fill,stroke,extra){return '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+Math.max(w,0).toFixed(1)+'" height="'+Math.max(h,0).toFixed(1)+'" fill="'+(fill||'none')+'"'+(stroke?' stroke="'+stroke+'" stroke-width="1"':'')+(extra||'')+'/>'}
     function L(x1,y1,x2,y2,stc,w,dash){return '<line x1="'+x1.toFixed(1)+'" y1="'+y1.toFixed(1)+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="'+stc+'" stroke-width="'+(w||1)+'"'+(dash?' stroke-dasharray="'+dash+'"':'')+'/>'}
     function Tx(x,y,t,anchor,color,weight,size){return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" font-size="'+(size||12)+'" fill="'+(color||T.text)+'" text-anchor="'+(anchor||'middle')+'"'+(weight?' font-weight="'+weight+'"':'')+'>'+t+'</text>'}
@@ -198,9 +204,9 @@
       var ph0=Math.min(1,Math.max(0.3,c.lift-0.4),c.lift)*s, plx=Math.max(padL-6,sx-1.2*s);
       if(ph0>1){o+=R(plx,gy-ph0,sx+sw+1.2*s-plx,ph0,T.wallAlt,T.wallStroke); base=gy-ph0}
     }
-    if(c.furn==='office'||c.furn==='plant'){ // растение слева от экрана
-      var pxp=sx-0.95*s, pw2=0.42*s, phh=0.42*s;
-      if(pxp-pw2/2>padL-10){
+    if(plant){ // растение слева от экрана
+      var pxp=plantX, pw2=0.42*s, phh=0.42*s;
+      {
         o+=R(pxp-pw2/2,gy-phh,pw2,phh,F,FS);
         [[-0.34,-0.55,-28],[0.34,-0.55,28],[-0.16,-0.85,-10],[0.16,-0.85,10],[0,-1.05,0]].forEach(function(lf){
           var lx=pxp+lf[0]*s, ly=gy-phh+lf[1]*s+0.12*s;
@@ -233,10 +239,9 @@
     else o+=Tx(sx+sw/2,sy-8-(c.ctx==='pylon'?0.7*s:0),label,'middle',T.text,600,12);
     // высота установки
     if(c.lift>0){
-      var lx=padL-18;
       o+=L(lx,sb,lx,gy,T.dim)+L(lx-4,sb,lx+4,sb,T.dim)+L(lx-4,gy,lx+4,gy,T.dim)+Tx(lx-6,(sb+gy)/2+4,fmt(c.lift)+' м','end',T.text,500,12);
     }
-    // человек 1,8 м
+    // человек 1,75 м
     var drag=!c.nav&&uid==='pb', hw=Math.max(ph*0.13,6)+24;
     o+='<g'+(drag?' class="pb-person"':'')+'>'+(drag?'<title>Перетащите, чтобы изменить расстояние просмотра</title>':'')+
       R(px-hw-8,gy-ph-10,2*hw+16,ph+20,'rgba(0,0,0,0)')+
@@ -251,14 +256,12 @@
     if(broken) o+=L(midx-lw2/2+2,ay+5,midx-lw2/2+8,ay-5,T.dim)+L(midx+lw2/2-8,ay+5,midx+lw2/2-2,ay-5,T.dim);
     o+=Tx(midx,ay+4,fmt(c.d,1)+' м','middle',T.text,600,12);
     // центровка: вся композиция (здание или стена, экран, человек) встаёт по середине схемы
-    var x0=c.ctx==='stage'?padL-0.4*s-8:(c.lift>0?padL-56:padL-10), x1=px+hw+10, dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
+    var x0=Math.min(c.ctx==='stage'?padL-0.4*s-8:padL-10,leftMost), x1=px+hw+10; if(!narrow){ x0=Math.min(x0,capL-6); x1=Math.max(x1,px+12+wH+6); }
+    var dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
     if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken};
-    // подпись в свободном поле слева на полосе земли: одной строкой, а если не помещается — двумя
-    var capA='Расстояние просмотра', capB=drag?'(передвиньте человека)':'', capX=narrow?10:18, room2=dx+sx+sw-14-capX;
-    var wA=textW(capA,'500 13px Inter,Arial,sans-serif'), wB=capB?textW(capB,'400 13px Inter,Arial,sans-serif'):0;
-    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA+(capB?' <tspan font-weight="400" fill="'+T.mute+'">'+capB+'</tspan>':'')+'</text>';
-    else if(wA+(wB?wB+6:0)<=room2) bg+='<text x="'+capX+'" y="'+(ay+4.5).toFixed(1)+'" font-size="13" font-weight="500" fill="'+T.text+'">'+capA+(capB?' <tspan font-weight="400" fill="'+T.mute+'">'+capB+'</tspan>':'')+'</text>';
-    else if(Math.max(wA,wB)<=room2) bg+='<text x="'+capX+'" y="'+(ay-3).toFixed(1)+'" font-size="13" font-weight="500" fill="'+T.text+'">'+capA+'</text>'+(capB?'<text x="'+capX+'" y="'+(ay+13).toFixed(1)+'" font-size="12" fill="'+T.mute+'">'+capB+'</text>':'');
+    // подписи у шкалы: слева — что она показывает, справа — рост человека; на узком экране — строкой под шкалой
+    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH+'</tspan></text>';
+    else o+=Tx(sx+sw-12,ay+4.5,capA,'end',T.text,500,13)+Tx(px+12,ay+4,capH,'start',T.mute,400,12);
     return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }
 
@@ -355,11 +358,11 @@
     el.tiles.dataset.n=String(r.cards.length); el.tiles.dataset.kind=p.nav?'board':'screen'; $('pb-rec-body').dataset.n=String(r.cards.length);
     el.tiles.innerHTML=r.cards.map(function(x){
       var on=x===c;
-      return '<button type="button" class="pb-tile" data-pitch="'+x.pitch+'" aria-pressed="'+on+'">'+
-        '<span class="pb-tile-top"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span>'+(x.rec?'<span class="pb-flag">Рекомендуем</span>':'')+(on?'<span class="pb-sel">Выбрано</span>':'')+'</span>'+
-        '<span class="pb-tile-img"><canvas data-k="'+x.k+'" role="img" aria-label="Шаг '+fmt(x.pitch)+' мм. '+LEVEL_HINT[x.level]+'"></canvas></span>'+
+      return '<button type="button" class="pb-tile" data-pitch="'+x.pitch+'" aria-pressed="'+on+'"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span>'+
+        '<span class="pb-tile-card"><span class="pb-tile-img"><span class="pb-tags">'+(x.rec?'<span class="pb-flag">Рекомендуем</span>':'')+(on?'<span class="pb-sel">Выбрано</span>':'')+'</span>'+
+        '<canvas data-k="'+x.k+'" role="img" aria-label="Шаг '+fmt(x.pitch)+' мм. '+LEVEL_HINT[x.level]+'"></canvas></span>'+
         '<span class="pb-tile-b"><span class="pb-tile-p">Шаг пикселя '+fmt(x.pitch)+'\u00a0мм</span>'+
-        '<span class="pb-tile-h"><span class="pb-dot" style="background:'+LEVEL_COLOR[x.level]+'"></span>'+LEVEL_HINT[x.level]+'</span></span></button>';
+        '<span class="pb-tile-h"><span class="pb-dot" style="background:'+LEVEL_COLOR[x.level]+'"></span>'+LEVEL_HINT[x.level]+'</span></span></span></button>';
     }).join('');
     el.why.innerHTML=p.nav
       ?'<p>Изображение на табло складывается из светодиодных точек, и чем ближе зритель, тем они заметнее. Табло читают вблизи, примерно с 3 м, поэтому для них три шага:</p><ul><li><b>Стандартное качество</b> — 2,5 мм, точки видны.</li><li><b>Оптимальное качество</b> — 2 мм, точки едва различимы.</li><li><b>Максимальное качество</b> — 1,86 мм, картинка как у домашнего телевизора.</li></ul>'
@@ -615,7 +618,7 @@
     if(on&&st.view==='calc'){ // параметры не помещаются по высоте — оставляем обычную прокрутку
       var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden&&x.tagName==='DIV'});
       var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*10+kids.reduce(function(a,x){return a+x.offsetHeight},0); // 10 px — минимальный отступ между группами
-      if(need+(el.mountBox.hidden&&el.navBox.hidden?84:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
+      if(need+(el.mountBox.hidden&&el.navBox.hidden?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
     }
   }
   ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',paintTiles)});

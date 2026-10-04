@@ -54,6 +54,19 @@
 .pb{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);border:1px solid var(--pb-line)}
 .pb-controls{padding:24px;display:flex;flex-direction:column;gap:20px;border-right:1px solid var(--pb-line);min-width:0}
 .pb-result{display:flex;flex-direction:column;min-width:0}
+/* нижняя строка на всю ширину блока: слева пояснение про точный расчёт, справа кнопки */
+.pb-foot{margin:0;padding:16px 24px;border-top:1px solid var(--pb-line);display:flex;align-items:center;font-size:13px;line-height:1.4;color:var(--pb-muted)}
+@media (min-width:981px){
+  .pb{grid-template-rows:minmax(0,1fr) auto auto}
+  .pb-result{display:contents}
+  .pb-controls{grid-column:1;grid-row:1/3}
+  .pb-scene{grid-column:2;grid-row:1}
+  .pb-out{grid-column:2;grid-row:2}
+  .pb-cta{grid-column:2;grid-row:3}
+  /* текст идёт одной полосой с кнопками: занимает левую колонку и пустую первую треть правой */
+  .pb-foot{grid-column:1/-1;grid-row:3;pointer-events:none}
+  #ep-podbor .pb-view .pb .pb-foot{padding-right:calc((100% - min(400px,50%))*2/3 + 20px)}
+}
 
 .pb-label{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--pb-muted);margin-bottom:8px}
 .pb-label b{font-weight:500;color:var(--pb-ink);letter-spacing:0;text-transform:none;font-size:14px;font-variant-numeric:tabular-nums}
@@ -130,7 +143,7 @@
 .pb-arw-in{color:#000;opacity:0;transform:translateX(-50px)}
 @keyframes pb-arw-enter{from{opacity:1;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
 @keyframes pb-arw-enter-r{from{opacity:1;transform:translateX(50px)}to{opacity:1;transform:translateX(0)}}
-.pb-btn--back{justify-content:flex-start}
+.pb-btn--back{justify-content:space-between}
 .pb-btn--back .pb-arw-in{transform:translateX(50px)}
 .pb-btn:is(:hover,:focus-visible,:active){background:#fff;color:#000;box-shadow:inset 0 0 0 1px #000}
 .pb-btn:is(:hover,:focus-visible,:active) .pb-arw-out{color:#fff}
@@ -175,13 +188,14 @@
 .pb-tiles[data-n="1"]{grid-template-columns:minmax(0,1fr)}
 #ep-podbor.is-pinned .pb-tiles[data-n="2"]{grid-template-columns:repeat(2,minmax(0,480px));justify-content:center}
 #ep-podbor.is-pinned .pb-tiles[data-n="1"],#ep-podbor.is-pinned .pb-tiles[data-n="0"]{grid-template-columns:minmax(0,480px);justify-content:center}
-.pb-tile{appearance:none;position:relative;display:flex;flex-direction:column;text-align:left;font:inherit;color:inherit;background:var(--pb-bg);border:1px solid var(--pb-line);border-radius:0;padding:0;cursor:pointer;min-width:0;transition:border-color 333ms ease,box-shadow 333ms ease}
-.pb-tile:hover{border-color:var(--pb-cta)}
-.pb-tile[aria-pressed="true"]{border-color:var(--pb-ink);box-shadow:inset 0 0 0 1px var(--pb-ink)}
-.pb-tile-img{display:block;background:#111}
+.pb-tile{appearance:none;display:flex;flex-direction:column;gap:12px;text-align:left;font:inherit;color:inherit;background:transparent;border:0;border-radius:0;padding:0;cursor:pointer;min-width:0}
+.pb-tile-card{display:flex;flex-direction:column;min-width:0;background:var(--pb-bg);border:1px solid var(--pb-line);transition:border-color 333ms ease,box-shadow 333ms ease}
+.pb-tile:hover .pb-tile-card{border-color:var(--pb-cta)}
+.pb-tile[aria-pressed="true"] .pb-tile-card{border-color:var(--pb-ink);box-shadow:0 0 0 1px var(--pb-ink)}
+.pb-tile-img{position:relative;display:block;background:#111}
+.pb-tags{position:absolute;top:0;right:0;z-index:1;display:flex}
 .pb-tile canvas{display:block;width:100%;aspect-ratio:1/1}
-.pb-tile-top{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;padding:12px 16px;min-height:52px}
-.pb-tile-l{font-size:clamp(16px,1.4vw,22px);font-weight:500;letter-spacing:-.015em;line-height:1.15;margin-right:auto}
+.pb-tile-l{font-size:clamp(18px,1.6vw,26px);font-weight:500;letter-spacing:-.02em;line-height:1.15}
 .pb-flag,.pb-sel{flex:none;color:#fff;font-size:11px;line-height:1;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px}
 .pb-flag{background:#1fa84d}
 .pb-sel{background:var(--pb-ink)}
@@ -199,11 +213,13 @@
 #ep-podbor.is-pinned .pb-recview{gap:12px}
 #ep-podbor.is-pinned .pb-rec-body{flex:1;min-height:0;display:flex}
 #ep-podbor.is-pinned .pb-tiles{flex:1;min-height:0;grid-template-rows:minmax(0,1fr)}
-#ep-podbor.is-pinned .pb-tile{min-height:0;overflow:hidden}
+#ep-podbor.is-pinned .pb-tile{min-height:0}
+#ep-podbor.is-pinned .pb-tile-card{flex:1;min-height:0;overflow:hidden}
 #ep-podbor.is-pinned .pb-tile-img{flex:1;min-height:0}
 #ep-podbor.is-pinned .pb-tile canvas{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:50% 0}
 #ep-podbor.is-pinned .pb-tiles[data-kind="board"] canvas{object-position:50% 50%}
-#ep-podbor.is-pinned .pb-tile-top,#ep-podbor.is-pinned .pb-tile-b{flex:none}
+#ep-podbor.is-pinned .pb-tile-l,#ep-podbor.is-pinned .pb-tile-b{flex:none}
+#ep-podbor.is-pinned .pb-foot{padding:10px 22px;font-size:12.5px}
 #ep-podbor.is-pinned .pb-why{flex:none;padding:14px 22px;font-size:clamp(14px,1.1vw,17px)}
 #ep-podbor.is-pinned .pb-why .pb-btn{width:260px;padding-inline:24px}
 
@@ -223,7 +239,8 @@
   #ep-podbor.is-pinned .pb-btn{min-height:46px}
   #ep-podbor.is-pinned .pb-why{padding:8px 18px}
   #ep-podbor.is-pinned .pb-tile-b{padding:8px 14px 10px}
-  #ep-podbor.is-pinned .pb-tile-top{padding:8px 14px;min-height:44px}
+  #ep-podbor.is-pinned .pb-tile{gap:8px}
+  #ep-podbor.is-pinned .pb-foot{padding:8px 18px;font-size:12px}
 }
 
 /* совсем низкие окна: отступы у заголовка меньше, чем у соседних разделов */
@@ -263,6 +280,7 @@ dialog.pb-dialog::backdrop{background:rgba(23,26,28,.55)}
   .pb-why{font-size:15px;padding:16px 18px}
   .pb-head h2{font-size:clamp(32px,7.4vw,48px)}
   .pb-controls{padding:18px 16px}
+  .pb-foot{padding:14px 16px}
   .pb-out{grid-template-columns:1fr 1fr}
   .pb-cell{padding:14px 16px}
   .pb-cell:nth-child(2){border-right:0}
