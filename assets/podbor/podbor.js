@@ -13,7 +13,7 @@
   var LEVEL_COLOR={below:'#E31E24',standard:'#e8a317',optimal:'#7cb342',max:'#1fa84d'};
   var NAV={distance:3,pitch:{standard:2.5,optimal:2,max:1.86},ceilGap:1,hangers:2,inset:0.25,
            w:[1.28,3.2,0.32],h:[0.48,0.96,0.16]}; // размеры табло — только из каталога: кабинеты 320 × 160 мм
-  var EPS=1e-9;
+  var EPS=1e-9, GROUP=0.10;
   var MOUNT_LABEL={wall:'На стену',structure:'На конструкцию',suspended:'На подвес'};
   var LIMITS={out:{w:[1,40,0.1],h:[1,20,0.1],d:[2,100,1],lift:[0,30,0.5]},
               in:{w:[0.5,15,0.1],h:[0.5,8,0.1],d:[1,20,0.5],lift:[0,6,0.1]}};
@@ -87,14 +87,15 @@
       var pool=MODELS.filter(function(m){return m.pool===p.pool&&(!p.maxPitch||m.pitch<=p.maxPitch+1e-6)});
       var avail=uniq(pool.map(function(m){return m.pitch}));
       if(avail.length){
-        var lv={}, seen=[];
+        var lv={}, seen=[], lo=0, hi=0;
         LEVELS.forEach(function(l){lv[l]=pickPitch(s.d,avail,COEF[l],tol)});
         LEVELS.forEach(function(l){
           var pitch=lv[l]; if(seen.indexOf(pitch)>=0)return; seen.push(pitch);
-          // вилка: все модели каталога с этим шагом
-          var list=pool.filter(function(m){return Math.abs(m.pitch-pitch)<1e-6}).sort(function(a,b){return a.price-b.price});
+          // вилка: модели каталога с этим шагом и с соседними, до 10 % мельче (5 мм → 4,8 мм)
+          var list=pool.filter(function(m){return m.pitch<=pitch+1e-6&&m.pitch>=pitch*(1-GROUP)-1e-6}).sort(function(a,b){return a.price-b.price});
+          var from=Math.max(list[0].price,lo), to=Math.max(list[list.length-1].price,hi,from); lo=from; hi=to; // чем выше качество, тем не ниже обе границы
           cards.push({level:levelOf(s.d,pitch,tol),req:LEVELS.filter(function(x){return lv[x]===pitch}),pitch:pitch,k:s.d/pitch*(1+tol),rec:Math.abs(pitch-lv.optimal)<1e-6,
-            from:area*list[0].price,to:area*list[list.length-1].price,models:[list[0].sku,list[list.length-1].sku].filter(function(v,i,a){return a.indexOf(v)===i})});
+            from:area*from,to:area*to,models:[list[0].sku,list[list.length-1].sku].filter(function(v,i,a){return a.indexOf(v)===i})});
         });
       }
     }
@@ -141,7 +142,7 @@
     var floors=Math.max(2,Math.ceil((c.lift+c.h+0.6)/3)), sideCols=c.w>12?2:1;
     if(c.ctx==='facade'){mL=mR=sideCols*2.4+0.5;ctxH=floors*3+0.5}
     if(c.ctx==='roof'){mL=2.5;mR=2.5}
-    if(c.ctx==='stage'){mL=1.2;mR=1.2;ctxH=c.lift+c.h+0.9}
+    if(c.ctx==='stage'){mL=1.9;mR=1.2;ctxH=c.lift+c.h+0.9}
     if(c.ctx==='road'){mL=0.5;mR=0.5}
     if(c.ctx==='pylon'){ctxH=c.lift+c.h+0.9}
     if(c.ctx==='room'){mL=c.furn==='stage'?1.5:c.nav?1.2:2.4;ctxH=ceilM}
@@ -149,7 +150,8 @@
     var s=Math.min((gy-top)/sceneH,zone/(mL+c.w+mR),64);
     var sx=padL+mL*s, sw=c.w*s, sh=c.h*s, sy=gy-(c.lift+c.h)*s, sb=sy+sh, ctxR=sx+sw+mR*s;
     // размерная линия высоты: у сцены — левее помоста, в помещении — рядом с экраном, иначе у левого края
-    var lx=c.ctx==='stage'?padL-0.4*s-20:(c.ctx==='room'&&c.furn!=='stage'?sx-22:padL-18), leftMost=c.lift>0?lx-40:padL-10;
+    var lx=c.ctx==='stage'?padL-0.4*s-20:(c.ctx==='room'&&c.furn!=='stage'?sx-9:padL-18), leftMost=c.lift>0?lx-40:padL-10;
+    var hx=sx-9-(c.ctx==='road'?Math.max(0.3*s,4):0), wy=sy-9-(c.ctx==='pylon'?0.7*s:0); leftMost=Math.min(leftMost,hx-46); // размерные линии экрана
     var plantX=c.lift>0?lx-44-0.5*s:sx-0.95*s, plant=(c.furn==='office'||c.furn==='plant')&&plantX-0.5*s>padL-40; // растение левее размерной линии
     if(plant) leftMost=Math.min(leftMost,plantX-0.5*s);
     var capL=sx+sw-12-wA, needL=narrow?0:Math.max(0,8-Math.min(capL-6,leftMost)); // сколько места занимает всё, что левее поля схемы
@@ -240,10 +242,9 @@
     if(T.glow) o+=R(sx,sy,sw,sh,T.screen,null,' filter="url(#'+uid+'-glow)" opacity=".55"');
     o+=R(sx,sy,sw,sh,T.screen);
     if(T.dots) o+=R(sx,sy,sw,sh,'url(#'+uid+'-dots)');
-    var label=fmt(c.w)+' × '+fmt(c.h)+' м';
-    if(sw>78&&sh>26&&!c.nav) o+=Tx(sx+sw/2,sy+sh/2+4,label,'middle',T.onScreen,600,13);
-    else if(hung){ o+=Tx(sx+sw/2,sb+17,label,'middle',T.text,600,12); if(c.nav) o+=Tx(sx+sw/2,sb+32,st.dbl?'двустороннее':'одностороннее','middle',T.mute,400,11); }
-    else o+=Tx(sx+sw/2,sy-8-(c.ctx==='pylon'?0.7*s:0),label,'middle',T.text,600,12);
+    o+=L(sx,wy,sx+sw,wy,T.dim)+L(sx,wy-4,sx,wy+4,T.dim)+L(sx+sw,wy-4,sx+sw,wy+4,T.dim)+Tx(sx+sw/2,wy-7,fmt(c.w)+' м','middle',T.text,600,12);
+    o+=L(hx,sy,hx,sb,T.dim)+L(hx-4,sy,hx+4,sy,T.dim)+L(hx-4,sb,hx+4,sb,T.dim)+Tx(hx-7,(sy+sb)/2+4,fmt(c.h)+' м','end',T.text,600,12);
+    if(c.nav) o+=Tx(sx+sw/2,sb+16,st.dbl?'двустороннее':'одностороннее','middle',T.mute,400,11);
     // высота установки
     if(c.lift>0){
       o+=L(lx,sb,lx,gy,T.dim)+L(lx-4,sb,lx+4,sb,T.dim)+L(lx-4,gy,lx+4,gy,T.dim)+Tx(lx-6,(sb+gy)/2+4,fmt(c.lift)+' м','end',T.text,500,12);
@@ -265,7 +266,7 @@
     // центровка: вся композиция (здание или стена, экран, человек) встаёт по середине схемы
     var x0=Math.min(c.ctx==='stage'?padL-0.4*s-8:padL-10,leftMost), x1=px+hw+10; if(!narrow){ x0=Math.min(x0,capL-6); x1=Math.max(x1,px+12+wH+6); }
     var dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
-    if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken,x:sx+dx,y:sy,w:sw,h:sh,label:sw>78&&sh>26&&!c.nav?label:''};
+    if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken,x:sx+dx,y:sy,w:sw,h:sh};
     // подписи у шкалы: слева — что она показывает, справа — рост человека; на узком экране — строкой под шкалой
     if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.join(' ').toLowerCase()+'</tspan></text>';
     else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay-3,capH[0],'start',T.mute,400,12)+Tx(px+12,ay+12,capH[1],'start',T.mute,400,12);
@@ -307,10 +308,9 @@
   var scrTile=document.createElement('canvas'), scrKey='';
   function paintScreen(){
     var box=$('pb-scr'), cv=$('pb-scr-c'), c=last&&last.sel, g=sceneGeom, p=place();
-    var img=$(p.nav?'pb-img-board':'pb-img-screen');
+    var tall=!p.nav&&g.h>g.w*1.25, img=$(p.nav?'pb-img-board':tall?'pb-img-plain':'pb-img-screen');
     if(!c||!g.w||!img.complete||!img.naturalWidth){ box.hidden=true; return; }
     box.hidden=false; box.style.cssText='left:'+g.x.toFixed(1)+'px;top:'+g.y.toFixed(1)+'px;width:'+g.w.toFixed(1)+'px;height:'+g.h.toFixed(1)+'px';
-    $('pb-scr-l').textContent=g.label; $('pb-scr-l').hidden=!g.label;
     var look=pixelLook(c.k), key=img.id+'|'+look.dots+'|'+look.grid.toFixed(3);
     if(key!==scrKey){ drawTile(scrTile,img,c.k); scrKey=key; }
     var dpr=Math.min(window.devicePixelRatio||1,2), W=Math.max(1,Math.round(g.w*dpr)), H=Math.max(1,Math.round(g.h*dpr));
@@ -322,7 +322,7 @@
       x0=(S-cw)/2; y0=clamp(S*0.535-ch/2,0,S-ch);
     } else {
       var sc=Math.max(g.w/S,g.h/S,Math.min(SCR_SCALE,g.w/400)); /* на маленьком экране надпись должна читаться целиком */ cw=Math.min(S,g.w/sc); ch=Math.min(S,g.h/sc);
-      x0=clamp(S*0.03,0,S-cw); y0=clamp(S*0.08,0,S-ch);
+      if(tall){ x0=(S-cw)/2; y0=clamp(S*0.42-ch/2,0,S-ch); } else { x0=clamp(S*0.03,0,S-cw); y0=clamp(S*0.08,0,S-ch); }
     }
     var ctx=cv.getContext('2d'); ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
     ctx.drawImage(scrTile,x0,y0,cw,ch,0,0,W,H);
@@ -649,7 +649,11 @@
       if(need+(el.mountBox.hidden?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
     }
   }
-  ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',function(){paintTiles();paintScreen()})});
+  ['pb-img-screen','pb-img-plain','pb-img-board'].forEach(function(id){$(id).addEventListener('load',function(){paintTiles();paintScreen()})});
+  // картинка на экране меняется по сезону: зима — декабрь–февраль, весна — март–май, лето — июнь–август, осень — сентябрь–ноябрь
+  var SEASON=['winter','winter','spring','spring','spring','summer','summer','summer','autumn','autumn','autumn','winter'][new Date().getMonth()];
+  var assetBase=$('pb-img-board').getAttribute('src').replace(/viewing-board\.webp.*$/,'');
+  $('pb-img-screen').src=assetBase+'screen-'+SEASON+'.webp'; $('pb-img-plain').src=assetBase+'plain-'+SEASON+'.webp';
   renderPlaces(); renderMount(); render();
   pin(); drawScene(); // закрепляем после первой отрисовки: высота блока уже известна
   var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){pin();render()},120)});
