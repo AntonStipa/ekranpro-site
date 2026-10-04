@@ -42,9 +42,9 @@
   var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),res:$('pb-res'),resS:$('pb-res-s'),
     money:$('pb-money'),moneyK:$('pb-money-k'),moneyS:$('pb-money-s'),mountBox:$('pb-mount-box'),mount:$('pb-mount'),mountFixed:$('pb-mount-fixed'),
     navBox:$('pb-nav-box'),navSize:$('pb-nav-size'),navDbl:$('pb-nav-dbl'),rowW:$('pb-row-w'),rowH:$('pb-row-h'),liftL:$('pb-lift-l'),
-    recT:$('pb-rec-t'),recS:$('pb-rec-s'),tiles:$('pb-tiles'),why:$('pb-why'),
+    tiles:$('pb-tiles'),why:$('pb-why'),
     dialog:$('pb-dialog'),sum:$('pb-sum'),form:$('pb-form'),done:$('pb-done')};
-  var inp={w:[$('pb-w-r'),$('pb-w')],h:[$('pb-h-r'),$('pb-h')],lift:[$('pb-lift-r'),$('pb-lift')],d:[$('pb-d-r'),$('pb-d')]};
+  var inp={w:[$('pb-w-r'),$('pb-w')],h:[$('pb-h-r'),$('pb-h')],lift:[$('pb-lift-r'),$('pb-lift')]};
 
   function fmt(v,dg){var s=(+v).toFixed(dg==null?2:dg);if(s.indexOf('.')>=0)s=s.replace(/0+$/,'').replace(/\.$/,'');return s.replace('.',',')}
   function sp(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
@@ -113,6 +113,8 @@
   var T={bg:'#e8ebe8',room:'#dcdfdb',floor:'#c4c8c4',ground:'#d8dad7',groundLine:null,wall:'#d2d5d1',wallStroke:null,wallAlt:'#b0b5b0',win:'#e2e5e1',winStroke:null,metal:'#a3a8a4',metalStroke:null,
        screen:'#171a1c',onScreen:'#ffffff',dots:true,glow:false,person:'#171a1c',dim:'#60656a',text:'#171a1c',mute:'#60656a',labelBg:'#e8ebe8'}; // оформление схемы: серый фон, графитовый экран
   var sceneGeom={k:1,broken:false};
+  var measureCtx=document.createElement('canvas').getContext('2d');
+  function textW(t,font){ if(!measureCtx) return t.length*7.4; measureCtx.font=font; return measureCtx.measureText(t).width+2; }
   function postCount(w){var cab=Math.max(1,Math.round(w/0.6));return Math.max(1,Math.floor(cab/2))+1} // стойка через каждые два кабинета 600 мм
   function drawScene(){
     var svg=el.svg, box=svg.parentNode, p=place();
@@ -125,7 +127,7 @@
   function sceneSVG(VW,VH,uid){
     var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
-    var padL=narrow?46:64, padR=narrow?30:52, top=30, gy=VH-46;
+    var padL=narrow?46:64, padR=narrow?30:52, top=30, gy=VH-(narrow?74:52);
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
     var mL=0,mR=0,ctxH=c.lift+c.h;
     var floors=Math.max(2,Math.ceil((c.lift+c.h+0.6)/3)), sideCols=c.w>12?2:1;
@@ -235,22 +237,28 @@
       o+=L(lx,sb,lx,gy,T.dim)+L(lx-4,sb,lx+4,sb,T.dim)+L(lx-4,gy,lx+4,gy,T.dim)+Tx(lx-6,(sb+gy)/2+4,fmt(c.lift)+' м','end',T.text,500,12);
     }
     // человек 1,8 м
-    var drag=!c.nav, hw=Math.max(ph*0.13,6)+16;
+    var drag=!c.nav&&uid==='pb', hw=Math.max(ph*0.13,6)+24;
     o+='<g'+(drag?' class="pb-person"':'')+'>'+(drag?'<title>Перетащите, чтобы изменить расстояние просмотра</title>':'')+
       R(px-hw-8,gy-ph-10,2*hw+16,ph+20,'rgba(0,0,0,0)')+
       '<g transform="translate('+px.toFixed(1)+','+(gy-ph).toFixed(1)+') scale('+(ph/100).toFixed(4)+')" fill="'+T.person+'"><circle cx="0" cy="9" r="9"/><path d="M-13 24h26v36h-6v40h-6V64h-2v36h-6V60h-6z"/></g>';
-    if(drag){ var hyy=gy-Math.max(ph*0.5,12); // стрелки ‹ › по бокам: человека можно двигать
-      o+='<path class="pb-person-h" d="M'+(px-hw+5).toFixed(1)+' '+(hyy-5).toFixed(1)+'l-5 5 5 5M'+(px+hw-5).toFixed(1)+' '+(hyy-5).toFixed(1)+'l5 5-5 5" fill="none" stroke="'+T.mute+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'; }
+    if(drag){ var hyy=gy-Math.max(ph*0.5,14), ax=hw-3; // стрелки ‹ › по бокам, в цвет кнопки: человека можно двигать
+      o+='<path class="pb-person-h" d="M'+(px-ax+8).toFixed(1)+' '+(hyy-9).toFixed(1)+'l-8 9 8 9M'+(px+ax-8).toFixed(1)+' '+(hyy-9).toFixed(1)+'l8 9-8 9" fill="none" stroke="#f36b52" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'; }
     o+='</g>';
     // линия взгляда и дистанция (с разрывом, если не помещается в масштабе)
     o+=L(sx+sw,sy+sh/2,px-ph*0.1,gy-ph*0.91,T.mute,1,'3 5');
-    var ay=gy+22, midx=(sx+sw+px)/2, lw2=broken?74:54;
+    var ay=gy+25, midx=(sx+sw+px)/2, lw2=broken?74:54;
     o+=L(sx+sw,ay,px,ay,T.dim)+L(sx+sw,ay-5,sx+sw,ay+5,T.dim)+L(px,ay-5,px,ay+5,T.dim)+R(midx-lw2/2,ay-9,lw2,18,floorFill);
     if(broken) o+=L(midx-lw2/2+2,ay+5,midx-lw2/2+8,ay-5,T.dim)+L(midx+lw2/2-8,ay+5,midx+lw2/2-2,ay-5,T.dim);
     o+=Tx(midx,ay+4,fmt(c.d,1)+' м','middle',T.text,600,12);
     // центровка: вся композиция (здание или стена, экран, человек) встаёт по середине схемы
     var x0=c.ctx==='stage'?padL-0.4*s-8:(c.lift>0?padL-56:padL-10), x1=px+hw+10, dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
     if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken};
+    // подпись в свободном поле слева на полосе земли: одной строкой, а если не помещается — двумя
+    var capA='Расстояние просмотра', capB=drag?'(передвиньте человека)':'', capX=narrow?10:18, room2=dx+sx+sw-14-capX;
+    var wA=textW(capA,'500 13px Inter,Arial,sans-serif'), wB=capB?textW(capB,'400 13px Inter,Arial,sans-serif'):0;
+    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA+(capB?' <tspan font-weight="400" fill="'+T.mute+'">'+capB+'</tspan>':'')+'</text>';
+    else if(wA+(wB?wB+6:0)<=room2) bg+='<text x="'+capX+'" y="'+(ay+4.5).toFixed(1)+'" font-size="13" font-weight="500" fill="'+T.text+'">'+capA+(capB?' <tspan font-weight="400" fill="'+T.mute+'">'+capB+'</tspan>':'')+'</text>';
+    else if(Math.max(wA,wB)<=room2) bg+='<text x="'+capX+'" y="'+(ay-3).toFixed(1)+'" font-size="13" font-weight="500" fill="'+T.text+'">'+capA+'</text>'+(capB?'<text x="'+capX+'" y="'+(ay+13).toFixed(1)+'" font-size="12" fill="'+T.mute+'">'+capB+'</text>':'');
     return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }
 
@@ -311,12 +319,11 @@
     }
   }
   function syncInputs(){
-    var L=LIMITS[st.env], p=place();
-    ['w','h','lift','d'].forEach(function(key){
+    var L=LIMITS[st.env];
+    ['w','h','lift'].forEach(function(key){
       var r=inp[key][0], n=inp[key][1], lim=L[key];
       r.min=lim[0]; r.max=lim[1]; r.step=lim[2]; n.min=lim[0]; n.max=lim[1];
       r.value=st[key]; if(document.activeElement!==n) n.value=st[key];
-      var off=key==='d'&&!!p.nav; r.disabled=off; n.disabled=off;
     });
   }
   var last;
@@ -339,20 +346,20 @@
     }
     // рекомендации по шагу
     if(!r.cards.length){
-      el.recS.textContent='Для вашей дистанции '+fmt(st.d,1)+' м.'; el.tiles.dataset.n='1'; $('pb-rec-body').dataset.n='0';
+      el.tiles.dataset.n='1'; $('pb-rec-body').dataset.n='0';
       el.tiles.innerHTML='<p class="pb-empty">Прозрачные экраны для помещений подбираем под проект: шаг и прозрачность зависят от остекления и расстояния просмотра. Оставьте заявку — инженер пришлёт варианты.</p>';
       el.why.hidden=true; $('pb-pdf').hidden=true; return;
     }
     el.why.hidden=false;
-    el.recS.textContent='Для вашей дистанции '+fmt(st.d,1)+' м. Так экран увидит зритель; выберите вариант — шаг и бюджет пересчитаются.'; $('pb-pdf').hidden=false;
+    $('pb-pdf').hidden=false;
     el.tiles.dataset.n=String(r.cards.length); el.tiles.dataset.kind=p.nav?'board':'screen'; $('pb-rec-body').dataset.n=String(r.cards.length);
     el.tiles.innerHTML=r.cards.map(function(x){
       var on=x===c;
-      return '<button type="button" class="pb-tile" data-pitch="'+x.pitch+'" aria-pressed="'+on+'">'+(x.rec?'<span class="pb-flag">Рекомендуем</span>':'')+(on?'<span class="pb-sel">Выбрано</span>':'')+
+      return '<button type="button" class="pb-tile" data-pitch="'+x.pitch+'" aria-pressed="'+on+'">'+
+        '<span class="pb-tile-top"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span>'+(x.rec?'<span class="pb-flag">Рекомендуем</span>':'')+(on?'<span class="pb-sel">Выбрано</span>':'')+'</span>'+
         '<span class="pb-tile-img"><canvas data-k="'+x.k+'" role="img" aria-label="Шаг '+fmt(x.pitch)+' мм. '+LEVEL_HINT[x.level]+'"></canvas></span>'+
-        '<span class="pb-tile-b"><span class="pb-tile-t"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span><span class="pb-tile-p">Шаг пикселя '+fmt(x.pitch)+'\u00a0мм</span>'+
-        '<span class="pb-tile-h"><span class="pb-dot" style="background:'+LEVEL_COLOR[x.level]+'"></span>'+LEVEL_HINT[x.level]+'</span></span>'+
-        '<span class="pb-tile-m">'+(x.piece?sp(x.from)+' ₽<small>за табло, с НДС</small>':money(x.from,x.to)+'<small>только экран, с НДС</small>')+'</span></span></button>';
+        '<span class="pb-tile-b"><span class="pb-tile-p">Шаг пикселя '+fmt(x.pitch)+'\u00a0мм</span>'+
+        '<span class="pb-tile-h"><span class="pb-dot" style="background:'+LEVEL_COLOR[x.level]+'"></span>'+LEVEL_HINT[x.level]+'</span></span></button>';
     }).join('');
     el.why.innerHTML=p.nav
       ?'<p>Изображение на табло складывается из светодиодных точек, и чем ближе зритель, тем они заметнее. Табло читают вблизи, примерно с 3 м, поэтому для них три шага:</p><ul><li><b>Стандартное качество</b> — 2,5 мм, точки видны.</li><li><b>Оптимальное качество</b> — 2 мм, точки едва различимы.</li><li><b>Максимальное качество</b> — 1,86 мм, картинка как у домашнего телевизора.</li></ul>'
@@ -384,12 +391,12 @@
   el.navSize.addEventListener('change',function(){touch();setNavSize(el.navSize.value);render()});
   el.navDbl.addEventListener('change',function(){touch();st.dbl=el.navDbl.checked;render()});
   el.tiles.addEventListener('click',function(e){var b=e.target.closest('.pb-tile');if(!b)return;st.pick=+b.dataset.pitch;render()});
-  ['w','h','lift','d'].forEach(function(key){
+  ['w','h','lift'].forEach(function(key){
     var range=inp[key][0], num=inp[key][1];
-    range.addEventListener('input',function(){touch();st[key]=+range.value;if(key==='d')st.pick=null;render()});
+    range.addEventListener('input',function(){touch();st[key]=+range.value;render()});
     num.addEventListener('input',function(){
       var v=parseFloat(String(num.value).replace(',','.')), L=LIMITS[st.env][key];
-      if(!isFinite(v))return; touch(); st[key]=Math.round(clamp(v,L[0],L[1])*100)/100; if(key==='d')st.pick=null; render();
+      if(!isFinite(v))return; touch(); st[key]=Math.round(clamp(v,L[0],L[1])*100)/100; render();
     });
     num.addEventListener('blur',function(){num.value=st[key]});
   });
@@ -574,6 +581,12 @@
     if(v!==st.d){ st.d=v; st.pick=null; render(); }
   });
   ['pointerup','pointercancel'].forEach(function(t){el.svg.addEventListener(t,function(){dragP=null;el.svg.classList.remove('is-drag')})});
+
+  el.svg.addEventListener('keydown',function(e){
+    if(place().nav||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;
+    var L=LIMITS[st.env].d, v=clamp(st.d+(e.key==='ArrowRight'?L[2]:-L[2]),L[0],L[1]);
+    e.preventDefault(); touch(); if(v!==st.d){ st.d=v; st.pick=null; render(); }
+  });
 
   // ——— Два вида в одном экране: подбор и рекомендации по шагу ———
   var root=$('ep-podbor'), viewCalc=$('pb-view-calc'), viewRec=$('pb-view-rec'), hintTimer;

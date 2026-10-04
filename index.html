@@ -2118,7 +2118,7 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
         <p class="pb-eyebrow">05 / Подбор экрана</p>
         <h2 id="pb-title">Подберите экран под ваш объект</h2>
       </div>
-      <button class="pb-btn pb-btn--ink" type="button" id="pb-back" hidden><span>Назад к подбору</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      <button class="pb-btn pb-btn--ink pb-btn--back" type="button" id="pb-back" hidden><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Назад к подбору</span></button>
     </div>
 
     <div class="pb-view" id="pb-view-calc">
@@ -2157,16 +2157,11 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
               <div class="pb-row"><label for="pb-lift-r" id="pb-lift-l">Высота установки</label><input type="range" id="pb-lift-r"><div class="pb-num"><input type="number" id="pb-lift" step="0.01" inputmode="decimal" aria-label="Высота установки, м"><span>м</span></div></div>
             </div>
           </div>
-          <i class="pb-sp" aria-hidden="true"></i>
-          <div class="pb-dist">
-            <div class="pb-label"><span>Расстояние просмотра</span></div>
-            <div class="pb-row pb-row--key"><input type="range" id="pb-d-r" aria-label="Расстояние просмотра"><div class="pb-num"><input type="number" id="pb-d" step="0.5" inputmode="decimal" aria-label="Расстояние просмотра, м"><span>м</span></div></div>
-          </div>
           <i class="pb-fill" aria-hidden="true"></i>
         </div>
 
         <div class="pb-result">
-          <div class="pb-scene"><svg id="pb-svg" role="img" aria-label="Схема масштаба: экран, дистанция просмотра и человек"></svg></div>
+          <div class="pb-scene"><svg id="pb-svg" role="img" tabindex="0" aria-label="Схема масштаба: экран, дистанция просмотра и человек"></svg></div>
           <div class="pb-out" aria-live="polite">
             <div class="pb-cell"><div class="pb-k">Шаг пикселя</div><div class="pb-v" id="pb-pitch"></div><div class="pb-s" id="pb-pitch-s"></div></div>
             <div class="pb-cell"><div class="pb-k">Разрешение</div><div class="pb-v" id="pb-res"></div><div class="pb-s" id="pb-res-s"></div></div>
@@ -2176,7 +2171,7 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
           <div class="pb-cta">
             <div class="pb-cta-c"></div>
             <div class="pb-cta-c">
-              <button class="pb-link" type="button" id="pb-rec-open"><span>Рекомендации по шагу пикселя</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              <button class="pb-link pb-cat" type="button" id="pb-rec-open"><span class="pb-cat-label"><span class="pb-cat-base">Рекомендации по шагу пикселя</span><span class="pb-cat-hover" aria-hidden="true">Рекомендации по шагу пикселя</span></span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-cat-line" aria-hidden="true"><i class="pb-line-out"></i><i class="pb-line-in"></i></span></button>
               <p class="pb-hint" id="pb-hint" role="status" hidden>Для получения рекомендаций выберите экран, который вам нужен.</p>
             </div>
             <div class="pb-cta-c">
@@ -2188,7 +2183,6 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
     </div>
 
     <div class="pb-view pb-recview" id="pb-view-rec" hidden>
-      <p class="pb-rec-sub" id="pb-rec-s"></p>
       <div class="pb-rec-body" id="pb-rec-body">
         <div class="pb-tiles" id="pb-tiles"></div>
       </div>
@@ -2217,8 +2211,8 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
 <img id="pb-img-screen" src="/ekranpro-site/assets/podbor/viewing-screen.webp" alt="" hidden>
 <img id="pb-img-board" src="/ekranpro-site/assets/podbor/viewing-board.webp" alt="" hidden>
 <img id="pb-img-logo" src="/ekranpro-site/assets/podbor/logo-white.png" alt="" hidden>
-<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=8129512e">
-<script src="/ekranpro-site/assets/podbor/podbor.js?v=8129512e" defer></script>
+<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=d41f70ff">
+<script src="/ekranpro-site/assets/podbor/podbor.js?v=d41f70ff" defer></script>
 <!-- PODBOR_END -->
 
 <!-- BUSINESS_SOLUTIONS_START -->
