@@ -81,6 +81,9 @@
 .pb-mount button{border-right:1px solid var(--pb-ink);font-size:13px;line-height:1.15;min-height:40px;padding:4px}
 .pb-mount button:last-child{border-right:0}
 .pb-fixed{font-size:14px}
+.pb-fixed-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pb-fixed-row .pb-check{margin:0}
+#ep-podbor.is-pinned .pb-fixed,#ep-podbor.is-pinned .pb-fixed-row .pb-check{font-size:13px}
 
 /* место установки: выбранное и наведение — цветом кнопки расчёта */
 .pb-places{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}

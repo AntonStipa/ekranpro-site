@@ -11,7 +11,8 @@
   var LEVEL_LABEL={standard:'Стандартное качество',optimal:'Оптимальное качество',max:'Максимальное качество',below:'Ниже стандарта'};
   var LEVEL_HINT={standard:'Точки видны, но мелкие',optimal:'Точки едва заметны',max:'Точек не видно, как у телевизора',below:'Точки заметны'};
   var LEVEL_COLOR={below:'#E31E24',standard:'#e8a317',optimal:'#7cb342',max:'#1fa84d'};
-  var NAV={distance:3,pitch:{standard:2.5,optimal:2,max:1.86},ceilGap:1,hangers:2,inset:0.25};
+  var NAV={distance:3,pitch:{standard:2.5,optimal:2,max:1.86},ceilGap:1,hangers:2,inset:0.25,
+           w:[1.28,3.2,0.32],h:[0.48,0.96,0.16]}; // размеры табло — только из каталога: кабинеты 320 × 160 мм
   var EPS=1e-9;
   var MOUNT_LABEL={wall:'На стену',structure:'На конструкцию',suspended:'На подвес'};
   var LIMITS={out:{w:[1,40,0.1],h:[1,20,0.1],d:[2,100,1],lift:[0,30,0.5]},
@@ -32,16 +33,16 @@
       {id:'lobby',ctx:'room',furn:'plant',name:'Холл / ресепшн',w:4,h:2.25,d:3,lift:1,pool:'in',icon:'<rect x="6" y="4" width="22" height="11"/><path d="M9 26v-6h16v6M4 26h26"/>'},
       {id:'retail',ctx:'room',furn:'plant',name:'Торговый зал',w:3,h:2,d:3,lift:1.5,pool:'in',icon:'<rect x="5" y="4" width="14" height="10"/><path d="M22 26V10h7v16M4 26h26M22 15h7M22 20h7"/>'},
       {id:'hall',ctx:'room',furn:'stage',name:'Зал / сцена',w:6,h:3.5,d:8,lift:1,pool:'in',mounts:['wall','suspended','structure'],icon:'<rect x="7" y="4" width="20" height="12"/><path d="M4 20h26v6H4z"/>'},
-      {id:'nav',ctx:'room',name:'Навигационный указатель',w:1.92,h:0.32,d:3,lift:2.2,pool:'nav',mounts:['suspended'],fixedMount:'На подвесе, в метре от потолка',nav:true,icon:'<path d="M3 4h28M11 4v7M23 4v7"/><rect x="5" y="11" width="24" height="8"/><path d="M10 15h8m-3-2.5 3 2.5-3 2.5"/>'},
+      {id:'nav',ctx:'room',name:'Навигационный указатель',w:1.92,h:0.48,d:3,lift:2.2,pool:'nav',mounts:['suspended'],fixedMount:'На подвесе, в метре от потолка',nav:true,icon:'<path d="M3 4h28M11 4v7M23 4v7"/><rect x="5" y="11" width="24" height="8"/><path d="M10 15h8m-3-2.5 3 2.5-3 2.5"/>'},
       {id:'transp',ctx:'room',furn:'plant',name:'Прозрачный экран',w:3,h:2,d:4,lift:0.5,pool:'transp',icon:'<rect x="5" y="5" width="24" height="16" stroke-dasharray="3 2.5"/><path d="M9 17l8-8M15 17l8-8M3 26h28"/>'}
     ]
   };
 
-  var st={view:'calc',touched:false,env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,pick:null,navSize:null,dbl:false};
+  var st={view:'calc',touched:false,env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,pick:null,dbl:false};
   var $=function(id){return document.getElementById(id)};
   var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),res:$('pb-res'),resS:$('pb-res-s'),
     money:$('pb-money'),moneyK:$('pb-money-k'),moneyS:$('pb-money-s'),mountBox:$('pb-mount-box'),mount:$('pb-mount'),mountFixed:$('pb-mount-fixed'),
-    navBox:$('pb-nav-box'),navSize:$('pb-nav-size'),navDbl:$('pb-nav-dbl'),rowW:$('pb-row-w'),rowH:$('pb-row-h'),liftL:$('pb-lift-l'),
+    navDbl:$('pb-nav-dbl'),navDblL:$('pb-nav-dbl-l'),rowW:$('pb-row-w'),rowH:$('pb-row-h'),liftL:$('pb-lift-l'),
     tiles:$('pb-tiles'),why:$('pb-why'),
     dialog:$('pb-dialog'),sum:$('pb-sum'),form:$('pb-form'),done:$('pb-done')};
   var inp={w:[$('pb-w-r'),$('pb-w')],h:[$('pb-h-r'),$('pb-h')],lift:[$('pb-lift-r'),$('pb-lift')]};
@@ -75,7 +76,7 @@
   function calc(s,p){
     var tol=TOL[s.env], area=s.w*s.h, cards=[];
     if(p.nav){
-      var size=s.navSize;
+      var size=Math.round(s.w*1000)+'×'+Math.round(s.h*1000);
       LEVELS.forEach(function(lv){
         var m=MODELS.filter(function(x){return x.pool==='nav'&&x.size===size&&Math.abs(x.pitch-NAV.pitch[lv])<1e-6})[0];
         if(!m)return;
@@ -97,8 +98,13 @@
         });
       }
     }
+    if(p.nav&&cards.length){ var pr=cards.map(function(x){return x.from}); var navFrom=Math.min.apply(null,pr), navTo=Math.max.apply(null,pr); }
     var sel=cards.filter(function(c){return s.pick!=null&&Math.abs(c.pitch-s.pick)<1e-6})[0]||cards[0]||null; // по умолчанию — стандартный шаг: 1 мм на 1 м расстояния
-    return {area:area,cards:cards,sel:sel,resW:sel?Math.round(s.w*1000/sel.pitch):0,resH:sel?Math.round(s.h*1000/sel.pitch):0};
+    return {area:area,cards:cards,sel:sel,navFrom:navFrom,navTo:navTo,resW:sel?Math.round(s.w*1000/sel.pitch):0,resH:sel?Math.round(s.h*1000/sel.pitch):0};
+  }
+  function pieceMoney(r){ // цена табло: вилка в тысячах, до миллиона — без округления до десятков
+    var a=r.navFrom, b=r.navTo; if(b>=1e6) return money(a,b);
+    var x=Math.floor(a/1000), y=Math.ceil(b/1000); return x===y?sp(x)+' тыс. ₽':sp(x)+' — '+sp(y)+' тыс. ₽';
   }
   function resNote(r){
     var px=Math.min(r.resW*9/16,r.resH);
@@ -127,7 +133,7 @@
   function sceneSVG(VW,VH,uid){
     var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
-    var capA=['Расстояние','просмотра'], capH=['Рост человека','175 см'], wA=textW(capA[0],'500 13px Inter,Arial,sans-serif'), wH=textW(capH[0],'400 12px Inter,Arial,sans-serif'); // подписи у шкалы — в две строки
+    var capA=['Расстояние','просмотра'], capH='Силуэт 175 см', wA=textW(capA[0],'500 13px Inter,Arial,sans-serif'), wH=textW(capH,'400 12px Inter,Arial,sans-serif'); // слева от шкалы — в две строки, справа — одной
     var padL=narrow?46:64, padR=narrow?30:Math.max(52,wH+26), top=30, gy=VH-(narrow?74:52);
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
     var mL=0,mR=0,ctxH=c.lift+c.h;
@@ -260,8 +266,8 @@
     var dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
     if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken};
     // подписи у шкалы: слева — что она показывает, справа — рост человека; на узком экране — строкой под шкалой
-    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.join(' ').toLowerCase()+'</tspan></text>';
-    else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay-3,capH[0],'start',T.mute,400,12)+Tx(px+12,ay+12,capH[1],'start',T.mute,400,12);
+    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.toLowerCase()+'</tspan></text>';
+    else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay+4,capH,'start',T.mute,400,12);
     return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }
 
@@ -313,18 +319,14 @@
     el.mountBox.hidden=!(m.length>1||p.fixedMount);
     el.mount.hidden=!(m.length>1); el.mountFixed.hidden=!p.fixedMount; el.mountFixed.textContent=p.fixedMount||'';
     el.mount.innerHTML=m.map(function(x){return '<button type="button" data-mount="'+x+'" aria-pressed="'+(x===st.mount)+'">'+MOUNT_LABEL[x]+'</button>'}).join('');
-    el.navBox.hidden=!p.nav; el.rowW.hidden=!!p.nav; el.rowH.hidden=!!p.nav;
+    el.navDblL.hidden=!p.nav; el.navDbl.checked=st.dbl;
     el.liftL.textContent=p.support?'Высота опоры':'Высота установки';
-    if(p.nav){
-      var sizes=MODELS.filter(function(x){return x.pool==='nav'}).map(function(x){return x.size}).filter(function(v,i,a){return a.indexOf(v)===i});
-      el.navSize.innerHTML=sizes.map(function(s){return '<option value="'+s+'"'+(s===st.navSize?' selected':'')+'>'+s+' мм</option>'}).join('');
-      el.navDbl.checked=st.dbl;
-    }
   }
+  function limit(key){ var p=place(); return p.nav&&NAV[key]?NAV[key]:LIMITS[st.env][key]; } // у табло ширина и высота — в пределах каталога
+  function snap(key,v){ var L=limit(key); v=clamp(v,L[0],L[1]); return place().nav&&NAV[key]?Math.round((L[0]+Math.round((v-L[0])/L[2])*L[2])*100)/100:Math.round(v*100)/100; }
   function syncInputs(){
-    var L=LIMITS[st.env];
     ['w','h','lift'].forEach(function(key){
-      var r=inp[key][0], n=inp[key][1], lim=L[key];
+      var r=inp[key][0], n=inp[key][1], lim=limit(key);
       r.min=lim[0]; r.max=lim[1]; r.step=lim[2]; n.min=lim[0]; n.max=lim[1];
       r.value=st[key]; if(document.activeElement!==n) n.value=st[key];
     });
@@ -333,7 +335,7 @@
   function render(){
     var p=place(), r=last=calc(st,p), c=r.sel;
     syncInputs();
-    el.area.textContent=p.nav?'':fmt(r.area,r.area<10?2:1)+' м²';
+    el.area.textContent=fmt(r.area,r.area<10?2:1)+' м²';
     drawScene();
     if(c){
       el.pitch.textContent=fmt(c.pitch)+' мм';
@@ -341,7 +343,7 @@
       el.res.textContent=sp(r.resW)+' × '+sp(r.resH);
       el.resS.textContent=resNote(r);
       el.moneyK.textContent=c.piece?'Цена табло':'Бюджет оборудования';
-      el.money.textContent=c.piece?sp(c.from)+' ₽':money(c.from,c.to);
+      el.money.textContent=c.piece?pieceMoney(r):money(c.from,c.to);
       el.moneyS.textContent=c.piece?'За одно табло, с НДС.\nМонтаж считается отдельно.':'Только оборудование, с НДС.\nМонтаж считается отдельно.';
     } else {
       el.pitch.textContent='—'; el.pitchS.textContent='Подберёт инженер'; el.res.textContent='—'; el.resS.textContent='';
@@ -372,10 +374,9 @@
 
   function applyPlace(p){
     st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.pick=null; st.mount=(p.mounts||[])[0]||null; st.dbl=false;
-    if(p.nav){ st.navSize=st.navSize||'1920×480'; setNavSize(st.navSize); st.d=NAV.distance; }
+    if(p.nav) st.d=NAV.distance;
     renderPlaces(); renderMount(); render();
   }
-  function setNavSize(v){var a=v.split('×'); st.navSize=v; st.w=+a[0]/1000; st.h=+a[1]/1000}
   document.querySelector('.pb-seg').addEventListener('click',function(e){
     var b=e.target.closest('button'); if(!b)return; touch(); if(b.dataset.env===st.env)return;
     st.env=b.dataset.env;
@@ -391,15 +392,14 @@
     st.mount=b.dataset.mount; st.lift=st.mount==='suspended'?3:place().lift; // подвес висит выше: 3 м, как в КП-системе
     renderMount(); render();
   });
-  el.navSize.addEventListener('change',function(){touch();setNavSize(el.navSize.value);render()});
   el.navDbl.addEventListener('change',function(){touch();st.dbl=el.navDbl.checked;render()});
   el.tiles.addEventListener('click',function(e){var b=e.target.closest('.pb-tile');if(!b)return;st.pick=+b.dataset.pitch;render()});
   ['w','h','lift'].forEach(function(key){
     var range=inp[key][0], num=inp[key][1];
-    range.addEventListener('input',function(){touch();st[key]=+range.value;render()});
+    range.addEventListener('input',function(){touch();st[key]=snap(key,+range.value);render()});
     num.addEventListener('input',function(){
-      var v=parseFloat(String(num.value).replace(',','.')), L=LIMITS[st.env][key];
-      if(!isFinite(v))return; touch(); st[key]=Math.round(clamp(v,L[0],L[1])*100)/100; render();
+      var v=parseFloat(String(num.value).replace(',','.'));
+      if(!isFinite(v))return; touch(); st[key]=snap(key,v); render();
     });
     num.addEventListener('blur',function(){num.value=st[key]});
   });
@@ -411,7 +411,7 @@
     return {source:'Подбор экрана',env:st.env==='out'?'На улице':'В помещении',place:p.name,mount:st.mount?MOUNT_LABEL[st.mount]:null,
       width_m:st.w,height_m:st.h,area_m2:Math.round(r.area*100)/100,install_height_m:st.lift,distance_m:st.d,double_sided:p.nav?st.dbl:null,
       pitch_mm:c?c.pitch:null,quality:c?LEVEL_LABEL[c.level]:null,resolution:c?r.resW+'×'+r.resH:null,
-      budget:c?(c.piece?sp(c.from)+' ₽ за табло':money(c.from,c.to)+' (только оборудование, с НДС)'):'по запросу',models:c?c.models:[]};
+      budget:c?(c.piece?pieceMoney(r)+' за табло, с НДС':money(c.from,c.to)+' (только оборудование, с НДС)'):'по запросу',models:c?c.models:[]};
   }
   function summaryRows(d){
     return [['Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],
@@ -503,7 +503,7 @@
       var bh=170; g.strokeStyle='#d8dad7'; g.lineWidth=2; g.strokeRect(M,y,CW,bh);
       var cols=[['ШАГ ПИКСЕЛЯ',c?fmt(c.pitch)+' мм':'—',c?LEVEL_LABEL[c.level]:'Подберёт инженер',INK],
                 ['РАЗРЕШЕНИЕ',c?sp(r.resW)+' × '+sp(r.resH):'—',c?resNote(r):'',INK],
-                [c&&c.piece?'ЦЕНА ТАБЛО':'БЮДЖЕТ ОБОРУДОВАНИЯ',c?(c.piece?sp(c.from)+' ₽':money(c.from,c.to)):'По запросу',c&&c.piece?'За одно табло, с НДС. Монтаж отдельно.':'Только экран, с НДС. Монтаж и работы отдельно.','#f36b52']];
+                [c&&c.piece?'ЦЕНА ТАБЛО':'БЮДЖЕТ ОБОРУДОВАНИЯ',c?(c.piece?pieceMoney(r):money(c.from,c.to)):'По запросу',c&&c.piece?'За одно табло, с НДС. Монтаж отдельно.':'Только экран, с НДС. Монтаж и работы отдельно.','#f36b52']];
       var cw3=[CW*0.27,CW*0.31,CW*0.42], cx=M;
       cols.forEach(function(k,i){ if(i){g.beginPath();g.moveTo(cx,y);g.lineTo(cx,y+bh);g.stroke()}
         text(k[0],cx+28,y+42,MUTE,'500',20); text(k[1],cx+28,y+100,k[3],'700',48); text(k[2],cx+28,y+142,MUTE,'400',22); cx+=cw3[i]; });
@@ -618,7 +618,7 @@
     if(on&&st.view==='calc'){ // параметры не помещаются по высоте — оставляем обычную прокрутку
       var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden&&x.tagName==='DIV'});
       var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*10+kids.reduce(function(a,x){return a+x.offsetHeight},0); // 10 px — минимальный отступ между группами
-      if(need+(el.mountBox.hidden&&el.navBox.hidden?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
+      if(need+(el.mountBox.hidden?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
     }
   }
   ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',paintTiles)});
