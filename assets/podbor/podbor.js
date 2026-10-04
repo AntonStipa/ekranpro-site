@@ -338,14 +338,13 @@
       el.moneyK.textContent='Бюджет оборудования'; el.money.textContent='По запросу'; el.moneyS.textContent='Прозрачные экраны\nсчитаем под проект.';
     }
     // рекомендации по шагу
-    el.recT.textContent='Рекомендации по выбору шага пикселя для дистанции '+fmt(st.d,1)+' м';
     if(!r.cards.length){
-      el.recS.textContent=''; el.tiles.dataset.n='1'; $('pb-rec-body').dataset.n='0';
+      el.recS.textContent='Для вашей дистанции '+fmt(st.d,1)+' м.'; el.tiles.dataset.n='1'; $('pb-rec-body').dataset.n='0';
       el.tiles.innerHTML='<p class="pb-empty">Прозрачные экраны для помещений подбираем под проект: шаг и прозрачность зависят от остекления и расстояния просмотра. Оставьте заявку — инженер пришлёт варианты.</p>';
       el.why.hidden=true; $('pb-pdf').hidden=true; return;
     }
     el.why.hidden=false;
-    el.recS.textContent='Так экран увидит зритель с '+fmt(st.d,1)+' м. Выберите вариант — шаг и бюджет пересчитаются.'; $('pb-pdf').hidden=false;
+    el.recS.textContent='Для вашей дистанции '+fmt(st.d,1)+' м. Так экран увидит зритель; выберите вариант — шаг и бюджет пересчитаются.'; $('pb-pdf').hidden=false;
     el.tiles.dataset.n=String(r.cards.length); el.tiles.dataset.kind=p.nav?'board':'screen'; $('pb-rec-body').dataset.n=String(r.cards.length);
     el.tiles.innerHTML=r.cards.map(function(x){
       var on=x===c;
@@ -580,6 +579,8 @@
   var root=$('ep-podbor'), viewCalc=$('pb-view-calc'), viewRec=$('pb-view-rec'), hintTimer;
   function setView(v){
     st.view=v; viewCalc.hidden=v!=='calc'; viewRec.hidden=v!=='rec';
+    root.dataset.view=v; $('pb-back').hidden=v!=='rec';
+    $('pb-title').textContent=v==='rec'?'Рекомендации по выбору шага пикселя':'Подберите экран под ваш объект';
     if(v==='rec'){ paintTiles(); $('pb-back').focus({preventScroll:true}); } else { drawScene(); }
     if(!root.classList.contains('is-pinned')) root.scrollIntoView({block:'start'});
   }
@@ -599,8 +600,8 @@
     var hdr=document.querySelector('#ekranpro-first-screen .ep1-header'); // закреплённая шапка сайта перекрывает верх экрана
     root.style.setProperty('--pb-hdr',((hdr&&hdr.offsetHeight)||84)+'px');
     if(on&&st.view==='calc'){ // параметры не помещаются по высоте — оставляем обычную прокрутку
-      var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden});
-      var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*parseFloat(cs.rowGap||0)+kids.reduce(function(a,x){return a+x.offsetHeight},0);
+      var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden&&x.tagName==='DIV'});
+      var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*10+kids.reduce(function(a,x){return a+x.offsetHeight},0); // 10 px — минимальный отступ между группами
       if(need+(el.mountBox.hidden&&el.navBox.hidden?84:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
     }
   }

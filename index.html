@@ -2115,10 +2115,10 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
   <div class="pb-pin">
     <div class="pb-head">
       <div>
-        <p class="pb-eyebrow">05 / Подбор</p>
+        <p class="pb-eyebrow">05 / Подбор экрана</p>
         <h2 id="pb-title">Подберите экран под ваш объект</h2>
       </div>
-      <p>Укажите место, размер и расстояние просмотра — получите шаг пикселя, разрешение и бюджет оборудования.</p>
+      <button class="pb-btn pb-btn--ink" type="button" id="pb-back" hidden><span>Назад к подбору</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
     </div>
 
     <div class="pb-view" id="pb-view-calc">
@@ -2131,20 +2131,24 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
               <button type="button" id="pb-env-in" data-env="in" aria-pressed="false">В помещении</button>
             </div>
           </div>
+          <i class="pb-sp" aria-hidden="true"></i>
           <div>
             <div class="pb-label"><span>Место установки</span></div>
             <div class="pb-places" id="pb-places" role="group" aria-label="Место установки"></div>
           </div>
+          <i class="pb-sp" aria-hidden="true"></i>
           <div id="pb-mount-box">
             <div class="pb-label"><span>Способ установки</span></div>
             <div class="pb-mount" id="pb-mount" role="group" aria-label="Способ установки"></div>
             <p class="pb-fixed" id="pb-mount-fixed" hidden></p>
           </div>
+          <i class="pb-sp" aria-hidden="true"></i>
           <div id="pb-nav-box" hidden>
             <div class="pb-label"><span>Размер табло</span></div>
             <select class="pb-select" id="pb-nav-size" aria-label="Размер табло"></select>
             <label class="pb-check" for="pb-nav-dbl"><input type="checkbox" id="pb-nav-dbl"> Двустороннее</label>
           </div>
+          <i class="pb-sp" aria-hidden="true"></i>
           <div>
             <div class="pb-label"><span>Параметры</span><b id="pb-area"></b></div>
             <div class="pb-params">
@@ -2153,10 +2157,12 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
               <div class="pb-row"><label for="pb-lift-r" id="pb-lift-l">Высота установки</label><input type="range" id="pb-lift-r"><div class="pb-num"><input type="number" id="pb-lift" step="0.01" inputmode="decimal" aria-label="Высота установки, м"><span>м</span></div></div>
             </div>
           </div>
+          <i class="pb-sp" aria-hidden="true"></i>
           <div class="pb-dist">
             <div class="pb-label"><span>Расстояние просмотра</span></div>
             <div class="pb-row pb-row--key"><input type="range" id="pb-d-r" aria-label="Расстояние просмотра"><div class="pb-num"><input type="number" id="pb-d" step="0.5" inputmode="decimal" aria-label="Расстояние просмотра, м"><span>м</span></div></div>
           </div>
+          <i class="pb-fill" aria-hidden="true"></i>
         </div>
 
         <div class="pb-result">
@@ -2182,13 +2188,7 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
     </div>
 
     <div class="pb-view pb-recview" id="pb-view-rec" hidden>
-      <div class="pb-rec-top">
-        <div>
-          <h3 id="pb-rec-t"></h3>
-          <p id="pb-rec-s"></p>
-        </div>
-        <button class="pb-link pb-link--back" type="button" id="pb-back"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Назад к подбору</span></button>
-      </div>
+      <p class="pb-rec-sub" id="pb-rec-s"></p>
       <div class="pb-rec-body" id="pb-rec-body">
         <div class="pb-tiles" id="pb-tiles"></div>
       </div>
@@ -2217,8 +2217,8 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
 <img id="pb-img-screen" src="/ekranpro-site/assets/podbor/viewing-screen.webp" alt="" hidden>
 <img id="pb-img-board" src="/ekranpro-site/assets/podbor/viewing-board.webp" alt="" hidden>
 <img id="pb-img-logo" src="/ekranpro-site/assets/podbor/logo-white.png" alt="" hidden>
-<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=2314ec44">
-<script src="/ekranpro-site/assets/podbor/podbor.js?v=2314ec44" defer></script>
+<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=8129512e">
+<script src="/ekranpro-site/assets/podbor/podbor.js?v=8129512e" defer></script>
 <!-- PODBOR_END -->
 
 <!-- BUSINESS_SOLUTIONS_START -->
