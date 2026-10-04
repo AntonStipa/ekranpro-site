@@ -38,9 +38,9 @@
     ]
   };
 
-  var st={view:'calc',touched:false,env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,pick:null,dbl:false};
+  var st={view:'calc',touched:false,env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,level:'standard',dbl:false};
   var $=function(id){return document.getElementById(id)};
-  var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),res:$('pb-res'),resS:$('pb-res-s'),
+  var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),q:$('pb-q'),res:$('pb-res'),resS:$('pb-res-s'),
     money:$('pb-money'),moneyK:$('pb-money-k'),moneyS:$('pb-money-s'),mountBox:$('pb-mount-box'),mount:$('pb-mount'),mountFixed:$('pb-mount-fixed'),
     navDbl:$('pb-nav-dbl'),navDblL:$('pb-nav-dbl-l'),rowW:$('pb-row-w'),rowH:$('pb-row-h'),liftL:$('pb-lift-l'),
     tiles:$('pb-tiles'),why:$('pb-why'),
@@ -81,7 +81,7 @@
         var m=MODELS.filter(function(x){return x.pool==='nav'&&x.size===size&&Math.abs(x.pitch-NAV.pitch[lv])<1e-6})[0];
         if(!m)return;
         var price=s.dbl&&m.price2?m.price2:m.price;
-        cards.push({level:lv,pitch:m.pitch,k:COEF[lv],rec:lv==='optimal',from:price,to:price,models:[m.sku],piece:true});
+        cards.push({level:lv,req:[lv],pitch:m.pitch,k:COEF[lv],rec:lv==='optimal',from:price,to:price,models:[m.sku],piece:true});
       });
     } else {
       var pool=MODELS.filter(function(m){return m.pool===p.pool&&(!p.maxPitch||m.pitch<=p.maxPitch+1e-6)});
@@ -93,13 +93,13 @@
           var pitch=lv[l]; if(seen.indexOf(pitch)>=0)return; seen.push(pitch);
           // вилка: все модели каталога с этим шагом
           var list=pool.filter(function(m){return Math.abs(m.pitch-pitch)<1e-6}).sort(function(a,b){return a.price-b.price});
-          cards.push({level:levelOf(s.d,pitch,tol),pitch:pitch,k:s.d/pitch*(1+tol),rec:Math.abs(pitch-lv.optimal)<1e-6,
+          cards.push({level:levelOf(s.d,pitch,tol),req:LEVELS.filter(function(x){return lv[x]===pitch}),pitch:pitch,k:s.d/pitch*(1+tol),rec:Math.abs(pitch-lv.optimal)<1e-6,
             from:area*list[0].price,to:area*list[list.length-1].price,models:[list[0].sku,list[list.length-1].sku].filter(function(v,i,a){return a.indexOf(v)===i})});
         });
       }
     }
     if(p.nav&&cards.length){ var pr=cards.map(function(x){return x.from}); var navFrom=Math.min.apply(null,pr), navTo=Math.max.apply(null,pr); }
-    var sel=cards.filter(function(c){return s.pick!=null&&Math.abs(c.pitch-s.pick)<1e-6})[0]||cards[0]||null; // по умолчанию — стандартный шаг: 1 мм на 1 м расстояния
+    var sel=cards.filter(function(c){return c.req.indexOf(s.level)>=0})[0]||cards[0]||null; // выбранное качество; по умолчанию стандартное: 1 мм шага на 1 м расстояния
     return {area:area,cards:cards,sel:sel,navFrom:navFrom,navTo:navTo,resW:sel?Math.round(s.w*1000/sel.pitch):0,resH:sel?Math.round(s.h*1000/sel.pitch):0};
   }
   function pieceMoney(r){ // цена табло: вилка в тысячах, до миллиона — без округления до десятков
@@ -128,12 +128,13 @@
     var VW=Math.max(320,box.clientWidth), VH=Math.max(200,box.clientHeight);
     svg.setAttribute('viewBox','0 0 '+VW+' '+VH);
     svg.innerHTML=sceneSVG(VW,VH,'pb');
+    paintScreen();
     svg.setAttribute('aria-label','Схема: '+p.name.toLowerCase()+', экран '+fmt(st.w)+' на '+fmt(st.h)+' м на высоте '+fmt(st.lift)+' м, расстояние просмотра '+fmt(st.d,1)+' м, человек ростом 1,75 м');
   }
   function sceneSVG(VW,VH,uid){
     var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
-    var capA=['Расстояние','просмотра'], capH='Силуэт 175 см', wA=textW(capA[0],'500 13px Inter,Arial,sans-serif'), wH=textW(capH,'400 12px Inter,Arial,sans-serif'); // слева от шкалы — в две строки, справа — одной
+    var capA=['Расстояние','просмотра'], capH=['Силуэт','175 см'], wA=textW(capA[0],'500 13px Inter,Arial,sans-serif'), wH=textW(capH[0],'400 12px Inter,Arial,sans-serif'); // подписи у шкалы — в две строки
     var padL=narrow?46:64, padR=narrow?30:Math.max(52,wH+26), top=30, gy=VH-(narrow?74:52);
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
     var mL=0,mR=0,ctxH=c.lift+c.h;
@@ -264,10 +265,10 @@
     // центровка: вся композиция (здание или стена, экран, человек) встаёт по середине схемы
     var x0=Math.min(c.ctx==='stage'?padL-0.4*s-8:padL-10,leftMost), x1=px+hw+10; if(!narrow){ x0=Math.min(x0,capL-6); x1=Math.max(x1,px+12+wH+6); }
     var dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
-    if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken};
+    if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken,x:sx+dx,y:sy,w:sw,h:sh,label:sw>78&&sh>26&&!c.nav?label:''};
     // подписи у шкалы: слева — что она показывает, справа — рост человека; на узком экране — строкой под шкалой
-    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.toLowerCase()+'</tspan></text>';
-    else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay+4,capH,'start',T.mute,400,12);
+    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.join(' ').toLowerCase()+'</tspan></text>';
+    else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay-3,capH[0],'start',T.mute,400,12)+Tx(px+12,ay+12,capH[1],'start',T.mute,400,12);
     return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }
 
@@ -302,6 +303,31 @@
       ctx.globalAlpha=look.grid; ctx.drawImage(led,0,0); ctx.globalAlpha=1;
     }
   }
+  // ——— Картинка на экране схемы: то же изображение, что в рекомендациях, с качеством выбранного шага ———
+  var scrTile=document.createElement('canvas'), scrKey='';
+  function paintScreen(){
+    var box=$('pb-scr'), cv=$('pb-scr-c'), c=last&&last.sel, g=sceneGeom, p=place();
+    var img=$(p.nav?'pb-img-board':'pb-img-screen');
+    if(!c||!g.w||!img.complete||!img.naturalWidth){ box.hidden=true; return; }
+    box.hidden=false; box.style.cssText='left:'+g.x.toFixed(1)+'px;top:'+g.y.toFixed(1)+'px;width:'+g.w.toFixed(1)+'px;height:'+g.h.toFixed(1)+'px';
+    $('pb-scr-l').textContent=g.label; $('pb-scr-l').hidden=!g.label;
+    var look=pixelLook(c.k), key=img.id+'|'+look.dots+'|'+look.grid.toFixed(3);
+    if(key!==scrKey){ drawTile(scrTile,img,c.k); scrKey=key; }
+    var dpr=Math.min(window.devicePixelRatio||1,2), W=Math.max(1,Math.round(g.w*dpr)), H=Math.max(1,Math.round(g.h*dpr));
+    cv.width=W; cv.height=H;
+    // масштаб не мельче, чем в карточках рекомендаций, иначе точки сливаются; при нехватке места показываем фрагмент картинки
+    var S=scrTile.width, cw, ch, x0, y0;
+    if(p.nav){ // табло узкое: показываем строку с надписью целиком
+      cw=430; ch=cw*g.h/g.w; if(ch>S){ ch=S; cw=ch*g.w/g.h; }
+      x0=(S-cw)/2; y0=clamp(S*0.535-ch/2,0,S-ch);
+    } else {
+      var sc=Math.max(g.w/S,g.h/S,Math.min(SCR_SCALE,g.w/400)); /* на маленьком экране надпись должна читаться целиком */ cw=Math.min(S,g.w/sc); ch=Math.min(S,g.h/sc);
+      x0=clamp(S*0.03,0,S-cw); y0=clamp(S*0.08,0,S-ch);
+    }
+    var ctx=cv.getContext('2d'); ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(scrTile,x0,y0,cw,ch,0,0,W,H);
+  }
+  var SCR_SCALE=0.5;
   var tileTimer;
   function paintTiles(){
     var img=$(place().nav?'pb-img-board':'pb-img-screen');
@@ -339,14 +365,15 @@
     drawScene();
     if(c){
       el.pitch.textContent=fmt(c.pitch)+' мм';
-      el.pitchS.textContent=LEVEL_LABEL[c.level];
+      el.q.hidden=false; el.pitchS.hidden=c.level!=='below'; el.pitchS.textContent=c.level==='below'?'Ниже стандарта: мельче шага в каталоге нет':'';
+      el.q.querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.level===st.level))});
       el.res.textContent=sp(r.resW)+' × '+sp(r.resH);
       el.resS.textContent=resNote(r);
       el.moneyK.textContent=c.piece?'Цена табло':'Бюджет оборудования';
       el.money.textContent=c.piece?pieceMoney(r):money(c.from,c.to);
       el.moneyS.textContent=c.piece?'За одно табло, с НДС.\nМонтаж считается отдельно.':'Только оборудование, с НДС.\nМонтаж считается отдельно.';
     } else {
-      el.pitch.textContent='—'; el.pitchS.textContent='Подберёт инженер'; el.res.textContent='—'; el.resS.textContent='';
+      el.pitch.textContent='—'; el.q.hidden=true; el.pitchS.hidden=false; el.pitchS.textContent='Подберёт инженер'; el.res.textContent='—'; el.resS.textContent='';
       el.moneyK.textContent='Бюджет оборудования'; el.money.textContent='По запросу'; el.moneyS.textContent='Прозрачные экраны\nсчитаем под проект.';
     }
     // рекомендации по шагу
@@ -360,7 +387,7 @@
     el.tiles.dataset.n=String(r.cards.length); el.tiles.dataset.kind=p.nav?'board':'screen'; $('pb-rec-body').dataset.n=String(r.cards.length);
     el.tiles.innerHTML=r.cards.map(function(x){
       var on=x===c;
-      return '<button type="button" class="pb-tile" data-pitch="'+x.pitch+'" aria-pressed="'+on+'"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span>'+
+      return '<button type="button" class="pb-tile" data-req="'+(x.req.indexOf(st.level)>=0?st.level:x.req[0])+'" aria-pressed="'+on+'"><span class="pb-tile-l">'+LEVEL_LABEL[x.level]+'</span>'+
         '<span class="pb-tile-card"><span class="pb-tile-img"><span class="pb-tags">'+(x.rec?'<span class="pb-flag">Рекомендуем</span>':'')+(on?'<span class="pb-sel">Выбрано</span>':'')+'</span>'+
         '<canvas data-k="'+x.k+'" role="img" aria-label="Шаг '+fmt(x.pitch)+' мм. '+LEVEL_HINT[x.level]+'"></canvas></span>'+
         '<span class="pb-tile-b"><span class="pb-tile-p">Шаг пикселя '+fmt(x.pitch)+'\u00a0мм</span>'+
@@ -373,7 +400,7 @@
   }
 
   function applyPlace(p){
-    st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.pick=null; st.mount=(p.mounts||[])[0]||null; st.dbl=false;
+    st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.level='standard'; st.mount=(p.mounts||[])[0]||null; st.dbl=false;
     if(p.nav) st.d=NAV.distance;
     renderPlaces(); renderMount(); render();
   }
@@ -392,8 +419,9 @@
     st.mount=b.dataset.mount; st.lift=st.mount==='suspended'?3:place().lift; // подвес висит выше: 3 м, как в КП-системе
     renderMount(); render();
   });
+  el.q.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;touch();st.level=b.dataset.level;render()});
   el.navDbl.addEventListener('change',function(){touch();st.dbl=el.navDbl.checked;render()});
-  el.tiles.addEventListener('click',function(e){var b=e.target.closest('.pb-tile');if(!b)return;st.pick=+b.dataset.pitch;render()});
+  el.tiles.addEventListener('click',function(e){var b=e.target.closest('.pb-tile');if(!b)return;st.level=b.dataset.req;render()});
   ['w','h','lift'].forEach(function(key){
     var range=inp[key][0], num=inp[key][1];
     range.addEventListener('input',function(){touch();st[key]=snap(key,+range.value);render()});
@@ -581,14 +609,14 @@
     if(!dragP)return;
     var L=LIMITS[st.env].d, v=dragP.d+(e.clientX-dragP.x)/dragP.k;
     v=clamp(Math.round(v/L[2])*L[2],L[0],L[1]);
-    if(v!==st.d){ st.d=v; st.pick=null; render(); }
+    if(v!==st.d){ st.d=v; render(); }
   });
   ['pointerup','pointercancel'].forEach(function(t){el.svg.addEventListener(t,function(){dragP=null;el.svg.classList.remove('is-drag')})});
 
   el.svg.addEventListener('keydown',function(e){
     if(place().nav||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;
     var L=LIMITS[st.env].d, v=clamp(st.d+(e.key==='ArrowRight'?L[2]:-L[2]),L[0],L[1]);
-    e.preventDefault(); touch(); if(v!==st.d){ st.d=v; st.pick=null; render(); }
+    e.preventDefault(); touch(); if(v!==st.d){ st.d=v; render(); }
   });
 
   // ——— Два вида в одном экране: подбор и рекомендации по шагу ———
@@ -621,7 +649,7 @@
       if(need+(el.mountBox.hidden?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
     }
   }
-  ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',paintTiles)});
+  ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',function(){paintTiles();paintScreen()})});
   renderPlaces(); renderMount(); render();
   pin(); drawScene(); // закрепляем после первой отрисовки: высота блока уже известна
   var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){pin();render()},120)});

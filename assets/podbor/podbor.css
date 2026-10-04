@@ -106,7 +106,8 @@
 .pb-num input:disabled{color:var(--pb-muted)}
 .pb-select{width:100%;height:38px;border:1px solid var(--pb-line);background:var(--pb-bg);color:var(--pb-ink);font:inherit;font-size:15px;padding:0 10px;border-radius:0}
 .pb-check{display:flex;align-items:center;gap:8px;font-size:14px;margin-top:6px;cursor:pointer}
-.pb-check input{width:18px;height:18px;accent-color:var(--pb-ink);margin:0}
+.pb-check input{-webkit-appearance:none;appearance:none;flex:none;width:18px;height:18px;margin:0;border:1px solid var(--pb-ink);border-radius:0;background:var(--pb-bg);cursor:pointer;transition:background-color 200ms ease}
+.pb-check input:checked{background:var(--pb-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M4 9.2l3.2 3.2L14 5.6' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E") center/100% no-repeat}
 
 #ep-podbor input[type=range]{--pb-rng:var(--pb-ink);-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0;cursor:pointer}
 #ep-podbor input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--pb-rng)}
@@ -119,6 +120,10 @@
 .pb-scene{position:relative;flex:1;min-height:300px;background:var(--pb-soft)}
 .pb-scene svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:pan-y}
 .pb-scene .pb-person{cursor:ew-resize}
+/* картинка на экране схемы */
+.pb-scr{position:absolute;overflow:hidden;pointer-events:none;background:#111}
+.pb-scr canvas{display:block;width:100%;height:100%}
+.pb-scr span{position:absolute;right:0;bottom:0;background:rgba(23,26,28,.82);color:#fff;font-size:12px;font-weight:600;line-height:1;padding:5px 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .pb-scene .pb-person-h{stroke:var(--pb-cta)}
 .pb-scene svg:focus-visible{outline-offset:-2px}
 .pb-scene svg.is-drag{cursor:ew-resize}
@@ -131,6 +136,13 @@
 .pb-v{font-size:clamp(22px,2vw,30px);line-height:1.15;font-weight:500;letter-spacing:-.02em;margin:6px 0 4px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .pb-v--money{color:var(--pb-cta);white-space:normal}
 .pb-s{font-size:13px;color:var(--pb-muted);white-space:pre-line}
+/* качество изображения: три кнопки под шагом пикселя */
+.pb-q{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--pb-ink);margin-top:2px}
+.pb-q button{appearance:none;border:0;border-right:1px solid var(--pb-ink);border-radius:0;background:var(--pb-bg);color:var(--pb-ink);font:inherit;font-size:11px;letter-spacing:-.02em;line-height:1.15;padding:5px 1px;min-height:34px;cursor:pointer;transition:background-color 333ms ease,color 333ms ease}
+.pb-q button:last-child{border-right:0}
+.pb-q button[aria-pressed="true"]{background:var(--pb-ink);color:#fff}
+.pb-q button:not([aria-pressed="true"]):hover{color:var(--pb-cta)}
+.pb-q+.pb-s{margin-top:4px}
 
 /* кнопки: залитая — как «Получить расчёт» на главной, ссылка со стрелкой — как «Перейти в каталог» */
 .pb-cta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;border-top:1px solid var(--pb-line)}
@@ -284,10 +296,10 @@ dialog.pb-dialog::backdrop{background:rgba(23,26,28,.55)}
   .pb-head h2{font-size:clamp(32px,7.4vw,48px)}
   .pb-controls{padding:18px 16px}
   .pb-foot{padding:14px 16px}
-  .pb-out{grid-template-columns:1fr 1fr}
-  .pb-cell{padding:14px 16px}
-  .pb-cell:nth-child(2){border-right:0}
-  .pb-cell:last-child{grid-column:1/-1;border-top:1px solid var(--pb-line)}
+  .pb-out{grid-template-columns:1fr}
+  .pb-cell{padding:14px 16px;border-right:0}
+  .pb-cell+.pb-cell{border-top:1px solid var(--pb-line)}
+  .pb-q button{font-size:12px;min-height:38px}
   .pb-cta{grid-template-columns:1fr}
   .pb-cta-c{padding:8px 16px}
   .pb-cta-c:first-child{display:none}
