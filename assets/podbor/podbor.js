@@ -323,10 +323,10 @@
       el.resS.textContent=resNote(r);
       el.moneyK.textContent=c.piece?'Цена табло':'Бюджет оборудования';
       el.money.textContent=c.piece?sp(c.from)+' ₽':money(c.from,c.to);
-      el.moneyS.textContent=c.piece?'За одно табло, с НДС. Монтаж считается отдельно.':'Только экран, с НДС. Монтаж и работы считаются отдельно.';
+      el.moneyS.textContent=c.piece?'За одно табло, с НДС.\nМонтаж считается отдельно.':'Только оборудование, с НДС.\nМонтаж считается отдельно.';
     } else {
       el.pitch.textContent='—'; el.pitchS.textContent='Подберёт инженер'; el.res.textContent='—'; el.resS.textContent='';
-      el.moneyK.textContent='Бюджет оборудования'; el.money.textContent='По запросу'; el.moneyS.textContent='Прозрачные экраны считаем под проект.';
+      el.moneyK.textContent='Бюджет оборудования'; el.money.textContent='По запросу'; el.moneyS.textContent='Прозрачные экраны\nсчитаем под проект.';
     }
     // рекомендации по шагу
     el.recT.textContent='Рекомендации по выбору шага пикселя для дистанции '+fmt(st.d,1)+' м';
@@ -574,11 +574,14 @@
     root.style.setProperty('--pb-vh',window.innerHeight+'px');
     var hdr=document.querySelector('#ekranpro-first-screen .ep1-header'); // закреплённая шапка сайта перекрывает верх экрана
     root.style.setProperty('--pb-hdr',((hdr&&hdr.offsetHeight)||84)+'px');
+    if(on&&st.view==='calc'){ // блок не помещается в окно целиком — оставляем обычную прокрутку
+      var pinBox=root.querySelector('.pb-pin'), need=viewCalc.getBoundingClientRect().bottom-pinBox.getBoundingClientRect().top+14+(el.mountBox.hidden?64:0);
+      if(need>window.innerHeight) root.classList.remove('is-pinned');
+    }
   }
-  pin();
-
   ['pb-img-screen','pb-img-board'].forEach(function(id){$(id).addEventListener('load',paintTiles)});
   renderPlaces(); renderMount(); render();
+  pin(); drawScene(); // закрепляем после первой отрисовки: высота блока уже известна
   var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){pin();render()},120)});
   if(window.ResizeObserver) new ResizeObserver(function(){drawScene()}).observe(el.svg.parentNode); // схема рисуется в пикселях контейнера
   window.__pb={calc:calc,PLACES:PLACES,money:money,makePdf:makePdf};

@@ -2116,7 +2116,7 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
     <div class="pb-head">
       <div>
         <p class="pb-eyebrow">05 / Подбор</p>
-        <h2 id="pb-title">Подберите экран под ваш объект</h2>
+        <h2 id="pb-title">Подберите экран<br>под ваш объект</h2>
       </div>
       <p>Укажите место, размер и расстояние просмотра — получите шаг пикселя, разрешение и бюджет оборудования.</p>
     </div>
@@ -2161,13 +2161,17 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
           <div class="pb-out" aria-live="polite">
             <div class="pb-cell"><div class="pb-k">Шаг пикселя</div><div class="pb-v" id="pb-pitch"></div><div class="pb-s" id="pb-pitch-s"></div></div>
             <div class="pb-cell"><div class="pb-k">Разрешение</div><div class="pb-v" id="pb-res"></div><div class="pb-s" id="pb-res-s"></div></div>
-            <div class="pb-cell"><div class="pb-k" id="pb-money-k">Бюджет оборудования</div><div class="pb-v pb-v--money" id="pb-money"></div><div class="pb-s" id="pb-money-s">Только экран, с НДС. Монтаж и работы считаются отдельно.</div></div>
+            <div class="pb-cell"><div class="pb-k" id="pb-money-k">Бюджет оборудования</div><div class="pb-v pb-v--money" id="pb-money"></div><div class="pb-s" id="pb-money-s">Только оборудование, с НДС.
+Монтаж считается отдельно.</div></div>
           </div>
           <div class="pb-cta">
-            <button class="pb-btn" type="button" id="pb-open"><span>Получить точный расчёт</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-            <div class="pb-cta-r">
+            <div class="pb-cta-c"></div>
+            <div class="pb-cta-c">
               <button class="pb-link" type="button" id="pb-rec-open"><span>Рекомендации по шагу пикселя</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
               <p class="pb-hint" id="pb-hint" role="status" hidden>Для получения рекомендаций выберите экран, который вам нужен.</p>
+            </div>
+            <div class="pb-cta-c">
+              <button class="pb-btn" type="button" id="pb-open"><span>Получить точный расчёт</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
             </div>
           </div>
         </div>
@@ -2210,8 +2214,8 @@ html { scroll-padding-top: var(--ep-header-height); scrollbar-gutter: stable; }
 <img id="pb-img-screen" src="/ekranpro-site/assets/podbor/viewing-screen.webp" alt="" hidden>
 <img id="pb-img-board" src="/ekranpro-site/assets/podbor/viewing-board.webp" alt="" hidden>
 <img id="pb-img-logo" src="/ekranpro-site/assets/podbor/logo-white.png" alt="" hidden>
-<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=5d3d9724">
-<script src="/ekranpro-site/assets/podbor/podbor.js?v=5d3d9724" defer></script>
+<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=00fee0c5">
+<script src="/ekranpro-site/assets/podbor/podbor.js?v=00fee0c5" defer></script>
 <!-- PODBOR_END -->
 
 <!-- BUSINESS_SOLUTIONS_START -->
