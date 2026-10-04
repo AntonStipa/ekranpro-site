@@ -67,15 +67,15 @@
     const GROUP = root.dataset.group || 'led';
     const LED_FILTERS = [
       { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
-      { key: 'apps', type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
       { key: 'env', type: 'check', title: 'Среда', opts: () => [['out', 'Улица'], ['in', 'Помещение']], test: (p, v) => p.env === v },
-      { key: 'pitch', type: 'preset', title: 'Шаг пикселя, мм', hint: 'Расстояние между пикселями. До 1,5 мм — переговорные и диспетчерские, 1,5–2,5 — ресепшн и витрины, 2,5–5 — сцены и залы, от 5 — улица и стадионы',
-        opts: () => [['0', '≤1,5', 0, 1.5], ['1', '1,5–2,5', 1.5, 2.5], ['2', '2,5–5', 2.5, 5], ['3', '5–10', 5, 10], ['4', '>10', 10, 999]], test: (p, v, o) => inRange(p.pitch, o[2], o[3]) },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
         opts: () => [['0', 'до 1 500', 0, 1500], ['1', '1 500–5 000', 1500, 5000], ['2', 'от 5 000', 5000, 999999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
-      { key: 'price', type: 'range', title: 'Цена, ₽ с НДС', ph: ['от 50 000', 'до 2 500 000'] },
-      { key: 'svc', type: 'check', title: 'Обслуживание', opts: () => [['front', 'Переднее'], ['back', 'Заднее']], test: (p, v) => p.svc === v || p.svc === 'both' },
+      { key: 'pitch', type: 'preset', title: 'Шаг пикселя, мм', hint: 'Расстояние между пикселями. До 1,5 мм — переговорные и диспетчерские, 1,5–2,5 — ресепшн и витрины, 2,5–5 — сцены и залы, от 5 — улица и стадионы',
+        opts: () => [['0', '≤1,5', 0, 1.5], ['1', '1,5–2,5', 1.5, 2.5], ['2', '2,5–5', 2.5, 5], ['3', '5–10', 5, 10], ['4', '>10', 10, 999]], test: (p, v, o) => inRange(p.pitch, o[2], o[3]) },
       { key: 'pixel', type: 'check', title: 'Тип пикселя', opts: () => DATA.pixelTypes.map(b => [b, b]), test: (p, v) => p.pixelType === v },
+      { key: 'svc', type: 'check', title: 'Обслуживание', opts: () => [['front', 'Переднее'], ['back', 'Заднее']], test: (p, v) => p.svc === v || p.svc === 'both' },
+      { key: 'price', type: 'range', title: 'Цена, ₽ с НДС', ph: ['от 50 000', 'до 2 500 000'] },
+      { key: 'apps', hidden: true, type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
     ];
     const LCD_FILTERS = [
       { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
@@ -136,8 +136,9 @@
     const countFor = (s, f, o) => P.filter(p => passes(p, s, f.key) && f.test(p, o[0], o)).length;
 
     const visibleFilters = () => FILTERS.filter(f => !(f.key === 'section' && lockedSection));
+    const sidebarFilters = () => visibleFilters().filter(f => !f.hidden);
     function filterHTML(s) {
-      return visibleFilters().map(f => {
+      return sidebarFilters().map(f => {
         let inner = '';
         if (f.type === 'check') inner = f.opts().map(o => { const n = countFor(s, f, o); const on = s.sel[f.key].has(o[0]); return `<label class="ek-chk ${n === 0 ? 'off' : ''}"><input type="checkbox" data-k="${f.key}" data-v="${o[0]}" ${on ? 'checked' : ''} ${n === 0 && !on ? 'disabled' : ''}><span>${o[1]}</span><span class="c ek-num">${n}</span></label>`; }).join('');
         else if (f.type === 'preset') inner = `<div class="ek-presets">${f.opts().map(o => { const n = countFor(s, f, o); const on = s.sel[f.key].has(o[0]); return `<button type="button" data-k="${f.key}" data-v="${o[0]}" aria-pressed="${on}" ${n === 0 && !on ? 'disabled' : ''}>${o[1]} <span class="ek-num" style="opacity:.55">${n}</span></button>`; }).join('')}</div>`;
@@ -209,8 +210,17 @@
       $('#ek-cmp-names').textContent = ids.map(i => P.find(p => p.sku === i).name).join(' · ');
       $$('[data-cmp]').forEach(el => { el.checked = ids.includes(el.dataset.cmp); });
     }
-    $('#ek-sort').innerHTML = SORTS.map(s => `<option value="${s[0]}">${s[1]}</option>`).join('');
-    $('#ek-sort').addEventListener('change', e => { state.sort = e.target.value; render(); });
+    (function sortMenu() {
+      const box = $('#ek-sort'); if (!box) return;
+      const label = () => (SORTS.find(s => s[0] === state.sort) || SORTS[0])[1];
+      box.innerHTML = `<button type="button" class="ek-dd-btn" aria-haspopup="listbox" aria-expanded="false"><span>${label()}</span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button><ul class="ek-dd-list" role="listbox" hidden>${SORTS.map(s => `<li role="option" data-v="${s[0]}" aria-selected="${s[0] === state.sort}">${s[1]}</li>`).join('')}</ul>`;
+      const btn = $('.ek-dd-btn', box), list = $('.ek-dd-list', box);
+      const open = o => { list.hidden = !o; btn.setAttribute('aria-expanded', o); box.classList.toggle('open', o); };
+      btn.addEventListener('click', () => open(list.hidden));
+      $$('li', list).forEach(li => li.addEventListener('click', () => { state.sort = li.dataset.v; $$('li', list).forEach(x => x.setAttribute('aria-selected', x === li)); $('span', btn).textContent = label(); open(false); render(); }));
+      document.addEventListener('click', e => { if (!box.contains(e.target)) open(false); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') open(false); });
+    })();
     $('#ek-q').value = state.q;
     $('#ek-q').addEventListener('input', e => { state.q = e.target.value.trim(); state.shown = 24; render(true); });
     $('#ek-v-grid').addEventListener('click', () => { state.view = 'grid'; $('#ek-v-grid').setAttribute('aria-pressed', 'true'); $('#ek-v-list').setAttribute('aria-pressed', 'false'); render(); });
