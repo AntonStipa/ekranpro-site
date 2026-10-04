@@ -151,7 +151,7 @@
     var sx=padL+mL*s, sw=c.w*s, sh=c.h*s, sy=gy-(c.lift+c.h)*s, sb=sy+sh, ctxR=sx+sw+mR*s;
     // размерная линия высоты: у сцены — левее помоста, в помещении — рядом с экраном, иначе у левого края
     var lx=c.ctx==='stage'?padL-0.4*s-20:(c.ctx==='room'&&c.furn!=='stage'?sx-9:padL-18), leftMost=c.lift>0?lx-40:padL-10;
-    var hx=sx-9-(c.ctx==='road'?Math.max(0.3*s,4):0), wy=sy-9-(c.ctx==='pylon'?0.7*s:0); leftMost=Math.min(leftMost,hx-46); // размерные линии экрана
+    var hx=sx-6-(c.ctx==='road'?Math.max(0.3*s,4):0); leftMost=Math.min(leftMost,hx-40); // подпись высоты экрана — слева от него
     var plantX=c.lift>0?lx-44-0.5*s:sx-0.95*s, plant=(c.furn==='office'||c.furn==='plant')&&plantX-0.5*s>padL-40; // растение левее размерной линии
     if(plant) leftMost=Math.min(leftMost,plantX-0.5*s);
     var capL=sx+sw-12-wA, needL=narrow?0:Math.max(0,8-Math.min(capL-6,leftMost)); // сколько места занимает всё, что левее поля схемы
@@ -242,8 +242,7 @@
     if(T.glow) o+=R(sx,sy,sw,sh,T.screen,null,' filter="url(#'+uid+'-glow)" opacity=".55"');
     o+=R(sx,sy,sw,sh,T.screen);
     if(T.dots) o+=R(sx,sy,sw,sh,'url(#'+uid+'-dots)');
-    o+=L(sx,wy,sx+sw,wy,T.dim)+L(sx,wy-4,sx,wy+4,T.dim)+L(sx+sw,wy-4,sx+sw,wy+4,T.dim)+Tx(sx+sw/2,wy-7,fmt(c.w)+' м','middle',T.text,600,12);
-    o+=L(hx,sy,hx,sb,T.dim)+L(hx-4,sy,hx+4,sy,T.dim)+L(hx-4,sb,hx+4,sb,T.dim)+Tx(hx-7,(sy+sb)/2+4,fmt(c.h)+' м','end',T.text,600,12);
+    o+=Tx(sx+sw/2,sy-6,fmt(c.w)+' м','middle',T.text,600,12)+Tx(hx,(sy+sb)/2+4,fmt(c.h)+' м','end',T.text,600,12); // размер экрана: ширина над ним, высота слева
     if(c.nav) o+=Tx(sx+sw/2,sb+16,st.dbl?'двустороннее':'одностороннее','middle',T.mute,400,11);
     // высота установки
     if(c.lift>0){
