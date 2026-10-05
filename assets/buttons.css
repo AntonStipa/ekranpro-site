@@ -1,0 +1,76 @@
+/* Кнопки ЭкранПро — единый стандарт для всех страниц.
+   Эталон: первый экран главной («Получить расчёт», «Перейти в каталог») и раздел 04 главной (чёрная кнопка и ссылка под ней).
+   Значения не менять по месту: размеры, шрифт, цвета и тайминги одинаковы на всём сайте.
+   Разметку даёт templates/_buttons.html (макросы btn и link).
+
+   Цвета:   коралловый #f36b52 · чёрный #171a1c · белый #fff
+   Шрифт:   EP HelveticaNeueCyr Roman, 14px, прописные, трекинг .06em, интерлиньяж 1.2
+   Размер:  320 × 60, поля 18/24, стрелка 24px
+   Эффект:  фон и текст меняются за 333 мс ease; новая стрелка въезжает слева (−50px) за 1 с
+            cubic-bezier(.22,1,.36,1) с задержкой 333 мс; у ссылки старая стрелка гаснет за 250 мс,
+            линия уезжает вправо за 250 мс cubic-bezier(.77,0,.175,1) и возвращается слева за 1 с с задержкой 333 мс. */
+
+/* ---------- 1. Залитая кнопка: .ep-btn--coral на первых экранах, .ep-btn--ink в разделах ---------- */
+.ep-btn{display:inline-flex;align-items:center;justify-content:space-between;width:320px;max-width:100%;height:60px;min-height:60px;padding:18px 24px;gap:24px;border:0;border-radius:0;background:var(--ep-btn-bg,#f36b52);color:#fff;font-family:"EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;text-align:left;text-decoration:none;white-space:nowrap;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;box-shadow:inset 0 0 0 1px transparent;transition:background-color 333.333ms ease,color 333.333ms ease,box-shadow 333.333ms ease}
+.ep-btn--coral{--ep-btn-bg:#f36b52}
+.ep-btn--ink{--ep-btn-bg:#171a1c}
+.ep-btn__label{min-width:0;white-space:nowrap}
+.ep-btn__arrow{position:relative;display:block;flex:0 0 24px;width:24px;height:24px;overflow:hidden}
+.ep-btn__arrow svg{position:absolute;inset:0;display:block;width:24px;height:24px;transition:none}
+.ep-btn__arrow svg:first-child{color:inherit;transform:none}
+.ep-btn__arrow svg+svg{color:#000;opacity:0;transform:translateX(-50px);animation:none}
+@media (hover:hover) and (pointer:fine){
+  .ep-btn:hover{background:#fff;color:#000}
+  .ep-btn--on-light:hover,.ep-btn--ink:hover{box-shadow:inset 0 0 0 1px #171a1c}
+  .ep-btn:hover .ep-btn__arrow svg:first-child{color:#fff}
+  .ep-btn:hover .ep-btn__arrow svg+svg{animation:ep-btn-arrow-enter 1s cubic-bezier(.22,1,.36,1) 333.333ms both}
+}
+.ep-btn:is(:focus-visible,:active){background:#fff;color:#000}
+:is(.ep-btn--on-light,.ep-btn--ink):is(:focus-visible,:active){box-shadow:inset 0 0 0 1px #171a1c}
+.ep-btn:is(:focus-visible,:active) .ep-btn__arrow svg:first-child{color:#fff}
+.ep-btn:is(:focus-visible,:active) .ep-btn__arrow svg+svg{animation:ep-btn-arrow-enter 1s cubic-bezier(.22,1,.36,1) 333.333ms both}
+@keyframes ep-btn-arrow-enter{from{opacity:1;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
+
+/* ---------- 2. Кнопка без заливки: .ep-link--hero на первых экранах (коралловый → белый), .ep-link--ink в разделах (чёрный → коралловый) ---------- */
+.ep-link{position:relative;display:flex;align-items:center;justify-content:space-between;width:320px;max-width:100%;height:60px;min-height:60px;gap:20px;padding:18px 24px;border:0;border-radius:0;background:transparent;box-shadow:none;color:var(--ep-link-rest);font-family:"EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:1.2;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;text-align:left;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:color 333.333ms ease;--ep-link-rest:#171a1c;--ep-link-hover:#f36b52}
+.ep-link--ink{--ep-link-rest:#171a1c;--ep-link-hover:#f36b52}
+.ep-link--hero{--ep-link-rest:#f36b52;--ep-link-hover:#fff}
+.ep-link--stack{width:100%;height:auto;min-height:44px;padding:4px 24px 12px}   /* вторая строка под залитой кнопкой, как в разделе 04 */
+.ep-link__label{display:inline-grid;align-items:center;min-width:0;overflow:visible;white-space:nowrap;isolation:isolate}
+.ep-link__label>span{grid-area:1/1;display:block;padding-block:.16em;margin-block:-.16em;font:inherit;color:var(--ep-link-rest);-webkit-text-fill-color:currentColor;transition:opacity 333.333ms ease;opacity:1}
+.ep-link__label>span+span{color:var(--ep-link-hover);opacity:0}
+.ep-link__arrow{position:relative;display:block;flex:0 0 24px;width:24px;height:24px;overflow:hidden}
+.ep-link__arrow svg{position:absolute;inset:0;display:block;width:24px;height:24px}
+.ep-link__line{position:absolute;inset:auto 0 0;height:1px;overflow:hidden;pointer-events:none}
+.ep-link__line i{position:absolute;inset:0;display:block;background:currentColor}
+.ep-link :is(.ep-link__arrow svg,.ep-link__line i){transition:none;animation:none}
+.ep-link :is(.ep-link__arrow svg:first-child,.ep-link__line i:first-child){opacity:1;transform:translateX(0)}
+.ep-link .ep-link__arrow svg+svg{opacity:0;transform:translateX(-50px)}
+.ep-link .ep-link__line i+i{opacity:0;transform:translateX(-102%)}
+@media (hover:hover) and (pointer:fine){
+  .ep-link:hover{color:var(--ep-link-hover)}
+  .ep-link:hover .ep-link__label>span:first-child{opacity:0}
+  .ep-link:hover .ep-link__label>span+span{opacity:1}
+  .ep-link:hover .ep-link__arrow svg:first-child{animation:ep-link-arrow-leave 250ms ease both}
+  .ep-link:hover .ep-link__arrow svg+svg{animation:ep-link-arrow-enter 1s cubic-bezier(.22,1,.36,1) 333.333ms both}
+  .ep-link:hover .ep-link__line i:first-child{animation:ep-link-line-leave 250ms cubic-bezier(.77,0,.175,1) both}
+  .ep-link:hover .ep-link__line i+i{animation:ep-link-line-enter 1s cubic-bezier(.22,1,.36,1) 333.333ms both}
+}
+.ep-link:is(:focus-visible,:active){color:var(--ep-link-hover)}
+.ep-link:is(:focus-visible,:active) .ep-link__label>span:first-child{opacity:0}
+.ep-link:is(:focus-visible,:active) .ep-link__label>span+span{opacity:1}
+@keyframes ep-link-arrow-leave{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(0)}}
+@keyframes ep-link-arrow-enter{from{opacity:1;transform:translateX(-50px)}to{opacity:1;transform:translateX(0)}}
+@keyframes ep-link-line-leave{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(102%)}}
+@keyframes ep-link-line-enter{from{opacity:1;transform:translateX(-102%)}to{opacity:1;transform:translateX(0)}}
+
+/* ---------- адаптив и доступность: как у эталона ---------- */
+@media (max-width:760px){.ep-btn--wide,.ep-link--wide{width:100%}}
+@media (max-width:480px){.ep-btn{padding-inline:20px;gap:20px;font-size:13px}.ep-link{padding-inline:20px;font-size:13px}}
+@media (max-width:380px){.ep-btn{padding-inline:18px;gap:16px;font-size:12px}.ep-link{padding-inline:18px;gap:16px;font-size:12px}}
+@media (prefers-reduced-motion:reduce){
+  .ep-btn,.ep-link,.ep-link__label>span{transition:none!important}
+  .ep-btn__arrow svg+svg,.ep-link__arrow svg+svg,.ep-link__line i+i{animation:none!important;display:none!important}
+  .ep-btn__arrow svg:first-child{color:inherit!important}
+  .ep-link :is(.ep-link__arrow svg:first-child,.ep-link__line i:first-child){animation:none!important;opacity:1!important;transform:none!important}
+}

@@ -86,13 +86,14 @@
       { key: 'layout', type: 'check', title: 'Конфигурация стены', opts: () => DATA.layouts.map(l => [l, l]), test: (p, v) => p.layout === v },
       { key: 'bezel', type: 'preset', title: 'Шов видеостены, мм', hint: 'Суммарная ширина рамок между соседними панелями. До 1 мм — диспетчерские и переговорные, 1,7–3,5 — ритейл и навигация',
         opts: () => [['0', 'до 1', 0, 1], ['1', '1–2', 1, 2], ['2', 'от 2', 2, 99]], test: (p, v, o) => p.bezel != null && inRange(p.bezel, o[2], o[3]) },
-      { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'Для офиса 500 нит, для витрины у окна от 700', opts: () => [['0', '500', 0, 500], ['1', 'от 700', 500, 99999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
+      { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'Для офиса 500 нит, для витрины у окна от 700', opts: () => [['0', 'до 500', 0, 500], ['1', 'от 650', 500, 99999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
+      { key: 'sensor', type: 'check', title: 'Сенсор', hint: 'Только для интерактивных панелей. Инфракрасный — касание любым предметом, ёмкостный — как в смартфоне, стекло без рамки', opts: () => [['ir', 'Инфракрасный'], ['pcap', 'Ёмкостный']], test: (p, v) => p.sensor === v },
       { key: 'res', type: 'check', title: 'Разрешение', opts: () => [['4k', '4K'], ['fhd', 'Full HD']], test: (p, v) => v === '4k' ? /3840 × 2160/.test(p.res || '') : /1920 × 1080/.test(p.res || '') },
-      { key: 'mode', type: 'check', title: 'Режим работы', opts: () => [['24/7', '24/7']], test: (p, v) => p.mode === v },
+      { key: 'mode', type: 'check', title: 'Режим работы', opts: () => [['24/7', '24/7'], ['18/7', '18/7'], ['16/7', '16/7'], ['12/7', '12/7']], test: (p, v) => p.mode === v },
       { key: 'price', type: 'range', title: 'Цена, ₽', ph: ['от 90 000', 'до 5 000 000'] },
     ];
     const FILTERS = GROUP === 'lcd' ? LCD_FILTERS : LED_FILTERS;
-    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим' };
+    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим', sensor: 'Сенсор' };
     const SORTS = GROUP === 'lcd' ? [
       ['default', 'по разделу и диагонали', (a, b) => (a.sectionOrder - b.sectionOrder) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 1e12) - (b.price || 1e12))],
       ['price-asc', 'цена: сначала дешевле', (a, b) => (a.price || 1e12) - (b.price || 1e12)],
@@ -163,7 +164,7 @@
       return out;
     }
     const BADGE = { 'ulichnye-ekrany': 'Уличный', 'interernye-ekrany': 'Интерьерный', 'gibkie-ekrany': 'Гибкий', 'mediafasady': 'Медиафасад', 'prokatnye-ekrany': 'Прокатный', 'tablo-navigatsii': 'Табло' };
-    const badge = p => GROUP === 'lcd' ? (p.layout ? 'Видеостена ' + p.layout : (p.mode || 'LCD')) : (BADGE[p.section] || p.sectionName);
+    const badge = p => GROUP === 'lcd' ? (p.section === 'interaktivnye-paneli' ? 'Сенсорная' : p.layout ? 'Видеостена ' + p.layout : (p.mode || 'LCD')) : (BADGE[p.section] || p.sectionName);
     const ARROW = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     const ARW = cls => `<span class="ek-arw" aria-hidden="true">${ARROW.replace('<svg', `<svg class="${cls}-out"`)}${ARROW.replace('<svg', `<svg class="${cls}-in"`)}</span>`;
     function cardHTML(p) {
@@ -175,7 +176,7 @@
       const imgs = frames.map((f, i) => `<img src="${BASE}/${f}" alt="${i ? '' : p.name}" loading="lazy" width="480" height="360" class="${i ? '' : 'on'}" ${i ? 'aria-hidden="true"' : ''}>`).join('');
       const dots = frames.length > 1 ? `<div class="ek-dots" aria-hidden="true">${frames.map((f, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : '';
       return `<article class="ek-card" data-sku="${p.sku}">
-        <div class="ek-img" data-frames="${frames.length}"><div class="ek-frames">${imgs}</div>${dots}<span class="ek-badges">${(GROUP !== 'lcd' && p.badges || [badge(p)]).map(b => `<span class="ek-badge">${b}</span>`).join('')}</span><label class="ek-cmp"><input type="checkbox" data-cmp="${p.sku}" ${cmp}>Сравнить</label></div>
+        <div class="ek-img" data-frames="${frames.length}"><div class="ek-frames">${imgs}</div>${dots}${p.section === 'interaktivnye-paneli' ? '<span class="ek-touch" title="Сенсорный экран" aria-label="Сенсорный экран"></span>' : ''}<span class="ek-badges">${(GROUP !== 'lcd' && p.badges || [badge(p)]).map(b => `<span class="ek-badge">${b}</span>`).join('')}</span><label class="ek-cmp"><input type="checkbox" data-cmp="${p.sku}" ${cmp}>Сравнить</label></div>
         <div class="ek-body"><div><h3><a href="${url}">${p.name}</a></h3><div class="ek-sku">${p.sku}</div></div>
         <dl class="ek-specs">${p.specs.map(s => `<div><dt>${s[0]}</dt><dd class="ek-num">${s[1]}</dd></div>`).join('')}</dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val">${price}</span></div></div>
@@ -259,7 +260,7 @@
     const items = ids.map(id => ALL.find(p => p.sku === id)).filter(Boolean);
     if (!items.length) { cmpRoot.innerHTML = `<div class="ek-empty">Список сравнения пуст. Отметьте «Сравнить» на карточках в <a href="${BASE}/catalog/led-ekrany/" style="text-decoration:underline">каталоге</a>.</div>`; }
     else {
-      const lcd = items.every(p => p.diag); const rows = lcd ? [['Раздел', p => p.sectionName], ['Диагональ', p => p.diag + '″'], ['Конфигурация', p => p.layout || '—'], ['Разрешение', p => p.res || '—'], ['Шов', p => p.bezel != null ? p.bezel + ' мм' : '—'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Режим', p => p.mode || '—'], ['Бренд', p => p.brand], ['Цена', p => p.price ? fmt(p.price) + ' ₽' : 'по запросу']] : [['Раздел', p => p.sectionName], ['Шаг пикселя', p => p.pitchStr + ' мм'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Защита', p => p.ip || '—'], ['Среда', p => p.env === 'out' ? 'Улица' : 'Помещение'], ['Обслуживание', p => ({ front: 'Переднее', back: 'Заднее', both: 'Переднее и заднее' })[p.svc] || '—'], ['Тип пикселя', p => p.pixelType || '—'], ['Размер', p => p.size ? p.size + ' мм' : '—'], ['Цена', p => p.price ? fmt(p.price) + ' ₽ ' + (p.priceUnit === 'шт' ? 'за табло' : 'за м²') : 'по запросу']];
+      const lcd = items.every(p => p.diag); const rows = lcd ? [['Раздел', p => p.sectionName], ['Диагональ', p => p.diag + '″'], ['Конфигурация', p => p.layout || '—'], ['Разрешение', p => p.res || '—'], ['Шов', p => p.bezel != null ? p.bezel + ' мм' : '—'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Режим', p => p.mode || '—'], ['Касания', p => p.touch ? p.touch + ' точек' : '—'], ['Бренд', p => p.brand], ['Цена', p => p.price ? fmt(p.price) + ' ₽' : 'по запросу']] : [['Раздел', p => p.sectionName], ['Шаг пикселя', p => p.pitchStr + ' мм'], ['Яркость', p => fmt(p.nit) + ' нит'], ['Защита', p => p.ip || '—'], ['Среда', p => p.env === 'out' ? 'Улица' : 'Помещение'], ['Обслуживание', p => ({ front: 'Переднее', back: 'Заднее', both: 'Переднее и заднее' })[p.svc] || '—'], ['Тип пикселя', p => p.pixelType || '—'], ['Размер', p => p.size ? p.size + ' мм' : '—'], ['Цена', p => p.price ? fmt(p.price) + ' ₽ ' + (p.priceUnit === 'шт' ? 'за табло' : 'за м²') : 'по запросу']];
       cmpRoot.innerHTML = `<div style="overflow-x:auto"><table class="ek-cmp-table"><thead><tr><th></th>${items.map(p => `<th><a href="${BASE}/catalog/tovar/${p.slug}/">${p.name}</a><br><img src="${BASE}/${p.photo}" alt="" style="width:120px;margin-top:8px;mix-blend-mode:multiply"><br><button type="button" class="ek-link" data-rm="${p.sku}">убрать</button></th>`).join('')}</tr></thead><tbody>${rows.map(([l, f]) => { const vals = items.map(f); const same = vals.every(v => v === vals[0]); return `<tr><td>${l}</td>${vals.map(v => `<td class="${same ? '' : 'diff'}">${v}</td>`).join('')}</tr>`; }).join('')}</tbody></table></div><p style="margin-top:16px;color:var(--ek-muted);font-size:13.5px">Розовым выделены параметры, по которым модели различаются.</p>`;
       $$('[data-rm]', cmpRoot).forEach(b => b.addEventListener('click', () => { cmpSet(cmpGet().filter(x => x !== b.dataset.rm)); location.reload(); }));
     }
