@@ -78,32 +78,45 @@
       { key: 'price', type: 'range', title: 'Цена, ₽ с НДС', ph: ['от 50 000', 'до 2 500 000'] },
       { key: 'apps', hidden: true, type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
     ];
+    const LCD_WALL = ['lcd-videosteny', 'lcd-paneli-dlya-videosten'];
+    // состав и порядок фильтров LCD: общий раздел ('') и каждый продукт отдельно
+    const LCD_SIDEBAR = {
+      '': ['section', 'diag', 'brand', 'layout', 'bezel', 'nit', 'sensor', 'res', 'mode', 'price'],
+      'lcd-videosteny': ['diag', 'brand', 'layout', 'bezel', 'nit', 'res', 'mode', 'price'],
+      'lcd-paneli-dlya-videosten': ['diag', 'brand', 'bezel', 'nit', 'res', 'mode', 'price'],
+      'informaczionnye-paneli': ['diag', 'brand', 'nit', 'res', 'mode', 'price'],
+      'professionalnye-displei': ['diag', 'brand', 'nit', 'res', 'mode', 'price'],
+      'interaktivnye-paneli': ['diag', 'brand', 'nit', 'sensor', 'res', 'mode', 'price'],
+    };
     const LCD_FILTERS = [
-      { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
-      { key: 'apps', type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
+      { key: 'section', type: 'check', title: 'Продукт', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
+      { key: 'apps', hidden: true, type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
       { key: 'brand', type: 'check', title: 'Бренд', opts: () => DATA.brands.map(b => [b, b]), test: (p, v) => p.brand === v },
       { key: 'diag', type: 'preset', title: 'Диагональ панели, ″', opts: () => [['0', 'до 43', 0, 43], ['1', '46–55', 43, 55], ['2', '65–75', 55, 75], ['3', 'от 86', 75, 999]], test: (p, v, o) => inRange(p.diag, o[2], o[3]) },
       { key: 'layout', type: 'check', title: 'Конфигурация стены', opts: () => DATA.layouts.map(l => [l, l]), test: (p, v) => p.layout === v },
       { key: 'bezel', type: 'preset', title: 'Шов видеостены, мм', hint: 'Суммарная ширина рамок между соседними панелями. До 1 мм — диспетчерские и переговорные, 1,7–3,5 — ритейл и навигация',
         opts: () => [['0', 'до 1', 0, 1], ['1', '1–2', 1, 2], ['2', 'от 2', 2, 99]], test: (p, v, o) => p.bezel != null && inRange(p.bezel, o[2], o[3]) },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'Для офиса 500 нит, для витрины у окна от 700', opts: () => [['0', 'до 500', 0, 500], ['1', 'от 650', 500, 99999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
-      { key: 'sensor', type: 'check', title: 'Сенсор', hint: 'Только для интерактивных панелей. Инфракрасный — касание любым предметом, ёмкостный — как в смартфоне, стекло без рамки', opts: () => [['ir', 'Инфракрасный'], ['pcap', 'Ёмкостный']], test: (p, v) => p.sensor === v },
+      { key: 'sensor', type: 'check', title: 'Тип сенсора', hint: 'Только для интерактивных панелей. Инфракрасный — касание любым предметом, ёмкостный — как в смартфоне, стекло без рамки', opts: () => [['ir', 'Инфракрасный'], ['pcap', 'Ёмкостный']], test: (p, v) => p.sensor === v },
       { key: 'res', type: 'check', title: 'Разрешение', opts: () => [['4k', '4K'], ['fhd', 'Full HD']], test: (p, v) => v === '4k' ? /3840 × 2160/.test(p.res || '') : /1920 × 1080/.test(p.res || '') },
-      { key: 'mode', type: 'check', title: 'Режим работы', opts: () => [['24/7', '24/7'], ['18/7', '18/7'], ['16/7', '16/7'], ['12/7', '12/7']], test: (p, v) => p.mode === v },
+      { key: 'mode', type: 'check', title: 'Режим работы', opts: () => [['24/7', '24/7'], ['18/7', '18/7'], ['16/7', '16/7'], ['12/7', '12/7']], test: (p, v) => (p.mode || (LCD_WALL.includes(p.section) ? '24/7' : '')) === v },
       { key: 'price', type: 'range', title: 'Цена, ₽', ph: ['от 90 000', 'до 5 000 000'] },
     ];
     const FILTERS = GROUP === 'lcd' ? LCD_FILTERS : LED_FILTERS;
     const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим', sensor: 'Сенсор' };
+    // по умолчанию: сначала модели с фото, внутри — от дешёвых к дорогим
+    const noPhoto = p => /\.svg$/.test(p.photo || '') ? 1 : 0;
+    const byPrice = (a, b) => (noPhoto(a) - noPhoto(b)) || ((a.price || 1e12) - (b.price || 1e12));
     const SORTS = GROUP === 'lcd' ? [
-      ['default', 'по разделу и диагонали', (a, b) => (a.sectionOrder - b.sectionOrder) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 1e12) - (b.price || 1e12))],
-      ['price-asc', 'цена: сначала дешевле', (a, b) => (a.price || 1e12) - (b.price || 1e12)],
+      ['default', 'цена: сначала дешевле', byPrice],
+      ['section', 'по разделу и диагонали', (a, b) => (a.sectionOrder - b.sectionOrder) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 1e12) - (b.price || 1e12))],
       ['price-desc', 'цена: сначала дороже', (a, b) => (b.price || 0) - (a.price || 0)],
       ['diag-asc', 'диагональ: от меньшей', (a, b) => (a.diag || 0) - (b.diag || 0)],
       ['diag-desc', 'диагональ: от большей', (a, b) => (b.diag || 0) - (a.diag || 0)],
       ['bezel-asc', 'шов: от тонкого', (a, b) => (a.bezel ?? 99) - (b.bezel ?? 99)],
     ] : [
-      ['default', 'по разделу и шагу', (a, b) => (a.sectionOrder - b.sectionOrder) || ((a.pitch || 99) - (b.pitch || 99)) || ((a.price || 0) - (b.price || 0))],
-      ['price-asc', 'цена: сначала дешевле', (a, b) => (a.price || 1e12) - (b.price || 1e12)],
+      ['default', 'цена: сначала дешевле', byPrice],
+      ['section', 'по разделу и шагу', (a, b) => (a.sectionOrder - b.sectionOrder) || ((a.pitch || 99) - (b.pitch || 99)) || ((a.price || 0) - (b.price || 0))],
       ['price-desc', 'цена: сначала дороже', (a, b) => (b.price || 0) - (a.price || 0)],
       ['pitch-asc', 'шаг пикселя: от мелкого', (a, b) => (a.pitch || 99) - (b.pitch || 99)],
       ['pitch-desc', 'шаг пикселя: от крупного', (a, b) => (b.pitch || 0) - (a.pitch || 0)],
@@ -117,7 +130,9 @@
     fresh(state);
     // пресеты из страницы раздела и из URL (?section=…&app=…)
     const lockedSection = root.dataset.section || '';
-    if (lockedSection) state.sel.section.add(lockedSection);
+    // исходное состояние раздела: сам раздел; у панелей для видеостен сразу отмечен режим 24/7
+    const preset = s => { if (lockedSection) s.sel.section.add(lockedSection); if (GROUP === 'lcd' && lockedSection === 'lcd-paneli-dlya-videosten') s.sel.mode.add('24/7'); };
+    preset(state);
     const qs = new URLSearchParams(location.search);
     if (qs.get('app') && APPS[qs.get('app')]) state.sel.apps.add(qs.get('app'));
     if (qs.get('env')) state.sel.env.add(qs.get('env'));
@@ -138,7 +153,7 @@
     const countFor = (s, f, o) => P.filter(p => passes(p, s, f.key) && f.test(p, o[0], o)).length;
 
     const visibleFilters = () => FILTERS.filter(f => !(f.key === 'section' && lockedSection));
-    const sidebarFilters = () => visibleFilters().filter(f => !f.hidden);
+    const sidebarFilters = () => { const vf = visibleFilters().filter(f => !f.hidden); if (GROUP !== 'lcd') return vf; return (LCD_SIDEBAR[lockedSection] || LCD_SIDEBAR['']).map(k => vf.find(f => f.key === k)).filter(Boolean); };
     function filterHTML(s) {
       return sidebarFilters().map(f => {
         let inner = '';
@@ -152,7 +167,7 @@
       $$('input[type=checkbox]', container).forEach(el => el.addEventListener('change', () => { el.checked ? s.sel[el.dataset.k].add(el.dataset.v) : s.sel[el.dataset.k].delete(el.dataset.v); after(); }));
       $$('.ek-presets button', container).forEach(el => el.addEventListener('click', () => { const S = s.sel[el.dataset.k]; S.has(el.dataset.v) ? S.delete(el.dataset.v) : S.add(el.dataset.v); after(); }));
       $$('input[type=number]', container).forEach(el => el.addEventListener('input', () => { s[el.dataset.k] = el.value; after(true); }));
-      const r = $('[data-reset]', container); if (r) r.addEventListener('click', () => { fresh(s); if (lockedSection) s.sel.section.add(lockedSection); const q = $('#ek-q'); if (q) q.value = ''; after(); });
+      const r = $('[data-reset]', container); if (r) r.addEventListener('click', () => { fresh(s); preset(s); const q = $('#ek-q'); if (q) q.value = ''; after(); });
     }
     function chipsList() {
       const out = [];
@@ -192,12 +207,12 @@
       more.innerHTML = n > shown.length ? `<button type="button" class="ek-btn ek-btn--outline ek-btn--center" id="ek-more-btn" style="min-width:260px">Показать ещё ${Math.min(24, n - shown.length)}</button><span>Показано ${shown.length} из ${n}</span>` : (n ? `<span>Показано ${shown.length} из ${n}</span>` : '');
       const mb = $('#ek-more-btn'); if (mb) mb.addEventListener('click', () => { state.shown += 24; render(); });
       bindSliders(grid);
-      $$('[data-reset-all]', grid).forEach(b => b.addEventListener('click', () => { fresh(state); if (lockedSection) state.sel.section.add(lockedSection); $('#ek-q').value = ''; state.shown = 24; render(); }));
+      $$('[data-reset-all]', grid).forEach(b => b.addEventListener('click', () => { fresh(state); preset(state); $('#ek-q').value = ''; state.shown = 24; render(); }));
       $$('[data-cmp]', grid).forEach(el => el.addEventListener('change', () => { let c = cmpGet().filter(x => x !== el.dataset.cmp); if (el.checked) c.push(el.dataset.cmp); cmpSet(c); renderCmp(); }));
       const chips = chipsList(), ce = $('#ek-chips');
       ce.innerHTML = chips.length ? chips.map((c, i) => `<span class="ek-chip"><small>${c.label}:</small> ${c.val}<button type="button" data-chip="${i}" aria-label="Убрать фильтр ${c.val}">×</button></span>`).join('') + `<button type="button" class="ek-clear" data-clear>Сбросить всё</button>` : '';
       $$('[data-chip]', ce).forEach(b => b.addEventListener('click', () => { chips[+b.dataset.chip].fn(); state.shown = 24; render(); }));
-      $$('[data-clear]', ce).forEach(b => b.addEventListener('click', () => { fresh(state); if (lockedSection) state.sel.section.add(lockedSection); $('#ek-q').value = ''; state.shown = 24; render(); }));
+      $$('[data-clear]', ce).forEach(b => b.addEventListener('click', () => { fresh(state); preset(state); $('#ek-q').value = ''; state.shown = 24; render(); }));
       const fc = $('#ek-fbtn-count'); if (fc) fc.textContent = chips.length ? `· ${chips.length}` : '';
       const fb = $('#ek-filter-body'); const focus = document.activeElement; const sel = focus && focus.selectionStart;
       fb.innerHTML = filterHTML(state); bindFilters(fb, state, soft => { state.shown = 24; render(soft); });
