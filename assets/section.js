@@ -47,6 +47,26 @@
     });
   }
 
+  // Этапы установки: блок закреплён, каждый шаг прокрутки открывает следующий этап (на узких экранах и без анимаций — обычный список).
+  const flow = document.querySelector('.sx-flow'), flowItems = flow ? [...flow.querySelectorAll('.sx-cards li')] : [];
+  if (flowItems.length) {
+    const count = flow.querySelector('.sx-flow-count b'), pin = flow.querySelector('.sx-flow-pin');
+    let shown = -1, tick = false;
+    const draw = () => {
+      tick = false;
+      // последний этап держится два шага: иначе он уезжает раньше, чем его успевают прочитать
+      const cs = getComputedStyle(pin), room = cs.position === 'sticky' ? flow.offsetHeight - pin.offsetHeight : 0;   // закрепление включает CSS; без него показаны все этапы
+      const n = room > 0 ? Math.min(flowItems.length, 1 + Math.max(0, Math.floor((parseFloat(cs.top) - flow.getBoundingClientRect().top) / (room / (flowItems.length + 1))))) : flowItems.length;
+      if (n === shown) return;
+      shown = n;
+      flowItems.forEach((li, i) => { li.classList.toggle('is-on', i < n); li.classList.toggle('is-last', i === n - 1); });
+      flow.style.setProperty('--sx-flow-n', n);
+      if (count) count.textContent = String(n).padStart(2, '0');
+    };
+    const ask = () => { if (!tick) { tick = true; requestAnimationFrame(draw); } };
+    draw(); addEventListener('scroll', ask, { passive: true }); addEventListener('resize', ask);
+  }
+
   // Каталог: лента в две карточки по высоте, листается вправо. Карточки рисует catalog.js;
   // здесь — стрелки, счётчик и догрузка всех моделей (кнопки «Показать ещё» в ленте нет).
   const grid = document.getElementById('ek-grid'), more = document.getElementById('ek-more');
@@ -75,6 +95,31 @@
   const queue = () => { if (!raf) raf = requestAnimationFrame(update); };
   prev.addEventListener('click', () => grid.scrollBy({ left: -grid.clientWidth - 1, behavior: 'smooth' }));
   next.addEventListener('click', () => grid.scrollBy({ left: grid.clientWidth + 1, behavior: 'smooth' }));
+  // Полоса под лентой: ползунок тянется мышью или пальцем, клик по свободному месту листает на один экран.
+  const track = rail.querySelector('.sx-rail-bar');
+  let drag = null;
+  track.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    const t = bar.getBoundingClientRect();
+    if (e.clientX < t.left || e.clientX > t.right) {       // мимо ползунка — лист на экран в сторону клика
+      grid.scrollBy({ left: (e.clientX < t.left ? -1 : 1) * (grid.clientWidth + 1), behavior: 'smooth' });
+      return;
+    }
+    drag = { x: e.clientX, left: grid.scrollLeft, k: grid.scrollWidth / track.getBoundingClientRect().width };
+    track.classList.add('is-drag'); track.setPointerCapture(e.pointerId);
+    grid.style.scrollSnapType = 'none'; grid.style.scrollBehavior = 'auto';   // пока тянем, лента идёт за рукой без прилипания
+    e.preventDefault();
+  });
+  track.addEventListener('pointermove', e => { if (drag) grid.scrollLeft = drag.left + (e.clientX - drag.x) * drag.k; });
+  const drop = () => {
+    if (!drag) return;
+    drag = null; track.classList.remove('is-drag');
+    const w = step(), to = Math.round(grid.scrollLeft / w) * w;   // довести до целой карточки
+    grid.style.scrollBehavior = '';
+    grid.scrollTo({ left: to, behavior: 'smooth' });
+    setTimeout(() => { grid.style.scrollSnapType = ''; }, 450);
+  };
+  track.addEventListener('pointerup', drop); track.addEventListener('pointercancel', drop);
   grid.addEventListener('scroll', queue, { passive: true });
   addEventListener('resize', queue);
   let loading = false;
