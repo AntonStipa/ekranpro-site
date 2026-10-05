@@ -14,8 +14,8 @@
 <link rel="stylesheet" href="/ekranpro-site/assets/site-shell.css">
 <link rel="stylesheet" href="/ekranpro-site/assets/catalog.css?v=5c769f92">
 
-<link rel="stylesheet" href="/ekranpro-site/assets/buttons.css?v=7b27dda2">
-<link rel="stylesheet" href="/ekranpro-site/assets/section.css?v=7b27dda2">
+<link rel="stylesheet" href="/ekranpro-site/assets/buttons.css?v=d751c3b3">
+<link rel="stylesheet" href="/ekranpro-site/assets/section.css?v=d751c3b3">
 <link rel="preload" as="image" media="(min-width:681px)" href="/ekranpro-site/assets/section/hero-ulichnye-2836.webp" imagesrcset="/ekranpro-site/assets/section/hero-ulichnye-1780.webp 1780w, /ekranpro-site/assets/section/hero-ulichnye-2836.webp 2836w" imagesizes="max(100vw, 250vh)">
 <style data-ep-product-showcase>#ep-products-compare {
   --ep-ink: #171a1c;
@@ -982,9 +982,635 @@
   </div>
 </section>
 
+<!-- REVIEWS_START -->
+<section id="ep-reviews" aria-labelledby="eprv-title">
+  <style>#ep-reviews {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(48px, 5vw, 96px) 4.8% clamp(56px, 5.5vw, 104px);
+  background: #f6f6f3;
+  color: #171a1c;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color-scheme: light;
+  scroll-margin-top: 0;
+}
+#ep-reviews > header, #ep-reviews > .eprv-carousel { flex: none; width: 100%; }
+#ep-reviews *, #ep-reviews *::before, #ep-reviews *::after { box-sizing: border-box; }
+#ep-reviews [hidden] { display: none !important; }
+#ep-reviews h2, #ep-reviews h3, #ep-reviews p { margin: 0; }
+#ep-reviews a { color: inherit; text-decoration: none; }
+#ep-reviews button { font: inherit; cursor: pointer; }
+#ep-reviews :is(a, button, [tabindex]):focus-visible { outline: 3px solid #bd461e; outline-offset: 5px; }
+#ep-reviews .eprv-eyebrow {
+  margin-bottom: clamp(20px, 1.8vw, 36px);
+  color: #60656a;
+  font-size: clamp(11px, .88vw, 18px);
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+#ep-reviews .eprv-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: clamp(32px, 3vw, 56px);
+}
+#ep-reviews h2 {
+  font-size: clamp(32px, 4.02vw, 80px);
+  font-weight: 500;
+  line-height: 1.07;
+  letter-spacing: -.045em;
+  white-space: nowrap;
+}
+#ep-reviews .eprv-intro {
+  flex: none;
+  color: #60656a;
+  font-size: clamp(15px, 1.15vw, 21px);
+  line-height: 1.45;
+}
+#ep-reviews .eprv-intro span { display: block; white-space: nowrap; }
+#ep-reviews .eprv-carousel { --eprv-gap: clamp(20px, 2vw, 36px); min-width: 0; }
+#ep-reviews .eprv-track {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - var(--eprv-gap) * 2) / 3);
+  gap: var(--eprv-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+/* The lower range control is the only visible scrollbar, including at load. */
+#ep-reviews .eprv-track::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+#ep-reviews .eprv-item { min-width: 0; scroll-snap-align: start; }
+#ep-reviews .eprv-card { display: flex; flex-direction: column; height: 100%; }
+#ep-reviews .eprv-card:focus-visible { outline-offset: -3px; }
+#ep-reviews .eprv-media {
+  position: relative;
+  display: block;
+  flex: none;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #252b2d;
+  isolation: isolate;
+}
+#ep-reviews .eprv-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(var(--eprv-photo-scale, 1.36));
+  transform-origin: var(--eprv-photo-origin, center top);
+  transition: none;
+}
+#ep-reviews .eprv-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, .9);
+  border-radius: 50%;
+  background: rgba(7, 12, 16, .28);
+  color: #fff;
+  transition: transform 240ms ease-out, background-color 240ms ease-out;
+}
+#ep-reviews .eprv-play svg { width: 19px; height: 19px; margin-left: 2px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .25)); }
+#ep-reviews .eprv-copy { display: flex; flex: 1; flex-direction: column; padding-top: 22px; }
+#ep-reviews .eprv-city { margin-bottom: 8px; color: #60656a; font-size: 13px; }
+#ep-reviews h3 {
+  font-size: clamp(21px, 1.7vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.035em;
+}
+#ep-reviews .eprv-person {
+  max-width: 34ch;
+  margin-top: 9px;
+  color: #555c60;
+  font-size: clamp(14px, 1.05vw, 18px);
+  line-height: 1.45;
+}
+/* A separate scrollbar stays below every name and job title. */
+#ep-reviews .eprv-track.is-scrubbing { scroll-snap-type: none; scroll-behavior: auto; }
+#ep-reviews .eprv-scrollbar {
+  --eprv-thumb-width: 37.5%;
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 24px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+#ep-reviews .eprv-scrollbar::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: #d8dad7;
+}
+#ep-reviews .eprv-scrollbar::-webkit-slider-thumb {
+  width: var(--eprv-thumb-width);
+  height: 6px;
+  margin-top: -1px;
+  border: 0;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #707975;
+  cursor: grab;
+}
+#ep-reviews .eprv-scrollbar::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: #d8dad7;
+}
+#ep-reviews .eprv-scrollbar::-moz-range-thumb {
+  width: var(--eprv-thumb-width);
+  height: 6px;
+  border: 0;
+  border-radius: 4px;
+  background: #707975;
+  cursor: grab;
+}
+#ep-reviews .eprv-scrollbar:active::-webkit-slider-thumb { cursor: grabbing; background: #343c41; }
+#ep-reviews .eprv-scrollbar:active::-moz-range-thumb { cursor: grabbing; background: #343c41; }
+#ep-reviews .eprv-scrollbar:focus-visible { outline: 3px solid #bd461e; outline-offset: 4px; }
+#ep-reviews .eprv-scrollbar:disabled { opacity: .45; cursor: default; }
+#ep-reviews .eprv-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 14px;
+  padding-top: 18px;
+  border-top: 1px solid #d8dad7;
+}
+#ep-reviews .eprv-counter { color: #60656a; font-size: 14px; font-variant-numeric: tabular-nums; }
+#ep-reviews .eprv-arrows { display: flex; gap: 8px; }
+#ep-reviews .eprv-arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #b9bebd;
+  border-radius: 2px;
+  background: transparent;
+  color: #171a1c;
+  transition: background-color 180ms ease-out, border-color 180ms ease-out;
+}
+#ep-reviews .eprv-arrow svg { width: 21px; height: 21px; }
+#ep-reviews .eprv-arrow:disabled { color: #9ba09e; border-color: #dde0dc; cursor: default; }
+html.eprv-dialog-open { overflow: hidden; }
+#ep-reviews .eprv-dialog {
+  width: min(1120px, calc(100vw - 40px));
+  max-width: none;
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 2px;
+  background: #f6f6f3;
+  color: #171a1c;
+}
+#ep-reviews .eprv-dialog::backdrop { background: rgba(7, 12, 16, .86); }
+#ep-reviews .eprv-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 24px;
+}
+#ep-reviews #eprv-dialog-title { font-size: clamp(19px, 2vw, 26px); font-weight: 500; line-height: 1.2; letter-spacing: -.025em; }
+#ep-reviews .eprv-close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #b9bebd;
+  border-radius: 2px;
+  background: transparent;
+  color: #171a1c;
+}
+#ep-reviews .eprv-close svg { width: 21px; height: 21px; }
+#ep-reviews .eprv-player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #070c10;
+}
+#ep-reviews .eprv-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #070c10; }
+#ep-reviews .eprv-player-status { position: absolute; inset: 0; display: grid; place-items: center; padding: 28px; color: #fff; text-align: center; font-size: 15px; }
+#ep-reviews .eprv-dialog-footer { display: flex; justify-content: flex-end; padding: 16px 24px; }
+#ep-reviews .eprv-external { display: inline-flex; align-items: center; gap: 14px; min-height: 36px; font-size: 14px; }
+#ep-reviews .eprv-external svg { width: 18px; height: 18px; }
+@media (hover: hover) and (pointer: fine) {
+  #ep-reviews .eprv-card:hover .eprv-play { transform: translate(-50%, -50%) scale(1.06); background: rgba(7, 12, 16, .48); }
+  #ep-reviews .eprv-arrow:not(:disabled):hover, #ep-reviews .eprv-close:hover { background: #e7e9e5; border-color: #8b928f; }
+}
+@media (max-width: 980px) {
+  #ep-reviews .eprv-heading { display: block; }
+  #ep-reviews .eprv-intro { margin-top: 18px; }
+  #ep-reviews .eprv-track { grid-auto-columns: calc((100% - var(--eprv-gap)) / 2); }
+  #ep-reviews h3 { font-size: 25px; }
+  #ep-reviews .eprv-person { max-width: none; }
+}
+@media (max-width: 680px) {
+  #ep-reviews { padding: 42px 20px 48px; }
+  #ep-reviews .eprv-heading { margin-bottom: 30px; }
+  #ep-reviews h2 { font-size: clamp(32px, 7.4vw, 48px); white-space: normal; }
+  #ep-reviews .eprv-intro { font-size: 15px; }
+  #ep-reviews .eprv-carousel { --eprv-gap: 16px; }
+  #ep-reviews .eprv-track { grid-auto-columns: calc(100% - 26px); }
+  #ep-reviews .eprv-copy { padding-top: 18px; }
+  #ep-reviews h3 { font-size: 23px; }
+  #ep-reviews .eprv-play { width: 46px; height: 46px; }
+  #ep-reviews .eprv-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
+  #ep-reviews .eprv-dialog-heading { gap: 12px; padding: 12px; }
+  #ep-reviews .eprv-dialog-footer { padding: 12px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ep-reviews .eprv-media img, #ep-reviews .eprv-play, #ep-reviews .eprv-arrow { transition: none; }
+  #ep-reviews .eprv-card:hover .eprv-play { transform: translate(-50%, -50%); }
+}
+</style>
+  <header>
+    <p class="eprv-eyebrow">04 / Отзывы</p>
+    <div class="eprv-heading">
+      <h2 id="eprv-title">Клиенты о работе с ЭкранПро</h2>
+      <p class="eprv-intro"><span>Руководители и специалисты —</span> <span>об опыте сотрудничества с нами.</span></p>
+    </div>
+  </header>
+  <div class="eprv-carousel" data-eprv-carousel="" role="region" aria-roledescription="карусель" aria-label="Видеоотзывы клиентов" data-eprv-ready="">
+    <ul id="eprv-track" class="eprv-track" data-eprv-track="" tabindex="0" aria-label="Отзывы. Перелистывайте стрелками влево и вправо">
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239224&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Алексей Шуховцов" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Алексей Шуховцов, «Инженер IT», Москва">
+        <span class="eprv-media" style="--eprv-photo-origin:40% top">
+          <img src="/ekranpro-site/assets/images/review-01-1280-11e78ad8.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-01-480-9f98022c.webp 480w, /ekranpro-site/assets/images/review-01-800-b312d28d.webp 800w, /ekranpro-site/assets/images/review-01-1280-11e78ad8.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Москва</span>
+          <h3>Алексей Шуховцов</h3>
+          <span class="eprv-person">«Инженер IT»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239223&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Людмила Климанович" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Людмила Климанович, Управляющая фитнес-клубом LVLup, Хабаровск">
+        <span class="eprv-media" style="--eprv-photo-origin:left top">
+          <img src="/ekranpro-site/assets/images/review-02-1280-a8322498.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-02-480-833c5a73.webp 480w, /ekranpro-site/assets/images/review-02-800-7c55925f.webp 800w, /ekranpro-site/assets/images/review-02-1280-a8322498.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Хабаровск</span>
+          <h3>Людмила Климанович</h3>
+          <span class="eprv-person">Управляющая фитнес-клубом LVLup</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239221&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Евгений Гаврилов" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Евгений Гаврилов, Коммерческий директор «Дезснаб-Трейд», Люберцы">
+        <span class="eprv-media" style="">
+          <img src="/ekranpro-site/assets/images/review-03-1280-17a22e4f.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-03-480-cbab8ac8.webp 480w, /ekranpro-site/assets/images/review-03-800-19490797.webp 800w, /ekranpro-site/assets/images/review-03-1280-17a22e4f.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Люберцы</span>
+          <h3>Евгений Гаврилов</h3>
+          <span class="eprv-person">Коммерческий директор «Дезснаб-Трейд»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239219&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Александр" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Александр, Управляющий парк-отелем «Империал», Москва">
+        <span class="eprv-media" style="--eprv-photo-origin:left top">
+          <img src="/ekranpro-site/assets/images/review-04-1280-243809d7.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-04-480-1448897a.webp 480w, /ekranpro-site/assets/images/review-04-800-7f7a9a5b.webp 800w, /ekranpro-site/assets/images/review-04-1280-243809d7.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Москва</span>
+          <h3>Александр</h3>
+          <span class="eprv-person">Управляющий парк-отелем «Империал»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239218&amp;hd=1&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Артем" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Артем, IT-специалист Xpate, Москва">
+        <span class="eprv-media" style="--eprv-photo-origin:right top">
+          <img src="/ekranpro-site/assets/images/review-05-1280-fda0f66b.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-05-480-0a858e94.webp 480w, /ekranpro-site/assets/images/review-05-800-a0a33820.webp 800w, /ekranpro-site/assets/images/review-05-1280-fda0f66b.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Москва</span>
+          <h3>Артем</h3>
+          <span class="eprv-person">IT-специалист Xpate</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239217&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Тимур Велиханов" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Тимур Велиханов, Директор исторического парка, Махачкала">
+        <span class="eprv-media" style="--eprv-photo-origin:right top;--eprv-photo-scale:1.46">
+          <img src="/ekranpro-site/assets/images/review-06-1280-bd3a2df7.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-06-480-2c7ad79c.webp 480w, /ekranpro-site/assets/images/review-06-800-d3b1a56f.webp 800w, /ekranpro-site/assets/images/review-06-1280-bd3a2df7.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Махачкала</span>
+          <h3>Тимур Велиханов</h3>
+          <span class="eprv-person">Директор исторического парка</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239216&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Анастасия" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Анастасия, Менеджер по маркетингу ТРЦ «Планета», Уфа">
+        <span class="eprv-media" style="--eprv-photo-origin:40% top">
+          <img src="/ekranpro-site/assets/images/review-07-1280-94011c7a.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-07-480-6548c0db.webp 480w, /ekranpro-site/assets/images/review-07-800-2b6f2aaa.webp 800w, /ekranpro-site/assets/images/review-07-1280-94011c7a.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Уфа</span>
+          <h3>Анастасия</h3>
+          <span class="eprv-person">Менеджер по маркетингу ТРЦ «Планета»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239215&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Надежда Пряничникова" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Надежда Пряничникова, Директор АНО «Потенциал», Семенов">
+        <span class="eprv-media" style="--eprv-photo-origin:35% top">
+          <img src="/ekranpro-site/assets/images/review-08-1280-dddfccee.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-08-480-9348da4c.webp 480w, /ekranpro-site/assets/images/review-08-800-7c4e69fd.webp 800w, /ekranpro-site/assets/images/review-08-1280-dddfccee.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Семенов</span>
+          <h3>Надежда Пряничникова</h3>
+          <span class="eprv-person">Директор АНО «Потенциал»</span>
+        </div>
+      </a>
+    </li>
+    </ul>
+    <input class="eprv-scrollbar" data-eprv-scrollbar="" type="range" min="0" max="1000" step="1" value="0" aria-label="Прокрутить отзывы" aria-controls="eprv-track" aria-valuetext="3 из 8" style="--eprv-thumb-width: 454.8151159289371px;">
+    <div class="eprv-nav" data-eprv-nav="">
+      <p class="eprv-counter" data-eprv-counter="" role="status" aria-live="polite" aria-atomic="true">3 из 8</p>
+      <div class="eprv-arrows">
+        <button class="eprv-arrow" type="button" data-eprv-prev="" aria-controls="eprv-track" aria-label="Предыдущие отзывы" disabled=""><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+        <button class="eprv-arrow" type="button" data-eprv-next="" aria-controls="eprv-track" aria-label="Следующие отзывы"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+      </div>
+    </div>
+  </div>
+  <dialog id="eprv-video-dialog" class="eprv-dialog" aria-labelledby="eprv-dialog-title">
+    <div class="eprv-dialog-heading">
+      <h3 id="eprv-dialog-title">Видеоотзыв</h3>
+      <button class="eprv-close" type="button" data-eprv-close="" aria-label="Закрыть видео"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+    </div>
+    <div class="eprv-player" data-eprv-player=""></div>
+    <div class="eprv-dialog-footer"><a class="eprv-external" data-eprv-external="" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239224&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer">Открыть в VK Видео<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter"></path></svg></a></div>
+  </dialog>
+</section>
+<script>(() => {
+  'use strict';
+  const section = document.getElementById('ep-reviews');
+  if (!section) return;
+  const carousel = section.querySelector('[data-eprv-carousel]');
+  const track = section.querySelector('[data-eprv-track]');
+  const items = track ? Array.from(track.children) : [];
+  const previous = section.querySelector('[data-eprv-prev]');
+  const next = section.querySelector('[data-eprv-next]');
+  const counter = section.querySelector('[data-eprv-counter]');
+  const navigation = section.querySelector('[data-eprv-nav]');
+  const scrollbar = section.querySelector('[data-eprv-scrollbar]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (carousel && track && items.length && previous && next && counter && navigation) {
+    let requestedLeft = null;
+    let isScrubbing = false;
+    let settleTimer = null;
+    let updateFrame = null;
+    const metrics = () => {
+      const cardWidth = items[0].getBoundingClientRect().width;
+      const step = items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : cardWidth;
+      const gap = Math.max(0, step - cardWidth);
+      return {
+        step,
+        max: Math.max(0, track.scrollWidth - track.clientWidth),
+        visible: Math.max(1, Math.min(items.length, Math.floor((track.clientWidth + gap + 1) / step)))
+      };
+    };
+    const update = () => {
+      updateFrame = null;
+      const { step, max, visible } = metrics();
+      if (!step) return;
+      const first = Math.max(0, Math.min(items.length - visible, Math.round(track.scrollLeft / step)));
+      const last = Math.min(items.length, first + visible);
+      const progressLabel = `${last} из ${items.length}`;
+      if (counter.textContent !== progressLabel) counter.textContent = progressLabel;
+      if (scrollbar) {
+        if (!isScrubbing) scrollbar.value = max > 0 ? String(Math.round(track.scrollLeft / max * 1000)) : '0';
+        scrollbar.setAttribute('aria-valuetext', progressLabel);
+        const thumbWidth = Math.min(scrollbar.clientWidth, Math.max(32, scrollbar.clientWidth * track.clientWidth / Math.max(1, track.scrollWidth)));
+        scrollbar.style.setProperty('--eprv-thumb-width', `${thumbWidth}px`);
+        scrollbar.disabled = max <= 2;
+      }
+      previous.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max - 2;
+    };
+    const go = direction => {
+      const { step, max } = metrics();
+      if (!step) return;
+      const start = requestedLeft ?? track.scrollLeft;
+      const target = direction === 'start' ? 0 : direction === 'end' ? max : (Math.round(start / step) + direction) * step;
+      requestedLeft = Math.max(0, Math.min(max, target));
+      track.scrollTo({ left: requestedLeft, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      update();
+    };
+    const releaseRequest = () => { requestedLeft = null; update(); };
+    previous.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+    track.addEventListener('scroll', () => {
+      if (updateFrame === null) updateFrame = window.requestAnimationFrame(update);
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(releaseRequest, 180);
+    }, { passive: true });
+    track.addEventListener('scrollend', releaseRequest);
+    track.addEventListener('pointerdown', () => { requestedLeft = null; }, { passive: true });
+    track.addEventListener('wheel', () => { requestedLeft = null; }, { passive: true });
+    track.addEventListener('keydown', event => {
+      if (event.target !== track || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      const direction = { ArrowLeft: -1, ArrowRight: 1, Home: 'start', End: 'end' }[event.key];
+      if (direction === undefined) return;
+      event.preventDefault();
+      go(direction);
+    });
+    if (scrollbar) {
+      const finishScrub = () => {
+        if (!isScrubbing) return;
+        isScrubbing = false;
+        track.classList.remove('is-scrubbing');
+        const { step, max } = metrics();
+        if (step) {
+          requestedLeft = Math.max(0, Math.min(max, Math.round(track.scrollLeft / step) * step));
+          track.scrollTo({ left: requestedLeft, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+        }
+        update();
+      };
+      scrollbar.addEventListener('input', () => {
+        isScrubbing = true;
+        requestedLeft = null;
+        track.classList.add('is-scrubbing');
+        const { max } = metrics();
+        track.scrollTo({ left: Number(scrollbar.value) / 1000 * max, behavior: 'auto' });
+        update();
+      });
+      scrollbar.addEventListener('change', finishScrub);
+      scrollbar.addEventListener('pointercancel', finishScrub);
+      scrollbar.addEventListener('blur', finishScrub);
+      scrollbar.addEventListener('keydown', event => {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        const direction = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1, PageDown: -1, PageUp: 1, Home: 'start', End: 'end' }[event.key];
+        if (direction === undefined) return;
+        event.preventDefault();
+        go(direction);
+      });
+    }
+    const resize = () => {
+      requestedLeft = null;
+      isScrubbing = false;
+      track.classList.remove('is-scrubbing');
+      update();
+    };
+    if (typeof ResizeObserver === 'function') new ResizeObserver(resize).observe(track);
+    else window.addEventListener('resize', resize, { passive: true });
+    carousel.setAttribute('data-eprv-ready', '');
+    navigation.hidden = false;
+    if (scrollbar) scrollbar.hidden = false;
+    update();
+  }
+
+  const dialog = section.querySelector('#eprv-video-dialog');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  const player = section.querySelector('[data-eprv-player]');
+  const title = section.querySelector('#eprv-dialog-title');
+  const external = section.querySelector('[data-eprv-external]');
+  const closeButton = section.querySelector('[data-eprv-close]');
+  let activeTrigger = null;
+  let loadingTimer = null;
+
+  const clearPlayer = () => {
+    window.clearTimeout(loadingTimer);
+    loadingTimer = null;
+    player.replaceChildren();
+  };
+
+  section.querySelectorAll('[data-eprv-video]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      clearPlayer();
+      activeTrigger = link;
+      const videoTitle = link.dataset.eprvTitle;
+      const url = link.href;
+      title.textContent = videoTitle;
+      external.href = url;
+      const status = document.createElement('p');
+      status.className = 'eprv-player-status';
+      status.setAttribute('role', 'status');
+      status.textContent = 'Загружаем видео…';
+      player.append(status);
+      const frame = document.createElement('iframe');
+      frame.hidden = true;
+      frame.title = `Видеоотзыв: ${videoTitle}`;
+      frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
+      frame.setAttribute('allowfullscreen', '');
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.addEventListener('load', () => {
+        if (!player.contains(frame)) return;
+        window.clearTimeout(loadingTimer);
+        loadingTimer = null;
+        status.remove();
+        frame.hidden = false;
+      }, { once: true });
+      frame.addEventListener('error', () => {
+        if (!player.contains(frame)) return;
+        window.clearTimeout(loadingTimer);
+        loadingTimer = null;
+        frame.remove();
+        status.textContent = 'Не удалось загрузить видео. Откройте его в VK Видео по ссылке ниже.';
+      }, { once: true });
+      dialog.showModal();
+      document.documentElement.classList.add('eprv-dialog-open');
+      closeButton.focus({ preventScroll: true });
+      loadingTimer = window.setTimeout(() => {
+        status.textContent = 'Видео ещё загружается. Можно открыть его в VK Видео по ссылке ниже.';
+      }, 12000);
+      frame.src = url;
+      player.append(frame);
+    });
+  });
+
+  closeButton.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    clearPlayer();
+    document.documentElement.classList.remove('eprv-dialog-open');
+    if (activeTrigger?.isConnected) activeTrigger.focus({ preventScroll: true });
+    activeTrigger = null;
+  });
+})();
+</script>
+
+
+<section class="sx-demo" id="demo" aria-labelledby="sx-demo-h">
+  <div class="sx-demo-backdrop" aria-hidden="true"></div>
+  <div class="sx-in">
+    <p class="sx-demo-eyebrow">05 / Демонстрация</p>
+    <div class="sx-demo-in">
+      <div class="sx-demo-copy">
+        <h2 id="sx-demo-h"><span>Привезём</span> <span>оборудование</span> <span>до покупки</span> </h2>
+        <p class="sx-demo-lead">Привезём и продемонстрируем образцы оборудования.</p>
+        <ul class="sx-demo-points" role="list"><li>Покажем разные варианты оборудования</li><li>Объясним преимущества каждого</li><li>Расскажем об особенностях монтажа и обслуживания</li></ul>
+        <div class="sx-demo-foot">
+          <button type="button" class="ep-btn ep-btn--coral ep-btn--auto ep-btn--wide" data-quote="Демонстрация оборудования: уличные экраны"><span class="ep-btn__label">Записаться на демонстрацию</span><span class="ep-btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+      </div>
+      <figure class="sx-demo-photo"><img src="/ekranpro-site/assets/section/demo-screens.webp" alt="Демонстрация светодиодных экранов ЭкранПро: три экрана на стойках и инженер компании" width="1344" height="896" loading="lazy" decoding="async"></figure>
+    </div>
+  </div>
+</section>
+
 <section class="sx-band" id="price" aria-labelledby="sx-price-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">04 / Цена</p><h2 id="sx-price-h">Из чего складывается цена проекта</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">06 / Цена</p><h2 id="sx-price-h">Из чего складывается цена проекта</h2></div>
     <ol class="sx-line"><li><span class="sx-line-n ek-num">01</span><h3>Оборудование</h3><p>Экран, видеопроцессор, система управления, комплект запасных частей</p></li><li><span class="sx-line-n ek-num">02</span><h3>Проектирование</h3><p>Металлоконструкция с расчётом нагрузок, силовые и слаботочные сети</p></li><li><span class="sx-line-n ek-num">03</span><h3>Монтаж</h3><p>Конструкция, установка экрана, подключение</p></li><li><span class="sx-line-n ek-num">04</span><h3>Пусконаладка</h3><p>Настройка, калибровка, запуск контента</p></li><li><span class="sx-line-n ek-num">05</span><h3>Доставка</h3><p>До объекта по России и СНГ</p></li><li><span class="sx-line-n ek-num">06</span><h3>Гарантия и сервис</h3><p>Полное гарантийное обслуживание. Выезды и ремонт за наш счёт</p></li></ol>
     <div class="sx-cta-row"><button type="button" class="ep-btn ep-btn--coral ep-btn--on-light ep-btn--wide" data-quote="Уличные экраны: расчёт стоимости"><span class="ep-btn__label">Получить расчёт</span><span class="ep-btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><p>Расчёт в трёх вариантах за 24 часа</p></div>
   </div>
@@ -992,7 +1618,7 @@
 
 <section class="sx-band sx-band--grey" id="compare" aria-labelledby="sx-compare-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">05 / Сравнение</p><h2 id="sx-compare-h">Почему профессиональный экран дороже</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">07 / Сравнение</p><h2 id="sx-compare-h">Почему профессиональный экран дороже</h2></div>
     <table class="sx-vs">
       <caption class="sx-sr">Почему профессиональный экран дороже: сравнение стандартного и профессионального уличного экрана</caption>
       <thead><tr><td></td><th scope="col">Стандартный уличный экран</th><th scope="col">Профессиональный экран</th></tr></thead>
@@ -1001,9 +1627,10 @@
   </div>
 </section>
 
+
 <section class="sx-band" id="cases" aria-labelledby="sx-cases-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">06 / Проекты</p><h2 id="sx-cases-h">Наши проекты</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">08 / Проекты</p><h2 id="sx-cases-h">Наши проекты</h2></div>
     <div class="sx-cases">
       <article class="sx-case">
         <figure><img src="/ekranpro-site/assets/images/project-orenburg-960-0338ba9c.webp" alt="Оренбург — Рекламное агентство «Орензнак»" loading="lazy" decoding="async" width="960" height="640"></figure>
@@ -1030,23 +1657,24 @@
   </div>
 </section>
 
+
 <section class="sx-band sx-band--dark" id="process" aria-labelledby="sx-process-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">07 / Этапы</p><h2 id="sx-process-h">Установка уличного экрана под ключ: этапы</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">09 / Этапы</p><h2 id="sx-process-h">Установка уличного экрана под ключ: этапы</h2></div>
     <ol class="sx-steps"><li><span class="sx-step-n ek-num">01</span><h3>Расчёт и подбор</h3><p>По фото места установки и размерам готовим расчёт в трёх вариантах.</p><p class="sx-step-t">24 часа</p></li><li><span class="sx-step-n ek-num">02</span><h3>Проектирование</h3><p>Металлоконструкция с расчётом нагрузок, силовые и слаботочные сети. Проектируем с СРО.</p><p class="sx-step-t"><span class="sx-todo">срок уточняется</span></p></li><li><span class="sx-step-n ek-num">03</span><h3>Поставка</h3><p>Прямые поставки с заводов, официальный ввоз с уплатой НДС и пошлин, страхование груза.</p><p class="sx-step-t"><span class="sx-todo">срок уточняется</span></p></li><li><span class="sx-step-n ek-num">04</span><h3>Монтаж</h3><p>Аттестованные монтажники: работы на высоте, электробезопасность, подъёмные сооружения.</p><p class="sx-step-t"><span class="sx-todo">срок уточняется</span></p></li><li><span class="sx-step-n ek-num">05</span><h3>Пусконаладка и обучение</h3><p>Настройка, запуск контента, обучение вашего персонала.</p><p class="sx-step-t"><span class="sx-todo">срок уточняется</span></p></li><li><span class="sx-step-n ek-num">06</span><h3>Сервис</h3><p>Техническая поддержка 24/7, в том числе после окончания гарантии.</p><p class="sx-step-t">до 5 лет гарантии</p></li></ol>
   </div>
 </section>
 
 <section class="sx-band" id="tender" aria-labelledby="sx-tender-h">
   <div class="sx-in sx-tender">
-    <div><p class="sx-eyebrow">08 / Для тендера</p><h2 id="sx-tender-h">Для тендера и закупки</h2><p class="sx-lead">Справочные данные для технического задания и закупочной документации.</p><button type="button" class="ep-btn ep-btn--ink ep-btn--wide" data-quote="Типовое ТЗ на уличный светодиодный экран"><span class="ep-btn__label">Запросить типовое ТЗ</span><span class="ep-btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
+    <div><p class="sx-eyebrow">10 / Для тендера</p><h2 id="sx-tender-h">Для тендера и закупки</h2><p class="sx-lead">Справочные данные для технического задания и закупочной документации.</p><button type="button" class="ep-btn ep-btn--ink ep-btn--wide" data-quote="Типовое ТЗ на уличный светодиодный экран"><span class="ep-btn__label">Запросить типовое ТЗ</span><span class="ep-btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
     <dl class="sx-kv sx-kv--table"><div><dt>ОКПД 2</dt><dd><span class="sx-todo">код уточняется</span></dd></div><div><dt>ТН ВЭД</dt><dd><span class="sx-todo">код уточняется</span></dd></div><div><dt>Амортизационная группа</dt><dd><span class="sx-todo">код уточняется</span></dd></div><div><dt>Срок службы</dt><dd>свыше 15 лет</dd></div><div><dt>Гарантия</dt><dd>2, 3 или 5 лет по уровню исполнения</dd></div><div><dt>Поставка</dt><dd>официальный ввоз, НДС и пошлины уплачены</dd></div></dl>
   </div>
 </section>
 
 <section class="sx-band sx-band--grey" id="about" aria-labelledby="sx-about-h">
   <div class="sx-in sx-about">
-    <div class="sx-about-side"><p class="sx-eyebrow">09 / Справка</p><h2 id="sx-about-h">Уличные экраны: виды, применение, характеристики</h2></div>
+    <div class="sx-about-side"><p class="sx-eyebrow">11 / Справка</p><h2 id="sx-about-h">Уличные экраны: виды, применение, характеристики</h2></div>
     <div class="sx-about-main">
     <div class="sx-about-body" id="sx-about-body">
       <p>Большие рекламные экраны для улицы помогают бизнесу привлекать внимание прохожих, водителей и посетителей городских пространств за счёт яркого динамичного рекламного контента. В отличие от статичных баннеров, LED-поверхность поддерживает трансляцию видеороликов, показ акций, расписаний, навигации, объявлений и имиджевых материалов. Такой формат подходит для фасадов торговых центров, бизнес-центров, АЗС, спортивных объектов, парков, остановочных зон, площадей и входных групп.</p><p>Наружный экран проектируют с учётом климата, освещённости, расстояния просмотра, направления потока людей и требований к безопасности. Важны не только габариты, но и яркость, степень защиты, вентиляция, способ крепления, энергопотребление и удобство обслуживания. Для улицы экран должен оставаться читаемым днём, вечером и в пасмурную погоду.</p><p>Если нужно купить светодиодный экран для рекламы на улице, лучше начинать с анализа места установки. Один объект требует компактного табло на фасаде, другой — крупной медиаповерхности для транспортного потока, третий — информационного экрана у входа. От сценария зависит технология, шаг пикселя, площадь, способ управления и итоговая цена.</p>
@@ -1064,7 +1692,7 @@
 
 <!-- GEOGRAPHY_START -->
 <section class="ep-section ep-geography ep-wrap" id="ep-geography" aria-labelledby="ep-geography-title">
-      <div class="ep-section-heading"><div><div class="ep-eyebrow" id="ep-geography-title">10 / География проектов</div></div></div>
+      <div class="ep-section-heading"><div><div class="ep-eyebrow" id="ep-geography-title">12 / География проектов</div></div></div>
       <!-- Cartography: Natural Earth, public domain (naturalearthdata.com). Added city coordinates: GeoNames, CC BY 4.0 (https://www.geonames.org/; https://download.geonames.org/export/dump/). -->
 <div class="ep-map-viewport" id="ep-map-scroll" tabindex="0" role="group" aria-label="Карта проектов с горизонтальной прокруткой"><div class="ep-map" id="ep-project-map">
 <svg viewBox="-120 -8 1060 552" role="img" aria-label="Карта проектов в России и других странах">
@@ -1286,7 +1914,7 @@
 <!-- DIRECTOR_START -->
   <section class="ep-director" id="ep-director" aria-labelledby="ep-director-title">
     <div class="ep-director-copy">
-      <p class="ep-eyebrow">11 / Консультация</p>
+      <p class="ep-eyebrow">13 / Консультация</p>
       <h2 id="ep-director-title"><span>Обсудите проект</span> <span>с техническим</span> <span>директором</span></h2>
       <p class="ep-director-description">Обсудим задачи проекта и ответим на технические вопросы.</p>
       <button class="ep-action ep-unified-cta" type="button" data-quote="Консультация технического директора: уличные экраны" data-brief-subject="Консультация с техническим директором." ><span class="epu-label">Обсудить проект</span><span class="epu-arrow" aria-hidden="true"><svg class="epu-arrow-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg class="epu-arrow-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
@@ -1301,7 +1929,7 @@
   </section>
   
 <section class="ep-section ep-faq ep-wrap" id="faq" aria-labelledby="sx-faq-h">
-  <div class="ep-faq-intro"><div class="ep-eyebrow">12 / Вопросы и ответы</div><h2 id="sx-faq-h">Нас часто спрашивают</h2><p>Вопросы, которые клиенты задают до расчёта.</p></div>
+  <div class="ep-faq-intro"><div class="ep-eyebrow">14 / Вопросы и ответы</div><h2 id="sx-faq-h">Нас часто спрашивают</h2><p>Вопросы, которые клиенты задают до расчёта.</p></div>
   <div class="ep-faq-list">
     <details name="sx-faq" open><summary><span class="ep-faq-number" aria-hidden="true">01</span><span>Чем уличный светодиодный экран отличается от обычного?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Главное отличие — защита от внешней среды. Уличный рекламный экран имеет высокий класс защиты IP (от пыли и влаги). Стандартные уличные экраны имеют значение IP65, профессиональные — IP69. Яркость таких экранов достигает 6 500–12 000 нит, что обеспечивает читаемость даже в яркий солнечный день, тогда как обычная техника для этого не предназначена.</p></div></details>
     <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">02</span><span>Не боится ли светодиодный экран для улицы дождя и мороза?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Современные уличные лед экраны для рекламы проектируются для работы в суровых условиях. Они имеют герметичные модули с классом защиты от IP65 до IP69, устойчивы к снегу, дождю и перепадам температур от −60 °C до +70 °C, что подтверждается техническими характеристиками.</p></div></details>
@@ -2243,7 +2871,7 @@
   requestMeasure();
 })();
 </script>
-<script src="/ekranpro-site/assets/section.js?v=7b27dda2" defer></script>
+<script src="/ekranpro-site/assets/section.js?v=d751c3b3" defer></script>
 
 <script src="/ekranpro-site/assets/site-shell.js" defer></script>
 <script src="/ekranpro-site/assets/catalog.js?v=5c769f92" defer></script>
