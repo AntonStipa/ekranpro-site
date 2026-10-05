@@ -68,6 +68,7 @@
     const LED_FILTERS = [
       { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
       { key: 'env', type: 'check', title: 'Среда', opts: () => [['out', 'Улица'], ['in', 'Помещение']], test: (p, v) => p.env === v },
+      { key: 'kind', type: 'check', title: 'Тип экрана', opts: () => [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['module', 'Модульные'], ['flex', 'Гибкие']], test: (p, v) => p.kind === v },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
         opts: () => [['0', 'до 1 500', 0, 1500], ['1', '1 500–5 000', 1500, 5000], ['2', 'от 5 000', 5000, 999999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
       { key: 'pitch', type: 'preset', title: 'Шаг пикселя, мм', hint: 'Расстояние между пикселями. До 1,5 мм — переговорные и диспетчерские, 1,5–2,5 — ресепшн и витрины, 2,5–5 — сцены и залы, от 5 — улица и стадионы',
@@ -91,7 +92,7 @@
       { key: 'price', type: 'range', title: 'Цена, ₽', ph: ['от 90 000', 'до 5 000 000'] },
     ];
     const FILTERS = GROUP === 'lcd' ? LCD_FILTERS : LED_FILTERS;
-    const CHIP = { section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим' };
+    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим' };
     const SORTS = GROUP === 'lcd' ? [
       ['default', 'по разделу и диагонали', (a, b) => (a.sectionOrder - b.sectionOrder) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 1e12) - (b.price || 1e12))],
       ['price-asc', 'цена: сначала дешевле', (a, b) => (a.price || 1e12) - (b.price || 1e12)],
@@ -174,7 +175,7 @@
       const imgs = frames.map((f, i) => `<img src="${BASE}/${f}" alt="${i ? '' : p.name}" loading="lazy" width="480" height="360" class="${i ? '' : 'on'}" ${i ? 'aria-hidden="true"' : ''}>`).join('');
       const dots = frames.length > 1 ? `<div class="ek-dots" aria-hidden="true">${frames.map((f, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : '';
       return `<article class="ek-card" data-sku="${p.sku}">
-        <div class="ek-img" data-frames="${frames.length}"><div class="ek-frames">${imgs}</div>${dots}<span class="ek-badge">${badge(p)}</span><label class="ek-cmp"><input type="checkbox" data-cmp="${p.sku}" ${cmp}>Сравнить</label></div>
+        <div class="ek-img" data-frames="${frames.length}"><div class="ek-frames">${imgs}</div>${dots}<span class="ek-badges">${(GROUP !== 'lcd' && p.badges || [badge(p)]).map(b => `<span class="ek-badge">${b}</span>`).join('')}</span><label class="ek-cmp"><input type="checkbox" data-cmp="${p.sku}" ${cmp}>Сравнить</label></div>
         <div class="ek-body"><div><h3><a href="${url}">${p.name}</a></h3><div class="ek-sku">${p.sku}</div></div>
         <dl class="ek-specs">${p.specs.map(s => `<div><dt>${s[0]}</dt><dd class="ek-num">${s[1]}</dd></div>`).join('')}</dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val">${price}</span></div></div>
