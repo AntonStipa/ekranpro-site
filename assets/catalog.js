@@ -68,7 +68,7 @@
     const LED_FILTERS = [
       { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
       { key: 'env', type: 'check', title: 'Среда', opts: () => [['out', 'Улица'], ['in', 'Помещение']], test: (p, v) => p.env === v },
-      { key: 'kind', type: 'check', title: 'Тип экрана', opts: () => [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['module', 'Модульные'], ['flex', 'Гибкие']], test: (p, v) => p.kind === v },
+      { key: 'kind', type: 'check', title: 'Тип экрана', opts: () => [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['flex', 'Гибкие']], test: (p, v) => p.kind === v },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
         opts: () => [['0', 'до 1 500', 0, 1500], ['1', '1 500–5 000', 1500, 5000], ['2', 'от 5 000', 5000, 999999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
       { key: 'pitch', type: 'preset', title: 'Шаг пикселя, мм', hint: 'Расстояние между пикселями. До 1,5 мм — переговорные и диспетчерские, 1,5–2,5 — ресепшн и витрины, 2,5–5 — сцены и залы, от 5 — улица и стадионы',
