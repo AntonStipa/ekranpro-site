@@ -7,7 +7,7 @@
 /* Экран на фото стоит посередине между правым краем слова «светодиодные» и правым краем окна.
    Фото 2836×1024 вписано по высоте; --sx-word — правый край слова, --sx-shot — центр экрана на фото (доля ширины).
    Точное положение уточняет section.js по фактическим размерам. */
-.sx-hero{--sx-f:clamp(40px,min(6.8vw,11.2svh),86px);--sx-hh:max(600px,calc(100svh - 84px));--sx-iw:calc(var(--sx-hh)*2.76953);--sx-word:calc(var(--sx-pad) + var(--sx-f)*6.575);--sx-shot:.7377}
+.sx-hero{--sx-f:clamp(40px,min(6.8vw,10svh),86px);--sx-hh:max(600px,calc(100svh - 84px));--sx-iw:calc(var(--sx-hh)*2.76953);--sx-word:calc(var(--sx-pad) + var(--sx-f)*6.575);--sx-shot:.7377}
 .sx-hero-img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:var(--sx-x,min(0px,max(calc(100vw - var(--sx-iw)),calc((var(--sx-word) + 100vw)/2 - var(--sx-iw)*var(--sx-shot))))) 50%}
 .sx-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,11,18,.86) 0,rgba(5,11,18,.8) 28%,rgba(5,11,18,.62) 42%,rgba(5,11,18,.22) 52%,rgba(5,11,18,0) 58%),linear-gradient(0deg,rgba(5,11,18,.96) 0,rgba(5,11,18,.86) 13%,rgba(5,11,18,.52) 25%,rgba(5,11,18,0) 42%)}
 .sx-hero-in{display:flex;flex-direction:column;width:100%;max-width:1800px;margin-inline:auto;padding:22px var(--sx-pad) 32px}
@@ -18,13 +18,15 @@
 .sx-crumbs a:hover{text-decoration:underline;text-underline-offset:3px}
 .sx-crumbs [aria-current]{color:#fff}
 .sx-hero-copy{flex:1 0 auto;display:flex;flex-direction:column}
-.cat-main .sx-hero h1{font-family:Inter,Arial,sans-serif;font-weight:500;font-size:clamp(40px,min(6.8vw,11.2svh),86px);line-height:1.02;letter-spacing:-.055em;margin:clamp(28px,6.4svh,68px) 0 40px;max-width:850px}
+.cat-main .sx-hero h1{font-family:Inter,Arial,sans-serif;font-weight:500;font-size:var(--sx-f);line-height:1.02;letter-spacing:-.055em;margin:clamp(20px,5svh,68px) 0 clamp(24px,4svh,40px);max-width:850px}
 .sx-hero-actions{display:flex;flex-wrap:wrap;align-items:flex-end;gap:20px 52px;margin-top:auto}
 .sx-hero-actions>*{flex:0 0 320px}
-.sx-hero-foot{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:40px;align-items:start;margin-top:56px;padding-top:25px;border-top:1px solid rgba(255,255,255,.34)}
-.sx-stats{display:grid;grid-template-columns:1.2fr .9fr 1.2fr;gap:24px}
-.sx-stats dt{font-size:28.6416px;font-weight:500;line-height:1.4;letter-spacing:-.025em;text-transform:uppercase;font-variant-numeric:tabular-nums;white-space:nowrap}
-.sx-stats dt small{font-size:.5em;font-weight:400;letter-spacing:.04em;vertical-align:.12em}
+.sx-h1-price{display:block;margin-top:.26em;font-size:.56em;line-height:1.05;letter-spacing:-.04em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sx-h1-price small{font-size:.5em;font-weight:400;letter-spacing:0}
+.sx-hero-foot{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:40px;align-items:start;margin-top:clamp(28px,5.6svh,56px);padding-top:25px;border-top:1px solid rgba(255,255,255,.34)}
+.sx-stats{display:grid;grid-template-columns:1.1fr .9fr 1.2fr;gap:24px}
+.sx-stats dt{font-size:34.37px;font-weight:500;line-height:1.17;letter-spacing:-.025em;text-transform:uppercase;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sx-stats dt small{font-size:.4167em;font-weight:400;letter-spacing:.04em;vertical-align:.12em}
 .sx-stats dd{margin-top:8px;max-width:21em;color:#fff;font-size:14.365px;line-height:1.5}
 .sx-hero-cap{min-height:80px;padding-left:28px;border-left:1px solid rgba(255,255,255,.24);color:#cbd4db;font-size:19.5px;line-height:1.5;letter-spacing:-.015em}
 .sx-hero-cap span{display:block;margin-bottom:9px;color:#6cc3f0;font-size:14.3px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase}
@@ -299,7 +301,7 @@
   .sx-cases{grid-template-columns:repeat(2,minmax(0,1fr))}
   .sx-hero-foot{grid-template-columns:minmax(0,1fr) 206px;gap:32px}
   .sx-stats{gap:17px}
-  .sx-stats dt{font-size:24px}
+  .sx-stats dt{font-size:28.8px}
   .sx-hero-cap{padding-left:14px;min-height:0;font-size:17px}
   #ek-grid.ek-grid{grid-auto-columns:calc((100% - 18px)/2)}
   .sx-lux{min-height:0}
