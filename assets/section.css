@@ -8,6 +8,19 @@
    Фото 2836×1024 вписано по высоте; --sx-word — правый край слова, --sx-shot — центр экрана на фото (доля ширины).
    Точное положение уточняет section.js по фактическим размерам. */
 .sx-hero{--sx-f:clamp(40px,min(6.8vw,10svh),86px);--sx-hh:max(600px,calc(100svh - 84px));--sx-iw:calc(var(--sx-hh)*2.76953);--sx-word:calc(var(--sx-pad) + var(--sx-f)*6.575);--sx-shot:.7377}
+/* Шапка на первом экране прозрачная, как на главной: лежит поверх фото и уходит вместе со страницей;
+   после 2/3 первого экрана возвращается закреплённой, полупрозрачной, с размытием. Состояния ставит section.js.
+   Без скрипта шапка остаётся обычной непрозрачной (правило каталога). */
+html.sx-hdr #ekranpro-first-screen .ep1-header{position:absolute!important;top:0!important;background:transparent!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+html.sx-hdr #ekranpro-first-screen .ep1-header.sx-docked{position:fixed!important;background:rgba(23,26,28,.72)!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);opacity:0!important;transform:translate3d(0,-100%,0)!important;pointer-events:none}
+html.sx-hdr #ekranpro-first-screen .ep1-header.sx-docked.sx-anim{transition:transform 520ms cubic-bezier(.23,1,.32,1),opacity 520ms ease!important}
+html.sx-hdr #ekranpro-first-screen .ep1-header.sx-docked.sx-shown{opacity:1!important;transform:translate3d(0,0,0)!important;pointer-events:auto}
+html.sx-hdr #ekranpro-first-screen .ep1-header.sx-docked.is-nav-open{transition:none!important}
+html.sx-hdr .sx-hero{--sx-top:var(--sx-head-h,var(--ep-header-height,84px));--sx-hh:max(calc(600px + var(--sx-top)),100svh);min-height:var(--sx-hh);padding-top:var(--sx-top)}
+/* затемнение под шапкой: белые пункты меню должны читаться и на светлом небе */
+html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:-1;height:calc(var(--sx-top) + 110px);background:linear-gradient(180deg,rgba(5,11,18,.78) 0,rgba(5,11,18,.5) 42%,rgba(5,11,18,0) 100%);pointer-events:none}
+@media (prefers-reduced-motion:reduce){html.sx-hdr #ekranpro-first-screen .ep1-header.sx-docked{transform:none!important;transition:opacity 120ms ease!important}}
+@media print{html.sx-hdr #ekranpro-first-screen .ep1-header{position:absolute!important;opacity:1!important;transform:none!important;background:transparent!important}}
 .sx-hero-img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:var(--sx-x,min(0px,max(calc(100vw - var(--sx-iw)),calc((var(--sx-word) + 100vw)/2 - var(--sx-iw)*var(--sx-shot))))) 50%}
 .sx-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,11,18,.86) 0,rgba(5,11,18,.8) 28%,rgba(5,11,18,.62) 42%,rgba(5,11,18,.22) 52%,rgba(5,11,18,0) 58%),linear-gradient(0deg,rgba(5,11,18,.96) 0,rgba(5,11,18,.86) 13%,rgba(5,11,18,.52) 25%,rgba(5,11,18,0) 42%)}
 .sx-hero-in{display:flex;flex-direction:column;width:100%;max-width:1800px;margin-inline:auto;padding:22px var(--sx-pad) 32px}

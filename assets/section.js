@@ -3,6 +3,33 @@
   'use strict';
   document.documentElement.classList.add('sx-js');
 
+  // Шапка: на первом экране прозрачная, дальше — как на главной (эталон — renderHeader главной страницы).
+  // Уходит вместе со страницей; после 2/3 высоты первого экрана выезжает закреплённой. Открытое меню показывает её сразу.
+  const head = document.querySelector('#ekranpro-first-screen .ep1-header'), firstScreen = document.querySelector('.sx-hero');
+  if (head && firstScreen && document.documentElement.classList.contains('sx-hdr')) {
+    let docked = false, kb = false, frame = 0;
+    const render = () => {
+      frame = 0;
+      const open = head.classList.contains('is-nav-open'), y = Math.max(0, scrollY);
+      const dock = open || y > head.offsetHeight;
+      if (!dock) kb = false;
+      if (dock !== docked) {
+        docked = dock;
+        head.classList.remove('sx-shown', 'sx-anim');
+        head.classList.toggle('sx-docked', dock);
+        if (dock) { head.getBoundingClientRect(); head.classList.add('sx-anim'); }   // сначала скрытое состояние, потом переход
+      }
+      head.classList.toggle('sx-shown', dock && (open || kb || y >= firstScreen.offsetHeight * 2 / 3));
+    };
+    const ask = () => { if (!frame) frame = requestAnimationFrame(render); };
+    const size = () => document.documentElement.style.setProperty('--sx-head-h', head.offsetHeight + 'px');   // фактическая высота шапки — отступ первого экрана
+    size(); render();
+    addEventListener('scroll', ask, { passive: true }); addEventListener('resize', () => { size(); ask(); });
+    new MutationObserver(ask).observe(head, { attributes: true, attributeFilter: ['class'] });
+    head.addEventListener('focusin', () => { if (docked && !head.classList.contains('sx-shown')) { kb = true; render(); } });
+    head.addEventListener('focusout', () => setTimeout(() => { if (!head.contains(document.activeElement)) { kb = false; ask(); } }, 0));
+  }
+
   // Первый экран: экран на фото — посередине между правым краем слова «светодиодные» и правым краем окна.
   const hero = document.querySelector('.sx-hero'), heroImg = hero && hero.querySelector('.sx-hero-img'), h1 = hero && hero.querySelector('h1');
   if (heroImg && h1) {
