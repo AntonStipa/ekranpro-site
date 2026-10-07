@@ -43,7 +43,7 @@ html,body{margin:0;padding:0}body{background:#e8ebe8}
     #ekranpro-first-screen .ep1-catalog-column h2{padding-bottom:16px;border-bottom:1px solid #bfc4c3;font-size:17px;line-height:1.4;font-weight:500;letter-spacing:-.025em}
     #ekranpro-first-screen .ep1-catalog-list{list-style:none;padding:9px 0 0;margin:0}
     #ekranpro-first-screen .ep1-catalog-list a{display:block;padding:8px 9px;margin-inline:-9px;font-size:14px;line-height:1.4;color:#30373b;border-radius:2px}
-    #ekranpro-first-screen .ep1-catalog-list a:hover,#ekranpro-first-screen .ep1-catalog-list a:focus-visible{background:#e4e7e3;color:#11181c}
+    #ekranpro-first-screen .ep1-catalog-list a:hover,#ekranpro-first-screen .ep1-catalog-list a:focus-visible{background:#e4e7e3;color:#11181c;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
     #ekranpro-first-screen .ep1-catalog-footer{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:19px;padding-top:13px;border-top:1px solid #d4d8d4;font-size:13px}
     #ekranpro-first-screen .ep1-catalog-footer a{display:flex;align-items:center;min-height:36px;gap:22px;flex:none;white-space:nowrap}
     #ekranpro-first-screen .ep1-catalog-footer a:last-child{font-weight:500}
