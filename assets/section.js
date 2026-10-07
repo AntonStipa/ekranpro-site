@@ -190,15 +190,6 @@
     draw();
   });
 
-  // Этапы сеткой: высота карточки не меняется. Пояснение всегда занимает своё место; пока оно скрыто, название опущено
-  // на его высоту (--sx-more), при наведении название поднимается, пояснение проявляется под ним.
-  document.querySelectorAll('.sx-steps-grid').forEach(grid => {
-    const items = [...grid.children];
-    const size = () => items.forEach(li => { const m = li.querySelector('.sx-steps-more'); if (m) li.style.setProperty('--sx-more', m.offsetHeight + 'px'); });
-    size(); addEventListener('resize', size);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(size);
-  });
-
   // Сравнение трёх решений: два разделителя на одном кадре. Каждый доходит до любого края; встречаясь, один толкает другой.
   document.querySelectorAll('[data-tri]').forEach(fig => {
     const bars = [...fig.querySelectorAll('.sx-tri-bar')], tags = [...fig.querySelectorAll('.sx-tri-tag')];
