@@ -39,6 +39,13 @@
   };
 
   var st={view:'calc',touched:false,env:'out',place:'facade',mount:null,w:6,h:3,d:10,lift:3,level:'standard',dbl:false};
+  // Стартовая среда: по умолчанию улица. Страница раздела задаёт свою атрибутом data-env у #pb-data (interernye-ekrany — «in»).
+  (function(){
+    var e=document.getElementById('pb-data').getAttribute('data-env'), p=e&&e!==st.env&&PLACES[e]&&PLACES[e][0];
+    if(!p)return;
+    st.env=e; st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.mount=(p.mounts||[])[0]||null;
+    [].forEach.call(document.querySelectorAll('.pb-seg button'),function(x){x.setAttribute('aria-pressed',String(x.dataset.env===e))});
+  })();
   var $=function(id){return document.getElementById(id)};
   var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),q:$('pb-q'),res:$('pb-res'),resS:$('pb-res-s'),
     money:$('pb-money'),moneyK:$('pb-money-k'),moneyS:$('pb-money-s'),mountBox:$('pb-mount-box'),mount:$('pb-mount'),mountFixed:$('pb-mount-fixed'),

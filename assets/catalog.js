@@ -70,14 +70,28 @@
       { key: 'env', type: 'check', title: 'Среда', opts: () => [['out', 'Улица'], ['in', 'Помещение']], test: (p, v) => p.env === v },
       { key: 'kind', type: 'check', title: 'Тип экрана', opts: () => [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['flex', 'Гибкие']], test: (p, v) => p.kind === v },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
-        opts: () => [['0', 'до 1 500', 0, 1500], ['1', '1 500–5 000', 1500, 5000], ['2', 'от 5 000', 5000, 999999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
+        opts: () => lockedSection === 'ulichnye-ekrany'
+          ? [['0', 'до 5 500', 0, 5500], ['1', '6 000–6 500', 5500, 7000], ['2', '7 500–8 000', 7000, 8999], ['3', '10 000', 8999, 999999]]   // уличные: свои ступени яркости
+          : lockedSection === 'interernye-ekrany'
+          ? [['0', '600', 0, 700], ['1', '800', 700, 900], ['2', '1 000', 900, 1250], ['3', '1 500', 1250, 1500], ['4', 'более 1 500', 1500, 999999]]   // интерьерные: свои ступени яркости
+          : [['0', 'до 1 500', 0, 1500], ['1', '1 500–5 000', 1500, 5000], ['2', 'от 5 000', 5000, 999999]], test: (p, v, o) => inRange(p.nit, o[2], o[3]) },
       { key: 'pitch', type: 'preset', title: 'Шаг пикселя, мм', hint: 'Расстояние между пикселями. До 1,5 мм — переговорные и диспетчерские, 1,5–2,5 — ресепшн и витрины, 2,5–5 — сцены и залы, от 5 — улица и стадионы',
         opts: () => [['0', '≤1,5', 0, 1.5], ['1', '1,5–2,5', 1.5, 2.5], ['2', '2,5–5', 2.5, 5], ['3', '5–10', 5, 10], ['4', '>10', 10, 999]], test: (p, v, o) => inRange(p.pitch, o[2], o[3]) },
       { key: 'pixel', type: 'check', title: 'Тип пикселя', opts: () => DATA.pixelTypes.map(b => [b, b]), test: (p, v) => p.pixelType === v },
       { key: 'svc', type: 'check', title: 'Обслуживание', opts: () => [['front', 'Переднее'], ['back', 'Заднее']], test: (p, v) => p.svc === v || p.svc === 'both' },
+      // только у интерьерных: защитное покрытие (в каталоге «да (COB)», «да (GOB)», «нет (SMD)») и тип корпуса
+      { key: 'coating', type: 'check', title: 'Защитное покрытие', opts: () => [['yes', 'Да'], ['no', 'Нет']], test: (p, v) => !!p.coating && /^да/i.test(p.coating) === (v === 'yes') },
+      { key: 'body', type: 'check', title: 'Тип экрана', opts: () => [['Кабинетный', 'Кабинетный'], ['Модульный', 'Модульный']], test: (p, v) => p.body === v },
+      { key: 'material', type: 'check', title: 'Материал корпуса', opts: () => [['Сталь', 'Сталь'], ['Алюминий', 'Алюминий']], test: (p, v) => p.material === v },
       { key: 'price', type: 'range', title: 'Цена, ₽ с НДС', ph: ['от 50 000', 'до 2 500 000'] },
       { key: 'apps', hidden: true, type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
     ];
+    // состав и порядок фильтров LED: общий список ('') и разделы со своим набором
+    const LED_SIDEBAR = {
+      '': ['section', 'env', 'kind', 'nit', 'pitch', 'pixel', 'svc', 'price'],
+      'ulichnye-ekrany': ['env', 'svc', 'nit', 'pitch', 'material', 'price'],
+      'interernye-ekrany': ['env', 'coating', 'nit', 'pitch', 'pixel', 'body', 'svc', 'price'],
+    };
     const LCD_WALL = ['lcd-videosteny', 'lcd-paneli-dlya-videosten'];
     // состав и порядок фильтров LCD: общий раздел ('') и каждый продукт отдельно
     const LCD_SIDEBAR = {
@@ -103,7 +117,7 @@
       { key: 'price', type: 'range', title: 'Цена, ₽', ph: ['от 90 000', 'до 5 000 000'] },
     ];
     const FILTERS = GROUP === 'lcd' ? LCD_FILTERS : LED_FILTERS;
-    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим', sensor: 'Сенсор' };
+    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', material: 'Материал', coating: 'Покрытие', body: 'Тип экрана', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим', sensor: 'Сенсор' };
     // по умолчанию: сначала модели с фото, внутри — от дешёвых к дорогим
     const noPhoto = p => /\.svg$/.test(p.photo || '') ? 1 : 0;
     const byPrice = (a, b) => (noPhoto(a) - noPhoto(b)) || ((a.price || 1e12) - (b.price || 1e12));
@@ -153,7 +167,7 @@
     const countFor = (s, f, o) => P.filter(p => passes(p, s, f.key) && f.test(p, o[0], o)).length;
 
     const visibleFilters = () => FILTERS.filter(f => !(f.key === 'section' && lockedSection));
-    const sidebarFilters = () => { const vf = visibleFilters().filter(f => !f.hidden); if (GROUP !== 'lcd') return vf; return (LCD_SIDEBAR[lockedSection] || LCD_SIDEBAR['']).map(k => vf.find(f => f.key === k)).filter(Boolean); };
+    const sidebarFilters = () => { const vf = visibleFilters().filter(f => !f.hidden); const map = GROUP === 'lcd' ? LCD_SIDEBAR : LED_SIDEBAR; return (map[lockedSection] || map['']).map(k => vf.find(f => f.key === k)).filter(Boolean); };
     function filterHTML(s) {
       return sidebarFilters().map(f => {
         let inner = '';

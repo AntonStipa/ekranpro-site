@@ -357,3 +357,150 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
   .sx-kv dd{text-align:left}
 }
 
+
+/* ---------- шаг пикселя: слева картинка из трёх зон, справа заголовок и два ползунка (страница «Интерьерные экраны») ----------
+   Зоны задаёт раздел: --z1, --z2 — границы в процентах ширины. Подписи зон стоят над картинкой, пунктир выходит за неё вверх и вниз.
+   Качество картинки пересчитывает section.js; без скрипта показано исходное фото. */
+/* тёмный фон выше окна: когда блок стоит по центру, сверху и снизу не видно краёв соседних блоков */
+.sx-pitch{display:flex;align-items:center;min-height:calc(100svh + 72px);padding-block:clamp(56px,6vw,104px)}
+.sx-pitch>.sx-in{width:100%}
+.sx-pitch-box{--z1:33.33%;--z2:66.67%;display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);gap:28px clamp(32px,4.6vw,88px);align-items:center}
+.sx-pitch-stage{position:relative;padding-bottom:clamp(14px,1.5vw,24px)}
+.sx-pitch-zones{list-style:none;margin:0;padding:clamp(12px,1.3vw,20px) 0 clamp(12px,1.2vw,18px);display:grid;grid-template-columns:var(--z1) calc(var(--z2) - var(--z1)) minmax(0,1fr)}
+.sx-pitch-zones li{padding-inline:8px;text-align:center}
+.sx-pitch-zones b{font-size:clamp(14px,1.15vw,19px);font-weight:500;line-height:1.2;letter-spacing:-.015em}
+.sx-pitch-frame{position:relative;margin:0;aspect-ratio:var(--sx-pitch-ratio);overflow:hidden;background:#fdf7e7}
+.sx-pitch-frame :is(img,canvas){position:absolute;inset:0;display:block;width:100%;height:100%}
+.sx-pitch-line{position:absolute;top:0;bottom:0;width:0;border-left:1px dashed #fff;opacity:.72;mix-blend-mode:difference;pointer-events:none}
+.sx-pitch-line--1{left:var(--z1)}
+.sx-pitch-line--2{left:var(--z2)}
+.sx-pitch .sx-eyebrow{color:var(--ek-cta)}
+.cat-main .sx-pitch-side h2:not(.sx-about-h){font-size:clamp(30px,3.1vw,56px)}
+.sx-pitch-side .sx-lead{margin-top:clamp(14px,1.4vw,22px)!important}
+.sx-pitch-controls{display:grid;gap:clamp(16px,1.8vw,28px);margin-top:clamp(26px,3vw,48px)}
+.sx-pitch-ctl{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:2px 16px}
+.sx-pitch-k{color:#ffffffb8;font-size:13px;letter-spacing:.09em;text-transform:uppercase}
+.sx-pitch-ctl output{font-size:clamp(24px,2.2vw,36px);font-weight:500;line-height:1.1;letter-spacing:-.035em;white-space:nowrap}
+.sx-pitch-ctl input{grid-column:1/-1;-webkit-appearance:none;appearance:none;width:100%;height:44px;margin:0;background:linear-gradient(#fff,#fff) 0 50%/var(--fill,0%) 3px no-repeat,linear-gradient(#ffffff47,#ffffff47) 0 50%/100% 1px no-repeat;cursor:ew-resize;touch-action:pan-y}
+.sx-pitch-ctl input::-webkit-slider-runnable-track{height:44px;background:none}
+.sx-pitch-ctl input::-moz-range-track{height:44px;background:none}
+.sx-pitch-ctl input::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;margin-top:11px;border:0;border-radius:0;background:var(--ek-cta);box-shadow:0 0 0 5px var(--sx-dark)}
+.sx-pitch-ctl input::-moz-range-thumb{width:22px;height:22px;border:0;border-radius:0;background:var(--ek-cta);box-shadow:0 0 0 5px var(--sx-dark)}
+.sx-pitch-ctl input:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.sx-pitch-scale{grid-column:1/-1;display:flex;justify-content:space-between;color:#ffffff8f;font-size:12px;line-height:1.2;font-variant-numeric:tabular-nums}
+.sx-pitch-scale i{font-style:normal;white-space:nowrap}
+.sx-pitch-note{margin-top:clamp(18px,2vw,30px)!important;color:#ffffff8f;font-size:13px;line-height:1.5}
+
+/* ---------- сравнение трёх решений: один кадр, два разделителя (страница «Интерьерные экраны») ----------
+   Слои лежат стопкой: проектор, поверх LCD-видеостена до --p2, поверх светодиодный экран до --p1. */
+.sx-tri{padding-block:clamp(32px,3.6vw,60px) clamp(36px,4vw,68px)}
+.sx-tri-head{margin-bottom:clamp(18px,2vw,32px)}
+.cat-main .sx-tri-head h2:not(.sx-about-h){font-size:clamp(28px,3.1vw,60px)}
+.sx-tri .sx-eyebrow{margin-bottom:clamp(10px,1.1vw,18px)!important}
+/* кадр и подписи под ним — одной ширины; ширина подобрана так, чтобы блок целиком помещался на экран */
+.sx-tri-in>:is(.sx-tri-fig,.sx-tri-notes){width:min(100%,calc((100svh - 84px - 330px)*1.9));min-width:min(100%,680px);margin-inline:auto}
+.sx-tri-fig{--p1:33.333%;--p2:66.667%;--tag-y:6.6%;position:relative;aspect-ratio:1.9;overflow:hidden;background:#d9d6cf;-webkit-user-select:none;user-select:none;touch-action:pan-y}
+.sx-tri-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%;pointer-events:none}
+.sx-tri-img--2{clip-path:inset(0 calc(100% - var(--p2)) 0 0)}
+.sx-tri-img--1{clip-path:inset(0 calc(100% - var(--p1)) 0 0)}
+.sx-tri-line{position:absolute;top:0;bottom:0;left:var(--p1);z-index:3;width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px #0000001a;pointer-events:none}
+.sx-tri-line--2{left:var(--p2)}
+/* ручки не уходят за край кадра: у края линия стоит на краю, ручка — рядом; две ручки разведены по высоте */
+.sx-tri-bar{position:absolute;top:42%;left:clamp(28px,var(--p1),calc(100% - 28px));z-index:4;display:grid;place-items:center;width:48px;height:48px;margin:-24px 0 0 -24px;padding:0;border:0;border-radius:50%;background:#fff;color:var(--ek-ink);box-shadow:0 4px 18px #0006;cursor:ew-resize;touch-action:none}
+.sx-tri-bar--2{top:58%;left:clamp(28px,var(--p2),calc(100% - 28px))}
+.sx-tri-bar svg{width:24px;height:24px;pointer-events:none}
+.sx-tri-bar:focus-visible{outline:2px solid var(--ek-cta);outline-offset:3px}
+.sx-tri-tag{position:absolute;top:var(--tag-y);z-index:2;transform:translate(-50%,-50%);padding:8px 13px 9px;background:rgba(16,19,21,.82);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6);color:#fff;font-family:var(--sx-btn-font);font-size:clamp(11px,.88vw,13.5px);line-height:1.2;letter-spacing:.06em;text-transform:uppercase;text-align:center;pointer-events:none;transition:opacity .2s ease}
+.sx-tri-tag--1{left:calc(var(--p1)/2);background:var(--ek-cta);box-shadow:none}
+.sx-tri-tag--2{left:calc((var(--p1) + var(--p2))/2)}
+.sx-tri-tag--3{left:calc((var(--p2) + 100%)/2)}
+.sx-tri-tag.is-off{opacity:0}
+@media (hover:hover){.sx-js .sx-tri-fig{cursor:ew-resize}}
+/* три подписи под кадром, вне картинки: что видно в каждой зоне */
+.sx-tri-notes{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px clamp(20px,2.6vw,44px);margin-top:clamp(16px,1.8vw,26px)}
+.sx-tri-notes li{padding-top:clamp(12px,1.2vw,18px);border-top:1px solid var(--ek-ink)}
+.sx-tri-notes li:first-child{border-top:3px solid var(--ek-cta);padding-top:calc(clamp(12px,1.2vw,18px) - 2px)}
+.sx-tri-notes b{display:block;font-size:clamp(16px,1.3vw,21px);font-weight:500;line-height:1.2;letter-spacing:-.02em}
+.sx-tri-notes span{display:block;margin-top:6px;color:#3d4246;font-size:clamp(14px,1.02vw,16px);line-height:1.45}
+.sx-table--about{min-width:520px;margin:4px 0 18px}
+
+/* ---------- этапы сеткой 3 × 2: все карточки на одном экране, без закрепления (страница «Интерьерные экраны») ----------
+   Видны номер и название; при наведении или фокусе номер становится коралловым и раскрывается пояснение.
+   На сенсорных экранах, где наведения нет, пояснение показано сразу. */
+.sx-steps-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.25vw,18px)}
+.sx-steps-grid li{display:flex;flex-direction:column;padding:clamp(18px,1.7vw,28px) clamp(18px,1.9vw,30px) clamp(20px,1.9vw,30px);background:var(--ek-grey);outline:0}
+.sx-steps-n{display:block;margin-bottom:auto;padding-bottom:clamp(16px,2.4svh,32px);color:#fff;font-family:var(--ek-head);font-size:clamp(64px,6.4vw,112px);line-height:.85;letter-spacing:-.05em;transition:color .25s ease}
+.cat-main .sx-steps-grid h3{font-size:clamp(22px,2vw,34px);line-height:1.1;letter-spacing:-.02em}
+.sx-steps-grid h3,.sx-steps-more{transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s ease}
+.sx-steps-grid p{margin-top:10px!important;color:#3d4246;font-size:clamp(14.5px,1.05vw,17px);line-height:1.45}
+.sx-steps-grid .sx-steps-t{margin-top:12px!important;color:var(--ek-ink);font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.sx-steps-grid li:focus-visible{box-shadow:inset 0 0 0 2px var(--ek-ink)}
+@media (hover:hover){
+  /* пояснение занимает место всегда, поэтому карточки не меняют высоту; движутся только название и прозрачность */
+  .sx-steps-grid li{overflow:hidden}
+  .sx-js .sx-steps-grid h3{transform:translateY(var(--sx-more,0px))}
+  .sx-steps-more{opacity:0;transform:translateY(12px)}
+  .sx-steps-grid li:is(:hover,:focus-visible) h3{transform:none}
+  .sx-steps-grid li:is(:hover,:focus-visible) .sx-steps-more{opacity:1;transform:none}
+  .sx-steps-grid li:is(:hover,:focus-visible) .sx-steps-n{color:var(--ek-cta)}
+}
+@media (prefers-reduced-motion:reduce){.sx-steps-grid h3,.sx-steps-more,.sx-steps-n{transition:none}}
+.sx-steps-note{margin-top:clamp(18px,1.8vw,28px)!important;padding-top:clamp(14px,1.4vw,20px);border-top:1px solid var(--ek-ink);font-size:clamp(15px,1.15vw,18px);font-weight:500;line-height:1.4}
+@media (min-width:1101px) and (min-height:600px){
+  .sx-steps{display:flex;min-height:calc(100svh - 84px);padding-block:clamp(28px,5.4svh,56px) clamp(24px,4.6svh,44px)}
+  .sx-steps>.sx-in{display:flex;flex-direction:column;width:100%}
+  .sx-steps .sx-head{margin-bottom:clamp(18px,3.4svh,36px)}
+  .sx-steps .sx-eyebrow{margin-bottom:clamp(10px,1.8svh,20px)!important}
+  .sx-steps-grid{flex:1;grid-template-rows:repeat(2,minmax(0,1fr))}
+}
+/* ---------- варианты сцены: миниатюры в тексте переключают картинку слева (сцена «Любые формы») ---------- */
+#ep-products-compare .epp-photo img.sx-var-img{opacity:0;transition:opacity .35s ease}
+#ep-products-compare .epp-photo img.sx-var-img.is-on{opacity:1}
+.sx-scene-vars{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;align-self:stretch;width:100%;margin-top:clamp(18px,2vw,30px)}
+.sx-scene-vars button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px 10px;border:0;background:none;box-shadow:inset 0 0 0 1px var(--ek-line);color:var(--ek-muted);text-align:center;cursor:pointer;transition:color .2s ease,box-shadow .2s ease,background-color .2s ease}
+.sx-scene-vars svg{display:block;width:32px;height:32px}
+.sx-scene-vars img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+.sx-scene-vars span{font-size:clamp(10px,.74vw,11.5px);line-height:1.2;letter-spacing:-.01em;overflow-wrap:anywhere}
+.sx-scene-vars button:hover{color:var(--ek-ink);box-shadow:inset 0 0 0 1px var(--ek-ink)}
+.sx-scene-vars button[aria-pressed="true"]{color:var(--ek-ink);background:#fff;box-shadow:inset 0 0 0 2px var(--ek-cta)}
+.sx-scene-vars button[aria-pressed="true"] svg{color:var(--ek-cta)}
+.sx-scene-vars button:focus-visible{outline:2px solid var(--ek-ink);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){#ep-products-compare .epp-photo img.sx-var-img{transition:none}}
+@media (min-width:1100px) and (min-aspect-ratio:8/5){#ep-products-compare .epp-scene--features .sx-scene-vars{margin-bottom:auto}}
+/* ---------- пиктограммы в сценах технологий: плитки (формы экрана) или строки (свойства) ---------- */
+#ep-products-compare .sx-scene-icons{list-style:none;margin:clamp(18px,2vw,30px) 0 0;padding:0;display:grid;gap:8px;align-self:stretch}
+.sx-scene-icons svg{display:block;flex:none;width:32px;height:32px;color:var(--ek-ink)}
+.sx-scene-icons span{color:var(--ek-ink);line-height:1.25}
+.sx-scene-icons--tiles{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);width:100%}
+.sx-scene-icons--tiles li{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px 10px;box-shadow:inset 0 0 0 1px var(--ek-line);text-align:center}
+.sx-scene-icons--tiles span{font-size:clamp(10px,.74vw,11px);letter-spacing:-.01em;overflow-wrap:anywhere}
+.sx-scene-icons--rows{gap:0}
+.sx-scene-icons--rows li{display:flex;align-items:center;gap:14px;padding:10px 0;border-top:1px solid var(--ek-line)}
+.sx-scene-icons--rows li:last-child{border-bottom:1px solid var(--ek-line)}
+.sx-scene-icons--rows span{font-size:clamp(15px,1.15vw,18px)}
+@media (min-width:1100px) and (min-aspect-ratio:8/5){#ep-products-compare .epp-scene--features .sx-scene-icons{margin-bottom:auto}}
+@media (max-width:1100px){
+  .sx-steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* в одну колонку: заголовок, картинка, под ней ползунки */
+  .sx-pitch{min-height:0}
+  .sx-pitch-box{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .sx-pitch-side{display:contents}
+  .sx-pitch-side>:is(.sx-eyebrow,h2,.sx-lead){order:-1}
+  .sx-pitch-side .sx-lead{margin-bottom:10px!important}
+  .sx-pitch-controls{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(24px,4vw,56px);margin-top:10px}
+  .sx-tri-fig{--tag-y:7.3%;aspect-ratio:3/2}
+  .sx-tri-img{object-position:50% 50%}
+}
+@media (max-width:680px){
+  .sx-steps-grid{grid-template-columns:minmax(0,1fr)}
+  .sx-steps-n{font-size:64px}
+  /* картинка шага шире экрана и листается вбок: мелкий текст остаётся читаемым, ползунки — сразу под ней */
+  .sx-pitch-scroll{margin-inline:calc(-1*var(--sx-pad));padding-inline:var(--sx-pad);overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .sx-pitch-stage{width:660px}
+  .sx-pitch-controls{grid-template-columns:minmax(0,1fr);gap:14px;margin-top:8px}
+  .sx-tri-in>:is(.sx-tri-fig,.sx-tri-notes){min-width:0;width:auto}
+  .sx-tri-bar{width:44px;height:44px;margin:-22px 0 0 -22px}
+  .sx-tri-tag{padding:5px 7px 6px;font-size:9.5px;letter-spacing:.04em}
+  .sx-tri-notes{grid-template-columns:minmax(0,1fr);gap:0;margin-top:14px}
+  .sx-tri-notes li{padding-block:12px}
+}
