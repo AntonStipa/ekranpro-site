@@ -3,6 +3,7 @@
 :root{--ek-paper:#ffffff;--ek-ink:#171a1c;--ek-muted:#60656a;--ek-line:#d8dad7;--ek-line-2:#e9ece6;--ek-cta:#f36b52;--ek-cta-dark:#d9533b;--ek-white:#fff;--ek-grey:#e8ebe8;--ek-ok:#2e7d4f;--ek-head:"EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;--ek-text:Inter,Arial,sans-serif}
 @font-face{font-family:"EP HelveticaNeueCyr Roman";src:local("HelveticaNeueCyr-Roman"),url("/ekranpro-site/assets/fonts/HelveticaNeueCyr-Roman.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 html{scroll-behavior:smooth;scroll-padding-top:110px}
+html{background:#171a1c}
 body{margin:0;background:#fff}
 [hidden]{display:none!important}
 #ekranpro-first-screen{background:var(--ek-paper)!important;color:var(--ek-ink)}
