@@ -33,7 +33,7 @@
   // Первый экран: экран на фото — посередине между правым краем слова «светодиодные» и правым краем окна.
   const hero = document.querySelector('.sx-hero'), heroImg = hero && hero.querySelector('.sx-hero-img'), h1 = hero && hero.querySelector('h1');
   if (heroImg && h1) {
-    const SHOT = .7377, RATIO = 2836 / 1024;                    // центр экрана на фото и пропорции фото
+    const SHOT = +hero.dataset.shot || .7377, RATIO = 2836 / 1024;                    // центр экрана на фото и пропорции фото
     const place = () => {
       if (matchMedia('(max-width:680px)').matches) { heroImg.style.removeProperty('--sx-x'); return; }
       const box = hero.getBoundingClientRect(), r = document.createRange();

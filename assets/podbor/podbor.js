@@ -46,6 +46,20 @@
     st.env=e; st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.mount=(p.mounts||[])[0]||null;
     [].forEach.call(document.querySelectorAll('.pb-seg button'),function(x){x.setAttribute('aria-pressed',String(x.dataset.env===e))});
   })();
+  // Подбор медиафасада (страница «Медиафасады», data-mode="mf" у #pb-data): только фасад здания, тип медиафасада вместо места
+  // установки, модели — только медиафасады каталога (поле type: rack — реечный, mesh — сетка, pixel — архитектурные пиксели).
+  // Тип без моделей в каталоге показывает бюджет «по запросу». Рекомендаций по шагу в этом режиме нет.
+  var MF=document.getElementById('pb-data').getAttribute('data-mode')==='mf';
+  if(MF){
+    // типы (название, назначение, фото) и стартовые размеры задаёт раздел: атрибуты data-types и data-start (sections/mediafasady.json → podbor)
+    var pbData=document.getElementById('pb-data'), S0=JSON.parse(pbData.getAttribute('data-start')||'{}'), TYPES=JSON.parse(pbData.getAttribute('data-types')||'[]');
+    var mf=function(t,icon){return {id:t.id,type:t.id,ctx:'facade',name:t.name,text:t.text||'',image:t.image||'',w:S0.w||20,h:S0.h||15,d:S0.d||30,lift:S0.lift!=null?S0.lift:3,pool:'mf',empty:'Этот тип считаем\nпод проект.',icon:icon||''}};
+    PLACES.mf=TYPES.length?TYPES.map(function(t){return mf(t)}):[mf({id:'rack',name:'Реечный'},'<path d="M5 5h24M7 5v20M11 5v20M15 5v20M19 5v20M23 5v20M27 5v20"/>'),
+      mf({id:'mesh',name:'Сетка'},'<rect x="5" y="5" width="24" height="20"/><path d="M5 11.7h24M5 18.3h24M11 5v20M17 5v20M23 5v20"/>'),
+      mf({id:'pixel',name:'Архитектурные пиксели'},'<circle cx="9" cy="9" r="1.8"/><circle cx="17" cy="9" r="1.8"/><circle cx="25" cy="9" r="1.8"/><circle cx="9" cy="16" r="1.8"/><circle cx="17" cy="16" r="1.8"/><circle cx="25" cy="16" r="1.8"/><circle cx="9" cy="23" r="1.8"/><circle cx="17" cy="23" r="1.8"/><circle cx="25" cy="23" r="1.8"/>')];
+    LIMITS.mf={w:[2,100,0.1],h:[2,60,0.1],d:[5,300,1],lift:[0,100,0.5]}; TOL.mf=TOL.out;
+    (function(p){st.env='mf'; st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.mount=null;})(PLACES.mf[0]);
+  }
   var $=function(id){return document.getElementById(id)};
   var el={places:$('pb-places'),area:$('pb-area'),svg:$('pb-svg'),pitch:$('pb-pitch'),pitchS:$('pb-pitch-s'),q:$('pb-q'),res:$('pb-res'),resS:$('pb-res-s'),
     money:$('pb-money'),moneyK:$('pb-money-k'),moneyS:$('pb-money-s'),mountBox:$('pb-mount-box'),mount:$('pb-mount'),mountFixed:$('pb-mount-fixed'),
@@ -91,7 +105,7 @@
         cards.push({level:lv,req:[lv],pitch:m.pitch,k:COEF[lv],rec:lv==='optimal',from:price,to:price,models:[m.sku],piece:true});
       });
     } else {
-      var pool=MODELS.filter(function(m){return m.pool===p.pool&&(!p.maxPitch||m.pitch<=p.maxPitch+1e-6)});
+      var pool=MODELS.filter(function(m){return m.pool===p.pool&&(!p.type||m.type===p.type)&&(!p.maxPitch||m.pitch<=p.maxPitch+1e-6)});
       var avail=uniq(pool.map(function(m){return m.pitch}));
       if(avail.length){
         var lv={}, seen=[], lo=0, hi=0;
@@ -341,6 +355,15 @@
   }
 
   function renderPlaces(){
+    if(MF){ // типы медиафасада: кнопки во всю ширину колонки, фото изделия слева, назначение справа
+      el.places.className='pb-places pb-places--mf';
+      el.places.innerHTML=PLACES.mf.map(function(p){
+        return '<button type="button" class="pb-place pb-type" data-place="'+p.id+'" aria-pressed="'+(p.id===st.place)+'">'+
+          (p.image?'<img src="'+p.image+'" alt="" width="160" height="160" loading="lazy" decoding="async">':'<svg viewBox="0 0 34 30" aria-hidden="true">'+p.icon+'</svg>')+
+          '<span class="pb-type-t"><b>'+p.name+'</b>'+(p.text?'<small>'+p.text+'</small>':'')+'</span></button>';
+      }).join('');
+      return;
+    }
     el.places.className='pb-places'+(PLACES[st.env].length>6?' pb-places--4':'');
     el.places.innerHTML=PLACES[st.env].map(function(p){
       return '<button type="button" class="pb-place" data-place="'+p.id+'" aria-pressed="'+(p.id===st.place)+'"><svg viewBox="0 0 34 30" aria-hidden="true">'+p.icon+'</svg><span>'+p.name+'</span></button>';
@@ -380,7 +403,7 @@
       el.moneyS.textContent=c.piece?'За одно табло, с НДС.\nМонтаж считается отдельно.':'Только оборудование, с НДС.\nМонтаж считается отдельно.';
     } else {
       el.pitch.textContent='—'; el.q.hidden=true; el.pitchS.hidden=false; el.pitchS.textContent='Подберёт инженер'; el.res.textContent='—'; el.resS.textContent='';
-      el.moneyK.textContent='Бюджет оборудования'; el.money.textContent='По запросу'; el.moneyS.textContent='Прозрачные экраны\nсчитаем под проект.';
+      el.moneyK.textContent='Бюджет оборудования'; el.money.textContent='По запросу'; el.moneyS.textContent=p.empty||'Прозрачные экраны\nсчитаем под проект.';
     }
     // рекомендации по шагу
     if(!r.cards.length){
@@ -406,6 +429,7 @@
   }
 
   function applyPlace(p){
+    if(MF){ st.place=p.id; st.level='standard'; renderPlaces(); render(); return; } // смена типа медиафасада не сбрасывает размеры
     st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.level='standard'; st.mount=(p.mounts||[])[0]||null; st.dbl=false;
     if(p.nav) st.d=NAV.distance;
     renderPlaces(); renderMount(); render();
@@ -442,13 +466,13 @@
   function touch(){ st.touched=true; $('pb-hint').hidden=true; }
   function payload(){
     var r=last, p=place(), c=r.sel;
-    return {source:'Подбор экрана',env:st.env==='out'?'На улице':'В помещении',place:p.name,mount:st.mount?MOUNT_LABEL[st.mount]:null,
+    return {source:MF?'Подбор медиафасада':'Подбор экрана',env:MF?'Медиафасад':st.env==='out'?'На улице':'В помещении',place:p.name,mount:st.mount?MOUNT_LABEL[st.mount]:null,
       width_m:st.w,height_m:st.h,area_m2:Math.round(r.area*100)/100,install_height_m:st.lift,distance_m:st.d,double_sided:p.nav?st.dbl:null,
       pitch_mm:c?c.pitch:null,quality:c?LEVEL_LABEL[c.level]:null,resolution:c?r.resW+'×'+r.resH:null,
       budget:c?(c.piece?pieceMoney(r)+' за табло, с НДС':money(c.from,c.to)+' (только оборудование, с НДС)'):'по запросу',models:c?c.models:[]};
   }
   function summaryRows(d){
-    return [['Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],
+    return [[MF?'Тип':'Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],
       ['Экран',fmt(d.width_m)+' × '+fmt(d.height_m)+' м'+(d.double_sided==null?', '+fmt(d.area_m2)+' м²':d.double_sided?', двустороннее':', одностороннее')],
       ['Высота установки',fmt(d.install_height_m)+' м'],['Расстояние просмотра',fmt(d.distance_m,1)+' м'],
       ['Шаг пикселя',d.pitch_mm?fmt(d.pitch_mm)+' мм, '+d.quality.toLowerCase():'подберёт инженер'],['Ориентир',d.budget]];
@@ -630,7 +654,7 @@
   function setView(v){
     st.view=v; viewCalc.hidden=v!=='calc'; viewRec.hidden=v!=='rec';
     root.dataset.view=v; $('pb-back').hidden=v!=='rec';
-    $('pb-title').textContent=v==='rec'?'Рекомендации по выбору шага пикселя':'Подберите экран под ваш объект';
+    $('pb-title').textContent=v==='rec'?'Рекомендации по выбору шага пикселя':MF?$('pb-data').getAttribute('data-title'):'Подберите экран под ваш объект';
     if(v==='rec'){ paintTiles(); $('pb-back').focus({preventScroll:true}); } else { drawScene(); }
     if(!root.classList.contains('is-pinned')) root.scrollIntoView({block:'start'});
   }
@@ -652,7 +676,7 @@
     if(on&&st.view==='calc'){ // параметры не помещаются по высоте — оставляем обычную прокрутку
       var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden&&x.tagName==='DIV'});
       var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*10+kids.reduce(function(a,x){return a+x.offsetHeight},0); // 10 px — минимальный отступ между группами
-      if(need+(el.mountBox.hidden?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned');
+      if(need+(el.mountBox.hidden&&!MF?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned'); // запас 64 px — под «Способ установки», которого в подборе медиафасада нет
     }
   }
   ['pb-img-screen','pb-img-plain','pb-img-board'].forEach(function(id){$(id).addEventListener('load',function(){paintTiles();paintScreen()})});
@@ -660,6 +684,13 @@
   var SEASON=['winter','winter','spring','spring','spring','summer','summer','summer','autumn','autumn','autumn','winter'][new Date().getMonth()];
   var assetBase=$('pb-img-board').getAttribute('src').replace(/viewing-board\.webp.*$/,'');
   $('pb-img-screen').src=assetBase+'screen-'+SEASON+'.webp'; $('pb-img-plain').src=assetBase+'plain-'+SEASON+'.webp';
+  if(MF){ // среда и место установки не нужны: медиафасад всегда на фасаде; вместо места — тип медиафасада
+    $('ep-podbor').classList.add('pb--mf'); document.querySelector('.pb-seg').parentNode.hidden=true; el.mountBox.hidden=true;
+    el.places.previousElementSibling.querySelector('span').textContent='Тип медиафасада'; el.places.setAttribute('aria-label','Тип медиафасада');
+    $('pb-rec-open').hidden=true;
+    var fill=$('ep-podbor').querySelector('.pb-fill'), params=el.rowW.closest('.pb-params').parentNode; // параметры — внизу колонки, как в общем подборе
+    if(fill&&params) params.parentNode.insertBefore(fill,params);
+  }
   renderPlaces(); renderMount(); render();
   pin(); drawScene(); // закрепляем после первой отрисовки: высота блока уже известна
   var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){pin();render()},120)});
