@@ -360,7 +360,7 @@
       el.places.innerHTML=PLACES.mf.map(function(p){
         return '<button type="button" class="pb-place pb-type" data-place="'+p.id+'" aria-pressed="'+(p.id===st.place)+'">'+
           (p.image?'<img src="'+p.image+'" alt="" width="160" height="160" loading="lazy" decoding="async">':'<svg viewBox="0 0 34 30" aria-hidden="true">'+p.icon+'</svg>')+
-          '<span class="pb-type-t"><b>'+p.name+'</b>'+(p.text?'<small>'+p.text+'</small>':'')+'</span></button>';
+          '<span class="pb-type-t"><b>'+p.name+'</b>'+(p.text?'<small>'+p.text.split('\n').join('<br>')+'</small>':'')+'</span></button>';
       }).join('');
       return;
     }
