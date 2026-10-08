@@ -136,17 +136,20 @@
 .pb-v--money{color:var(--pb-cta);white-space:normal}
 #ep-podbor.pb--mf .pb-v--money{white-space:nowrap;font-size:clamp(20px,1.75vw,30px)} /* подбор медиафасада: бюджет в десятки миллионов — в одну строку */
 /* подбор медиафасада: типы — три кнопки во всю ширину колонки, фото изделия слева, назначение справа; параметры прижаты к низу колонки */
-#ep-podbor.pb--mf .pb-controls>.pb-fill{display:block;flex:1 1 0}
+#ep-podbor.pb--mf .pb-controls>.pb-fill{display:block;flex:0 1 26px;min-height:10px}
 .pb-places--mf{grid-template-columns:minmax(0,1fr);gap:8px}
 #ep-podbor .pb-places--mf .pb-type{flex-direction:row;align-items:center;justify-content:flex-start;gap:14px;min-height:84px;padding:8px 14px 8px 8px;text-align:left;font-size:14px}
 .pb-type img,.pb-type svg{flex:none;width:68px;height:68px;object-fit:contain}
 .pb-type-t{display:flex;flex-direction:column;gap:4px;min-width:0}
 .pb-type-t b{font-weight:500}
 .pb-type-t small{color:var(--pb-muted);font-size:12px;font-weight:400;line-height:1.35}
-#ep-podbor.is-pinned .pb-places--mf{gap:6px}
-#ep-podbor.is-pinned .pb-places--mf .pb-type{min-height:62px;padding:4px 12px 4px 4px;gap:12px;font-size:13px}
-#ep-podbor.is-pinned .pb-places--mf .pb-type img{width:54px;height:54px}
-#ep-podbor.is-pinned .pb-places--mf .pb-type-t{gap:2px}
+/* в закреплённом блоке ячейки типов занимают всю свободную высоту колонки: фото и текст растут вместе с ячейкой (ниже — не мельче 62 px) */
+#ep-podbor.is-pinned.pb--mf .pb-controls>div:has(>.pb-places--mf){flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+#ep-podbor.is-pinned .pb-places--mf{flex:1 1 auto;min-height:0;gap:8px;grid-auto-rows:minmax(62px,1fr)}
+#ep-podbor.is-pinned .pb-places--mf .pb-type{min-height:62px;max-height:124px;padding:6px 14px 6px 6px;gap:14px;font-size:15px}
+#ep-podbor.is-pinned .pb-places--mf .pb-type img{width:auto;height:100%;max-height:104px;min-height:50px;aspect-ratio:1/1}
+#ep-podbor.is-pinned .pb-places--mf .pb-type-t{gap:4px}
+#ep-podbor.is-pinned .pb-places--mf .pb-type-t small{font-size:12.5px}
 #ep-podbor.is-pinned .pb-places--mf .pb-type-t small{font-size:11.5px}
 #pb-pitch{color:var(--pb-cta)}
 .pb-s{font-size:13px;color:var(--pb-muted);white-space:pre-line}
