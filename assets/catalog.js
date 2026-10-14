@@ -156,7 +156,11 @@
     // пресеты из страницы раздела и из URL (?section=…&app=…)
     const lockedSection = root.dataset.section || '';
     // исходное состояние раздела: сам раздел; у панелей для видеостен сразу отмечен режим 24/7
-    const preset = s => { if (lockedSection) s.sel.section.add(lockedSection); if (GROUP === 'lcd' && lockedSection === 'lcd-paneli-dlya-videosten') s.sel.mode.add('24/7'); };
+    // перенесённые категории: data-section может перечислять несколько разделов через запятую, data-preset — JSON с начальным фильтром {"sel":{"pitch":["0","1"]},"pmax":"900000","q":"..."}
+    let PRESET = {}; try { PRESET = JSON.parse(root.dataset.preset || '{}'); } catch (e) { PRESET = {}; }
+    const preset = s => { if (lockedSection) lockedSection.split(',').forEach(x => x && s.sel.section.add(x)); if (GROUP === 'lcd' && lockedSection === 'lcd-paneli-dlya-videosten') s.sel.mode.add('24/7');
+      for (const k in (PRESET.sel || {})) { if (s.sel[k]) PRESET.sel[k].forEach(v => s.sel[k].add(String(v))); }
+      if (PRESET.pmin != null) s.pmin = String(PRESET.pmin); if (PRESET.pmax != null) s.pmax = String(PRESET.pmax); if (PRESET.q) s.q = PRESET.q; };
     preset(state);
     const qs = new URLSearchParams(location.search);
     if (qs.get('app') && APPS[qs.get('app')]) state.sel.apps.add(qs.get('app'));
@@ -177,7 +181,7 @@
     const results = s => { const r = P.filter(p => passes(p, s)); const srt = SORTS.find(x => x[0] === s.sort) || SORTS[0]; r.sort(srt[2]); return r; };
     const countFor = (s, f, o) => P.filter(p => passes(p, s, f.key) && f.test(p, o[0], o)).length;
 
-    const visibleFilters = () => FILTERS.filter(f => !(f.key === 'section' && lockedSection));
+    const visibleFilters = () => FILTERS.filter(f => !(f.key === 'section' && lockedSection && !lockedSection.includes(',')));
     const sidebarFilters = () => { const vf = visibleFilters().filter(f => !f.hidden); const map = GROUP === 'lcd' ? LCD_SIDEBAR : LED_SIDEBAR; return (map[lockedSection] || map['']).map(k => vf.find(f => f.key === k)).filter(Boolean); };
     function filterHTML(s) {
       return sidebarFilters().map(f => {
