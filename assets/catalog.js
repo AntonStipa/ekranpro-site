@@ -236,7 +236,7 @@
         <div class="ek-img"><div class="ek-frames">${c.img ? `<img src="${esc(c.img)}" alt="${esc(c.name)}" loading="lazy" width="480" height="360" class="on">` : ''}</div><span class="ek-badges"><span class="ek-badge">Со старого сайта</span></span></div>
         <div class="ek-body"><div><h3>${url ? `<a href="${url}">${esc(c.name)}</a>` : esc(c.name)}</h3><div class="ek-sku">${sub}</div></div>
         <dl class="ek-specs">${(c.specs || []).map(s => `<div><dt>${esc(s[0])}</dt><dd class="ek-num">${esc(s[1])}</dd></div>`).join('')}</dl>
-        <div class="ek-price"><span class="pl">Цена</span><span class="val"><b>по запросу</b></span></div></div>
+        <div class="ek-price"><span class="pl">Цена</span><span class="val"><b>${esc(c.price || 'по запросу')}</b></span></div></div>
         <div class="ek-actions"><button type="button" class="ek-order" data-order="${esc(c.name)}"><span class="lbl">Заказать</span>${ARW('ek-o')}</button>${url ? `<a class="ek-details" href="${url}"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span>${ARW('ek-d')}</a>` : `<span class="ek-details ek-details--off" title="Полная карточка модели готовится"><span class="ek-lbl2"><span class="base">Подробнее</span></span></span>`}</div></article>`;
     }
     function render(keepFocus) {
