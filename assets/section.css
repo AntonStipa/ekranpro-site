@@ -515,3 +515,6 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
   .sx-tri-notes{grid-template-columns:minmax(0,1fr);gap:0;margin-top:14px}
   .sx-tri-notes li{padding-block:12px}
 }
+
+/* служебная пометка приёмки переноса */
+.sx-transfer-note{display:inline-block;margin:0 0 12px;padding:6px 10px;border-radius:6px;background:#fff3c4;color:#5c4400;font-size:13px;line-height:1.35}
