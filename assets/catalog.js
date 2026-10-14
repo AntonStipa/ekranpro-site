@@ -226,12 +226,25 @@
         <div class="ek-price"><span class="pl">Цена</span><span class="val">${price}</span></div></div>
         <div class="ek-actions"><button type="button" class="ek-order" data-order="${p.name} (${p.sku})"><span class="lbl">Заказать</span>${ARW('ek-o')}</button><a class="ek-details" href="${url}"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span>${ARW('ek-d')}<span class="ek-line" aria-hidden="true"><i class="out"></i><i class="in"></i></span></a></div></article>`;
     }
+    // карточки, перенесённые со старого сайта (#ek-pinned): всегда первыми, фильтры на них не действуют
+    const PINNED = (() => { const el = $('#ek-pinned'); try { return el ? JSON.parse(el.textContent) : []; } catch (e) { return []; } })();
+    const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    function pinnedHTML(c) {
+      const url = c.href_new ? `${BASE}${c.href_new}` : '';
+      const sub = c.href_new ? 'есть карточка в новом каталоге' : (c.linked ? 'своя страница на старом сайте' : 'без страницы на старом сайте');
+      return `<article class="ek-card ek-card--pinned">
+        <div class="ek-img"><div class="ek-frames">${c.img ? `<img src="${esc(c.img)}" alt="${esc(c.name)}" loading="lazy" width="480" height="360" class="on">` : ''}</div><span class="ek-badges"><span class="ek-badge">Со старого сайта</span></span></div>
+        <div class="ek-body"><div><h3>${url ? `<a href="${url}">${esc(c.name)}</a>` : esc(c.name)}</h3><div class="ek-sku">${sub}</div></div>
+        <dl class="ek-specs">${(c.specs || []).map(s => `<div><dt>${esc(s[0])}</dt><dd class="ek-num">${esc(s[1])}</dd></div>`).join('')}</dl>
+        <div class="ek-price"><span class="pl">Цена</span><span class="val"><b>по запросу</b></span></div></div>
+        <div class="ek-actions"><button type="button" class="ek-order" data-order="${esc(c.name)}"><span class="lbl">Заказать</span>${ARW('ek-o')}</button>${url ? `<a class="ek-details" href="${url}"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span>${ARW('ek-d')}</a>` : `<span class="ek-details ek-details--off" title="Полная карточка модели готовится"><span class="ek-lbl2"><span class="base">Подробнее</span></span></span>`}</div></article>`;
+    }
     function render(keepFocus) {
       const r = results(state), n = r.length;
       $('#ek-count').textContent = n; $('#ek-count-word').textContent = wordFor(n);
       const shown = r.slice(0, state.shown);
       const grid = $('#ek-grid'); grid.className = 'ek-grid' + (state.view === 'list' ? ' list' : '');
-      grid.innerHTML = n ? shown.map(cardHTML).join('') : `<div class="ek-empty" style="grid-column:1/-1">По этим условиям моделей нет. <button type="button" data-reset-all>Сбросить фильтры</button> или оставьте заявку — подберём под задачу.</div>`;
+      grid.innerHTML = PINNED.map(pinnedHTML).join('') + (n ? shown.map(cardHTML).join('') : `<div class="ek-empty" style="grid-column:1/-1">По этим условиям моделей нет. <button type="button" data-reset-all>Сбросить фильтры</button> или оставьте заявку — подберём под задачу.</div>`);
       const more = $('#ek-more');
       more.innerHTML = n > shown.length ? `<button type="button" class="ek-btn ek-btn--outline ek-btn--center" id="ek-more-btn" style="min-width:260px">Показать ещё ${Math.min(24, n - shown.length)}</button><span>Показано ${shown.length} из ${n}</span>` : (n ? `<span>Показано ${shown.length} из ${n}</span>` : '');
       const mb = $('#ek-more-btn'); if (mb) mb.addEventListener('click', () => { state.shown += 24; render(); });

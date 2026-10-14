@@ -374,6 +374,5 @@ body{margin:0;background:#fff}
 .ek-card--static .ek-price b{font-size:14px;font-weight:600;color:var(--ek-muted,#6b7280)}
 .ek-noimg{display:flex;align-items:center;justify-content:center;height:100%;min-height:160px;color:#9ca3af;font-size:13px;background:#f3f4f6}
 
-.ek-static-more{margin-top:10px;width:100%;padding:9px 12px;border:1px solid var(--ek-line,#d8dde3);border-radius:8px;background:transparent;color:var(--ek-muted,#6b7280);font:inherit;font-size:13px;cursor:not-allowed;opacity:.75}
-.ek-static-more--on{display:block;text-align:center;text-decoration:none;cursor:pointer;opacity:1;color:inherit;border-color:currentColor}
-.ek-sub-h{font-size:20px;margin:28px 0 12px}
+.ek-details--off{opacity:.45;cursor:not-allowed}
+.ek-card--pinned .ek-badge{background:#fff3c4;color:#5c4400}

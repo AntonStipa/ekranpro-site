@@ -518,3 +518,26 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 
 /* служебная пометка приёмки переноса */
 .sx-transfer-note{display:inline-block;margin:0 0 12px;padding:6px 10px;border-radius:6px;background:#fff3c4;color:#5c4400;font-size:13px;line-height:1.35}
+
+/* ---------- страница решения (templates/solution.html) ----------
+   Первый экран: своё фото страницы обычных пропорций — по центру кадра; лид под заголовком.
+   «Задачи и что ставим» — на сетке этапов sx-steps-grid, но без раскрытия по наведению: всё видно сразу, карточка — ссылка. */
+.sx-hero-img--own{--sx-x:50%}
+.cat-main .sx-hero-lead{max-width:38em;margin:calc(-1*clamp(8px,2svh,20px)) 0 clamp(24px,4svh,40px);color:#d5dde3;font-size:clamp(15px,1.12vw,19px);line-height:1.5}
+.cat-main .sx-tasks .sx-steps-grid h3{opacity:1;transform:none}
+.sx-tasks .sx-steps-grid li{position:relative}
+.sx-tasks .sx-steps-grid li:has(.sx-task-link:is(:hover,:focus-visible)) .sx-steps-n{color:var(--ek-cta)}
+.sx-task-link{display:inline-flex;align-items:center;gap:10px;margin-top:clamp(16px,1.6vw,24px);padding-top:14px;border-top:1px solid #c9cdc9;color:var(--ek-ink);font-size:clamp(14.5px,1.05vw,17px);font-weight:500;line-height:1.3}
+.sx-task-link::after{content:"";position:absolute;inset:0}
+.sx-task-link:focus-visible{outline:0}
+.sx-tasks .sx-steps-grid li:has(.sx-task-link:focus-visible){box-shadow:inset 0 0 0 2px var(--ek-ink)}
+.sx-task-link svg{flex:none;width:22px;height:22px;transition:transform .25s ease}
+.sx-task-link:hover svg{transform:translateX(4px)}
+@media (min-width:1101px){.sx-tasks-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.sx-models-foot{display:flex;flex-wrap:wrap;gap:16px 48px;margin-top:clamp(24px,2.4vw,40px)}
+.sx-models-foot>*{flex:0 1 360px}
+.sx-rel-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.sx-rel-list a{display:flex;align-items:center;justify-content:space-between;gap:16px;height:100%;padding:18px 22px;background:var(--ek-grey);color:var(--ek-ink);font-size:clamp(15px,1.1vw,18px);font-weight:500;line-height:1.3;transition:background-color .2s ease}
+.sx-rel-list a:hover{background:#dde1dd}
+.sx-rel-list svg{flex:none;width:22px;height:22px}
+@media (prefers-reduced-motion:reduce){.sx-task-link svg{transition:none}}
