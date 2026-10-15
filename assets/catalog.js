@@ -217,14 +217,14 @@
       const price = p.price ? `<b class="ek-num">${p.priceUnit === 'м²' ? 'от ' : ''}${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
       const cmp = cmpGet().includes(p.sku) ? 'checked' : '';
       const frames = (p.frames && p.frames.length ? p.frames : [p.photo]);
-      const imgs = frames.map((f, i) => `<img src="${BASE}/${f}" alt="${i ? '' : p.name}" loading="lazy" width="480" height="360" class="${i ? '' : 'on'}" ${i ? 'aria-hidden="true"' : ''}>`).join('');
+      const imgs = frames.map((f, i) => `<img src="${BASE}/${f}" alt="${i ? '' : (p.fullName || p.name)}" loading="lazy" width="480" height="360" class="${i ? '' : 'on'}" ${i ? 'aria-hidden="true"' : ''}>`).join('');
       const dots = frames.length > 1 ? `<div class="ek-dots" aria-hidden="true">${frames.map((f, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : '';
       return `<article class="ek-card" data-sku="${p.sku}">
         <div class="ek-img" data-frames="${frames.length}"><div class="ek-frames">${imgs}</div>${dots}${p.section === 'interaktivnye-paneli' ? '<span class="ek-touch" title="Сенсорный экран" aria-label="Сенсорный экран"></span>' : ''}<span class="ek-badges">${(GROUP !== 'lcd' && p.badges || [badge(p)]).map(b => `<span class="ek-badge">${b}</span>`).join('')}</span><label class="ek-cmp"><input type="checkbox" data-cmp="${p.sku}" ${cmp}>Сравнить</label></div>
-        <div class="ek-body"><div><h3><a href="${url}">${p.name}</a></h3><div class="ek-sku">${p.sku}</div></div>
+        <div class="ek-body"><div><h3><a href="${url}">${p.typeName ? `<span class="ek-kind">${p.typeName}</span> ` : ''}${p.name}</a></h3><div class="ek-sku">${p.sku}</div></div>
         <dl class="ek-specs">${p.specs.map(s => `<div><dt>${s[0]}</dt><dd class="ek-num">${s[1]}</dd></div>`).join('')}</dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val">${price}</span></div></div>
-        <div class="ek-actions"><button type="button" class="ek-order" data-order="${p.name} (${p.sku})"><span class="lbl">Заказать</span>${ARW('ek-o')}</button><a class="ek-details" href="${url}"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span>${ARW('ek-d')}<span class="ek-line" aria-hidden="true"><i class="out"></i><i class="in"></i></span></a></div></article>`;
+        <div class="ek-actions"><button type="button" class="ek-order" data-order="${p.fullName || p.name} (${p.sku})"><span class="lbl">Заказать</span>${ARW('ek-o')}</button><a class="ek-details" href="${url}"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span>${ARW('ek-d')}<span class="ek-line" aria-hidden="true"><i class="out"></i><i class="in"></i></span></a></div></article>`;
     }
     // карточки, перенесённые со старого сайта (#ek-pinned): всегда первыми, фильтры на них не действуют
     const ONLY_PINNED = !!(document.getElementById('ek-grid') && document.getElementById('ek-grid').dataset.onlyPinned);

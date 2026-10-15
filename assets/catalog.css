@@ -381,3 +381,6 @@ body{margin:0;background:#fff}
 .ek-card--pinned .ek-badge{background:#fff3c4;color:#5c4400}
 .ek-pdp .sx-transfer-note,.ek-sec .sx-transfer-note{display:inline-block;margin:8px 0 0;padding:6px 10px;border-radius:6px;background:#fff3c4;color:#5c4400;font-size:13px;line-height:1.35}
 .ek-head + .sx-transfer-note{display:inline-block;margin:0 0 12px;padding:6px 10px;border-radius:6px;background:#fff3c4;color:#5c4400;font-size:13px;line-height:1.35}
+
+/* 15.10: тип экрана над моделью в карточке листинга — часть названия (внутри ссылки), визуально мелко */
+.ek-card h3 .ek-kind{display:block;font-size:12px;line-height:1.3;font-weight:400;color:var(--ek-muted,#6b7280);letter-spacing:0;margin-bottom:3px}
