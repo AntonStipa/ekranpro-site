@@ -60,7 +60,7 @@ body{margin:0;background:#fff}
 .ek-tile{display:flex;flex-direction:column;background:#fff;border:1px solid var(--ek-line);transition:border-color .15s ease,box-shadow .15s ease;position:relative}
 .ek-tile:hover{border-color:#949b93;box-shadow:0 8px 24px #171a1c16}
 .ek-tile .ek-ph{position:relative;aspect-ratio:16/10;background:var(--ek-grey);padding:22px;border-bottom:1px solid var(--ek-line-2);display:block;max-width:100%}
-.ek-tile .ek-ph img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.ek-tile .ek-ph img{position:absolute;top:22px;left:22px;width:calc(100% - 44px);height:calc(100% - 44px);max-width:none;object-fit:contain;object-position:50% 50%;mix-blend-mode:multiply}
 .ek-tile .ek-t{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
 .ek-tile h3{font-size:19px;letter-spacing:-.02em;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
 .ek-tile h3 span{font-family:var(--ek-text);color:var(--ek-muted);font-size:13px;white-space:nowrap}
@@ -140,6 +140,8 @@ body{margin:0;background:#fff}
 .ek-frames{position:absolute;inset:24px 18px 30px}
 .ek-frames img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;display:block;opacity:0;transition:opacity .12s ease}
 .ek-frames img.on{opacity:1}
+/* 15.10: фото, отрисованное сервером до запуска скрипта, — в той же рамке, что и .ek-frames (иначе в Safari вылезает за блок) */
+.ek-card .ek-img > img{position:absolute;top:24px;left:18px;width:calc(100% - 36px);height:calc(100% - 54px);max-width:none;object-fit:contain;object-position:50% 50%;mix-blend-mode:multiply;display:block}
 .ek-dots{position:absolute;left:18px;right:18px;bottom:12px;display:flex;gap:6px}
 .ek-dots i{flex:1;height:3px;background:#cfd2cd;transition:background .12s ease}
 .ek-dots i.on{background:var(--ek-ink)}
@@ -228,12 +230,12 @@ body{margin:0;background:#fff}
 /* ---------- страница товара ---------- */
 .ek-pdp{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;margin-top:10px;align-items:start}
 .ek-gallery .ek-main{position:relative;aspect-ratio:4/3;background:var(--ek-grey);border:1px solid var(--ek-line);display:block;padding:32px;max-width:100%}
-.ek-gallery .ek-main img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;display:block}
+.ek-gallery .ek-main img{position:absolute;top:32px;left:32px;width:calc(100% - 64px);height:calc(100% - 64px);max-width:none;object-fit:contain;object-position:50% 50%;mix-blend-mode:multiply;display:block}
 .ek-thumbs{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
-.ek-thumbs button{width:96px;aspect-ratio:4/3;border:1px solid var(--ek-line);background:var(--ek-grey);padding:6px;cursor:pointer;transition:border-color .15s ease}
+.ek-thumbs button{position:relative;width:96px;aspect-ratio:4/3;border:1px solid var(--ek-line);background:var(--ek-grey);padding:6px;cursor:pointer;transition:border-color .15s ease}
 .ek-thumbs button[aria-pressed="true"]{border-color:var(--ek-ink)}
 .ek-thumbs button:hover{border-color:#949b93}
-.ek-thumbs img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;display:block}
+.ek-thumbs img{position:absolute;top:6px;left:6px;width:calc(100% - 12px);height:calc(100% - 12px);max-width:none;object-fit:contain;object-position:50% 50%;mix-blend-mode:multiply;display:block}
 .ek-gallery figcaption{font-size:12.5px;color:#9a9e9f;margin-top:8px}
 .ek-info{position:sticky;top:104px;display:flex;flex-direction:column;gap:20px}
 .ek-eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ek-muted)}
@@ -331,6 +333,7 @@ body{margin:0;background:#fff}
   .ek-grid .ek-card{flex-wrap:wrap}
   .ek-actions{position:static;opacity:1;visibility:visible;transform:none;border:0;border-top:1px solid var(--ek-line-2);box-shadow:none;padding:12px 14px 14px;width:100%;flex-basis:100%}
   .ek-frames{inset:10px 10px 16px}
+  .ek-card .ek-img > img{top:10px;left:10px;width:calc(100% - 20px);height:calc(100% - 26px)}
   .ek-dots{left:10px;right:10px;bottom:6px}
   .ek-grid .ek-card h3{font-size:18px}
   .ek-specs{font-size:12.5px}
