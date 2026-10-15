@@ -104,9 +104,9 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 #ep-products-compare .epp-scene:nth-child(even){background:#e8ebe8}
 
 
-.sx-cat-head{padding-top:clamp(48px,6vw,104px)}
+.sx-cat-head{padding-top:clamp(24px,3vw,52px)}  /* 15.10: отступ от первого экрана уменьшен вдвое (было clamp(48px,6vw,104px)) */
 .sx-cat-head .ek-head h2{font-family:Inter,Arial,sans-serif;font-weight:500;font-size:clamp(32px,4.02vw,80px);line-height:1.07;letter-spacing:-.045em}
-.sx-podbor{border-top:1px solid var(--ek-line)}
+.sx-podbor{border-top:0}  /* 15.10: линия между листингом и подбором убрана */
 
 /* ---------- таблицы ---------- */
 .sx-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -542,3 +542,9 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 .sx-rel-list a:hover{background:#dde1dd}
 .sx-rel-list svg{flex:none;width:22px;height:22px}
 @media (prefers-reduced-motion:reduce){.sx-task-link svg{transition:none}}
+
+/* 15.10: хлебные крошки перенесены с первого экрана к заголовку каталога (на светлом фоне) */
+.sx-cat-head .sx-crumbs{color:var(--ek-muted);margin-bottom:clamp(14px,1.4vw,24px)}
+.sx-cat-head .sx-crumbs li+li::before{color:#b9bfc6}
+.sx-cat-head .sx-crumbs a{color:inherit}
+.sx-cat-head .sx-crumbs [aria-current]{color:var(--ek-ink)}
