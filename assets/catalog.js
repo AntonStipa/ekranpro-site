@@ -68,7 +68,9 @@
     const LED_FILTERS = [
       { key: 'section', type: 'check', title: 'Раздел', opts: () => SECTIONS.map(s => [s.slug, s.name]), test: (p, v) => p.section === v },
       { key: 'env', type: 'check', title: 'Среда', opts: () => [['out', 'Улица'], ['in', 'Помещение']], test: (p, v) => p.env === v },
-      { key: 'kind', type: 'check', title: 'Тип экрана', opts: () => [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['flex', 'Гибкие']], test: (p, v) => p.kind === v },
+      { key: 'kind', type: 'check', title: 'Тип экрана', opts: () => lockedSection === 'prozrachnye-ekrany'
+          ? [['panel', 'Стеклянная панель'], ['facade', 'Фасадное стекло'], ['rail', 'Ограждение'], ['poster', 'Постер'], ['rack', 'Реечный']]   // прозрачные: вид экрана
+          : [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['flex', 'Гибкие'], ['glass', 'Прозрачные']], test: (p, v) => v === 'glass' ? p.section === 'prozrachnye-ekrany' : p.kind === v },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
         opts: () => lockedSection === 'ulichnye-ekrany'
           ? [['0', 'до 5 500', 0, 5500], ['1', '6 000–6 500', 5500, 7000], ['2', '7 500–8 000', 7000, 8999], ['3', '10 000', 8999, 999999]]   // уличные: свои ступени яркости
@@ -89,7 +91,8 @@
       { key: 'material', type: 'check', title: 'Материал корпуса', opts: () => [['Сталь', 'Сталь'], ['Алюминий', 'Алюминий']], test: (p, v) => p.material === v },
       // только у медиафасадов: прозрачность, вес, степень защиты, ширина кабинета (первое число поля «Размер кабинета»)
       { key: 'transp', type: 'preset', title: 'Прозрачность, %', hint: 'Доля площади, через которую виден фасад и проходит свет',
-        opts: () => [['0', 'до 50', 0, 50], ['1', '60–68', 50, 70], ['2', '71', 70, 100]], test: (p, v, o) => inRange(p.transparency, o[2], o[3]) },
+        opts: () => lockedSection === 'prozrachnye-ekrany' ? [['0', '55–65', 0, 66], ['1', '75–86', 66, 87], ['2', '89–93', 87, 94], ['3', '95–99', 94, 100]]   // прозрачные: свои ступени
+          : [['0', 'до 50', 0, 50], ['1', '60–68', 50, 70], ['2', '71', 70, 100]], test: (p, v, o) => inRange(p.transparency, o[2], o[3]) },
       { key: 'weight', type: 'preset', title: 'Вес, кг/м²', opts: () => [['0', 'до 13', 0, 13], ['1', '15', 13, 16], ['2', 'от 17', 16, 999]], test: (p, v, o) => inRange(p.weight, o[2], o[3]) },
       { key: 'ipx', type: 'check', title: 'Степень защиты', opts: () => [['IP65', 'IP65'], ['IP68', 'IP68']], test: (p, v) => (p.ip || '').indexOf(v) === 0 },
       { key: 'cabw', type: 'check', title: 'Ширина кабинета, мм', opts: () => [['500', '500'], ['1000', '1 000']], test: (p, v) => (p.size || '').split('×')[0] === v },
@@ -102,6 +105,7 @@
       'ulichnye-ekrany': ['env', 'svc', 'nit', 'pitch', 'material', 'price'],
       'interernye-ekrany': ['env', 'coating', 'nit', 'pitch', 'pixel', 'body', 'svc', 'price'],
       'mediafasady': ['nit', 'pitch', 'transp', 'weight', 'ipx', 'pixel', 'cabw', 'price'],
+      'prozrachnye-ekrany': ['kind', 'env', 'transp', 'pitch', 'nit'],   // цен нет — «по запросу», фильтр цены не нужен
     };
     const LCD_WALL = ['lcd-videosteny', 'lcd-paneli-dlya-videosten'];
     // состав и порядок фильтров LCD: общий раздел ('') и каждый продукт отдельно
