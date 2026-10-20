@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<pattern id="d" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.15" fill="#fff" stroke="none"/></pattern>
+<radialGradient id="s" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".3" stop-color="#fff" stop-opacity=".95"/><stop offset=".55" stop-color="#ffe2a8" stop-opacity=".45"/><stop offset="1" stop-color="#ffe2a8" stop-opacity="0"/></radialGradient>
+<linearGradient id="b" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<!-- солнце -->
+<circle cx="258" cy="44" r="40" fill="url(#s)" stroke="none"/>
+<g stroke-opacity=".8" stroke-width="1.4">
+<path d="M258 14v-8M258 74v8M228 44h-8M288 44h8M237 23l-6-6M279 65l6 6M279 23l6-6M237 65l-6 6"/>
+</g>
+<!-- лучи на витрину -->
+<path d="M238 58 252 70 150 200 80 200z" fill="url(#b)" stroke="none"/>
+<!-- фасад -->
+<g stroke-opacity=".7" stroke-width="1.2">
+<path d="M14 210V70H200"/>
+<path d="M14 84H200"/>
+<path d="M14 210H300"/>
+</g>
+<!-- козырёк -->
+<path d="M26 98H196l-8 12H34z" stroke-opacity=".6" stroke-width="1.2"/>
+<!-- витрина с экраном -->
+<rect x="30" y="116" width="120" height="94" stroke-opacity=".7" stroke-width="1.2"/>
+<rect x="44" y="126" width="92" height="64" fill="url(#d)" fill-opacity=".95" stroke="#fff" stroke-opacity=".9" stroke-width="1.2"/>
+<!-- дверь -->
+<path d="M162 210v-90h30v90M170 168h4" stroke-opacity=".6" stroke-width="1.2"/>
+<!-- тротуар -->
+<path d="M200 70v6M206 210h20M240 210h20M274 210h20" stroke-opacity=".4" stroke-width="1"/>
+</svg>

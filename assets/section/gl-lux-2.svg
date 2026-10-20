@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+<defs>
+<pattern id="d" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.15" fill="#fff" stroke="none"/></pattern>
+<linearGradient id="b" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="#fff4d6" stop-opacity=".38"/><stop offset="1" stop-color="#fff4d6" stop-opacity="0"/></linearGradient>
+<radialGradient id="s" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#fff4d6" stop-opacity=".8"/><stop offset="1" stop-color="#fff4d6" stop-opacity="0"/></radialGradient>
+</defs>
+<!-- солнце над кровлей -->
+<circle cx="262" cy="24" r="24" fill="url(#s)" stroke="none"/>
+<!-- стеклянная кровля -->
+<g stroke-opacity=".7" stroke-width="1.2">
+<path d="M30 58 150 18 290 58"/>
+<path d="M30 58H290"/>
+</g>
+<g stroke-opacity=".4" stroke-width="1">
+<path d="M60 48V58M90 38V58M120 28V58M150 18V58M180 28V58M210 38V58M240 48V58M270 52V58"/>
+</g>
+<!-- лучи дневного света через кровлю -->
+<path d="M150 58h90l-30 152H96z" fill="url(#b)" stroke="none"/>
+<path d="M60 58h60l-40 152H20z" fill="url(#b)" stroke="none" opacity=".6"/>
+<!-- галереи этажей -->
+<g stroke-opacity=".55" stroke-width="1.2">
+<path d="M30 58V210M290 58V210"/>
+<path d="M30 112h56M30 160h56M234 112h56M234 160h56"/>
+</g>
+<g stroke-opacity=".35" stroke-width="1">
+<path d="M42 104v8M54 104v8M66 104v8M78 104v8M42 152v8M54 152v8M66 152v8M78 152v8M242 104v8M254 104v8M266 104v8M278 104v8M242 152v8M254 152v8M266 152v8M278 152v8M30 104h56M30 152h56M234 104h56M234 152h56"/>
+</g>
+<!-- подвесной прозрачный экран -->
+<path d="M126 58v34M194 58v34" stroke-opacity=".6" stroke-width="1"/>
+<rect x="122" y="92" width="76" height="58" fill="url(#d)" fill-opacity=".75" stroke="#fff" stroke-opacity=".8" stroke-width="1.2"/>
+<path d="M30 210H290" stroke-opacity=".55" stroke-width="1.2"/>
+</svg>
