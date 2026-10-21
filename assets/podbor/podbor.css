@@ -331,3 +331,14 @@ dialog.pb-dialog::backdrop{background:rgba(23,26,28,.55)}
   .pb-cat .pb-arw-out,.pb-cat .pb-line-out{animation:none!important;opacity:1!important;transform:none!important}
   .pb-btn .pb-arw-out{color:inherit!important}
 }
+
+/* 21.10: подбор прозрачного экрана — фото способов установки заполняют квадрат; экран на схеме чуть прозрачный */
+#ep-podbor.pb--tr .pb-type img{object-fit:cover}
+#ep-podbor.pb--tr .pb-scr{opacity:.9}
+/* 21.10: способы установки прозрачного — иконки-инфографика (линии), крупнее обычных значков мест */
+#ep-podbor.pb--tr .pb-places--mf .pb-type svg,#ep-podbor.is-pinned.pb--tr .pb-places--mf .pb-type svg{flex:none;width:58px;height:52px;stroke-width:1.1;padding:4px;box-sizing:content-box}
+/* 21.10: способы установки прозрачного не сжимаются по высоте — иначе нижняя кнопка уходит под «Параметры» и не нажимается (окно ниже ~800 px) */
+#ep-podbor.pb--tr .pb-controls>div:has(>.pb-places--mf){flex:none!important;display:block!important}
+#ep-podbor.pb--tr .pb-places--mf{flex:none!important;grid-auto-rows:auto!important;gap:6px!important}
+#ep-podbor.pb--tr .pb-places--mf .pb-type{min-height:54px!important;max-height:none!important;padding:5px 12px 5px 6px!important;gap:12px!important}
+#ep-podbor.pb--tr .pb-places--mf .pb-type svg,#ep-podbor.is-pinned.pb--tr .pb-places--mf .pb-type svg{width:46px;height:41px;padding:2px}

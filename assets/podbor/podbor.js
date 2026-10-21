@@ -50,6 +50,22 @@
   // установки, модели — только медиафасады каталога (поле type: rack — реечный, mesh — сетка, pixel — архитектурные пиксели).
   // Тип без моделей в каталоге показывает бюджет «по запросу». Рекомендаций по шагу в этом режиме нет.
   var MF=document.getElementById('pb-data').getAttribute('data-mode')==='mf';
+  // 21.10: подбор прозрачного экрана (страница «Прозрачные экраны», data-mode="tr"): среда — куда светит экран (на улицу — модели от 4500 нит),
+  // вместо места — способ установки (на стекло / подвес / отдельная конструкция) с фото; модели — только прозрачные каталога (поле mounts).
+  var TR=document.getElementById('pb-data').getAttribute('data-mode')==='tr';
+  if(TR){
+    var TT=JSON.parse(document.getElementById('pb-data').getAttribute('data-types')||'[]');
+    var TD={glass:{w:3,h:2,d:4,lift:0.4},hang:{w:2,h:3,d:5,lift:1},stand:{w:1,h:2,d:3,lift:0.3}};
+    var DOTS=function(x0,y0,nx,ny,st){var o='';for(var i=0;i<nx;i++)for(var j=0;j<ny;j++)o+='<circle cx="'+(x0+i*st)+'" cy="'+(y0+j*st)+'" r=".9" fill="currentColor" stroke="none"/>';return o};
+    var TICON={ // 21.10: инфографика способов установки (вместо фото)
+      glass:'<path d="M2 28h30M4 28V8h26v20"/><path d="M4 8l2-4h22l2 4"/><rect x="7" y="11" width="13" height="14"/><rect x="23" y="14" width="5" height="14"/><path d="M24.5 21v2"/>'+DOTS(9.5,13.5,4,4,2.7),
+      hang:'<path d="M2 3h30M10 3v6M24 3v6"/><rect x="7" y="9" width="20" height="15"/><path d="M2 28h30"/>'+DOTS(10,12,5,4,3.4),
+      stand:'<rect x="10" y="3" width="14" height="18"/><path d="M12 21v4M22 21v4M8 25h18"/><circle cx="9.5" cy="27.4" r="1.4"/><circle cx="24.5" cy="27.4" r="1.4"/>'+DOTS(12.5,6,4,5,3)};
+    var tp=function(t,env){var d=TD[t.id]||TD.glass;return {id:t.id,trm:t.id,ctx:t.id==='glass'?'shop':t.id,name:t.name,text:t.text||'',image:'',icon:TICON[t.id]||'',w:d.w,h:d.h,d:d.d,lift:d.lift,pool:'tr',minNit:env==='out'?4500:0,empty:'Под эти условия\nподберём под проект.'}};
+    PLACES.out=TT.map(function(t){return tp(t,'out')}); PLACES.in=TT.map(function(t){return tp(t,'in')});
+    LIMITS.out={w:[0.5,20,0.1],h:[0.5,10,0.1],d:[1,50,0.5],lift:[0,10,0.1]}; LIMITS.in=LIMITS.out;
+    (function(p){st.place=p.id; st.w=p.w; st.h=p.h; st.d=p.d; st.lift=p.lift; st.mount=null;})(PLACES[st.env][0]);
+  }
   if(MF){
     // типы (название, назначение, фото) и стартовые размеры задаёт раздел: атрибуты data-types и data-start (sections/mediafasady.json → podbor)
     var pbData=document.getElementById('pb-data'), S0=JSON.parse(pbData.getAttribute('data-start')||'{}'), TYPES=JSON.parse(pbData.getAttribute('data-types')||'[]');
@@ -105,7 +121,7 @@
         cards.push({level:lv,req:[lv],pitch:m.pitch,k:COEF[lv],rec:lv==='optimal',from:price,to:price,models:[m.sku],piece:true});
       });
     } else {
-      var pool=MODELS.filter(function(m){return m.pool===p.pool&&(!p.type||m.type===p.type)&&(!p.maxPitch||m.pitch<=p.maxPitch+1e-6)});
+      var pool=MODELS.filter(function(m){return m.pool===p.pool&&(!p.type||m.type===p.type)&&(!p.maxPitch||m.pitch<=p.maxPitch+1e-6)&&(!p.trm||(m.mounts||[]).indexOf(p.trm)>=0)&&(!p.minNit||m.nit>=p.minNit)});
       var avail=uniq(pool.map(function(m){return m.pitch}));
       if(avail.length){
         var lv={}, seen=[], lo=0, hi=0;
@@ -167,6 +183,11 @@
     if(c.ctx==='road'){mL=0.5;mR=0.5}
     if(c.ctx==='pylon'){ctxH=c.lift+c.h+0.9}
     if(c.ctx==='room'){mL=c.furn==='stage'?1.5:c.nav?1.2:2.4;ctxH=ceilM}
+    var TRin=TR&&st.env==='in', TRout=TR&&st.env==='out';
+    if(TR){mL=mR=TRout?1.5:(c.ctx==='stand'?1.4:1.8);ctxH=c.lift+c.h+(c.ctx==='hang'?1.2:0.7)+(TRout?0.9:0);
+      if(c.ctx==='shop'&&TRout){mL=1.3;mR=0.35+0.5+1.1+0.9;ctxH=Math.max(c.lift+c.h+0.35,2.6)+0.7+3.1}
+      if(c.ctx==='stand'){mL=mR=1.2;ctxH=c.lift+c.h+0.5}
+      if(c.ctx==='shop'&&TRin){mL=1.2;mR=0.4+1.9+0.9;ctxH=Math.max(c.lift+c.h+1.8,5.2)}}   // ТЦ: потолок как у подвеса (~5 м)
     var sceneH=Math.max(ctxH,2.1), zone=(VW-padL-padR)*0.52;
     var s=Math.min((gy-top)/sceneH,zone/(mL+c.w+mR),64);
     var sx=padL+mL*s, sw=c.w*s, sh=c.h*s, sy=gy-(c.lift+c.h)*s, sb=sy+sh, ctxR=sx+sw+mR*s;
@@ -189,10 +210,11 @@
     o+='<defs><pattern id="'+uid+'-dots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="1.3" fill="#fff" fill-opacity=".3"/></pattern>'+
        '<filter id="'+uid+'-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="18"/></filter></defs>';
     // фон на всю ширину схемы (не сдвигается при центровке)
-    var bg=o+R(0,0,VW,VH,T.bg), room=c.ctx==='room', floorFill=room?T.floor:T.ground; o='';
+    var bg=o+R(0,0,VW,VH,T.bg), room=c.ctx==='room'||TRin, floorFill=room?T.floor:T.ground; o='';
     if(room){ // стена и пол темнее стены; линия потолка — только у навигационного указателя
       bg+=R(0,0,VW,gy,T.room);
       if(c.nav){ var cy=gy-ceilM*s; bg+=R(0,0,VW,cy,T.bg)+L(0,cy,VW,cy,T.dim,1.2); }
+      if(TRin&&c.ctx!=='stand'){ var cy3=gy-ctxH*s; bg+=R(0,0,VW,cy3,T.bg)+L(0,cy3,VW,cy3,T.dim,1.2); } // прозрачные в помещении: линия потолка
     }
     bg+=R(0,gy,VW,VH-gy,floorFill);
     // улица
@@ -227,6 +249,40 @@
       o+=R(padL,ty,tw,gy-ty,T.metal,T.metalStroke)+R(ctxR-tw,ty,tw,gy-ty,T.metal,T.metalStroke)+R(padL,ty,ctxR-padL,tw,T.metal,T.metalStroke);
       o+=R(padL-0.4*s,gy-pl,ctxR-padL+0.8*s,pl,T.wall,T.wallStroke);
       o+=L(sx+sw*0.25,ty+tw,sx+sw*0.25,sy,T.metalStroke||T.metal,1.5)+L(sx+sw*0.75,ty+tw,sx+sw*0.75,sy,T.metalStroke||T.metal,1.5);
+    }
+    if(TR){ // прозрачные: витрина на улицу или стеклянная перегородка, подвес на тросах, рама на стойках с колёсами
+      var wp=0.35*s, fw=Math.max(0.05*s,2), GL='#eef2f3', wx0=sx-wp, wx1=sx+sw+wp, topY=gy-ctxH*s, winTop=topY;
+      var frame=function(x0,y0,x1,y1){return R(x0,y0,x1-x0,y1-y0,GL)+R(x0,y0,x1-x0,fw,T.metal)+R(x0,y1-fw,x1-x0,fw,T.metal)+R(x0,y0,fw,y1-y0,T.metal)+R(x1-fw,y0,fw,y1-y0,T.metal)};
+      if(TRout&&c.ctx==='shop'){ // входная группа магазина: витрина с экраном, стеклянная дверь, вывеска, окна второго этажа
+        winTop=sy-wp; var winBot=gy-Math.min(0.3,Math.max(0,c.lift-0.05))*s, gf=Math.max(c.lift+c.h+0.35,2.6), dx0=wx1+0.5*s, dw=1.1*s, dh=2.2*s;
+        o+=R(padL,topY,ctxR-padL,gy-topY,T.wall,T.wallStroke);
+        o+=R(wx0,gy-(gf+0.6)*s,dx0+dw-wx0,0.45*s,T.wallAlt);                       // вывеска над витриной и дверью
+        o+=frame(wx0,winTop,wx1,winBot)+frame(dx0,gy-dh,dx0+dw,gy)+R(dx0+dw*0.72,gy-dh*0.5-0.2*s,Math.max(0.05*s,2),0.4*s,T.metal); // витрина, дверь с ручкой
+        var fl2=gy-(gf+0.7+0.8)*s, wn=Math.max(2,Math.floor((ctxR-padL)/(2.1*s))), stp=(ctxR-padL)/wn;   // второй этаж
+        for(var k2=0;k2<wn;k2++) o+=R(padL+k2*stp+(stp-1.2*s)/2,fl2-1.5*s,1.2*s,1.5*s,T.win,T.winStroke);
+      } else if(TRout&&c.ctx==='hang'){ // подвес за витриной
+        winTop=sy-1.0*s; var winBot2=gy-Math.min(0.3,Math.max(0,c.lift-0.05))*s;
+        o+=R(padL,topY,ctxR-padL,gy-topY,T.wall,T.wallStroke)+frame(wx0,winTop,wx1,winBot2);
+      } else if(c.ctx==='shop'){ // в помещении: витрина магазина в торговом центре — стеклянный фронт с импостами, вывеска, двойные стеклянные двери
+        var fasc=0.8*s, gTop=topY+fasc, sx0=padL+0.1*s, sx1=ctxR-0.1*s, pier=0.3*s, d0=wx1+0.4*s, d1=d0+1.9*s, dTop=gy-Math.min(2.5*s,gy-gTop-0.3*s), mw=Math.max(0.05*s,1.5);
+        winTop=gTop;
+        o+=R(sx0-pier,topY,pier,gy-topY,T.wall,T.wallStroke)+R(sx1,topY,pier,gy-topY,T.wall,T.wallStroke);            // пилоны по краям
+        o+=R(sx0,topY,sx1-sx0,fasc,T.wall,T.wallStroke)+R(sx0+(sx1-sx0)*0.18,topY+fasc*0.25,(sx1-sx0)*0.64,fasc*0.5,T.wallAlt); // фриз с вывеской
+        o+=R(sx0,gTop,sx1-sx0,gy-gTop,GL)+R(sx0,gTop,sx1-sx0,mw,T.metal)+R(sx0,gy-0.12*s,sx1-sx0,0.12*s,T.metal);    // стекло во всю высоту, верхний профиль, цоколь
+        var nm=Math.max(2,Math.round((sx1-sx0)/(1.6*s))), stp2=(sx1-sx0)/nm;
+        o+=R(d0-0.3*s-mw/2,gTop,mw,gy-gTop,T.metal); // 21.10: один импост отделяет зону дверей, слева стекло без перегородок — экран просто на стекле
+        o+=R(d0-mw,dTop-mw,d1-d0+2*mw,mw,T.metal)+R(d0-mw,dTop,mw,gy-dTop,T.metal)+R(d1,dTop,mw,gy-dTop,T.metal)+R((d0+d1)/2-mw/2,dTop,mw,gy-dTop,T.metal); // двери: коробка и створки
+        o+=R((d0+d1)/2-0.18*s,dTop+(gy-dTop)*0.45,Math.max(0.04*s,1.5),0.5*s,T.metal)+R((d0+d1)/2+0.18*s-Math.max(0.04*s,1.5),dTop+(gy-dTop)*0.45,Math.max(0.04*s,1.5),0.5*s,T.metal); // ручки
+      }
+      if(c.ctx==='hang') [0.15,0.85].forEach(function(t){o+=L(sx+sw*t,winTop,sx+sw*t,sy,'#7d8380',1.5)});
+      if(c.ctx!=='shop') o+=R(sx-fw,sy-fw,sw+2*fw,sh+2*fw,T.metal);
+      if(c.ctx==='stand'){
+        var q2=Math.max(0.07*s,2.5), rr=Math.max(0.06*s,2.5), fy=gy-2*rr;
+        [sx+q2,sx+sw-q2].forEach(function(xx){
+          o+=R(xx-q2/2,sb,q2,fy-sb,T.metal)+R(xx-0.35*s,fy-q2,0.7*s,q2,T.metal);
+          [-0.28,0.28].forEach(function(dd){o+='<circle cx="'+(xx+dd*s).toFixed(1)+'" cy="'+(gy-rr).toFixed(1)+'" r="'+rr.toFixed(1)+'" fill="'+T.screen+'"/>'});
+        });
+      }
     }
     // помещение: обстановка
     var F=T.metal, FS=T.metalStroke, base=gy; // base — уровень, на котором стоит конструкция
@@ -355,9 +411,9 @@
   }
 
   function renderPlaces(){
-    if(MF){ // типы медиафасада: кнопки во всю ширину колонки, фото изделия слева, назначение справа
+    if(MF||TR){ // типы медиафасада / способы установки прозрачного: кнопки во всю ширину колонки, фото слева, пояснение справа
       el.places.className='pb-places pb-places--mf';
-      el.places.innerHTML=PLACES.mf.map(function(p){
+      el.places.innerHTML=(MF?PLACES.mf:PLACES[st.env]).map(function(p){
         return '<button type="button" class="pb-place pb-type" data-place="'+p.id+'" aria-pressed="'+(p.id===st.place)+'">'+
           (p.image?'<img src="'+p.image+'" alt="" width="160" height="160" loading="lazy" decoding="async">':'<svg viewBox="0 0 34 30" aria-hidden="true">'+p.icon+'</svg>')+
           '<span class="pb-type-t"><b>'+p.name+'</b>'+(p.text?'<small>'+p.text.split('\n').join('<br>')+'</small>':'')+'</span></button>';
@@ -438,6 +494,7 @@
     var b=e.target.closest('button'); if(!b)return; touch(); if(b.dataset.env===st.env)return;
     st.env=b.dataset.env;
     document.querySelectorAll('.pb-seg button').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.env===st.env))});
+    if(TR){ st.place=(PLACES[st.env].filter(function(p){return p.id===st.place})[0]||PLACES[st.env][0]).id; st.level='standard'; renderPlaces(); render(); return; }
     applyPlace(PLACES[st.env][0]);
   });
   el.places.addEventListener('click',function(e){
@@ -466,13 +523,13 @@
   function touch(){ st.touched=true; $('pb-hint').hidden=true; }
   function payload(){
     var r=last, p=place(), c=r.sel;
-    return {source:MF?'Подбор медиафасада':'Подбор экрана',env:MF?'Медиафасад':st.env==='out'?'На улице':'В помещении',place:p.name,mount:st.mount?MOUNT_LABEL[st.mount]:null,
+    return {source:MF?'Подбор медиафасада':TR?'Подбор прозрачного экрана':'Подбор экрана',env:MF?'Медиафасад':TR?(st.env==='out'?'Направлен на улицу':'Направлен в помещение'):st.env==='out'?'На улице':'В помещении',place:p.name,mount:st.mount?MOUNT_LABEL[st.mount]:null,
       width_m:st.w,height_m:st.h,area_m2:Math.round(r.area*100)/100,install_height_m:st.lift,distance_m:st.d,double_sided:p.nav?st.dbl:null,
       pitch_mm:c?c.pitch:null,quality:c?LEVEL_LABEL[c.level]:null,resolution:c?r.resW+'×'+r.resH:null,
       budget:c?(c.piece?pieceMoney(r)+' за табло, с НДС':money(c.from,c.to)+' (только оборудование, с НДС)'):'по запросу',models:c?c.models:[]};
   }
   function summaryRows(d){
-    return [[MF?'Тип':'Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],
+    return [[MF?'Тип':TR?'Установка':'Место',d.env+', '+d.place.toLowerCase()+(d.mount?', '+d.mount.toLowerCase():'')],
       ['Экран',fmt(d.width_m)+' × '+fmt(d.height_m)+' м'+(d.double_sided==null?', '+fmt(d.area_m2)+' м²':d.double_sided?', двустороннее':', одностороннее')],
       ['Высота установки',fmt(d.install_height_m)+' м'],['Расстояние просмотра',fmt(d.distance_m,1)+' м'],
       ['Шаг пикселя',d.pitch_mm?fmt(d.pitch_mm)+' мм, '+d.quality.toLowerCase():'подберёт инженер'],['Ориентир',d.budget]];
@@ -676,7 +733,7 @@
     if(on&&st.view==='calc'){ // параметры не помещаются по высоте — оставляем обычную прокрутку
       var cc=root.querySelector('.pb-controls'), cs=getComputedStyle(cc), kids=[].filter.call(cc.children,function(x){return !x.hidden&&x.tagName==='DIV'});
       var need=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+(kids.length-1)*10+kids.reduce(function(a,x){return a+x.offsetHeight},0); // 10 px — минимальный отступ между группами
-      if(need+(el.mountBox.hidden&&!MF?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned'); // запас 64 px — под «Способ установки», которого в подборе медиафасада нет
+      if(need+(el.mountBox.hidden&&!(MF||TR)?64:0)>cc.clientHeight+1) root.classList.remove('is-pinned'); // запас 64 px — под «Способ установки», которого в подборе медиафасада нет
     }
   }
   ['pb-img-screen','pb-img-plain','pb-img-board'].forEach(function(id){$(id).addEventListener('load',function(){paintTiles();paintScreen()})});
@@ -690,6 +747,14 @@
     $('pb-rec-open').hidden=true;
     var fill=$('ep-podbor').querySelector('.pb-fill'), params=el.rowW.closest('.pb-params').parentNode; // параметры — внизу колонки, как в общем подборе
     if(fill&&params) params.parentNode.insertBefore(fill,params);
+  }
+  if(TR){ // подписи: куда светит экран и способ установки
+    $('ep-podbor').classList.add('pb--mf','pb--tr'); el.mountBox.hidden=true;
+    var seg=document.querySelector('.pb-seg'); seg.parentNode.querySelector('.pb-label span').textContent='Куда будет направлен экран'; seg.setAttribute('aria-label','Куда будет направлен экран');
+    $('pb-env-out').textContent='На улицу'; $('pb-env-in').textContent='В помещение';
+    el.places.previousElementSibling.querySelector('span').textContent='Способ установки'; el.places.setAttribute('aria-label','Способ установки');
+    var fill2=$('ep-podbor').querySelector('.pb-fill'), params2=el.rowW.closest('.pb-params').parentNode;
+    if(fill2&&params2) params2.parentNode.insertBefore(fill2,params2);
   }
   renderPlaces(); renderMount(); render();
   pin(); drawScene(); // закрепляем после первой отрисовки: высота блока уже известна
