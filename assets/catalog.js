@@ -107,7 +107,7 @@
       'ulichnye-ekrany': ['env', 'svc', 'nit', 'pitch', 'material', 'price'],
       'interernye-ekrany': ['env', 'coating', 'nit', 'pitch', 'pixel', 'body', 'svc', 'price'],
       'mediafasady': ['nit', 'pitch', 'transp', 'weight', 'ipx', 'pixel', 'cabw', 'price'],
-      'prozrachnye-ekrany': ['kind', 'env', 'transp', 'pitch', 'nit'],   // цен нет — «по запросу», фильтр цены не нужен
+      'prozrachnye-ekrany': ['kind', 'env', 'transp', 'pitch', 'nit', 'price'],   // 21.10: цены появились — фильтр цены вернули
     };
     const LCD_WALL = ['lcd-videosteny', 'lcd-paneli-dlya-videosten'];
     // состав и порядок фильтров LCD: общий раздел ('') и каждый продукт отдельно
@@ -161,6 +161,8 @@
     fresh(state);
     // пресеты из страницы раздела и из URL (?section=…&app=…)
     const lockedSection = root.dataset.section || '';
+    // 21.10: у прозрачных по умолчанию — перемешанный порядок каталога (одинаковые виды не рядом), сортировка по цене — в списке
+    if (lockedSection === 'prozrachnye-ekrany' && GROUP !== 'lcd') { SORTS.unshift(['mix', 'рекомендуемые', (a, b) => a.id - b.id]); state.sort = 'mix'; }
     // исходное состояние раздела: сам раздел; у панелей для видеостен сразу отмечен режим 24/7
     // перенесённые категории: data-section может перечислять несколько разделов через запятую, data-preset — JSON с начальным фильтром {"sel":{"pitch":["0","1"]},"pmax":"900000","q":"..."}
     let PRESET = {}; try { PRESET = JSON.parse(root.dataset.preset || '{}'); } catch (e) { PRESET = {}; }
@@ -219,7 +221,7 @@
     const ARW = cls => `<span class="ek-arw" aria-hidden="true">${ARROW.replace('<svg', `<svg class="${cls}-out"`)}${ARROW.replace('<svg', `<svg class="${cls}-in"`)}</span>`;
     function cardHTML(p) {
       const url = `${BASE}/catalog/tovar/${p.slug}/`;
-      const unit = p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : 'за табло, с НДС') : 'за м², с НДС';
+      const unit = p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : p.section === 'prozrachnye-ekrany' ? 'за шт, с НДС' : 'за табло, с НДС') : 'за м², с НДС';
       const price = p.price ? `<b class="ek-num">${p.priceUnit === 'м²' ? 'от ' : ''}${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
       const cmp = cmpGet().includes(p.sku) ? 'checked' : '';
       const frames = (p.frames && p.frames.length ? p.frames : [p.photo]);
