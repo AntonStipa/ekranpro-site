@@ -232,6 +232,7 @@
   // здесь — стрелки, счётчик и догрузка всех моделей (кнопки «Показать ещё» в ленте нет).
   const grid = document.getElementById('ek-grid'), more = document.getElementById('ek-more');
   if (!grid || !more) return;
+  if (document.querySelector('#ek-listing[data-rows]')) return;   // 22.10: «LED-экраны» — обычная сетка по рядам и «Показать ещё» (catalog.js), без ленты
   const ARROW = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const rail = document.createElement('div');
   rail.className = 'sx-rail';

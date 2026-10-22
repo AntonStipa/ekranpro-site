@@ -60,6 +60,9 @@
 
   /* ---------- листинг ---------- */
   const root = $('#ek-listing');
+  // 22.10.2026: data-rows — показывать N рядов карточек, «Показать ещё» добавляет ещё N рядов (страница «LED-экраны»)
+  const ROWS = +(root && root.dataset.rows) || 0;
+  const STEP = () => { if (!ROWS) return 24; const g = $('#ek-grid'); const cols = g ? getComputedStyle(g).gridTemplateColumns.split(' ').filter(x => x && x !== 'none').length : 1; return Math.max(1, cols) * ROWS; };
   if (root) {
     const DATA = JSON.parse($('#ek-data').textContent);
     const P = DATA.products, SECTIONS = DATA.sections, APPS = DATA.apps;
@@ -156,7 +159,7 @@
     const secOrder = Object.fromEntries(SECTIONS.map((s, i) => [s.slug, i]));
     P.forEach(p => { p.sectionOrder = secOrder[p.section] ?? 99; });
 
-    const state = { sel: {}, pmin: '', pmax: '', q: '', sort: 'default', shown: 24, view: 'grid' };
+    const state = { sel: {}, pmin: '', pmax: '', q: '', sort: 'default', shown: 24, pages: 1, view: 'grid' };
     const fresh = s => { s.sel = {}; FILTERS.forEach(f => { if (f.type !== 'range') s.sel[f.key] = new Set(); }); s.pmin = ''; s.pmax = ''; s.q = ''; };
     fresh(state);
     // пресеты из страницы раздела и из URL (?section=…&app=…)
@@ -251,23 +254,23 @@
     function render(keepFocus) {
       const r = results(state), n = r.length;
       $('#ek-count').textContent = n; $('#ek-count-word').textContent = wordFor(n);
-      const shown = r.slice(0, state.shown);
       const grid = $('#ek-grid'); grid.className = 'ek-grid' + (state.view === 'list' ? ' list' : '');
+      const shown = r.slice(0, ROWS ? state.pages * STEP() : state.shown);
       if (ONLY_PINNED) { $('#ek-count').textContent = PINNED.length; $('#ek-count-word').textContent = wordFor(PINNED.length); grid.innerHTML = PINNED.map(pinnedHTML).join(''); $('#ek-more').innerHTML = ''; }
       if (!ONLY_PINNED) grid.innerHTML = PINNED.map(pinnedHTML).join('') + (n ? shown.map(cardHTML).join('') : `<div class="ek-empty" style="grid-column:1/-1">По этим условиям моделей нет. <button type="button" data-reset-all>Сбросить фильтры</button> или оставьте заявку — подберём под задачу.</div>`);
       const more = $('#ek-more');
-      if (!ONLY_PINNED) more.innerHTML = n > shown.length ? `<button type="button" class="ek-btn ek-btn--outline ek-btn--center" id="ek-more-btn" style="min-width:260px">Показать ещё ${Math.min(24, n - shown.length)}</button><span>Показано ${shown.length} из ${n}</span>` : (n ? `<span>Показано ${shown.length} из ${n}</span>` : '');
-      const mb = $('#ek-more-btn'); if (mb) mb.addEventListener('click', () => { state.shown += 24; render(); });
+      if (!ONLY_PINNED) more.innerHTML = n > shown.length ? `<button type="button" class="ek-btn ek-btn--outline ek-btn--center" id="ek-more-btn" style="min-width:260px">Показать ещё ${Math.min(ROWS ? STEP() : 24, n - shown.length)}</button><span>Показано ${shown.length} из ${n}</span>` : (n ? `<span>Показано ${shown.length} из ${n}</span>` : '');
+      const mb = $('#ek-more-btn'); if (mb) mb.addEventListener('click', () => { if (ROWS) state.pages++; else state.shown += 24; render(); });
       bindSliders(grid);
-      $$('[data-reset-all]', grid).forEach(b => b.addEventListener('click', () => { fresh(state); preset(state); $('#ek-q').value = ''; state.shown = 24; render(); }));
+      $$('[data-reset-all]', grid).forEach(b => b.addEventListener('click', () => { fresh(state); preset(state); $('#ek-q').value = ''; state.shown = 24; state.pages = 1; render(); }));
       $$('[data-cmp]', grid).forEach(el => el.addEventListener('change', () => { let c = cmpGet().filter(x => x !== el.dataset.cmp); if (el.checked) c.push(el.dataset.cmp); cmpSet(c); renderCmp(); }));
       const chips = chipsList(), ce = $('#ek-chips');
       ce.innerHTML = chips.length ? chips.map((c, i) => `<span class="ek-chip"><small>${c.label}:</small> ${c.val}<button type="button" data-chip="${i}" aria-label="Убрать фильтр ${c.val}">×</button></span>`).join('') + `<button type="button" class="ek-clear" data-clear>Сбросить всё</button>` : '';
-      $$('[data-chip]', ce).forEach(b => b.addEventListener('click', () => { chips[+b.dataset.chip].fn(); state.shown = 24; render(); }));
-      $$('[data-clear]', ce).forEach(b => b.addEventListener('click', () => { fresh(state); preset(state); $('#ek-q').value = ''; state.shown = 24; render(); }));
+      $$('[data-chip]', ce).forEach(b => b.addEventListener('click', () => { chips[+b.dataset.chip].fn(); state.shown = 24; state.pages = 1; render(); }));
+      $$('[data-clear]', ce).forEach(b => b.addEventListener('click', () => { fresh(state); preset(state); $('#ek-q').value = ''; state.shown = 24; state.pages = 1; render(); }));
       const fc = $('#ek-fbtn-count'); if (fc) fc.textContent = chips.length ? `· ${chips.length}` : '';
       const fb = $('#ek-filter-body'); const focus = document.activeElement; const sel = focus && focus.selectionStart;
-      fb.innerHTML = filterHTML(state); bindFilters(fb, state, soft => { state.shown = 24; render(soft); });
+      fb.innerHTML = filterHTML(state); bindFilters(fb, state, soft => { state.shown = 24; state.pages = 1; render(soft); });
       if (keepFocus && focus && focus.dataset && focus.dataset.k) { const again = $(`[data-k="${focus.dataset.k}"]`, fb); if (again) { again.focus(); try { again.setSelectionRange(sel, sel); } catch (e) {} } }
       renderCmp();
     }
@@ -291,10 +294,11 @@
       document.addEventListener('keydown', e => { if (e.key === 'Escape') open(false); });
     })();
     $('#ek-q').value = state.q;
-    $('#ek-q').addEventListener('input', e => { state.q = e.target.value.trim(); state.shown = 24; render(true); });
+    $('#ek-q').addEventListener('input', e => { state.q = e.target.value.trim(); state.shown = 24; state.pages = 1; render(true); });
     $('#ek-v-grid').addEventListener('click', () => { state.view = 'grid'; $('#ek-v-grid').setAttribute('aria-pressed', 'true'); $('#ek-v-list').setAttribute('aria-pressed', 'false'); render(); });
     $('#ek-v-list').addEventListener('click', () => { state.view = 'list'; $('#ek-v-list').setAttribute('aria-pressed', 'true'); $('#ek-v-grid').setAttribute('aria-pressed', 'false'); render(); });
     $('#ek-cmp-clear').addEventListener('click', () => { cmpSet([]); render(); });
+    if (ROWS) { let lastStep = STEP(); addEventListener('resize', () => { const s = STEP(); if (s !== lastStep) { lastStep = s; render(true); } }); }   // 22.10: число колонок поменялось — пересчитать ряды
 
     // выдвижная панель (телефон)
     const drawer = $('#ek-drawer'); let dstate = null;
@@ -302,7 +306,7 @@
     const paintDrawer = () => { const db = $('#ek-drawer-body'); db.innerHTML = filterHTML(dstate); bindFilters(db, dstate, paintDrawer); const n = results(dstate).length; $('#ek-drawer-n').textContent = n + ' ' + wordFor(n); };
     $('#ek-open-drawer').addEventListener('click', () => { dstate = cloneState(); paintDrawer(); drawer.showModal(); });
     $('#ek-close-drawer').addEventListener('click', () => drawer.close());
-    $('#ek-drawer-apply').addEventListener('click', () => { Object.keys(dstate.sel).forEach(k => state.sel[k] = new Set(dstate.sel[k])); state.pmin = dstate.pmin; state.pmax = dstate.pmax; state.shown = 24; drawer.close(); render(); });
+    $('#ek-drawer-apply').addEventListener('click', () => { Object.keys(dstate.sel).forEach(k => state.sel[k] = new Set(dstate.sel[k])); state.pmin = dstate.pmin; state.pmax = dstate.pmax; state.shown = 24; state.pages = 1; drawer.close(); render(); });
     render();
   }
 

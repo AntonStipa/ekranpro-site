@@ -12,8 +12,551 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%22-4%20-8%2049%2049%22%3E%3Cpath%20d%3D%22M37.4207%208.23513H34.1211V28.7594C34.1211%2030.5497%2035.5981%2032.0005%2037.4207%2032.0005C39.2433%2032.0005%2040.7209%2030.5497%2040.7209%2028.7594V7.221C39.7825%207.85884%2038.6462%208.23513%2037.4207%208.23513Z%22%20fill%3D%22%232BB673%22%20%2F%3E%0A%3Cpath%20d%3D%22M32.3379%2028.7594V25.5177H3.3002C1.47762%2025.5177%200%2026.9691%200%2028.7594C0%2030.5497%201.47762%2032.0005%203.3002%2032.0005H33.3704C32.721%2031.0788%2032.3379%2029.9626%2032.3379%2028.7594Z%22%20fill%3D%22%23F7941E%22%20%2F%3E%0A%3Cpath%20d%3D%22M3.30203%2023.7696H6.60223V3.24532C6.60223%201.45504%205.12461%200.0042057%203.30203%200.0042057C1.47945%200.0042057%200.00244141%201.45504%200.00244141%203.24532V24.7837C0.940788%2024.1459%202.07714%2023.7696%203.30203%2023.7696Z%22%20fill%3D%22%2328AAE1%22%20%2F%3E%0A%3Cpath%20d%3D%22M37.4209%207.77245e-05H7.3501C7.99944%200.921796%208.38253%202.03801%208.38253%203.2418V6.48291H37.4209C39.2435%206.48291%2040.7211%205.03148%2040.7211%203.2418C40.7211%201.45151%2039.2435%207.77245e-05%2037.4209%207.77245e-05Z%22%20fill%3D%22%23ED1D24%22%20%2F%3E%0A%3C%2Fsvg%3E">
 <link rel="stylesheet" href="/ekranpro-site/assets/site-shell.css">
-<link rel="stylesheet" href="/ekranpro-site/assets/catalog.css?v=37a0617f">
+<link rel="stylesheet" href="/ekranpro-site/assets/catalog.css?v=68e2de93">
+
+<script>document.documentElement.classList.add("sx-js")</script>
+<link rel="stylesheet" href="/ekranpro-site/assets/buttons.css?v=5c5cd16b">
+<link rel="stylesheet" href="/ekranpro-site/assets/section.css?v=5c5cd16b">
+<style data-ep-product-showcase>#ep-products-compare {
+  --ep-ink: #171a1c;
+  --ep-muted: #60656a;
+  --ep-orange: #f7941e;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+  --ease-in-out: cubic-bezier(.77, 0, .175, 1);
+  --epp-inset: 24px;
+  --epp-photo-share: 62.5%;
+  --epp-copy-left: clamp(28px, 3vw, 64px);
+  --epp-copy-right: clamp(28px, 4.8vw, 76px);
+  position: relative;
+  background: #fff;
+  color: var(--ep-ink);
+  font: 400 16px/1.5 Inter, Arial, sans-serif;
+  color-scheme: light;
+}
+#ep-products-compare *, #ep-products-compare *::before, #ep-products-compare *::after { box-sizing: border-box; }
+#ep-products-compare :is(h2, p, figure) { margin: 0; }
+#ep-products-compare :is(button, a) { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+#ep-products-compare :is(button, a):focus-visible { outline: 2px solid var(--ep-orange); outline-offset: 5px; }
+#ep-products-compare .epp-scene {
+  display: grid;
+  grid-template-columns: var(--epp-photo-share) minmax(0, 1fr);
+  align-items: stretch;
+  min-height: max(700px, 100vh);
+  min-height: max(700px, 100svh);
+  padding: calc(var(--ep-header-height, 84px) + var(--epp-inset)) 0 var(--epp-inset) var(--epp-inset);
+  background: #fff;
+}
+#ep-products-compare .epp-scene:nth-child(even) { background: #e8ebe8; }
+#ep-products-compare .epp-photo {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: #d6dad7;
+  clip-path: polygon(0 0, 93% 0, 100% 100%, 0 100%);
+}
+#ep-products-compare .epp-photo img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--epp-photo-position, 50% 50%);
+}
+#ep-products-compare .epp-photo::after {
+  content: "";
+  position: absolute;
+  inset: 70% 0 0;
+  background: linear-gradient(0deg, rgba(5,11,18,.72), transparent);
+  pointer-events: none;
+}
+#ep-products-compare .epp-photo figcaption {
+  position: absolute;
+  z-index: 1;
+  left: clamp(20px, 2.1vw, 40px);
+  right: 12%;
+  bottom: clamp(20px, 2vw, 38px);
+  color: #fff;
+  font-size: clamp(12px, .9vw, 18px);
+  line-height: 1.45;
+  text-shadow: 0 1px 8px #0006;
+}
+#ep-products-compare .epp-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(20px, 2.2vw, 42px) var(--epp-copy-right) 32px var(--epp-copy-left);
+}
+#ep-products-compare .epp-copy > * { flex: 0 0 auto; }
+#ep-products-compare .epp-eyebrow {
+  color: var(--ep-muted);
+  font-size: clamp(11px, .88vw, 18px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+#ep-products-compare .epp-title {
+  width: 100%;
+  margin-top: clamp(20px, 1.8vw, 36px);
+  font-size: clamp(32px, 3.25vw, 64px);
+  font-weight: 500;
+  line-height: 1.07;
+  letter-spacing: -.045em;
+  overflow-wrap: normal;
+}
+#ep-products-compare .epp-title span { display: block; }
+#ep-products-compare .epp-description {
+  max-width: 27em;
+  margin-top: clamp(24px, 2.1vw, 40px);
+  color: var(--ep-muted);
+  font-size: clamp(15px, 1.15vw, 22px);
+  line-height: 1.5;
+}
+#ep-products-compare .epp-note {
+  max-width: 27em;
+  margin-top: 14px;
+  color: var(--ep-muted);
+  font-size: clamp(14px, 1vw, 18px);
+  line-height: 1.5;
+}
+#ep-products-compare .epp-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+  width: 320px;
+  max-width: 100%;
+  margin-top: clamp(28px, 2.6vw, 50px);
+}
+/* Exact hero typography, geometry and two-stage arrow entrance, in black. */
+#ep-products-compare .epp-quote {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 320px;
+  max-width: 100%;
+  height: 60px;
+  min-height: 60px;
+  padding: 18px 24px;
+  gap: 24px;
+  border: 0;
+  border-radius: 0;
+  background: #171a1c;
+  color: #fff;
+  font-family: "EP HelveticaNeueCyr Roman", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 333.333ms ease, color 333.333ms ease;
+}
+#ep-products-compare .epp-cta-label { min-width: 0; white-space: nowrap; }
+#ep-products-compare .epp-arrow-window {
+  position: relative;
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+}
+#ep-products-compare .epp-arrow-window svg { position: absolute; inset: 0; display: block; width: 24px; height: 24px; }
+#ep-products-compare .epp-quote-arrow-out { color: inherit; transform: none; transition: none; }
+#ep-products-compare .epp-quote-arrow-in { color: #000; opacity: 0; transform: translateX(-50px); animation: none; }
+@keyframes epp-quote-arrow-enter {
+  from { opacity: 1; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* The secondary action follows the reference: label, 24px arrow and hairline. */
+#ep-products-compare .epp-catalog {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  min-height: 44px;
+  padding: 4px 0 12px;
+  color: #171a1c;
+  text-decoration: none;
+  font-family: "EP HelveticaNeueCyr Roman", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: color 250ms ease;
+}
+#ep-products-compare .epp-catalog-line { position: absolute; inset: auto 0 0; height: 1px; overflow: hidden; pointer-events: none; }
+#ep-products-compare .epp-catalog-line i { position: absolute; inset: 0; display: block; background: currentColor; transition: transform 600ms var(--ease-in-out); }
+#ep-products-compare .epp-catalog-line .epp-line-out { transform: translateX(0); }
+#ep-products-compare .epp-catalog-line .epp-line-in { transform: translateX(-102%); }
+#ep-products-compare .epp-catalog-arrow-out { transform: translateX(0); transition: transform 600ms var(--ease-out); }
+#ep-products-compare .epp-catalog-arrow-in { transform: translateX(-125%); transition: transform 600ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  #ep-products-compare .epp-quote:hover { background: #fff; color: #000; }
+  #ep-products-compare .epp-quote:hover .epp-quote-arrow-out { color: #fff; }
+  #ep-products-compare .epp-quote:hover .epp-quote-arrow-in { animation: epp-quote-arrow-enter 1s cubic-bezier(.22, 1, .36, 1) 333.333ms both; }
+  #ep-products-compare .epp-catalog:hover { color: var(--ep-catalog-hover); }
+  #ep-products-compare .epp-catalog:hover .epp-catalog-arrow-out { transform: translateX(125%); }
+  #ep-products-compare .epp-catalog:hover .epp-catalog-arrow-in { transform: translateX(0); transition-delay: 70ms; }
+  #ep-products-compare .epp-catalog:hover .epp-line-out { transform: translateX(102%); }
+  #ep-products-compare .epp-catalog:hover .epp-line-in { transform: translateX(0); transition-delay: 70ms; }
+}
+#ep-products-compare .epp-quote:is(:focus-visible, :active) { background: #fff; color: #000; }
+#ep-products-compare .epp-quote:is(:focus-visible, :active) .epp-quote-arrow-out { color: #fff; }
+#ep-products-compare .epp-quote:is(:focus-visible, :active) .epp-quote-arrow-in { animation: epp-quote-arrow-enter 1s cubic-bezier(.22, 1, .36, 1) 333.333ms both; }
+#ep-products-compare .epp-catalog:is(:focus-visible, :active) { color: var(--ep-catalog-hover); }
+#ep-products-compare .epp-pagination { display: none; }
+/* Enhancement only: without JS all four sections remain in the reading flow. */
+#ep-products-compare.is-pinned { height: var(--epp-length); }
+#ep-products-compare.is-pinned .epp-stage { position: sticky; top: 0; height: var(--epp-vh); overflow: hidden; isolation: isolate; }
+#ep-products-compare.is-pinned .epp-scenes { position: relative; height: 100%; }
+#ep-products-compare.is-pinned .epp-scene {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  min-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 600ms var(--ease-out), visibility 0s linear 600ms;
+}
+#ep-products-compare.is-pinned .epp-scene.is-current { z-index: 2; opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
+#ep-products-compare.is-pinned .epp-copy { opacity: 1; transform: none; transition: none; }
+#ep-products-compare.is-pinned .epp-pagination {
+  position: absolute;
+  z-index: 3;
+  right: calc((100% - var(--epp-inset)) * .375 + clamp(20px, 2vw, 38px));
+  bottom: calc(var(--epp-inset) + clamp(20px, 2vw, 38px));
+  width: 174px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+#ep-products-compare .epp-count { font-size: 13px; line-height: 1.4; letter-spacing: .05em; font-variant-numeric: tabular-nums; }
+#ep-products-compare .epp-count-total { color: #ffffffb3; }
+#ep-products-compare .epp-nav-arrows { display: flex; gap: 8px; }
+#ep-products-compare .epp-nav-arrows button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #ffffff70;
+  border-radius: 0;
+  background: #0a151a26;
+  color: #fff;
+  cursor: pointer;
+}
+#ep-products-compare .epp-nav-arrows button:disabled { opacity: .28; cursor: default; }
+#ep-products-compare .epp-nav-arrows svg { display: block; width: 24px; height: 24px; }
+#ep-products-compare .epp-nav-arrows [data-epp-prev] svg { transform: rotate(180deg); }
+#ep-products-compare.epp-instant :is(.epp-scene, .epp-copy) { transition: none !important; }
+#ep-products-compare.is-pinned .epp-photo figcaption { right: 230px; }
+@media (max-height: 850px) and (min-width: 1100px) {
+  #ep-products-compare .epp-copy { padding-top: 16px; padding-bottom: 24px; }
+  #ep-products-compare .epp-eyebrow { font-size: 11px; }
+  #ep-products-compare .epp-title { margin-top: 18px; font-size: clamp(32px, 3vw, 48px); }
+  #ep-products-compare .epp-description { margin-top: 20px; font-size: 15px; }
+  #ep-products-compare .epp-note { margin-top: 10px; font-size: 13px; }
+  #ep-products-compare .epp-actions { margin-top: 24px; }
+}
+
+@media (max-width: 1099px), (max-aspect-ratio: 1599/1000) {
+  #ep-products-compare .epp-scene { display: flex; flex-direction: column; min-height: 0; padding: 0; }
+  #ep-products-compare .epp-photo { width: 100%; height: auto; aspect-ratio: 1.5; clip-path: polygon(0 0, 96% 0, 100% 100%, 0 100%); }
+  #ep-products-compare .epp-photo img { object-position: 50% 50%; }
+  #ep-products-compare .epp-copy { padding: 36px clamp(20px, 4.8vw, 60px) 52px; }
+  #ep-products-compare .epp-title { font-size: clamp(32px, 5.7vw, 56px); }
+  #ep-products-compare .epp-description { font-size: 16px; max-width: 34em; }
+  #ep-products-compare .epp-note { font-size: 15px; max-width: 34em; }
+}
+@media (max-width: 680px) {
+  #ep-products-compare .epp-title { font-size: clamp(30px, 7.4vw, 48px); }
+  #ep-products-compare .epp-eyebrow { font-size: 11px; }
+  #ep-products-compare .epp-description { font-size: 15px; }
+  #ep-products-compare .epp-note { font-size: 14px; }
+  #ep-products-compare .epp-photo figcaption { left: 20px; bottom: 18px; font-size: 12px; }
+}
+@media (max-width: 480px) {
+  #ep-products-compare .epp-quote { padding-inline: 20px; gap: 20px; font-size: 13px; }
+  #ep-products-compare .epp-catalog { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  #ep-products-compare .epp-quote { padding-inline: 18px; gap: 16px; font-size: 12px; }
+  #ep-products-compare .epp-catalog { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ep-products-compare .epp-quote, #ep-products-compare .epp-catalog { transition-duration: 120ms; }
+  #ep-products-compare .epp-quote-arrow-in { animation: none !important; opacity: 0 !important; }
+  #ep-products-compare .epp-quote .epp-quote-arrow-out { color: inherit !important; }
+  #ep-products-compare .epp-catalog :is(svg, i) { transition: none !important; transform: none !important; }
+  #ep-products-compare .epp-catalog-arrow-in, #ep-products-compare .epp-line-in { display: none; }
+}
+
+/* Outdoor screen: compact specifications and actions aligned to the photograph. */
+#ep-products-compare .epp-features {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
+  column-gap: clamp(16px, 1.4vw, 28px);
+  row-gap: 20px;
+  width: 100%;
+  margin: clamp(24px, 2vw, 36px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+#ep-products-compare .epp-feature {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#ep-products-compare .epp-feature-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  color: var(--ep-ink);
+}
+#ep-products-compare .epp-feature-copy {
+  min-width: 0;
+  color: var(--ep-ink);
+  font-size: clamp(13px, .95vw, 16px);
+  font-weight: 400;
+  line-height: 1.45;
+}
+#ep-products-compare .epp-feature-value { font-weight: 500; white-space: nowrap; }
+#ep-products-compare .epp-scene .epp-catalog { justify-content: flex-end; text-align: right; }
+#ep-products-compare .epp-scene .epp-quote {
+  box-shadow: inset 0 0 0 1px transparent;
+  transition: background-color 333.333ms ease, color 333.333ms ease, box-shadow 333.333ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  #ep-products-compare .epp-scene .epp-quote:hover { box-shadow: inset 0 0 0 1px var(--ep-ink); }
+}
+#ep-products-compare .epp-scene .epp-quote:is(:focus-visible, :active) { box-shadow: inset 0 0 0 1px var(--ep-ink); }
+@media (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene--outdoor .epp-copy { padding-bottom: 0; }
+  #ep-products-compare .epp-scene .epp-actions { margin-top: auto; padding-top: clamp(24px, 2.6vw, 50px); }
+}
+@media (max-height: 850px) and (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-features { margin-top: 24px; row-gap: 16px; }
+  #ep-products-compare .epp-feature-copy { font-size: 13px; }
+  #ep-products-compare .epp-scene .epp-actions { padding-top: 24px; }
+}
+@media (max-height: 760px) and (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene--outdoor .epp-copy { padding-top: 12px; }
+  #ep-products-compare .epp-scene .epp-title { margin-top: 16px; }
+  #ep-products-compare .epp-scene--outdoor .epp-description { margin-top: 16px; }
+  #ep-products-compare .epp-features { margin-top: 18px; row-gap: 12px; }
+  #ep-products-compare .epp-feature-copy { line-height: 1.4; }
+  #ep-products-compare .epp-scene .epp-actions { padding-top: 16px; gap: 12px; }
+}
+@media (max-width: 480px) {
+  #ep-products-compare .epp-features { column-gap: 16px; row-gap: 20px; }
+  #ep-products-compare .epp-feature { grid-template-columns: 22px minmax(0, 1fr); gap: 8px; }
+  #ep-products-compare .epp-feature-icon { width: 22px; height: 22px; }
+  #ep-products-compare .epp-feature-copy { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  #ep-products-compare .epp-feature-copy { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ep-products-compare .epp-scene .epp-quote { transition-duration: 120ms; }
+}
+
+
+/* A common heading size follows the actual width of each text column. */
+#ep-products-compare { --epp-control-inset: clamp(20px, 2vw, 38px); }
+#ep-products-compare .epp-copy { container-type: inline-size; }
+#ep-products-compare .epp-title {
+  font-size: clamp(32px, 3.9vw, 80px);
+  font-size: clamp(30px, 13cqw, 80px);
+}
+#ep-products-compare .epp-title span { white-space: nowrap; }
+#ep-products-compare.is-pinned .epp-pagination {
+  bottom: calc(var(--epp-inset) + var(--epp-control-inset));
+}
+/* Keep the full-width underline, with both CTA labels on the same left axis. */
+#ep-products-compare .epp-scene .epp-catalog {
+  justify-content: space-between;
+  padding-inline: 24px;
+  text-align: left;
+}
+@media (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene--outdoor .epp-copy {
+    padding-bottom: var(--epp-control-inset);
+  }
+  #ep-products-compare .epp-scene--features .epp-features {
+    margin-block: auto;
+    padding-block: 24px;
+  }
+  #ep-products-compare .epp-scene .epp-actions {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+/* Preserve room for the larger headings on shorter desktop displays. */
+@media (max-height: 850px) and (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene--outdoor .epp-copy { padding-top: 12px; }
+  #ep-products-compare .epp-scene .epp-title { margin-top: 14px; }
+  #ep-products-compare .epp-scene--outdoor .epp-description { margin-top: 16px; }
+  #ep-products-compare .epp-scene--features .epp-features { padding-block: 12px; row-gap: 12px; }
+  #ep-products-compare .epp-scene--features .epp-feature-copy { line-height: 1.4; }
+  #ep-products-compare .epp-scene .epp-actions { gap: 12px; }
+}
+@media (max-width: 1099px), (max-aspect-ratio: 1599/1000) {
+  #ep-products-compare .epp-title {
+    font-size: clamp(30px, 8.5vw, 64px);
+    font-size: clamp(30px, 13cqw, 64px);
+  }
+}
+@media (max-width: 480px) {
+  #ep-products-compare .epp-scene .epp-catalog { padding-inline: 20px; }
+}
+@media (max-width: 380px) {
+  #ep-products-compare .epp-scene .epp-catalog { padding-inline: 18px; }
+}
+
+
+/* Outdoor typography: a further 20% increase and full-column actions. */
+#ep-products-compare .epp-scene .epp-title {
+  font-size: var(--epp-title-fit, clamp(38.4px, 4.68vw, 96px));
+  font-size: var(--epp-title-fit, clamp(36px, 15.6cqw, 96px));
+}
+#ep-products-compare .epp-scene--outdoor .epp-description {
+  margin-top: calc(clamp(24px, 2.1vw, 40px) + 12px);
+}
+#ep-products-compare .epp-scene .epp-actions,
+#ep-products-compare .epp-scene .epp-quote { width: 100%; }
+@media (max-height: 850px) and (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene--outdoor .epp-description { margin-top: 28px; }
+}
+@media (max-width: 1099px), (max-aspect-ratio: 1599/1000) {
+  #ep-products-compare .epp-scene .epp-title {
+    font-size: var(--epp-title-fit, clamp(36px, 10.2vw, 76.8px));
+    font-size: var(--epp-title-fit, clamp(36px, 15.6cqw, 76.8px));
+  }
+  #ep-products-compare .epp-scene--outdoor .epp-description { margin-top: 32px; }
+}
+
+
+/* More space beneath the section label, with one title scale and CTA style. */
+#ep-products-compare .epp-scene .epp-title {
+  margin-top: calc(clamp(20px, 1.8vw, 36px) + 20px);
+}
+#ep-products-compare .epp-title span { white-space: normal; }
+#ep-products-compare #aligned-media-title span { white-space: nowrap; }
+@media (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene .epp-copy { padding-bottom: var(--epp-control-inset); }
+  #ep-products-compare .epp-scene:not(.epp-scene--features) .epp-actions {
+    margin-top: auto;
+    padding-top: clamp(24px, 2.6vw, 50px);
+  }
+}
+@media (max-height: 850px) and (min-width: 1100px) and (min-aspect-ratio: 8/5) {
+  #ep-products-compare .epp-scene .epp-title { margin-top: 34px; }
+  #ep-products-compare .epp-scene:not(.epp-scene--features) .epp-actions { padding-top: 24px; }
+}
+
+
+/* Clip the moving copy above the stationary action row. */
+#ep-products-compare .epp-feature-copy--single { white-space: nowrap; }
+#ep-products-compare .epp-copy > .epp-text-viewport {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  overflow: clip;
+}
+#ep-products-compare .epp-text-motion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 auto;
+  width: 100%;
+  min-height: 0;
+  transition: none;
+}
+#ep-products-compare .epp-text-motion > * { flex: 0 0 auto; }
+#ep-products-compare.epp-instant .epp-text-motion {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #ep-products-compare .epp-text-motion {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+#ep-products-compare .epp-feature-value--wrap { white-space: normal; }
+
+@media print {
+  #ep-products-compare { height: auto !important; }
+  #ep-products-compare .epp-stage { position: static !important; height: auto !important; overflow: visible !important; }
+  #ep-products-compare .epp-scene { position: static !important; opacity: 1 !important; visibility: visible !important; height: auto !important; min-height: 0; break-inside: avoid; }
+  #ep-products-compare .epp-text-motion { opacity: 1 !important; transform: none !important; }
+  #ep-products-compare .epp-text-viewport { overflow: visible !important; }
+  #ep-products-compare .epp-photo { min-height: 320px; }
+  #ep-products-compare .epp-pagination { display: none !important; }
+}
+
+#ep-products-compare .epp-background { display: none; }
+#ep-products-compare.is-pinned .epp-stage { background: #fff; }
+#ep-products-compare.is-pinned .epp-background { display: block; position: absolute; inset: 0; z-index: 0; background: #e8ebe8; pointer-events: none; opacity: 0; }
+#ep-products-compare.is-pinned .epp-scenes { z-index: 1; }
+#ep-products-compare.is-pinned .epp-scene { background: transparent; transition: none; }
+#ep-products-compare.is-pinned .epp-scene.is-previous { z-index: 1; opacity: 1; visibility: visible; pointer-events: none; }
+#ep-products-compare.is-pinned .epp-scene.is-current { z-index: 2; }
+#ep-products-compare.is-pinned .is-previous .epp-actions { visibility: hidden; }
+#ep-products-compare .epp-photo { transition: none; }
+#ep-products-compare.epp-instant .epp-photo,
+#ep-products-compare.epp-instant .epp-photo figcaption { opacity: 1 !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  #ep-products-compare .epp-photo,
+  #ep-products-compare .epp-photo figcaption { opacity: 1 !important; transform: none !important; }
+}
+@media print {
+  #ep-products-compare .epp-background { display: none !important; }
+  #ep-products-compare .epp-photo,
+  #ep-products-compare .epp-photo figcaption { opacity: 1 !important; transform: none !important; }
+  #ep-products-compare .epp-copy > :not(.epp-text-viewport) { visibility: visible !important; }
+}
+</style>
+<style>/* 22.10: здесь листинг обычной сеткой, как в каталоге (section.css делает из него горизонтальную ленту и прячет «Показать ещё») */
+#ek-grid.ek-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;grid-auto-columns:auto;overflow:visible;scroll-snap-type:none;padding:0;margin-bottom:0;align-items:start}
+#ek-grid.ek-grid.list{grid-template-columns:1fr;gap:10px}
+html #ek-more{display:flex!important}
+@media (min-width:861px){html .ek-viewsw{display:inline-flex!important}}
+@media (max-width:1180px){#ek-grid.ek-grid:not(.list){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:860px){#ek-grid.ek-grid:not(.list){grid-template-columns:1fr;gap:14px}}
+</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "LED-экраны", "numberOfItems": 379, "itemListElement": [{"@type": "ListItem", "position": 1, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-195-prox-f-dmd-35k/", "name": "Уличный светодиодный экран SPO 1.95 PROX 35K"}, {"@type": "ListItem", "position": 2, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spob-25-std/", "name": "Уличный светодиодный экран SPOB 2,5"}, {"@type": "ListItem", "position": 3, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spobs-25-std/", "name": "Уличный светодиодный экран SPOBS 2,5"}, {"@type": "ListItem", "position": 4, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-26-plus-f-dmd-4k/", "name": "Уличный светодиодный экран SPO 2.6 PLUS 4K"}, {"@type": "ListItem", "position": 5, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-26-prox-f-dmd-3k/", "name": "Уличный светодиодный экран SPO 2.6 PROX 3K"}, {"@type": "ListItem", "position": 6, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-26-plus-u-usk-5k/", "name": "Уличный светодиодный экран SPO 2.6 PLUS 5K"}, {"@type": "ListItem", "position": 7, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-26-prox-u-usk-7k/", "name": "Уличный светодиодный экран SPO 2.6 PROX 7K"}, {"@type": "ListItem", "position": 8, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-29-plus-f-dmd/", "name": "Уличный светодиодный экран SPO 2.9 PLUS DMD"}, {"@type": "ListItem", "position": 9, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-29-prox-f-dmd-3k/", "name": "Уличный светодиодный экран SPO 2.9 PROX 3K"}, {"@type": "ListItem", "position": 10, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-29-prox-f-dmd-6k/", "name": "Уличный светодиодный экран SPO 2.9 PROX 6K"}, {"@type": "ListItem", "position": 11, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-29-plus-u-usk-5k/", "name": "Уличный светодиодный экран SPO 2.9 PLUS USK"}, {"@type": "ListItem", "position": 12, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-29-prox-u-usk-7k/", "name": "Уличный светодиодный экран SPO 2.9 PROX"}, {"@type": "ListItem", "position": 13, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spob-31-std/", "name": "Уличный светодиодный экран SPOB 3,07"}, {"@type": "ListItem", "position": 14, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spobs-31-std/", "name": "Уличный светодиодный экран SPOBS 3,07"}, {"@type": "ListItem", "position": 15, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-39-plus-f-ptf-6k/", "name": "Уличный светодиодный экран SPO 3.9 PLUS 6K"}, {"@type": "ListItem", "position": 16, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-39-plus-f-ptf-7k/", "name": "Уличный светодиодный экран SPO 3.9 PLUS 7K"}, {"@type": "ListItem", "position": 17, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-39-prox-f-ptf/", "name": "Уличный светодиодный экран SPO 3.9 PROX"}, {"@type": "ListItem", "position": 18, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-39-std-f-ptf-5k/", "name": "Уличный светодиодный экран SPO 3.9 5K"}, {"@type": "ListItem", "position": 19, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-39-std-u-usk-55k/", "name": "Уличный светодиодный экран SPO 3.9 55K"}, {"@type": "ListItem", "position": 20, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-39-plus-u-usk-7k/", "name": "Уличный светодиодный экран SPO 3.9 PLUS"}, {"@type": "ListItem", "position": 21, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spob-4-std/", "name": "Уличный светодиодный экран SPOB 4"}, {"@type": "ListItem", "position": 22, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spobs-4-std/", "name": "Уличный светодиодный экран SPOBS 4"}, {"@type": "ListItem", "position": 23, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spof-4-std/", "name": "Уличный светодиодный экран SPOF 4"}, {"@type": "ListItem", "position": 24, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-plus-f-pt-6k/", "name": "Уличный светодиодный экран SPO 4.4 PLUS 6K"}, {"@type": "ListItem", "position": 25, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-prox-f-pt-8k/", "name": "Уличный светодиодный экран SPO 4.4 PROX 8K"}, {"@type": "ListItem", "position": 26, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-std-u-lstc-55k/", "name": "Уличный светодиодный экран SPO 4.4 LSTC"}, {"@type": "ListItem", "position": 27, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-plus-u-usfg-65k/", "name": "Уличный светодиодный экран SPO 4.4 PLUS 65K"}, {"@type": "ListItem", "position": 28, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-prox-u-lstc-75k/", "name": "Уличный светодиодный экран SPO 4.4 PROX 75K"}, {"@type": "ListItem", "position": 29, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-prox-u-lstg-75k/", "name": "Уличный светодиодный экран SPO 4.4 PROX LSTG"}, {"@type": "ListItem", "position": 30, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-prox-u-usfg-75k/", "name": "Уличный светодиодный экран SPO 4.4 PROX USFG"}, {"@type": "ListItem", "position": 31, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-44-std-u-usfc-55k/", "name": "Уличный светодиодный экран SPO 4.4 USFC"}, {"@type": "ListItem", "position": 32, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-48-plus-f-ptf-6k/", "name": "Уличный светодиодный экран SPO 4.8 PLUS 6K"}, {"@type": "ListItem", "position": 33, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-48-prox-f-ptf/", "name": "Уличный светодиодный экран SPO 4.8 PROX"}, {"@type": "ListItem", "position": 34, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-48-plus-u-usk-65k/", "name": "Уличный светодиодный экран SPO 4.8 PLUS"}, {"@type": "ListItem", "position": 35, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-48-plus-u-usk-55k/", "name": "Уличный светодиодный экран SPO 4.8 PLUS 55K"}, {"@type": "ListItem", "position": 36, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spob-5-std/", "name": "Уличный светодиодный экран SPOB 5"}, {"@type": "ListItem", "position": 37, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spobs-5-std/", "name": "Уличный светодиодный экран SPOBS 5"}, {"@type": "ListItem", "position": 38, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spof-5-std/", "name": "Уличный светодиодный экран SPOF 5"}, {"@type": "ListItem", "position": 39, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-57-plus-f-pt/", "name": "Уличный светодиодный экран SPO 5.7 PLUS PT"}, {"@type": "ListItem", "position": 40, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-57-plus-f-pta/", "name": "Уличный светодиодный экран SPO 5.7 PLUS PTA"}, {"@type": "ListItem", "position": 41, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-57-prox-f-pt/", "name": "Уличный светодиодный экран SPO 5.7 PROX"}, {"@type": "ListItem", "position": 42, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-57-std-f-pt/", "name": "Уличный светодиодный экран SPO 5.7 PT"}, {"@type": "ListItem", "position": 43, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-57-std-f-pta/", "name": "Уличный светодиодный экран SPO 5.7 PTA"}, {"@type": "ListItem", "position": 44, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-59-std-u-usk-55k/", "name": "Уличный светодиодный экран SPO 5.9 55K"}, {"@type": "ListItem", "position": 45, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-59-std-u-usk-65k/", "name": "Уличный светодиодный экран SPO 5.9 65K"}, {"@type": "ListItem", "position": 46, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-67-plus-f-pt/", "name": "Уличный светодиодный экран SPO 6.7 PLUS PT"}, {"@type": "ListItem", "position": 47, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-67-plus-f-pta-8k/", "name": "Уличный светодиодный экран SPO 6.7 PLUS 8K"}, {"@type": "ListItem", "position": 48, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-67-prox-f-pt/", "name": "Уличный светодиодный экран SPO 6.7 PROX PT"}, {"@type": "ListItem", "position": 49, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-67-prox-f-pta/", "name": "Уличный светодиодный экран SPO 6.7 PROX"}, {"@type": "ListItem", "position": 50, "url": "https://antonstipa.github.io/ekranpro-site/catalog/tovar/spo-67-std-f-pt/", "name": "Уличный светодиодный экран SPO 6.7 PT"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Как выбрать шаг пикселя?", "acceptedAnswer": {"@type": "Answer", "text": "Это первый и, пожалуй, самый важный вопрос. Именно от шага пикселя зависит разрешение экрана и качество всего изображения. Шаг пикселя – это расстояние между центрами соседних светодиодных пикселей. Шаг пикселя выбирается исходя из двух параметров: расстояние просмотра и размер экрана. Определяем минимальное расстояние просмотра экрана. Далее в зависимости от того, какого уровня качества должно быть изображение, можно применять следующие формулы: 1) минимальное качество 1м расстояния = 1мм шага пикселя; 2) средний уровень качества 1м расстояния = 0,5мм шага пикселя; 3) максимальный уровень качества 1м расстояния = 0,25мм шага пикселя. Например, если минимальное расстояние просмотра составляет 3 метра, то для минимального качества шаг пикселя должен быть 3 мм, для среднего — 1,5 мм, для максимального — 0,75 мм. При максимальном качестве вы не увидите ни единого пикселя. Изображение будет цельным как экран монитора. Если сомневаетесь какой шаг точно выбрать, мы можем приехать к вам с разными образцами и провести демонстрацию на месте."}}, {"@type": "Question", "name": "Чем отличаются модульные экраны от кабинетных?", "acceptedAnswer": {"@type": "Answer", "text": "Выделяют два типа светодиодных экранов: кабинетные и модульные. Напомним, что экран состоит из блоков – их называют кабинеты. Кабинеты бывают размером 1200х900мм, 960х960мм, 500х1000мм, 500х500мм, 640х640мм и пр. В свою очередь кабинет тоже состоит из блоков – их называют модули. Модули имеют меньшие размеры: 160 × 320 мм, 128 × 256 мм, 120 × 240 мм, 500 × 500 мм и пр. Сам кабинет — это корпус (стальной, алюминиевый или карбоновый), на котором установлены модули и внутри которого установлены принимающие карты и блоки питания. Кабинетный экран. Весь экран собирается на кабинетах. Блоками равными размерам кабинетов. Применяется на всех типах светодиодных экранов. Модульные экраны. В этом случает из конструкции экрана исключается кабинет. То есть модули, блоки питания и принимающие карты устанавливаются на металлический каркас. Такие экраны применяются в основном в интерьере с шагом от 4мм до 2,5мм и требуют высокой квалификации у инженеров при установке, потому что больше вероятность появления стыков при сборке. Мы не рекомендуем покупать модульный экран для улицы, потому что кабинет в уличных экранах это IP защита. А также для интерьера при шаге меньше 2,5 мм, при сборке будут черные полоски между модулями. Если вы все же решили выбрать модульный экран, обязательно посмотрите вживую примеры таких экранов у подрядчика, чтобы убедиться в качестве стыков."}}, {"@type": "Question", "name": "Как управлять экранами? Какую систему управления выбрать?", "acceptedAnswer": {"@type": "Answer", "text": "Стандартная система управления экраном состоит из принимающих карт (они расположены в кабинетах экрана) и отправляющей карты (она подключается к компьютеру). То есть собирается цепочка – компьютер - отправляющая карта - экран. Далее компьютер настраивается на 2 монитора. Одним монитором является монитор компьютера, вторым монитором является сам экран. На компьютер устанавливается плеер, в который загружаются ролики. Это стоковая система управления. Изображение будет показываться пока работает компьютер. Если на компьютере появится какая-то ошибка, например уведомление об обновлении драйвера или Windows, она будет видна на экране. Чтобы этого избежать, используют медиаплееры. Это такие коробочки, размером чуть больше iPhone, которые устанавливаются в следующую цепочку: компьютер – плеер – отправляющая карта – экран. Плейлист загружается на плеер, после чего контент транслируется на экран. В этом случае мы не зависим от сбоев компьютера. Сами медиаплееры отличаются высокой стабильностью в работе. Также с их помощью можно организовать удаленное управление сетью из более чем 100 экранов. Они имеют набор шаблонов, макетов рекламных роликов, что позволяет самостоятельно разрабатывать контент. Незаменимое решение для рекламных экранов. Если вы покупаете экран в театр или для концертных мероприятий, то вам нужен дополнительный комплекс оборудования от видеопроцессора до видеомикшера и серверов. Если нужна консультация, наши специалисты помогут подобрать вам необходимое оборудование для управления экранами под любые задачи."}}, {"@type": "Question", "name": "Какой срок службы экранов?", "acceptedAnswer": {"@type": "Answer", "text": "Срок службы светодиодного экрана зависит от светодиодов и частоты эксплуатации экрана. Обычно производители светодиодов пишут срок службы 100 000 часов, что составляет 11,4 года при непрерывной работе 24/7. Но, более важный показатель, это какой процент яркости теряет экран каждый год. Важно учитывать, какой уровень яркости сохранит экран через 5 лет или 100 000 часов. Этот показатель уже зависит от качества комплектующих, которые используют при производстве экрана. Если даже поставить дорогие японские светодиоды Nichia, но при этом дешевые микросхемы и блоки питания, то они просто выжгут эти диоды раньше срока. Этим и отличаются ведущие мировые производители экранов. Например, экраны Unilumin за один год эксплуатации теряют всего 1-3% яркости. Это достигается использованием высококачественных комплектующих, в сочетании с передовыми инженерными разработками. Поэтому эти экраны могут прослужить более 15 лет."}}, {"@type": "Question", "name": "Какие бывают способы установки?", "acceptedAnswer": {"@type": "Answer", "text": "Способ установки светодиодных экранов зависит от задачи и может быть абсолютно любой, если это не противоречит законам физики. Наиболее часто распространенный вариант – установка на стену экрана с передним обслуживанием. При этом материал стены может быть практически любой. Также существует вариант установки на землю, на бетонное основание, на пол, на передвижную конструкцию. Светодиодный экран можно так же подвесить. При выборе места установки важно проконсультироваться с проектировщиками с допуском СРО, у которых есть опыт установки подобных решений. Это позволит установить экран надежно и, что самое главное, безопасно для вас и окружающих."}}, {"@type": "Question", "name": "Как защитить экран от физических повреждений?", "acceptedAnswer": {"@type": "Answer", "text": "Если шаг пикселя светодиодного экрана 3 мм и более, модули таких экранов, как уличных, так и интерьерных оснащены пластиковыми масками. Данных масок достаточно для защиты экранов от механических повреждений. Даже если кто-то ударит по экрану или в него попадет камень, повреждение, скорее всего, затронет только несколько пикселей. Это легко устранить, заменив один модуль, который у вас есть в ЗИП комплекте. А вот если экран с шагом пикселя менее 2,5 мм, тут защита более актуальна. Пиксели на таком экране расположены очень близко друг к другу и к краям кабинета. Их размер может быть менее 1мм. Если экран расположен в непосредственной близости к посетителям, например в магазине, его легко могут задеть сумкой, тележкой и повредить несколько пикселей. Чтобы избежать таких ситуаций необходимо покупать экран изготовленный по технологии COB (но это еще достаточно сырая технология и намного дороже SMD), либо использовать специальное защитное покрытие на SMD экран. Такое покрытие защищает пиксели от механических воздействий и брызг, а также делает поверхность экрана более ровной. Ваш экран будет полностью защищен. Мы не рекомендуем закрывать экран стеклянными кожухами или кожухами из прозрачного пластика, плотно прижимая их к поверхности. Во-первых, между стеклом и экраном будет скапливаться мелкая пыль. Чтобы ее убрать, нужно будет демонтировать стекло. Во-вторых, будет риск перегрева светодиодов. В-третьих, любое стекло бликует, изображение на экране потеряет сочность и будет выглядеть искаженно."}}, {"@type": "Question", "name": "Что входит в гарантийное обслуживание?", "acceptedAnswer": {"@type": "Answer", "text": "На наши светодиодные экраны мы предоставляем полную гарантию до 5 лет. В гарантийные обязательства входят замена и ремонт всех комплектующих: модулей, карт, блоков питания, проводов и пр. Также на протяжении всего срока эксплуатации экрана, мы храним у себя небольшой комплект запасных частей, на случай если вы свой потеряете или он полностью будет израсходован."}}]}</script>
+
 </head>
 <body>
 <div id="ekranpro-first-screen"><div class="ep1-catalog-shade" hidden></div><header class="ep1-header">
@@ -55,11 +598,10 @@
 <div class="cat-wrap">
 <nav class="ek-crumbs" aria-label="Хлебные крошки"><ol><li><a href="/ekranpro-site/">Главная</a></li><li><a href="/ekranpro-site/catalog/">Каталог</a></li><li><span aria-current="page">LED-экраны</span></li></ol></nav>
 
-<div class="ek-head"><h1>LED-экраны</h1><div class="ek-count">Найдено <b id="ek-count" class="ek-num">379</b> <span id="ek-count-word">моделей</span></div></div>
-
+<div class="ek-head" id="catalog"><h1>LED-экраны</h1><div class="ek-count">Найдено <b id="ek-count" class="ek-num">379</b> <span id="ek-count-word">моделей</span></div></div>
 <p class="ek-intro">Все светодиодные экраны: уличные и интерьерные, прокатные, гибкие, медиафасады и навигационные табло. Цены указаны за квадратный метр оборудования с НДС, у табло — за готовое изделие.</p>
 
-<div class="ek-layout" id="ek-listing" data-section="" data-group="led">
+<div class="ek-layout" id="ek-listing" data-section="" data-group="led" data-rows="2">
   <aside class="ek-filters" aria-label="Фильтры">
     <div id="ek-filter-body"></div>
     <div class="ek-other"><a href="/ekranpro-site/catalog/lcd-paneli-i-videosteny/"><span>LCD-панели и видеостены →</span></a></div>
@@ -74,7 +616,7 @@
     <div class="ek-chips" id="ek-chips"></div>
     <div class="ek-grid" id="ek-grid">
     
-    <article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPG-40-FILM.webp" alt="Прозрачный светодиодный экран SPG 40 FILM" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spg-40-film/"><span class="ek-kind">Прозрачный светодиодный экран</span> SPG 40 FILM</a></h3><div class="ek-sku">SPG-40-FILM · Прозрачные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">40 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">2 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">90 %</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP43</dd></div></dl><div class="ek-price"><b class="ek-num">от 34 052 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-4-STD-3840.webp" alt="Светодиодный экран для помещений SP 4 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-4-std-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 4 3840</a></h3><div class="ek-sku">SP-4-STD-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 54 295 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-4-STD.webp" alt="Светодиодный экран для помещений SP 4" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-4-std/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 4</a></h3><div class="ek-sku">SP-4-STD · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 55 204 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPG-20-FILM.webp" alt="Прозрачный светодиодный экран SPG 20 FILM" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spg-20-film/"><span class="ek-kind">Прозрачный светодиодный экран</span> SPG 20 FILM</a></h3><div class="ek-sku">SPG-20-FILM · Прозрачные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">20 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">2 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">88 %</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP43</dd></div></dl><div class="ek-price"><b class="ek-num">от 61 221 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOBS-8-STD.webp" alt="Уличный светодиодный экран SPOBS 8" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spobs-8-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOBS 8</a></h3><div class="ek-sku">SPOBS-8-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">8 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 63 323 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-31-STD-3840.webp" alt="Светодиодный экран для помещений SP 3,07 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-31-std-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 3,07 3840</a></h3><div class="ek-sku">SP-31-STD-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">3,07 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 65 076 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-31-STD.webp" alt="Светодиодный экран для помещений SP 3,07" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-31-std/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 3,07</a></h3><div class="ek-sku">SP-31-STD · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">3,07 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 66 895 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOBS-67-STD.webp" alt="Уличный светодиодный экран SPOBS 6,67" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spobs-67-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOBS 6,67</a></h3><div class="ek-sku">SPOBS-67-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">6,67 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 67 846 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOBS-5-STD.webp" alt="Уличный светодиодный экран SPOBS 5" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spobs-5-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOBS 5</a></h3><div class="ek-sku">SPOBS-5-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">5 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 68 622 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-25-STD-3840.webp" alt="Светодиодный экран для помещений SP 2,5 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-25-std-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 2,5 3840</a></h3><div class="ek-sku">SP-25-STD-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">2,5 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 70 791 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPG-20-MESH.webp" alt="Прозрачный светодиодный экран SPG 20 MESH" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spg-20-mesh/"><span class="ek-kind">Прозрачный светодиодный экран</span> SPG 20 MESH</a></h3><div class="ek-sku">SPG-20-MESH · Прозрачные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">20 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">4 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">98 %</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP43</dd></div></dl><div class="ek-price"><b class="ek-num">от 73 059 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOB-8-STD.webp" alt="Уличный светодиодный экран SPOB 8" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spob-8-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOB 8</a></h3><div class="ek-sku">SPOB-8-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">8 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 73 259 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-4-PLUS-3840.webp" alt="Светодиодный экран для помещений SP Fix 4 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-4-plus-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP Fix 4 3840</a></h3><div class="ek-sku">SP-4-PLUS-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Кабинетный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 73 519 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-25-STD.webp" alt="Светодиодный экран для помещений SP 2,5" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-25-std/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 2,5</a></h3><div class="ek-sku">SP-25-STD · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">2,5 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 73 779 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-4-PLUS.webp" alt="Светодиодный экран для помещений SP Fix 4" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-4-plus/"><span class="ek-kind">Светодиодный экран для помещений</span> SP Fix 4</a></h3><div class="ek-sku">SP-4-PLUS · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Кабинетный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 74 428 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOBS-4-STD.webp" alt="Уличный светодиодный экран SPOBS 4" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spobs-4-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOBS 4</a></h3><div class="ek-sku">SPOBS-4-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 74 437 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOB-67-STD.webp" alt="Уличный светодиодный экран SPOB 6,67" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spob-67-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOB 6,67</a></h3><div class="ek-sku">SPOB-67-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">6,67 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 78 065 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOB-5-STD.webp" alt="Уличный светодиодный экран SPOB 5" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spob-5-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOB 5</a></h3><div class="ek-sku">SPOB-5-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">5 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 78 975 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-31-PLUS-3840.webp" alt="Светодиодный экран для помещений SP Fix 3,07 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-31-plus-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP Fix 3,07 3840</a></h3><div class="ek-sku">SP-31-PLUS-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">3,07 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Кабинетный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 81 832 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPIR-4-STD.webp" alt="Прокатный светодиодный экран SP Rent 4" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spir-4-std/"><span class="ek-kind">Прокатный светодиодный экран</span> SP Rent 4</a></h3><div class="ek-sku">SPIR-4-STD · Прокатные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Размер кабинета</dt><dd class="ek-num">640×640 мм</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 82 871 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-31-PLUS.webp" alt="Светодиодный экран для помещений SP Fix 3,07" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-31-plus/"><span class="ek-kind">Светодиодный экран для помещений</span> SP Fix 3,07</a></h3><div class="ek-sku">SP-31-PLUS · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">3,07 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Кабинетный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 83 651 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOB-4-STD.webp" alt="Уличный светодиодный экран SPOB 4" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spob-4-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOB 4</a></h3><div class="ek-sku">SPOB-4-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 84 560 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-25-PLUS-3840.webp" alt="Светодиодный экран для помещений SP Fix 2,5 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-25-plus-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP Fix 2,5 3840</a></h3><div class="ek-sku">SP-25-PLUS-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">2,5 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Кабинетный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 86 898 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-25-PLUS.webp" alt="Светодиодный экран для помещений SP Fix 2,5" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-25-plus/"><span class="ek-kind">Светодиодный экран для помещений</span> SP Fix 2,5</a></h3><div class="ek-sku">SP-25-PLUS · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">2,5 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Кабинетный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 89 885 ₽</b><span>за м², с НДС</span></div></div></article>
+    <article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPG-40-FILM.webp" alt="Прозрачный светодиодный экран SPG 40 FILM" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spg-40-film/"><span class="ek-kind">Прозрачный светодиодный экран</span> SPG 40 FILM</a></h3><div class="ek-sku">SPG-40-FILM · Прозрачные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">40 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">2 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">90 %</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP43</dd></div></dl><div class="ek-price"><b class="ek-num">от 34 052 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-4-STD-3840.webp" alt="Светодиодный экран для помещений SP 4 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-4-std-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 4 3840</a></h3><div class="ek-sku">SP-4-STD-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 54 295 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-4-STD.webp" alt="Светодиодный экран для помещений SP 4" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-4-std/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 4</a></h3><div class="ek-sku">SP-4-STD · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">4 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 55 204 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPG-20-FILM.webp" alt="Прозрачный светодиодный экран SPG 20 FILM" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spg-20-film/"><span class="ek-kind">Прозрачный светодиодный экран</span> SPG 20 FILM</a></h3><div class="ek-sku">SPG-20-FILM · Прозрачные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">20 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">2 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">88 %</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP43</dd></div></dl><div class="ek-price"><b class="ek-num">от 61 221 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOBS-8-STD.webp" alt="Уличный светодиодный экран SPOBS 8" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spobs-8-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOBS 8</a></h3><div class="ek-sku">SPOBS-8-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">8 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 63 323 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-31-STD-3840.webp" alt="Светодиодный экран для помещений SP 3,07 3840" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-31-std-3840/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 3,07 3840</a></h3><div class="ek-sku">SP-31-STD-3840 · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">3,07 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 65 076 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SP-31-STD.webp" alt="Светодиодный экран для помещений SP 3,07" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/sp-31-std/"><span class="ek-kind">Светодиодный экран для помещений</span> SP 3,07</a></h3><div class="ek-sku">SP-31-STD · Интерьерные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">3,07 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">600 нит</dd></div><div><dt>Тип корпуса</dt><dd class="ek-num">Модульный</dd></div><div><dt>Защитное покрытие</dt><dd class="ek-num">Нет (SMD)</dd></div><div><dt>Соотношение сторон</dt><dd class="ek-num">—</dd></div></dl><div class="ek-price"><b class="ek-num">от 66 895 ₽</b><span>за м², с НДС</span></div></div></article><article class="ek-card"><div class="ek-img"><img src="/ekranpro-site/assets/catalog/photos/SPOBS-67-STD.webp" alt="Уличный светодиодный экран SPOBS 6,67" loading="lazy" width="480" height="360"></div><div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spobs-67-std/"><span class="ek-kind">Уличный светодиодный экран</span> SPOBS 6,67</a></h3><div class="ek-sku">SPOBS-67-STD · Уличные экраны</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">6,67 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">5 500 нит</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP54</dd></div><div><dt>Обслуживание</dt><dd class="ek-num">Заднее</dd></div></dl><div class="ek-price"><b class="ek-num">от 67 846 ₽</b><span>за м², с НДС</span></div></div></article>
     </div>
     <div class="ek-more" id="ek-more"></div>
     <div class="ek-cmpbar" id="ek-cmpbar"><span>Сравнить</span><span class="names" id="ek-cmp-names"></span><a class="go" href="/ekranpro-site/catalog/sravnenie/">Открыть сравнение <span id="ek-cmp-n" class="ek-num">0</span></a><button class="x" id="ek-cmp-clear" type="button">Очистить</button></div>
@@ -86,9 +628,790 @@
 
 </div>
 
+<div class="sx-podbor"><!-- PODBOR_START -->
+<section id="ep-podbor" aria-labelledby="pb-title">
+  <div class="pb-pin">
+    <div class="pb-head">
+      <div>
+        <p class="pb-eyebrow">01 / Подбор экрана</p>
+        <h2 id="pb-title">Подберите экран под ваш объект</h2>
+      </div>
+      <button class="pb-btn pb-btn--ink pb-btn--back" type="button" id="pb-back" hidden><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Назад к подбору</span></button>
+    </div>
+
+    <div class="pb-view" id="pb-view-calc">
+      <div class="pb">
+        <div class="pb-controls">
+          <div>
+            <div class="pb-label"><span>Где будет экран</span></div>
+            <div class="pb-seg" role="group" aria-label="Среда">
+              <button type="button" id="pb-env-out" data-env="out" aria-pressed="true">На улице</button>
+              <button type="button" id="pb-env-in" data-env="in" aria-pressed="false">В помещении</button>
+            </div>
+          </div>
+          <i class="pb-sp" aria-hidden="true"></i>
+          <div>
+            <div class="pb-label"><span>Место установки</span></div>
+            <div class="pb-places" id="pb-places" role="group" aria-label="Место установки"></div>
+          </div>
+          <i class="pb-sp" aria-hidden="true"></i>
+          <div id="pb-mount-box">
+            <div class="pb-label"><span>Способ установки</span></div>
+            <div class="pb-mount" id="pb-mount" role="group" aria-label="Способ установки"></div>
+            <div class="pb-fixed-row"><p class="pb-fixed" id="pb-mount-fixed" hidden></p><label class="pb-check" for="pb-nav-dbl" id="pb-nav-dbl-l" hidden><input type="checkbox" id="pb-nav-dbl"> Двустороннее</label></div>
+          </div>
+          <i class="pb-sp" aria-hidden="true"></i>
+          <div>
+            <div class="pb-label"><span>Параметры</span><b id="pb-area"></b></div>
+            <div class="pb-params">
+              <div class="pb-row" id="pb-row-w"><label for="pb-w-r">Ширина</label><input type="range" id="pb-w-r"><div class="pb-num"><input type="number" id="pb-w" step="0.01" inputmode="decimal" aria-label="Ширина, м"><span>м</span></div></div>
+              <div class="pb-row" id="pb-row-h"><label for="pb-h-r">Высота</label><input type="range" id="pb-h-r"><div class="pb-num"><input type="number" id="pb-h" step="0.01" inputmode="decimal" aria-label="Высота, м"><span>м</span></div></div>
+              <div class="pb-row"><label for="pb-lift-r" id="pb-lift-l">Высота установки</label><input type="range" id="pb-lift-r"><div class="pb-num"><input type="number" id="pb-lift" step="0.01" inputmode="decimal" aria-label="Высота установки, м"><span>м</span></div></div>
+            </div>
+          </div>
+          <i class="pb-fill" aria-hidden="true"></i>
+        </div>
+
+        <div class="pb-result">
+          <div class="pb-scene"><svg id="pb-svg" role="img" tabindex="0" aria-label="Схема масштаба: экран, расстояние просмотра и человек"></svg><div class="pb-scr" id="pb-scr" aria-hidden="true" hidden><canvas id="pb-scr-c"></canvas></div></div>
+          <div class="pb-out" aria-live="polite">
+            <div class="pb-cell"><div class="pb-k">Шаг пикселя</div><div class="pb-v" id="pb-pitch"></div><div class="pb-q" id="pb-q" role="group" aria-label="Качество изображения"><button type="button" data-level="standard">Стандартное качество</button><button type="button" data-level="optimal">Оптимальное качество</button><button type="button" data-level="max">Максимальное качество</button></div><div class="pb-s" id="pb-pitch-s"></div></div>
+            <div class="pb-cell"><div class="pb-k">Разрешение</div><div class="pb-v" id="pb-res"></div><div class="pb-s" id="pb-res-s"></div></div>
+            <div class="pb-cell"><div class="pb-k" id="pb-money-k">Бюджет оборудования</div><div class="pb-v pb-v--money" id="pb-money"></div><div class="pb-s" id="pb-money-s">Только оборудование, с НДС.
+Монтаж считается отдельно.</div></div>
+          </div>
+          <div class="pb-cta">
+            <div class="pb-cta-c"></div>
+            <div class="pb-cta-c">
+              <button class="pb-link pb-cat" type="button" id="pb-rec-open"><span class="pb-cat-label"><span class="pb-cat-base">Рекомендации по шагу пикселя</span><span class="pb-cat-hover" aria-hidden="true">Рекомендации по шагу пикселя</span></span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="pb-cat-line" aria-hidden="true"><i class="pb-line-out"></i><i class="pb-line-in"></i></span></button>
+              <p class="pb-hint" id="pb-hint" role="status" hidden>Для получения рекомендаций выберите экран, который вам нужен.</p>
+            </div>
+            <div class="pb-cta-c">
+              <button class="pb-btn" type="button" id="pb-open"><span>Получить точный расчёт</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+        <p class="pb-foot"><span>Оставьте заявку — мы за 24 часа подготовим точный расчёт под ключ в трёх вариантах.<br>С монтажом, доставкой и пусконаладочными работами.</span></p>
+      </div>
+    </div>
+
+    <div class="pb-view pb-recview" id="pb-view-rec" hidden>
+      <div class="pb-rec-body" id="pb-rec-body">
+        <div class="pb-tiles" id="pb-tiles"></div>
+      </div>
+      <div class="pb-why">
+        <div id="pb-why"></div>
+        <button class="pb-btn pb-btn--ink" type="button" id="pb-pdf"><span>Скачать PDF</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M12 3V17M6 12L12 18L18 12M4 21H20" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M12 3V17M6 12L12 18L18 12M4 21H20" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog class="pb-dialog" id="pb-dialog" aria-labelledby="pb-dlg-t"><div class="pb-dlg">
+  <div class="pb-dlg-h"><h3 id="pb-dlg-t">Расчёт за 24 часа</h3><button class="pb-x" type="button" id="pb-close" aria-label="Закрыть">×</button></div>
+  <dl class="pb-sum" id="pb-sum"></dl>
+  <form class="pb-form" id="pb-form">
+    <label for="pb-f-name">Ваше имя<input id="pb-f-name" name="name" autocomplete="name" placeholder="Как к вам обращаться" maxlength="100"></label>
+    <label for="pb-f-contact">Телефон или почта<input id="pb-f-contact" name="contact" placeholder="+7 … или name@company.ru" required maxlength="160"></label>
+    <label for="pb-f-task" id="pb-f-task-l">О проекте, необязательно<textarea id="pb-f-task" name="task" placeholder="Адрес объекта, сроки, особенности монтажа" maxlength="3000"></textarea></label>
+    <button class="pb-btn" type="submit"><span id="pb-f-btn">Получить расчёт</span><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+    <p class="pb-note" id="pb-f-note">Бесплатно, без обязательств. Ответит инженер, не менеджер по продажам.</p>
+  </form>
+  <div class="pb-done" id="pb-done" role="status" tabindex="-1" hidden></div>
+</div></dialog>
+
+<script type="application/json" id="pb-data">[{"sku":"SPO-195-PROX-F-DMD-35K","pool":"out","pitch":1.95,"price":732852},{"sku":"SPOB-25-STD","pool":"out","pitch":2.5,"price":135218},{"sku":"SPOBS-25-STD","pool":"out","pitch":2.5,"price":125225},{"sku":"SPO-26-PLUS-F-DMD-4K","pool":"out","pitch":2.6,"price":426310},{"sku":"SPO-26-PROX-F-DMD-3K","pool":"out","pitch":2.6,"price":487033},{"sku":"SPO-26-PLUS-U-USK-5K","pool":"out","pitch":2.6,"price":456044},{"sku":"SPO-26-PROX-U-USK-7K","pool":"out","pitch":2.6,"price":817235},{"sku":"SPO-29-PLUS-F-DMD","pool":"out","pitch":2.9,"price":320152},{"sku":"SPO-29-PROX-F-DMD-3K","pool":"out","pitch":2.9,"price":377314},{"sku":"SPO-29-PROX-F-DMD-6K","pool":"out","pitch":2.9,"price":331668},{"sku":"SPO-29-PLUS-U-USK-5K","pool":"out","pitch":2.9,"price":412072},{"sku":"SPO-29-PROX-U-USK-7K","pool":"out","pitch":2.9,"price":679040},{"sku":"SPOB-31-STD","pool":"out","pitch":3.07,"price":106771},{"sku":"SPOBS-31-STD","pool":"out","pitch":3.07,"price":96923},{"sku":"SPO-39-PLUS-F-PTF-6K","pool":"out","pitch":3.9,"price":207293},{"sku":"SPO-39-PLUS-F-PTF-7K","pool":"out","pitch":3.9,"price":317430},{"sku":"SPO-39-PROX-F-PTF","pool":"out","pitch":3.9,"price":391134},{"sku":"SPO-39-STD-F-PTF-5K","pool":"out","pitch":3.9,"price":188239},{"sku":"SPO-39-STD-U-USK-55K","pool":"out","pitch":3.9,"price":335646},{"sku":"SPO-39-PLUS-U-USK-7K","pool":"out","pitch":3.9,"price":488080},{"sku":"SPOB-4-STD","pool":"out","pitch":4.0,"price":84560},{"sku":"SPOBS-4-STD","pool":"out","pitch":4.0,"price":74437},{"sku":"SPOF-4-STD","pool":"out","pitch":4.0,"price":110019},{"sku":"SPO-44-PLUS-F-PT-6K","pool":"out","pitch":4.4,"price":153899},{"sku":"SPO-44-PROX-F-PT-8K","pool":"out","pitch":4.4,"price":280578},{"sku":"SPO-44-STD-U-LSTC-55K","pool":"out","pitch":4.4,"price":183213},{"sku":"SPO-44-PLUS-U-USFG-65K","pool":"out","pitch":4.4,"price":317011},{"sku":"SPO-44-PROX-U-LSTC-75K","pool":"out","pitch":4.4,"price":221740},{"sku":"SPO-44-PROX-U-LSTG-75K","pool":"out","pitch":4.4,"price":337740},{"sku":"SPO-44-PROX-U-USFG-75K","pool":"out","pitch":4.4,"price":349885},{"sku":"SPO-44-STD-U-USFC-55K","pool":"out","pitch":4.4,"price":177141},{"sku":"SPO-48-PLUS-F-PTF-6K","pool":"out","pitch":4.8,"price":182166},{"sku":"SPO-48-PROX-F-PTF","pool":"out","pitch":4.8,"price":304657},{"sku":"SPO-48-PLUS-U-USK-65K","pool":"out","pitch":4.8,"price":438246},{"sku":"SPO-48-PLUS-U-USK-55K","pool":"out","pitch":4.8,"price":318267},{"sku":"SPOB-5-STD","pool":"out","pitch":5.0,"price":78975},{"sku":"SPOBS-5-STD","pool":"out","pitch":5.0,"price":68622},{"sku":"SPOF-5-STD","pool":"out","pitch":5.0,"price":99887},{"sku":"SPO-57-PLUS-F-PT","pool":"out","pitch":5.7,"price":163321},{"sku":"SPO-57-PLUS-F-PTA","pool":"out","pitch":5.7,"price":151176},{"sku":"SPO-57-PROX-F-PT","pool":"out","pitch":5.7,"price":232628},{"sku":"SPO-57-STD-F-PT","pool":"out","pitch":5.7,"price":165624},{"sku":"SPO-57-STD-F-PTA","pool":"out","pitch":5.7,"price":150130},{"sku":"SPO-59-STD-U-USK-55K","pool":"out","pitch":5.9,"price":313661},{"sku":"SPO-59-STD-U-USK-65K","pool":"out","pitch":5.9,"price":384224},{"sku":"SPO-67-PLUS-F-PT","pool":"out","pitch":6.67,"price":154528},{"sku":"SPO-67-PLUS-F-PTA-8K","pool":"out","pitch":6.67,"price":136519},{"sku":"SPO-67-PROX-F-PT","pool":"out","pitch":6.67,"price":207293},{"sku":"SPO-67-PROX-F-PTA","pool":"out","pitch":6.67,"price":162903},{"sku":"SPO-67-STD-F-PT","pool":"out","pitch":6.67,"price":156202},{"sku":"SPO-67-STD-F-PTA","pool":"out","pitch":6.67,"price":122491},{"sku":"SPOB-67-STD","pool":"out","pitch":6.67,"price":78065},{"sku":"SPOBS-67-STD","pool":"out","pitch":6.67,"price":67846},{"sku":"SPO-67-PLUS-U-USFC-75K","pool":"out","pitch":6.67,"price":150549},{"sku":"SPO-67-PLUS-U-LSTC-75K","pool":"out","pitch":6.67,"price":181957},{"sku":"SPO-67-PLUS-U-USFC-ES-75K","pool":"out","pitch":6.67,"price":198498},{"sku":"SPO-67-PLUS-U-USFG-75K","pool":"out","pitch":6.67,"price":177141},{"sku":"SPO-67-PLUS-U-US3-75K","pool":"out","pitch":6.67,"price":271784},{"sku":"SPO-67-PROX-U-LSTC-10K","pool":"out","pitch":6.67,"price":183841},{"sku":"SPO-67-PROX-U-USFG-10K","pool":"out","pitch":6.67,"price":217134},{"sku":"SPO-67-PROX-U-LSTG-10K","pool":"out","pitch":6.67,"price":222368},{"sku":"SPO-67-PROX-U-US3-10K","pool":"out","pitch":6.67,"price":318895},{"sku":"SPO-8-PLUS-F-PT-8K","pool":"out","pitch":8.0,"price":141545},{"sku":"SPO-8-PLUS-F-PTA","pool":"out","pitch":8.0,"price":128564},{"sku":"SPO-8-PROX-F-PT","pool":"out","pitch":8.0,"price":177978},{"sku":"SPO-8-PROX-F-PTA","pool":"out","pitch":8.0,"price":142592},{"sku":"SPO-8-STD-F-PT","pool":"out","pitch":8.0,"price":142592},{"sku":"SPO-8-STD-F-PTA","pool":"out","pitch":8.0,"price":120397},{"sku":"SPOB-8-STD","pool":"out","pitch":8.0,"price":73259},{"sku":"SPOBS-8-STD","pool":"out","pitch":8.0,"price":63323},{"sku":"SPO-8-PLUS-U-USFC-ES-75K","pool":"out","pitch":8.0,"price":144267},{"sku":"SPO-8-PLUS-U-USFC-75K","pool":"out","pitch":8.0,"price":145942},{"sku":"SPO-8-PLUS-U-USFG-75K","pool":"out","pitch":8.0,"price":158715},{"sku":"SPO-8-PLUS-U-LSTC-75K","pool":"out","pitch":8.0,"price":168975},{"sku":"SPO-8-PROX-U-LSTC-10K","pool":"out","pitch":8.0,"price":172116},{"sku":"SPO-8-PROX-U-USFG-10K","pool":"out","pitch":8.0,"price":191170},{"sku":"SPO-8-PROX-U-LSTG-10K","pool":"out","pitch":8.0,"price":201848},{"sku":"SPO-83-PLUS-U-US3-75K","pool":"out","pitch":8.3,"price":253358},{"sku":"SPO-83-PROX-U-US3-10K","pool":"out","pitch":8.3,"price":277437},{"sku":"SPO-10-PLUS-F-PT-8K","pool":"out","pitch":10.0,"price":130029},{"sku":"SPO-10-PLUS-F-PTA","pool":"out","pitch":10.0,"price":122700},{"sku":"SPO-10-PROX-F-PT","pool":"out","pitch":10.0,"price":151176},{"sku":"SPO-10-PROX-F-PTA","pool":"out","pitch":10.0,"price":128773},{"sku":"SPO-10-STD-F-PT","pool":"out","pitch":10.0,"price":130657},{"sku":"SPO-10-STD-F-PTA","pool":"out","pitch":10.0,"price":110346},{"sku":"SPO-10-PLUS-U-USFC-75K","pool":"out","pitch":10.0,"price":138195},{"sku":"SPO-10-PLUS-U-LSTC-75K","pool":"out","pitch":10.0,"price":151805},{"sku":"SPO-10-PLUS-U-USFC-ES-75K","pool":"out","pitch":10.0,"price":151386},{"sku":"SPO-10-PLUS-U-USFG-75K","pool":"out","pitch":10.0,"price":141336},{"sku":"SPO-10-PLUS-U-US3-75K","pool":"out","pitch":10.0,"price":207083},{"sku":"SPO-10-PROX-U-LSTC-10K","pool":"out","pitch":10.0,"price":156621},{"sku":"SPO-10-PROX-U-USFG-10K","pool":"out","pitch":10.0,"price":150339},{"sku":"SPO-10-PROX-U-LSTG-10K","pool":"out","pitch":10.0,"price":160599},{"sku":"SPO-10-PROX-U-US3-10K","pool":"out","pitch":10.0,"price":238910},{"sku":"SPI-062-PROX-R-IMFP","pool":"in","pitch":0.62,"price":2373604},{"sku":"SPI-078-PROX-R-IMF","pool":"in","pitch":0.78,"price":1099488},{"sku":"SPI-078-PROX-R-IMFP","pool":"in","pitch":0.78,"price":1244384},{"sku":"SPI-078-PROX-R-IMFPXM","pool":"in","pitch":0.78,"price":1752146},{"sku":"SPI-094-PROX-R-IMF","pool":"in","pitch":0.93,"price":500433},{"sku":"SPI-094-PROX-R-IMFHB","pool":"in","pitch":0.93,"price":578953},{"sku":"SPI-094-PROX-R-IMFP","pool":"in","pitch":0.93,"price":669199},{"sku":"SPI-094-PROX-R-IMFPHB","pool":"in","pitch":0.93,"price":771798},{"sku":"SPI-094-PROX-R-IMFPXM","pool":"in","pitch":0.93,"price":1224282},{"sku":"SP-125-PLUS","pool":"in","pitch":1.25,"price":245756},{"sku":"SP-125-PLUS-3840","pool":"in","pitch":1.25,"price":243158},{"sku":"SP-125-PLUS-COB","pool":"in","pitch":1.25,"price":285114},{"sku":"SP-125-PLUS-GOB","pool":"in","pitch":1.25,"price":259525},{"sku":"SPI-125-PROX-R-IMF","pool":"in","pitch":1.25,"price":270108},{"sku":"SPI-125-PROX-R-IMFHB","pool":"in","pitch":1.25,"price":373336},{"sku":"SPI-125-PROX-R-IMFP","pool":"in","pitch":1.25,"price":467769},{"sku":"SPI-125-PROX-R-IMFPHB","pool":"in","pitch":1.25,"price":545661},{"sku":"SPI-125-PROX-R-IMFPXM","pool":"in","pitch":1.25,"price":856809},{"sku":"SP-154-PLUS","pool":"in","pitch":1.53,"price":161716},{"sku":"SP-154-PLUS-3840","pool":"in","pitch":1.53,"price":155481},{"sku":"SP-154-PLUS-COB","pool":"in","pitch":1.53,"price":212504},{"sku":"SP-154-PLUS-GOB","pool":"in","pitch":1.53,"price":173276},{"sku":"SPI-156-PROX-R-IMF","pool":"in","pitch":1.56,"price":244982},{"sku":"SPI-156-PROX-R-IMFHB","pool":"in","pitch":1.56,"price":308845},{"sku":"SPI-156-PROX-R-IMFP","pool":"in","pitch":1.56,"price":445784},{"sku":"SPI-156-PROX-R-IMFPHB","pool":"in","pitch":1.56,"price":500015},{"sku":"SP-186-PLUS","pool":"in","pitch":1.86,"price":113006},{"sku":"SP-186-PLUS-3840","pool":"in","pitch":1.86,"price":109629},{"sku":"SP-186-PLUS-COB","pool":"in","pitch":1.86,"price":147558},{"sku":"SP-186-STD","pool":"in","pitch":1.86,"price":98458},{"sku":"SPI-188-PROX-R-IMF","pool":"in","pitch":1.87,"price":225509},{"sku":"SPI-188-PROX-R-IMFHB","pool":"in","pitch":1.87,"price":286650},{"sku":"SPI-188-PROX-R-IMFP","pool":"in","pitch":1.87,"price":400137},{"sku":"SPI-188-PROX-R-IMFPHB","pool":"in","pitch":1.87,"price":452693},{"sku":"SP-2-PLUS","pool":"in","pitch":2.0,"price":106512},{"sku":"SP-2-PLUS-3840","pool":"in","pitch":2.0,"price":99368},{"sku":"SP-2-PLUS-GOB","pool":"in","pitch":2.0,"price":118722},{"sku":"SP-2-STD","pool":"in","pitch":2.0,"price":91444},{"sku":"SP-25-PLUS","pool":"in","pitch":2.5,"price":89885},{"sku":"SP-25-PLUS-3840","pool":"in","pitch":2.5,"price":86898},{"sku":"SP-25-PLUS-GOB","pool":"in","pitch":2.5,"price":106122},{"sku":"SP-25-STD","pool":"in","pitch":2.5,"price":73779},{"sku":"SP-25-STD-3840","pool":"in","pitch":2.5,"price":70791},{"sku":"SP-31-PLUS","pool":"in","pitch":3.07,"price":83651},{"sku":"SP-31-PLUS-3840","pool":"in","pitch":3.07,"price":81832},{"sku":"SP-31-STD","pool":"in","pitch":3.07,"price":66895},{"sku":"SP-31-STD-3840","pool":"in","pitch":3.07,"price":65076},{"sku":"SP-4-PLUS","pool":"in","pitch":4.0,"price":74428},{"sku":"SP-4-PLUS-3840","pool":"in","pitch":4.0,"price":73519},{"sku":"SP-4-STD","pool":"in","pitch":4.0,"price":55204},{"sku":"SP-4-STD-3840","pool":"in","pitch":4.0,"price":54295},{"sku":"SPOR-25-STD","pool":"rent_out","pitch":2.5,"price":148077},{"sku":"SPOR-26-PLUS","pool":"rent_out","pitch":2.6,"price":202632},{"sku":"SPOR-29-PLUS","pool":"rent_out","pitch":2.9,"price":186006},{"sku":"SPOR-29-PROX-A-NT-BLACK","pool":"rent_out","pitch":2.9,"price":420238},{"sku":"SPOR-29-PROX-A-NT-MAX-BLACK","pool":"rent_out","pitch":2.9,"price":382339},{"sku":"SPOR-29-PROX-F-MST","pool":"rent_out","pitch":2.9,"price":293770},{"sku":"SPOR-29-PROX-F-MST-BLACK","pool":"rent_out","pitch":2.9,"price":347791},{"sku":"SPOR-31-STD","pool":"rent_out","pitch":3.07,"price":118981},{"sku":"SPOR-39-PLUS","pool":"rent_out","pitch":3.9,"price":154389},{"sku":"SPOR-39-PROX-A-NT","pool":"rent_out","pitch":3.9,"price":266549},{"sku":"SPOR-39-PROX-A-NT-BLACK","pool":"rent_out","pitch":3.9,"price":333762},{"sku":"SPOR-39-PROX-A-NT-MAX","pool":"rent_out","pitch":3.9,"price":231581},{"sku":"SPOR-39-PROX-A-NT-MAX-BLACK","pool":"rent_out","pitch":3.9,"price":238072},{"sku":"SPOR-39-PROX-F-MST","pool":"rent_out","pitch":3.9,"price":220484},{"sku":"SPOR-39-PROX-F-MST-BLACK-3K","pool":"rent_out","pitch":3.9,"price":240585},{"sku":"SPOR-39-PROX-F-MST-BLACK-45K","pool":"rent_out","pitch":3.9,"price":417308},{"sku":"SPOR-39-PROX-F-MST-MAX","pool":"rent_out","pitch":3.9,"price":185307},{"sku":"SPOR-39-PROX-F-MST-MAX-BLACK","pool":"rent_out","pitch":3.9,"price":219856},{"sku":"SPOR-4-STD","pool":"rent_out","pitch":4.0,"price":92224},{"sku":"SPOR-48-PROX-F-MST","pool":"rent_out","pitch":4.8,"price":206664},{"sku":"SPOR-48-PROX-F-MST-BLACK","pool":"rent_out","pitch":4.8,"price":251264},{"sku":"SPOR-48-PROX-F-MST-MAX","pool":"rent_out","pitch":4.8,"price":170650},{"sku":"SPOR-48-PROX-F-MST-MAX-BLACK","pool":"rent_out","pitch":4.8,"price":186354},{"sku":"SPN-186-1280x480","pool":"nav","pitch":1.86,"price":107452,"size":"1280×480","price2":151829},{"sku":"SPN-186-1280x640","pool":"nav","pitch":1.86,"price":128566,"size":"1280×640","price2":192810},{"sku":"SPN-186-1280x800","pool":"nav","pitch":1.86,"price":155499,"size":"1280×800","price2":240440},{"sku":"SPN-186-1280x960","pool":"nav","pitch":1.86,"price":176612,"size":"1280×960","price2":281421},{"sku":"SPN-186-1600x480","pool":"nav","pitch":1.86,"price":125106,"size":"1600×480","price2":184642},{"sku":"SPN-186-1600x640","pool":"nav","pitch":1.86,"price":151135,"size":"1600×640","price2":235452},{"sku":"SPN-186-1600x800","pool":"nav","pitch":1.86,"price":177163,"size":"1600×800","price2":286262},{"sku":"SPN-186-1600x960","pool":"nav","pitch":1.86,"price":203191,"size":"1600×960","price2":337072},{"sku":"SPN-186-1920x480","pool":"nav","pitch":1.86,"price":144942,"size":"1920×480","price2":219949},{"sku":"SPN-186-1920x640","pool":"nav","pitch":1.86,"price":176612,"size":"1920×640","price2":281421},{"sku":"SPN-186-1920x800","pool":"nav","pitch":1.86,"price":208282,"size":"1920×800","price2":342891},{"sku":"SPN-186-1920x960","pool":"nav","pitch":1.86,"price":239953,"size":"1920×960","price2":404361},{"sku":"SPN-186-2240x480","pool":"nav","pitch":1.86,"price":162595,"size":"2240×480","price2":252764},{"sku":"SPN-186-2240x640","pool":"nav","pitch":1.86,"price":199181,"size":"2240×640","price2":324063},{"sku":"SPN-186-2240x800","pool":"nav","pitch":1.86,"price":235766,"size":"2240×800","price2":395364},{"sku":"SPN-186-2240x960","pool":"nav","pitch":1.86,"price":272352,"size":"2240×960","price2":466663},{"sku":"SPN-186-2560x480","pool":"nav","pitch":1.86,"price":182431,"size":"2560×480","price2":288071},{"sku":"SPN-186-2560x640","pool":"nav","pitch":1.86,"price":224659,"size":"2560×640","price2":370032},{"sku":"SPN-186-2560x800","pool":"nav","pitch":1.86,"price":266886,"size":"2560×800","price2":451991},{"sku":"SPN-186-2560x960","pool":"nav","pitch":1.86,"price":309114,"size":"2560×960","price2":533952},{"sku":"SPN-186-2880x480","pool":"nav","pitch":1.86,"price":200085,"size":"2880×480","price2":320885},{"sku":"SPN-186-2880x640","pool":"nav","pitch":1.86,"price":247227,"size":"2880×640","price2":412674},{"sku":"SPN-186-2880x800","pool":"nav","pitch":1.86,"price":294370,"size":"2880×800","price2":504464},{"sku":"SPN-186-2880x960","pool":"nav","pitch":1.86,"price":341512,"size":"2880×960","price2":596254},{"sku":"SPN-186-3200x480","pool":"nav","pitch":1.86,"price":219921,"size":"3200×480","price2":356192},{"sku":"SPN-186-3200x640","pool":"nav","pitch":1.86,"price":272705,"size":"3200×640","price2":458642},{"sku":"SPN-186-3200x800","pool":"nav","pitch":1.86,"price":325489,"size":"3200×800","price2":561093},{"sku":"SPN-186-3200x960","pool":"nav","pitch":1.86,"price":378274,"size":"3200×960","price2":663544},{"sku":"SPN-2-1280x480","pool":"nav","pitch":2.0,"price":102584,"size":"1280×480","price2":142093},{"sku":"SPN-2-1280x640","pool":"nav","pitch":2.0,"price":122075,"size":"1280×640","price2":179828},{"sku":"SPN-2-1280x800","pool":"nav","pitch":2.0,"price":147385,"size":"1280×800","price2":224212},{"sku":"SPN-2-1280x960","pool":"nav","pitch":2.0,"price":166877,"size":"1280×960","price2":261947},{"sku":"SPN-2-1600x480","pool":"nav","pitch":2.0,"price":119020,"size":"1600×480","price2":172472},{"sku":"SPN-2-1600x640","pool":"nav","pitch":2.0,"price":143021,"size":"1600×640","price2":219224},{"sku":"SPN-2-1600x800","pool":"nav","pitch":2.0,"price":167021,"size":"1600×800","price2":265978},{"sku":"SPN-2-1600x960","pool":"nav","pitch":2.0,"price":191021,"size":"1600×960","price2":312731},{"sku":"SPN-2-1920x480","pool":"nav","pitch":2.0,"price":137639,"size":"1920×480","price2":205345},{"sku":"SPN-2-1920x640","pool":"nav","pitch":2.0,"price":166877,"size":"1920×640","price2":261947},{"sku":"SPN-2-1920x800","pool":"nav","pitch":2.0,"price":196113,"size":"1920×800","price2":318550},{"sku":"SPN-2-1920x960","pool":"nav","pitch":2.0,"price":225349,"size":"1920×960","price2":375152},{"sku":"SPN-2-2240x480","pool":"nav","pitch":2.0,"price":154077,"size":"2240×480","price2":235725},{"sku":"SPN-2-2240x640","pool":"nav","pitch":2.0,"price":187822,"size":"2240×640","price2":301345},{"sku":"SPN-2-2240x800","pool":"nav","pitch":2.0,"price":221568,"size":"2240×800","price2":366965},{"sku":"SPN-2-2240x960","pool":"nav","pitch":2.0,"price":255312,"size":"2240×960","price2":432586},{"sku":"SPN-2-2560x480","pool":"nav","pitch":2.0,"price":172696,"size":"2560×480","price2":268598},{"sku":"SPN-2-2560x640","pool":"nav","pitch":2.0,"price":211678,"size":"2560×640","price2":344068},{"sku":"SPN-2-2560x800","pool":"nav","pitch":2.0,"price":250658,"size":"2560×800","price2":419538},{"sku":"SPN-2-2560x960","pool":"nav","pitch":2.0,"price":289640,"size":"2560×960","price2":495008},{"sku":"SPN-2-2880x480","pool":"nav","pitch":2.0,"price":189132,"size":"2880×480","price2":298977},{"sku":"SPN-2-2880x640","pool":"nav","pitch":2.0,"price":232623,"size":"2880×640","price2":383465},{"sku":"SPN-2-2880x800","pool":"nav","pitch":2.0,"price":276113,"size":"2880×800","price2":467953},{"sku":"SPN-2-2880x960","pool":"nav","pitch":2.0,"price":319604,"size":"2880×960","price2":552441},{"sku":"SPN-2-3200x480","pool":"nav","pitch":2.0,"price":207751,"size":"3200×480","price2":331851},{"sku":"SPN-2-3200x640","pool":"nav","pitch":2.0,"price":256478,"size":"3200×640","price2":426188},{"sku":"SPN-2-3200x800","pool":"nav","pitch":2.0,"price":305205,"size":"3200×800","price2":520525},{"sku":"SPN-2-3200x960","pool":"nav","pitch":2.0,"price":353933,"size":"3200×960","price2":614862},{"sku":"SPN-25-1280x480","pool":"nav","pitch":2.5,"price":93167,"size":"1280×480","price2":123259},{"sku":"SPN-25-1280x640","pool":"nav","pitch":2.5,"price":109519,"size":"1280×640","price2":154715},{"sku":"SPN-25-1280x800","pool":"nav","pitch":2.5,"price":131690,"size":"1280×800","price2":192823},{"sku":"SPN-25-1280x960","pool":"nav","pitch":2.5,"price":148042,"size":"1280×960","price2":224280},{"sku":"SPN-25-1600x480","pool":"nav","pitch":2.5,"price":107249,"size":"1600×480","price2":148929},{"sku":"SPN-25-1600x640","pool":"nav","pitch":2.5,"price":127326,"size":"1600×640","price2":187835},{"sku":"SPN-25-1600x800","pool":"nav","pitch":2.5,"price":154676,"size":"1600×800","price2":226740},{"sku":"SPN-25-1600x960","pool":"nav","pitch":2.5,"price":174752,"size":"1600×960","price2":265645},{"sku":"SPN-25-1920x480","pool":"nav","pitch":2.5,"price":123515,"size":"1920×480","price2":177094},{"sku":"SPN-25-1920x640","pool":"nav","pitch":2.5,"price":148042,"size":"1920×640","price2":224280},{"sku":"SPN-25-1920x800","pool":"nav","pitch":2.5,"price":181298,"size":"1920×800","price2":271465},{"sku":"SPN-25-1920x960","pool":"nav","pitch":2.5,"price":205826,"size":"1920×960","price2":318649},{"sku":"SPN-25-2240x480","pool":"nav","pitch":2.5,"price":137596,"size":"2240×480","price2":202764},{"sku":"SPN-25-2240x640","pool":"nav","pitch":2.5,"price":165849,"size":"2240×640","price2":257398},{"sku":"SPN-25-2240x800","pool":"nav","pitch":2.5,"price":204284,"size":"2240×800","price2":312032},{"sku":"SPN-25-2240x960","pool":"nav","pitch":2.5,"price":232536,"size":"2240×960","price2":366667},{"sku":"SPN-25-2560x480","pool":"nav","pitch":2.5,"price":153861,"size":"2560×480","price2":230930},{"sku":"SPN-25-2560x640","pool":"nav","pitch":2.5,"price":186564,"size":"2560×640","price2":293844},{"sku":"SPN-25-2560x800","pool":"nav","pitch":2.5,"price":230907,"size":"2560×800","price2":356757},{"sku":"SPN-25-2560x960","pool":"nav","pitch":2.5,"price":263611,"size":"2560×960","price2":419670},{"sku":"SPN-25-2880x480","pool":"nav","pitch":2.5,"price":167943,"size":"2880×480","price2":256601},{"sku":"SPN-25-2880x640","pool":"nav","pitch":2.5,"price":204371,"size":"2880×640","price2":326962},{"sku":"SPN-25-2880x800","pool":"nav","pitch":2.5,"price":253893,"size":"2880×800","price2":397325},{"sku":"SPN-25-2880x960","pool":"nav","pitch":2.5,"price":290321,"size":"2880×960","price2":467688},{"sku":"SPN-25-3200x480","pool":"nav","pitch":2.5,"price":184208,"size":"3200×480","price2":284766},{"sku":"SPN-25-3200x640","pool":"nav","pitch":2.5,"price":225088,"size":"3200×640","price2":363408},{"sku":"SPN-25-3200x800","pool":"nav","pitch":2.5,"price":280515,"size":"3200×800","price2":442050},{"sku":"SPN-25-3200x960","pool":"nav","pitch":2.5,"price":321395,"size":"3200×960","price2":520692}]</script>
+<img id="pb-img-screen" alt="" hidden>
+<img id="pb-img-plain" alt="" hidden>
+<img id="pb-img-board" src="/ekranpro-site/assets/podbor/viewing-board.webp" alt="" hidden>
+<img id="pb-img-logo" src="/ekranpro-site/assets/podbor/logo-white.png" alt="" hidden>
+<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=f0426b17">
+<script src="/ekranpro-site/assets/podbor/podbor.js?v=f0426b17" defer></script>
+<!-- PODBOR_END -->
+</div>
+
+
+
+
+
+
+
+
+<!-- REVIEWS_START -->
+<section id="ep-reviews" aria-labelledby="eprv-title">
+  <style>#ep-reviews {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(48px, 5vw, 96px) 4.8% clamp(56px, 5.5vw, 104px);
+  background: #f6f6f3;
+  color: #171a1c;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color-scheme: light;
+  scroll-margin-top: 0;
+}
+#ep-reviews > header, #ep-reviews > .eprv-carousel { flex: none; width: 100%; }
+#ep-reviews *, #ep-reviews *::before, #ep-reviews *::after { box-sizing: border-box; }
+#ep-reviews [hidden] { display: none !important; }
+#ep-reviews h2, #ep-reviews h3, #ep-reviews p { margin: 0; }
+#ep-reviews a { color: inherit; text-decoration: none; }
+#ep-reviews button { font: inherit; cursor: pointer; }
+#ep-reviews :is(a, button, [tabindex]):focus-visible { outline: 3px solid #bd461e; outline-offset: 5px; }
+#ep-reviews .eprv-eyebrow {
+  margin-bottom: clamp(20px, 1.8vw, 36px);
+  color: #60656a;
+  font-size: clamp(11px, .88vw, 18px);
+  font-weight: 500;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+#ep-reviews .eprv-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  margin-bottom: clamp(32px, 3vw, 56px);
+}
+#ep-reviews h2 {
+  font-size: clamp(32px, 4.02vw, 80px);
+  font-weight: 500;
+  line-height: 1.07;
+  letter-spacing: -.045em;
+  white-space: nowrap;
+}
+#ep-reviews .eprv-intro {
+  flex: none;
+  color: #60656a;
+  font-size: clamp(15px, 1.15vw, 21px);
+  line-height: 1.45;
+}
+#ep-reviews .eprv-intro span { display: block; white-space: nowrap; }
+#ep-reviews .eprv-carousel { --eprv-gap: clamp(20px, 2vw, 36px); min-width: 0; }
+#ep-reviews .eprv-track {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - var(--eprv-gap) * 2) / 3);
+  gap: var(--eprv-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+/* The lower range control is the only visible scrollbar, including at load. */
+#ep-reviews .eprv-track::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+#ep-reviews .eprv-item { min-width: 0; scroll-snap-align: start; }
+#ep-reviews .eprv-card { display: flex; flex-direction: column; height: 100%; }
+#ep-reviews .eprv-card:focus-visible { outline-offset: -3px; }
+#ep-reviews .eprv-media {
+  position: relative;
+  display: block;
+  flex: none;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #252b2d;
+  isolation: isolate;
+}
+#ep-reviews .eprv-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(var(--eprv-photo-scale, 1.36));
+  transform-origin: var(--eprv-photo-origin, center top);
+  transition: none;
+}
+#ep-reviews .eprv-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, .9);
+  border-radius: 50%;
+  background: rgba(7, 12, 16, .28);
+  color: #fff;
+  transition: transform 240ms ease-out, background-color 240ms ease-out;
+}
+#ep-reviews .eprv-play svg { width: 19px; height: 19px; margin-left: 2px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .25)); }
+#ep-reviews .eprv-copy { display: flex; flex: 1; flex-direction: column; padding-top: 22px; }
+#ep-reviews .eprv-city { margin-bottom: 8px; color: #60656a; font-size: 13px; }
+#ep-reviews h3 {
+  font-size: clamp(21px, 1.7vw, 32px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.035em;
+}
+#ep-reviews .eprv-person {
+  max-width: 34ch;
+  margin-top: 9px;
+  color: #555c60;
+  font-size: clamp(14px, 1.05vw, 18px);
+  line-height: 1.45;
+}
+/* A separate scrollbar stays below every name and job title. */
+#ep-reviews .eprv-track.is-scrubbing { scroll-snap-type: none; scroll-behavior: auto; }
+#ep-reviews .eprv-scrollbar {
+  --eprv-thumb-width: 37.5%;
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 24px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+#ep-reviews .eprv-scrollbar::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: #d8dad7;
+}
+#ep-reviews .eprv-scrollbar::-webkit-slider-thumb {
+  width: var(--eprv-thumb-width);
+  height: 6px;
+  margin-top: -1px;
+  border: 0;
+  border-radius: 4px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #707975;
+  cursor: grab;
+}
+#ep-reviews .eprv-scrollbar::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: #d8dad7;
+}
+#ep-reviews .eprv-scrollbar::-moz-range-thumb {
+  width: var(--eprv-thumb-width);
+  height: 6px;
+  border: 0;
+  border-radius: 4px;
+  background: #707975;
+  cursor: grab;
+}
+#ep-reviews .eprv-scrollbar:active::-webkit-slider-thumb { cursor: grabbing; background: #343c41; }
+#ep-reviews .eprv-scrollbar:active::-moz-range-thumb { cursor: grabbing; background: #343c41; }
+#ep-reviews .eprv-scrollbar:focus-visible { outline: 3px solid #bd461e; outline-offset: 4px; }
+#ep-reviews .eprv-scrollbar:disabled { opacity: .45; cursor: default; }
+#ep-reviews .eprv-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-top: 14px;
+  padding-top: 18px;
+  border-top: 1px solid #d8dad7;
+}
+#ep-reviews .eprv-counter { color: #60656a; font-size: 14px; font-variant-numeric: tabular-nums; }
+#ep-reviews .eprv-arrows { display: flex; gap: 8px; }
+#ep-reviews .eprv-arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #b9bebd;
+  border-radius: 2px;
+  background: transparent;
+  color: #171a1c;
+  transition: background-color 180ms ease-out, border-color 180ms ease-out;
+}
+#ep-reviews .eprv-arrow svg { width: 21px; height: 21px; }
+#ep-reviews .eprv-arrow:disabled { color: #9ba09e; border-color: #dde0dc; cursor: default; }
+html.eprv-dialog-open { overflow: hidden; }
+#ep-reviews .eprv-dialog {
+  width: min(1120px, calc(100vw - 40px));
+  max-width: none;
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 2px;
+  background: #f6f6f3;
+  color: #171a1c;
+}
+#ep-reviews .eprv-dialog::backdrop { background: rgba(7, 12, 16, .86); }
+#ep-reviews .eprv-dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 24px;
+}
+#ep-reviews #eprv-dialog-title { font-size: clamp(19px, 2vw, 26px); font-weight: 500; line-height: 1.2; letter-spacing: -.025em; }
+#ep-reviews .eprv-close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #b9bebd;
+  border-radius: 2px;
+  background: transparent;
+  color: #171a1c;
+}
+#ep-reviews .eprv-close svg { width: 21px; height: 21px; }
+#ep-reviews .eprv-player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #070c10;
+}
+#ep-reviews .eprv-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #070c10; }
+#ep-reviews .eprv-player-status { position: absolute; inset: 0; display: grid; place-items: center; padding: 28px; color: #fff; text-align: center; font-size: 15px; }
+#ep-reviews .eprv-dialog-footer { display: flex; justify-content: flex-end; padding: 16px 24px; }
+#ep-reviews .eprv-external { display: inline-flex; align-items: center; gap: 14px; min-height: 36px; font-size: 14px; }
+#ep-reviews .eprv-external svg { width: 18px; height: 18px; }
+@media (hover: hover) and (pointer: fine) {
+  #ep-reviews .eprv-card:hover .eprv-play { transform: translate(-50%, -50%) scale(1.06); background: rgba(7, 12, 16, .48); }
+  #ep-reviews .eprv-arrow:not(:disabled):hover, #ep-reviews .eprv-close:hover { background: #e7e9e5; border-color: #8b928f; }
+}
+@media (max-width: 980px) {
+  #ep-reviews .eprv-heading { display: block; }
+  #ep-reviews .eprv-intro { margin-top: 18px; }
+  #ep-reviews .eprv-track { grid-auto-columns: calc((100% - var(--eprv-gap)) / 2); }
+  #ep-reviews h3 { font-size: 25px; }
+  #ep-reviews .eprv-person { max-width: none; }
+}
+@media (max-width: 680px) {
+  #ep-reviews { padding: 42px 20px 48px; }
+  #ep-reviews .eprv-heading { margin-bottom: 30px; }
+  #ep-reviews h2 { font-size: clamp(32px, 7.4vw, 48px); white-space: normal; }
+  #ep-reviews .eprv-intro { font-size: 15px; }
+  #ep-reviews .eprv-carousel { --eprv-gap: 16px; }
+  #ep-reviews .eprv-track { grid-auto-columns: calc(100% - 26px); }
+  #ep-reviews .eprv-copy { padding-top: 18px; }
+  #ep-reviews h3 { font-size: 23px; }
+  #ep-reviews .eprv-play { width: 46px; height: 46px; }
+  #ep-reviews .eprv-dialog { width: calc(100vw - 24px); max-height: calc(100dvh - 24px); }
+  #ep-reviews .eprv-dialog-heading { gap: 12px; padding: 12px; }
+  #ep-reviews .eprv-dialog-footer { padding: 12px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ep-reviews .eprv-media img, #ep-reviews .eprv-play, #ep-reviews .eprv-arrow { transition: none; }
+  #ep-reviews .eprv-card:hover .eprv-play { transform: translate(-50%, -50%); }
+}
+</style>
+  <header>
+    <p class="eprv-eyebrow">02 / Отзывы</p>
+    <div class="eprv-heading">
+      <h2 id="eprv-title">Клиенты о работе с ЭкранПро</h2>
+      <p class="eprv-intro"><span>Руководители и специалисты —</span> <span>об опыте сотрудничества с нами.</span></p>
+    </div>
+  </header>
+  <div class="eprv-carousel" data-eprv-carousel="" role="region" aria-roledescription="карусель" aria-label="Видеоотзывы клиентов" data-eprv-ready="">
+    <ul id="eprv-track" class="eprv-track" data-eprv-track="" tabindex="0" aria-label="Отзывы. Перелистывайте стрелками влево и вправо">
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239224&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Алексей Шуховцов" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Алексей Шуховцов, «Инженер IT», Москва">
+        <span class="eprv-media" style="--eprv-photo-origin:40% top">
+          <img src="/ekranpro-site/assets/images/review-01-1280-11e78ad8.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-01-480-9f98022c.webp 480w, /ekranpro-site/assets/images/review-01-800-b312d28d.webp 800w, /ekranpro-site/assets/images/review-01-1280-11e78ad8.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Москва</span>
+          <h3>Алексей Шуховцов</h3>
+          <span class="eprv-person">«Инженер IT»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239223&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Людмила Климанович" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Людмила Климанович, Управляющая фитнес-клубом LVLup, Хабаровск">
+        <span class="eprv-media" style="--eprv-photo-origin:left top">
+          <img src="/ekranpro-site/assets/images/review-02-1280-a8322498.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-02-480-833c5a73.webp 480w, /ekranpro-site/assets/images/review-02-800-7c55925f.webp 800w, /ekranpro-site/assets/images/review-02-1280-a8322498.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Хабаровск</span>
+          <h3>Людмила Климанович</h3>
+          <span class="eprv-person">Управляющая фитнес-клубом LVLup</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239221&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Евгений Гаврилов" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Евгений Гаврилов, Коммерческий директор «Дезснаб-Трейд», Люберцы">
+        <span class="eprv-media" style="">
+          <img src="/ekranpro-site/assets/images/review-03-1280-17a22e4f.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-03-480-cbab8ac8.webp 480w, /ekranpro-site/assets/images/review-03-800-19490797.webp 800w, /ekranpro-site/assets/images/review-03-1280-17a22e4f.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Люберцы</span>
+          <h3>Евгений Гаврилов</h3>
+          <span class="eprv-person">Коммерческий директор «Дезснаб-Трейд»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239219&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Александр" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Александр, Управляющий парк-отелем «Империал», Москва">
+        <span class="eprv-media" style="--eprv-photo-origin:left top">
+          <img src="/ekranpro-site/assets/images/review-04-1280-243809d7.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-04-480-1448897a.webp 480w, /ekranpro-site/assets/images/review-04-800-7f7a9a5b.webp 800w, /ekranpro-site/assets/images/review-04-1280-243809d7.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Москва</span>
+          <h3>Александр</h3>
+          <span class="eprv-person">Управляющий парк-отелем «Империал»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239218&amp;hd=1&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Артем" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Артем, IT-специалист Xpate, Москва">
+        <span class="eprv-media" style="--eprv-photo-origin:right top">
+          <img src="/ekranpro-site/assets/images/review-05-1280-fda0f66b.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-05-480-0a858e94.webp 480w, /ekranpro-site/assets/images/review-05-800-a0a33820.webp 800w, /ekranpro-site/assets/images/review-05-1280-fda0f66b.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Москва</span>
+          <h3>Артем</h3>
+          <span class="eprv-person">IT-специалист Xpate</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239217&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Тимур Велиханов" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Тимур Велиханов, Директор исторического парка, Махачкала">
+        <span class="eprv-media" style="--eprv-photo-origin:right top;--eprv-photo-scale:1.46">
+          <img src="/ekranpro-site/assets/images/review-06-1280-bd3a2df7.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-06-480-2c7ad79c.webp 480w, /ekranpro-site/assets/images/review-06-800-d3b1a56f.webp 800w, /ekranpro-site/assets/images/review-06-1280-bd3a2df7.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Махачкала</span>
+          <h3>Тимур Велиханов</h3>
+          <span class="eprv-person">Директор исторического парка</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239216&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Анастасия" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Анастасия, Менеджер по маркетингу ТРЦ «Планета», Уфа">
+        <span class="eprv-media" style="--eprv-photo-origin:40% top">
+          <img src="/ekranpro-site/assets/images/review-07-1280-94011c7a.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-07-480-6548c0db.webp 480w, /ekranpro-site/assets/images/review-07-800-2b6f2aaa.webp 800w, /ekranpro-site/assets/images/review-07-1280-94011c7a.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Уфа</span>
+          <h3>Анастасия</h3>
+          <span class="eprv-person">Менеджер по маркетингу ТРЦ «Планета»</span>
+        </div>
+      </a>
+    </li>
+      <li class="eprv-item">
+      <a class="eprv-card" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239215&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer" data-eprv-video="" data-eprv-title="Надежда Пряничникова" aria-haspopup="dialog" aria-controls="eprv-video-dialog" aria-label="Смотреть видеоотзыв: Надежда Пряничникова, Директор АНО «Потенциал», Семенов">
+        <span class="eprv-media" style="--eprv-photo-origin:35% top">
+          <img src="/ekranpro-site/assets/images/review-08-1280-dddfccee.webp" alt="" width="1280" height="720" loading="lazy" decoding="async" srcset="/ekranpro-site/assets/images/review-08-480-9348da4c.webp 480w, /ekranpro-site/assets/images/review-08-800-7c4e69fd.webp 800w, /ekranpro-site/assets/images/review-08-1280-dddfccee.webp 1280w" sizes="(max-width: 680px) 100vw, (max-width: 1100px) 60vw, 45vw">
+          <span class="eprv-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15L20 12 7 4.5Z"></path></svg></span>
+        </span>
+        <div class="eprv-copy">
+          <span class="eprv-city">Семенов</span>
+          <h3>Надежда Пряничникова</h3>
+          <span class="eprv-person">Директор АНО «Потенциал»</span>
+        </div>
+      </a>
+    </li>
+    </ul>
+    <input class="eprv-scrollbar" data-eprv-scrollbar="" type="range" min="0" max="1000" step="1" value="0" aria-label="Прокрутить отзывы" aria-controls="eprv-track" aria-valuetext="3 из 8" style="--eprv-thumb-width: 454.8151159289371px;">
+    <div class="eprv-nav" data-eprv-nav="">
+      <p class="eprv-counter" data-eprv-counter="" role="status" aria-live="polite" aria-atomic="true">3 из 8</p>
+      <div class="eprv-arrows">
+        <button class="eprv-arrow" type="button" data-eprv-prev="" aria-controls="eprv-track" aria-label="Предыдущие отзывы" disabled=""><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+        <button class="eprv-arrow" type="button" data-eprv-next="" aria-controls="eprv-track" aria-label="Следующие отзывы"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+      </div>
+    </div>
+  </div>
+  <dialog id="eprv-video-dialog" class="eprv-dialog" aria-labelledby="eprv-dialog-title">
+    <div class="eprv-dialog-heading">
+      <h3 id="eprv-dialog-title">Видеоотзыв</h3>
+      <button class="eprv-close" type="button" data-eprv-close="" aria-label="Закрыть видео"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" stroke="currentColor" stroke-width="1.5"></path></svg></button>
+    </div>
+    <div class="eprv-player" data-eprv-player=""></div>
+    <div class="eprv-dialog-footer"><a class="eprv-external" data-eprv-external="" href="https://vkvideo.ru/video_ext.php?oid=-57927061&amp;id=456239224&amp;hd=2&amp;autoplay=1" target="_blank" rel="noopener noreferrer">Открыть в VK Видео<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="square" stroke-linejoin="miter"></path></svg></a></div>
+  </dialog>
+</section>
+<script>(() => {
+  'use strict';
+  const section = document.getElementById('ep-reviews');
+  if (!section) return;
+  const carousel = section.querySelector('[data-eprv-carousel]');
+  const track = section.querySelector('[data-eprv-track]');
+  const items = track ? Array.from(track.children) : [];
+  const previous = section.querySelector('[data-eprv-prev]');
+  const next = section.querySelector('[data-eprv-next]');
+  const counter = section.querySelector('[data-eprv-counter]');
+  const navigation = section.querySelector('[data-eprv-nav]');
+  const scrollbar = section.querySelector('[data-eprv-scrollbar]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (carousel && track && items.length && previous && next && counter && navigation) {
+    let requestedLeft = null;
+    let isScrubbing = false;
+    let settleTimer = null;
+    let updateFrame = null;
+    const metrics = () => {
+      const cardWidth = items[0].getBoundingClientRect().width;
+      const step = items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : cardWidth;
+      const gap = Math.max(0, step - cardWidth);
+      return {
+        step,
+        max: Math.max(0, track.scrollWidth - track.clientWidth),
+        visible: Math.max(1, Math.min(items.length, Math.floor((track.clientWidth + gap + 1) / step)))
+      };
+    };
+    const update = () => {
+      updateFrame = null;
+      const { step, max, visible } = metrics();
+      if (!step) return;
+      const first = Math.max(0, Math.min(items.length - visible, Math.round(track.scrollLeft / step)));
+      const last = Math.min(items.length, first + visible);
+      const progressLabel = `${last} из ${items.length}`;
+      if (counter.textContent !== progressLabel) counter.textContent = progressLabel;
+      if (scrollbar) {
+        if (!isScrubbing) scrollbar.value = max > 0 ? String(Math.round(track.scrollLeft / max * 1000)) : '0';
+        scrollbar.setAttribute('aria-valuetext', progressLabel);
+        const thumbWidth = Math.min(scrollbar.clientWidth, Math.max(32, scrollbar.clientWidth * track.clientWidth / Math.max(1, track.scrollWidth)));
+        scrollbar.style.setProperty('--eprv-thumb-width', `${thumbWidth}px`);
+        scrollbar.disabled = max <= 2;
+      }
+      previous.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= max - 2;
+    };
+    const go = direction => {
+      const { step, max } = metrics();
+      if (!step) return;
+      const start = requestedLeft ?? track.scrollLeft;
+      const target = direction === 'start' ? 0 : direction === 'end' ? max : (Math.round(start / step) + direction) * step;
+      requestedLeft = Math.max(0, Math.min(max, target));
+      track.scrollTo({ left: requestedLeft, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      update();
+    };
+    const releaseRequest = () => { requestedLeft = null; update(); };
+    previous.addEventListener('click', () => go(-1));
+    next.addEventListener('click', () => go(1));
+    track.addEventListener('scroll', () => {
+      if (updateFrame === null) updateFrame = window.requestAnimationFrame(update);
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(releaseRequest, 180);
+    }, { passive: true });
+    track.addEventListener('scrollend', releaseRequest);
+    track.addEventListener('pointerdown', () => { requestedLeft = null; }, { passive: true });
+    track.addEventListener('wheel', () => { requestedLeft = null; }, { passive: true });
+    track.addEventListener('keydown', event => {
+      if (event.target !== track || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      const direction = { ArrowLeft: -1, ArrowRight: 1, Home: 'start', End: 'end' }[event.key];
+      if (direction === undefined) return;
+      event.preventDefault();
+      go(direction);
+    });
+    if (scrollbar) {
+      const finishScrub = () => {
+        if (!isScrubbing) return;
+        isScrubbing = false;
+        track.classList.remove('is-scrubbing');
+        const { step, max } = metrics();
+        if (step) {
+          requestedLeft = Math.max(0, Math.min(max, Math.round(track.scrollLeft / step) * step));
+          track.scrollTo({ left: requestedLeft, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+        }
+        update();
+      };
+      scrollbar.addEventListener('input', () => {
+        isScrubbing = true;
+        requestedLeft = null;
+        track.classList.add('is-scrubbing');
+        const { max } = metrics();
+        track.scrollTo({ left: Number(scrollbar.value) / 1000 * max, behavior: 'auto' });
+        update();
+      });
+      scrollbar.addEventListener('change', finishScrub);
+      scrollbar.addEventListener('pointercancel', finishScrub);
+      scrollbar.addEventListener('blur', finishScrub);
+      scrollbar.addEventListener('keydown', event => {
+        if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        const direction = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1, PageDown: -1, PageUp: 1, Home: 'start', End: 'end' }[event.key];
+        if (direction === undefined) return;
+        event.preventDefault();
+        go(direction);
+      });
+    }
+    const resize = () => {
+      requestedLeft = null;
+      isScrubbing = false;
+      track.classList.remove('is-scrubbing');
+      update();
+    };
+    if (typeof ResizeObserver === 'function') new ResizeObserver(resize).observe(track);
+    else window.addEventListener('resize', resize, { passive: true });
+    carousel.setAttribute('data-eprv-ready', '');
+    navigation.hidden = false;
+    if (scrollbar) scrollbar.hidden = false;
+    update();
+  }
+
+  const dialog = section.querySelector('#eprv-video-dialog');
+  if (!dialog || typeof dialog.showModal !== 'function') return;
+  const player = section.querySelector('[data-eprv-player]');
+  const title = section.querySelector('#eprv-dialog-title');
+  const external = section.querySelector('[data-eprv-external]');
+  const closeButton = section.querySelector('[data-eprv-close]');
+  let activeTrigger = null;
+  let loadingTimer = null;
+
+  const clearPlayer = () => {
+    window.clearTimeout(loadingTimer);
+    loadingTimer = null;
+    player.replaceChildren();
+  };
+
+  section.querySelectorAll('[data-eprv-video]').forEach(link => {
+    link.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      clearPlayer();
+      activeTrigger = link;
+      const videoTitle = link.dataset.eprvTitle;
+      const url = link.href;
+      title.textContent = videoTitle;
+      external.href = url;
+      const status = document.createElement('p');
+      status.className = 'eprv-player-status';
+      status.setAttribute('role', 'status');
+      status.textContent = 'Загружаем видео…';
+      player.append(status);
+      const frame = document.createElement('iframe');
+      frame.hidden = true;
+      frame.title = `Видеоотзыв: ${videoTitle}`;
+      frame.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture; encrypted-media');
+      frame.setAttribute('allowfullscreen', '');
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.addEventListener('load', () => {
+        if (!player.contains(frame)) return;
+        window.clearTimeout(loadingTimer);
+        loadingTimer = null;
+        status.remove();
+        frame.hidden = false;
+      }, { once: true });
+      frame.addEventListener('error', () => {
+        if (!player.contains(frame)) return;
+        window.clearTimeout(loadingTimer);
+        loadingTimer = null;
+        frame.remove();
+        status.textContent = 'Не удалось загрузить видео. Откройте его в VK Видео по ссылке ниже.';
+      }, { once: true });
+      dialog.showModal();
+      document.documentElement.classList.add('eprv-dialog-open');
+      closeButton.focus({ preventScroll: true });
+      loadingTimer = window.setTimeout(() => {
+        status.textContent = 'Видео ещё загружается. Можно открыть его в VK Видео по ссылке ниже.';
+      }, 12000);
+      frame.src = url;
+      player.append(frame);
+    });
+  });
+
+  closeButton.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    clearPlayer();
+    document.documentElement.classList.remove('eprv-dialog-open');
+    if (activeTrigger?.isConnected) activeTrigger.focus({ preventScroll: true });
+    activeTrigger = null;
+  });
+})();
+</script>
+
+
+<section class="sx-demo" id="demo" aria-labelledby="sx-demo-h">
+  <div class="sx-demo-backdrop" aria-hidden="true"></div>
+  <div class="sx-in">
+    <p class="sx-demo-eyebrow">03 / Демонстрация</p>
+    <div class="sx-demo-in">
+      <div class="sx-demo-copy">
+        <h2 id="sx-demo-h"><span>Привезём</span> <span>оборудование</span> <span>до покупки</span> </h2>
+        <p class="sx-demo-lead">Привезём и продемонстрируем образцы оборудования.</p>
+        <ul class="sx-demo-points" role="list"><li>Покажем разные варианты оборудования</li><li>Объясним преимущества каждого</li><li>Расскажем об особенностях монтажа и обслуживания</li></ul>
+        <div class="sx-demo-foot">
+          <button type="button" class="ep-btn ep-btn--coral ep-btn--auto ep-btn--wide" data-quote="Демонстрация оборудования: Светодиодные LED-экраны"><span class="ep-btn__label">Записаться на демонстрацию</span><span class="ep-btn__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+        </div>
+      </div>
+      <figure class="sx-demo-photo"><img src="/ekranpro-site/assets/section/demo-kub.webp" alt="Демонстрация светодиодных экранов: LED-куб на светодиодной стойке и специалист рядом" width="1536" height="1024" loading="lazy" decoding="async"></figure>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<section class="sx-band sx-steps" id="process" aria-labelledby="sx-process-h">
+  <div class="sx-in">
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">04 / Этапы</p><h2 id="sx-process-h">Этапы работы</h2></div>
+    <ol class="sx-steps-grid"><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">01</span><p class="sx-steps-big" aria-hidden="true"><span>Подбор</span><span>и расчёт</span></p><h3>Подбор и расчёт</h3><div class="sx-steps-more"><div><p>По задаче, месту установки и размерам подбираем тип экрана, шаг пикселя и яркость, готовим расчёт в нескольких вариантах.</p><p class="sx-steps-t">24 часа</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">02</span><p class="sx-steps-big" aria-hidden="true"><span>Проект</span></p><h3>Проект</h3><div class="sx-steps-more"><div><p>Конструкция, питание и управление под ваш объект: улица, помещение, сцена или фасад.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">03</span><p class="sx-steps-big" aria-hidden="true"><span>Поставка</span></p><h3>Поставка</h3><div class="sx-steps-more"><div><p>Официальный дилер: ввоз с уплатой НДС и пошлин, страхование груза.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">04</span><p class="sx-steps-big" aria-hidden="true"><span>Монтаж</span><span>и запуск</span></p><h3>Монтаж и запуск</h3><div class="sx-steps-more"><div><p>Монтаж, настройка, запуск контента и обучение вашего персонала.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">05</span><p class="sx-steps-big" aria-hidden="true"><span>Сервис</span></p><h3>Сервис</h3><div class="sx-steps-more"><div><p>Техническая поддержка и выезды на обслуживание.</p><p class="sx-steps-t">до 5 лет гарантии</p></div></div></li></ol>
+    
+  </div>
+</section>
+
+
+
+
+<section class="sx-band sx-band--grey" id="about" aria-labelledby="sx-about-h">
+  <div class="sx-in sx-about">
+    <div class="sx-about-side"><p class="sx-eyebrow">05 / Справка</p><h2 id="sx-about-h">Светодиодные LED-экраны</h2></div>
+    <div class="sx-about-main">
+    <div class="sx-about-body" id="sx-about-body">
+      <p>Современные светодиодные мониторы позволяют выводить видеоролики, статичные макеты, расписания, навигацию, трансляции, брендированный и рекламный контент. Они привлекают внимание лучше обычных вывесок, быстро обновляются и помогают бизнесу адаптировать визуальные сообщения под сезон, событие или аудиторию.</p><p>Итоговая цена светодиодного экрана зависит от площади, шага пикселя, типа модулей, места установки, яркости, сложности конструкции, системы управления и монтажных работ. Для точного расчета важно заранее определить, где будет размещен экран, с какого расстояния его будут смотреть и какой контент планируется показывать.</p>
+      <h2 class="sx-about-h">Особенности технологии</h2><p>Светодиодные панели и экраны работают за счет множества LED-элементов, которые формируют изображение на модульной поверхности. Экран можно собрать почти любого размера и пропорции, адаптировать под стену, фасад, сцену, витрину или отдельную конструкцию. Это делает технологию удобной для коммерческих, информационных и имиджевых проектов.</p><p>Термин LED screen чаще используют для обозначения светодиодной экранной системы в международной технической документации. По сути, речь идет о модульной конструкции, где каждый участок состоит из светодиодов, управляющих плат, корпуса, кабельных соединений и блоков питания.</p><ul><li>Для интерьерных задач выбирают меньший шаг пикселя, чтобы зритель видел четкую картинку на близком расстоянии.</li><li>Для улицы важнее повышенная яркость, защита от осадков, устойчивость к температуре и прочная конструкция. Поэтому один и тот же размер экрана может требовать разных технических решений в зависимости от места установки.</li></ul><p>Если экран ставится в помещении, важны детализация, точная цветопередача, равномерность цвета, отсутствие лишней яркости и удобство интеграции в интерьер.</p><p>Для наружных проектов ключевыми становятся степень защиты, читаемость на солнце и надежность крепления.</p><h2 class="sx-about-h">Виды светодиодных экранов</h2><p>Лэд дисплей может быть интерьерным, наружным, гибким, прозрачным, сценическим, фасадным, мобильным или стационарным.</p><ul><li>реклама в магазине,</li><li>медиафасад,</li><li>информационное табло,</li><li>концертная площадка,</li><li>витрина,</li><li>конференц-зал или навигационная зона.</li></ul><p>Для коммерческих помещений подходит светодиодный (LED) экран с малым шагом пикселя и высоким качеством изображения. Он помогает показывать презентации, товары, проморолики, видеоконтент и цифровую навигацию.</p><p>В международных спецификациях часто встречается термин LED display. Он описывает экран, который собирается из светодиодных модулей и управляется через контроллер, видеопроцессор или медиасервер.</p><p>Светодиодные (лед) экраны отличаются по шагу пикселя, яркости, частоте обновления, типу корпуса, способу обслуживания и условиям применения. Для витрин и залов подходят интерьерные модели, для фасадов и городских конструкций — наружные.</p><p>В проектах, где требуется необычная форма, используют гибкий LED-формат. Он позволяет оформлять колонны, волнообразные поверхности, арки, нестандартные стенды и дизайнерские инсталляции.</p><h2 class="sx-about-h">Основные параметры LED экранов</h2><p>Диодные экраны выбирают по нескольким характеристикам:</p><ul><li>шагу пикселя,</li><li>яркости,</li><li>разрешению,</li><li>частоте обновления,</li><li>углу обзора,</li><li>типу корпуса,</li><li>защите,</li><li>энергопотреблению и сервисному доступу.</li></ul><p>Ошибка в одном параметре может привести к тому, что картинка будет слишком зернистой, тусклой или дорогой для конкретной задачи.</p><p>Световой экран должен соответствовать условиям просмотра. Если зритель находится близко, нужен меньший шаг пикселя. Если экран расположен высоко на фасаде или виден с дороги, можно выбрать более крупный шаг и увеличить площадь.</p><p>Электронный экран для рекламы должен быть заметным, но не избыточным по яркости. Для помещений важен комфорт глаз, а для улицы — читаемость при дневном свете.</p><p>Для наружной установки учитывают рабочий температурный диапазон, а также более жёсткие требования к корпусу, вентиляции, защите от влаги и стабильности питания. Здесь особенно важны надежное крепление и правильный расчет ветровой нагрузки.</p><p>Если выбирается наружный экран, его подбирают с учетом температуры, осадков, пыли и прямого солнца. Интерьерные модели для таких условий не подходят.</p><h2 class="sx-about-h">Что необходимо для расчета экрана?</h2><p>Лэд экраны рассчитывают по задаче, месту установки и формату контента. Для начала нужно определить ширину и высоту экранного поля, расстояние до зрителя, режим работы, уровень освещенности, способ монтажа и требования к управлению.</p><p>Если требуются видеоэкраны для рекламы, важно понять, какие ролики будут транслироваться: короткие промосообщения, детальные презентации, меню, навигация, спортивные повторы или трансляции. От этого зависит разрешение и шаг пикселя.</p><p>Светящийся экран для витрины должен быть ярким, но не создавать дискомфорт внутри торгового пространства. Для фасада, наоборот, нужна высокая яркость и устойчивость к внешним условиям.</p><p>При расчете учитывают, будет ли экран уличным или интерьерным. Для улицы потребуется защищенный корпус, другая яркость, усиленное крепление и продуманная система обслуживания.</p><p>В смету входят изготовление, поставка модулей, контроллеров, металлоконструкции, кабельной части, монтаж, пусконаладочные работы и настройка. Поэтому предварительный расчет всегда должен учитывать не только сам экран, но и весь комплекс работ.</p><h2 class="sx-about-h">Преимущества светодиодных экранов</h2><p>Большой лед экран хорошо работает там, где нужно привлечь внимание с расстояния и создать сильный визуальный эффект. Он подходит для торговых центров, сцен, фасадов, спортивных объектов, выставок, шоурумов, ресторанов и общественных пространств.</p><p>Качественный монтаж светодиодного экрана обеспечивает ровную геометрию, надёжное крепление, стабильное питание и удобный доступ к сервисному обслуживанию. Профессиональная установка особенно важна для крупных и наружных конструкций.</p><p>Профессиональные дисплеи позволяют использовать экран в коммерческом режиме, включая продолжительную или круглосуточную работу, регулярное обновление контента и стабильный показ изображения. Это отличает LED-системы от бытовых решений.</p><p>Для бизнеса важны реклама, имидж, навигация и информирование. Светодиодный экран помогает объединить эти задачи в одном носителе и быстро менять сообщения без печати новых материалов.</p><p>«Экран Про» подбирает решения в Москве и для проектов в других регионах. Клиент может купить экран с учетом объекта, бюджета, контента и режима работы.</p><p>В проект входят оборудование, программная настройка, несущая конструкция, крепления, кабельная инфраструктура и сервисные рекомендации. Поставщик дает гарантию на согласованные компоненты и помогает выбрать оптимальную конфигурацию.</p><p>Для магазина, шоурума или ТЦ важен рекламный эффект. Для офиса или конференц-зала — четкость, высокая контрастность и стабильность показа. Для сцены — яркость и динамика.</p><p>Доступна установка LED-экрана под ключ, включая расчет, поставку, монтаж, настройку и запуск. При правильно выбранном шаге пикселя изображение выглядит цельным, ярким и читаемым.</p><p>Высокое качество показа помогает усилить визуальную коммуникацию и сделать цифровую поверхность полезной частью пространства. Для премиальных проектов часто выбирают интерьерный экран с малым шагом пикселя.</p><p>Если экран нужен для точки продаж, магазин получает гибкий инструмент продвижения: акции, новинки, навигацию, расписание, брендовые ролики и другой контент можно обновлять без замены физического носителя.</p>
+    </div>
+    <button type="button" class="ep-link ep-link--ink sx-about-more" aria-controls="sx-about-body" aria-expanded="false" data-more="Читать всё" data-less="Свернуть" hidden><span class="ep-link__label"><span>Читать всё</span><span aria-hidden="true">Читать всё</span></span><span class="ep-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ep-link__line" aria-hidden="true"><i></i><i></i></span></button>
+    </div>
+  </div>
+</section>
+
+
 </main>
 </div>
 <div id="ep-page-end">
+
+
+
+<section class="ep-section ep-faq ep-wrap" id="faq" aria-labelledby="sx-faq-h">
+  <div class="ep-faq-intro"><div class="ep-eyebrow">06 / Вопросы и ответы</div><h2 id="sx-faq-h">Нас часто спрашивают</h2><p>Вопросы, которые клиенты задают до расчёта.</p></div>
+  <div class="ep-faq-list">
+    <details name="sx-faq" open><summary><span class="ep-faq-number" aria-hidden="true">01</span><span>Как выбрать шаг пикселя?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Это первый и, пожалуй, самый важный вопрос. Именно от шага пикселя зависит разрешение экрана и качество всего изображения. Шаг пикселя – это расстояние между центрами соседних светодиодных пикселей. Шаг пикселя выбирается исходя из двух параметров: расстояние просмотра и размер экрана. Определяем минимальное расстояние просмотра экрана. Далее в зависимости от того, какого уровня качества должно быть изображение, можно применять следующие формулы: 1) минимальное качество 1м расстояния = 1мм шага пикселя; 2) средний уровень качества 1м расстояния = 0,5мм шага пикселя; 3) максимальный уровень качества 1м расстояния = 0,25мм шага пикселя. Например, если минимальное расстояние просмотра составляет 3 метра, то для минимального качества шаг пикселя должен быть 3 мм, для среднего — 1,5 мм, для максимального — 0,75 мм. При максимальном качестве вы не увидите ни единого пикселя. Изображение будет цельным как экран монитора. Если сомневаетесь какой шаг точно выбрать, мы можем приехать к вам с разными образцами и провести демонстрацию на месте.</p></div></details>
+    <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">02</span><span>Чем отличаются модульные экраны от кабинетных?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Выделяют два типа светодиодных экранов: кабинетные и модульные. Напомним, что экран состоит из блоков – их называют кабинеты. Кабинеты бывают размером 1200х900мм, 960х960мм, 500х1000мм, 500х500мм, 640х640мм и пр. В свою очередь кабинет тоже состоит из блоков – их называют модули. Модули имеют меньшие размеры: 160 × 320 мм, 128 × 256 мм, 120 × 240 мм, 500 × 500 мм и пр. Сам кабинет — это корпус (стальной, алюминиевый или карбоновый), на котором установлены модули и внутри которого установлены принимающие карты и блоки питания. Кабинетный экран. Весь экран собирается на кабинетах. Блоками равными размерам кабинетов. Применяется на всех типах светодиодных экранов. Модульные экраны. В этом случает из конструкции экрана исключается кабинет. То есть модули, блоки питания и принимающие карты устанавливаются на металлический каркас. Такие экраны применяются в основном в интерьере с шагом от 4мм до 2,5мм и требуют высокой квалификации у инженеров при установке, потому что больше вероятность появления стыков при сборке. Мы не рекомендуем покупать модульный экран для улицы, потому что кабинет в уличных экранах это IP защита. А также для интерьера при шаге меньше 2,5 мм, при сборке будут черные полоски между модулями. Если вы все же решили выбрать модульный экран, обязательно посмотрите вживую примеры таких экранов у подрядчика, чтобы убедиться в качестве стыков.</p></div></details>
+    <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">03</span><span>Как управлять экранами? Какую систему управления выбрать?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Стандартная система управления экраном состоит из принимающих карт (они расположены в кабинетах экрана) и отправляющей карты (она подключается к компьютеру). То есть собирается цепочка – компьютер - отправляющая карта - экран. Далее компьютер настраивается на 2 монитора. Одним монитором является монитор компьютера, вторым монитором является сам экран. На компьютер устанавливается плеер, в который загружаются ролики. Это стоковая система управления. Изображение будет показываться пока работает компьютер. Если на компьютере появится какая-то ошибка, например уведомление об обновлении драйвера или Windows, она будет видна на экране. Чтобы этого избежать, используют медиаплееры. Это такие коробочки, размером чуть больше iPhone, которые устанавливаются в следующую цепочку: компьютер – плеер – отправляющая карта – экран. Плейлист загружается на плеер, после чего контент транслируется на экран. В этом случае мы не зависим от сбоев компьютера. Сами медиаплееры отличаются высокой стабильностью в работе. Также с их помощью можно организовать удаленное управление сетью из более чем 100 экранов. Они имеют набор шаблонов, макетов рекламных роликов, что позволяет самостоятельно разрабатывать контент. Незаменимое решение для рекламных экранов. Если вы покупаете экран в театр или для концертных мероприятий, то вам нужен дополнительный комплекс оборудования от видеопроцессора до видеомикшера и серверов. Если нужна консультация, наши специалисты помогут подобрать вам необходимое оборудование для управления экранами под любые задачи.</p></div></details>
+    <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">04</span><span>Какой срок службы экранов?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Срок службы светодиодного экрана зависит от светодиодов и частоты эксплуатации экрана. Обычно производители светодиодов пишут срок службы 100 000 часов, что составляет 11,4 года при непрерывной работе 24/7. Но, более важный показатель, это какой процент яркости теряет экран каждый год. Важно учитывать, какой уровень яркости сохранит экран через 5 лет или 100 000 часов. Этот показатель уже зависит от качества комплектующих, которые используют при производстве экрана. Если даже поставить дорогие японские светодиоды Nichia, но при этом дешевые микросхемы и блоки питания, то они просто выжгут эти диоды раньше срока. Этим и отличаются ведущие мировые производители экранов. Например, экраны Unilumin за один год эксплуатации теряют всего 1-3% яркости. Это достигается использованием высококачественных комплектующих, в сочетании с передовыми инженерными разработками. Поэтому эти экраны могут прослужить более 15 лет.</p></div></details>
+    <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">05</span><span>Какие бывают способы установки?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Способ установки светодиодных экранов зависит от задачи и может быть абсолютно любой, если это не противоречит законам физики. Наиболее часто распространенный вариант – установка на стену экрана с передним обслуживанием. При этом материал стены может быть практически любой. Также существует вариант установки на землю, на бетонное основание, на пол, на передвижную конструкцию. Светодиодный экран можно так же подвесить. При выборе места установки важно проконсультироваться с проектировщиками с допуском СРО, у которых есть опыт установки подобных решений. Это позволит установить экран надежно и, что самое главное, безопасно для вас и окружающих.</p></div></details>
+    <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">06</span><span>Как защитить экран от физических повреждений?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>Если шаг пикселя светодиодного экрана 3 мм и более, модули таких экранов, как уличных, так и интерьерных оснащены пластиковыми масками. Данных масок достаточно для защиты экранов от механических повреждений. Даже если кто-то ударит по экрану или в него попадет камень, повреждение, скорее всего, затронет только несколько пикселей. Это легко устранить, заменив один модуль, который у вас есть в ЗИП комплекте. А вот если экран с шагом пикселя менее 2,5 мм, тут защита более актуальна. Пиксели на таком экране расположены очень близко друг к другу и к краям кабинета. Их размер может быть менее 1мм. Если экран расположен в непосредственной близости к посетителям, например в магазине, его легко могут задеть сумкой, тележкой и повредить несколько пикселей. Чтобы избежать таких ситуаций необходимо покупать экран изготовленный по технологии COB (но это еще достаточно сырая технология и намного дороже SMD), либо использовать специальное защитное покрытие на SMD экран. Такое покрытие защищает пиксели от механических воздействий и брызг, а также делает поверхность экрана более ровной. Ваш экран будет полностью защищен. Мы не рекомендуем закрывать экран стеклянными кожухами или кожухами из прозрачного пластика, плотно прижимая их к поверхности. Во-первых, между стеклом и экраном будет скапливаться мелкая пыль. Чтобы ее убрать, нужно будет демонтировать стекло. Во-вторых, будет риск перегрева светодиодов. В-третьих, любое стекло бликует, изображение на экране потеряет сочность и будет выглядеть искаженно.</p></div></details>
+    <details name="sx-faq"><summary><span class="ep-faq-number" aria-hidden="true">07</span><span>Что входит в гарантийное обслуживание?</span><svg class="ep-faq-toggle" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.5"/></svg></summary><div class="ep-faq-answer"><p>На наши светодиодные экраны мы предоставляем полную гарантию до 5 лет. В гарантийные обязательства входят замена и ремонт всех комплектующих: модулей, карт, блоков питания, проводов и пр. Также на протяжении всего срока эксплуатации экрана, мы храним у себя небольшой комплект запасных частей, на случай если вы свой потеряете или он полностью будет израсходован.</p></div></details>
+  </div>
+</section>
 
 <footer class="epf epf--graphite ep-wrap" id="ep-contact"><div class="epf-cta"><div><h2>Обсудим ваш проект?</h2><p>Пришлите задачу, размеры или фотографию объекта.</p></div><button class="epf-button ep-unified-cta" type="button" data-quote="Новый проект" ><span class="epu-label">Получить расчёт</span><span class="epu-arrow" aria-hidden="true"><svg class="epu-arrow-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="epu-arrow-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button></div>
 <div class="epf-directory"><div class="epf-brand-contact"><div class="epf-identity"><a class="epf-logo" href="/ekranpro-site/" aria-label="ЭкранПро — главная" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" width="135" height="32" viewBox="0 0 135 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,7 +1437,470 @@
 <form class="cat-order-form" id="cat-order-form"><label>Модель<input name="product" readonly></label><label>Ваше имя<input name="name" autocomplete="name" placeholder="Как к вам обращаться" maxlength="100"></label><label>Телефон или почта<input name="contact" autocomplete="off" placeholder="+7 … или name@company.ru" required maxlength="160"></label><label>О проекте <span class="cat-form-note">необязательно</span><textarea name="task" placeholder="Где будет экран, его размеры и сроки" maxlength="3000"></textarea></label><button type="submit" class="ek-btn ek-btn--cta">Получить расчёт <svg viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></button><p class="cat-form-note">Бесплатно, без обязательств. Ответит инженер, не менеджер по продажам.</p></form>
 <p class="cat-form-result" id="cat-form-result" role="status" tabindex="-1" hidden></p></div></dialog>
 
+
+<script data-ep-product-showcase>
+(() => {
+  'use strict';
+  const root = document.getElementById('ep-products-compare');
+  if (!root || !window.requestAnimationFrame) return;
+  const scenes = [...root.querySelectorAll('.epp-scene')];
+  const copies = scenes.map(scene => scene.querySelector('.epp-copy'));
+  const textViewports = copies.map(copy => copy.querySelector('.epp-text-viewport'));
+  const textLayers = copies.map(copy => copy.querySelector('.epp-text-motion'));
+  const titles = copies.map(copy => copy.querySelector('.epp-title'));
+  const eyebrows = copies.map(copy => copy.querySelector('.epp-eyebrow'));
+  const photos = scenes.map(scene => scene.querySelector('.epp-photo'));
+  const currentLabel = root.querySelector('[data-epp-current]');
+  const previous = root.querySelector('[data-epp-prev]');
+  const next = root.querySelector('[data-epp-next]');
+  const layout = window.matchMedia('(min-width: 1100px) and (min-aspect-ratio: 8/5)');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
+  let pinned = false;
+  let current = -1;
+  let presented = -1;
+  let top = 0;
+  let step = 1;
+  let raf = 0;
+  let needsMeasure = true;
+  let lastSize = '';
+
+  const background = root.querySelector('.epp-background');
+  const captions = photos.map(photo => photo.querySelector('figcaption'));
+  let entryStart = 0, entryDistance = 1, readingDistance = 0;
+  let stops = [];
+  let pause = null, releasedThrough = -1, inputMode = 'pointer';
+  let lastScrollY = window.scrollY, touchY = null, newTouchGesture = false;
+  const wheelGestureGap = 220;
+  // A continuous wheel/trackpad stream may never produce an idle gap.
+  // Bound the reading pause independently of those events so it cannot trap scroll.
+  const maxPauseMs = 600;
+  const motionNow = () => window.performance?.now?.() ?? Date.now();
+  const textMotion = copies.map(() => ({ top: 0, photoTop: 0, height: 0, travel: 0, photoTravel: 0 }));
+  const forcedVisible = new Set();
+  const setStyle = (element, property, value) => {
+    if (element && element.style[property] !== value) element.style[property] = value;
+  };
+
+  function paintText(index, progress, alpha = 1) {
+    progress = clamp(progress, 0, 1);
+    const offset = (1 - progress) * textMotion[index].travel;
+    const fadeRange = pinned ? .16 : .06;
+    setStyle(textLayers[index], 'transform', `translate3d(0, ${offset.toFixed(2)}px, 0)`);
+    setStyle(textLayers[index], 'opacity', (clamp(progress / fadeRange, 0, 1) * alpha).toFixed(3));
+  }
+
+  function paintEyebrow(index, opacity) {
+    setStyle(eyebrows[index], 'opacity', clamp(opacity, 0, 1).toFixed(3));
+  }
+  function present(index) {
+    if (presented === index) return;
+    presented = index;
+    currentLabel.textContent = String(index + 1).padStart(2, '0');
+    previous.disabled = index === 0;
+    next.disabled = index === scenes.length - 1;
+  }
+
+  function paintPhoto(index, progress, captionOpacity = progress) {
+    progress = clamp(progress, 0, 1);
+    const offset = (1 - progress) * textMotion[index].photoTravel;
+    setStyle(photos[index], 'transform', `translate3d(${-offset.toFixed(2)}px, 0, 0)`);
+    setStyle(photos[index], 'opacity', progress.toFixed(3));
+    setStyle(captions[index], 'opacity', clamp(captionOpacity, 0, 1).toFixed(3));
+  }
+
+  function resetTextMeasurement() {
+    [...textLayers, ...photos, ...captions, ...eyebrows].forEach(element => {
+      element?.style.removeProperty('transform');
+      element?.style.removeProperty('opacity');
+    });
+  }
+
+  function measureText() {
+    const y = window.scrollY, vh = window.innerHeight;
+    textLayers.forEach((layer, index) => {
+      const heading = titles[index].getBoundingClientRect();
+      const scene = scenes[index].getBoundingClientRect();
+      const photo = photos[index].getBoundingClientRect();
+      const state = textMotion[index];
+      state.top = pinned ? top + heading.top - scene.top : heading.top + y;
+      state.photoTop = photo.top + y;
+      state.height = layer.getBoundingClientRect().height;
+      state.travel = pinned && index > 0
+        ? clamp(vh * .54 - (heading.top - scene.top), 0, vh * .4)
+        : clamp(vh * .075, 36, 72);
+      state.photoTravel = Math.min(48, photos[index].clientWidth * .045);
+    });
+  }
+
+  function forceVisibleText(index) {
+    if (Number.isInteger(index) && index >= 0 && index < copies.length) forcedVisible.add(index);
+    else if (pinned && current >= 0) forcedVisible.add(current);
+    else {
+      const y = window.scrollY, vh = window.innerHeight;
+      textMotion.forEach((state, i) => {
+        if (state.top < y + vh && state.top + state.height > y) forcedVisible.add(i);
+      });
+    }
+    requestRender();
+  }
+
+  function renderTextFromScroll() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const instant = reduced.matches || root.classList.contains('epp-instant');
+    if (pinned) {
+      // The first photograph starts when 15% of the section has entered.
+      // Its copy starts at 50%; both are complete when the section reaches top.
+      // Scroll positions can differ by a fraction of a pixel at a held stop.
+      // Keep that completed slide stable instead of selecting the next one.
+      const settledStop = stops.find(stop => Math.abs(y - stop) <= 1);
+      const sceneY = settledStop ?? y;
+      let index = 0;
+      let rawProgress = clamp((sceneY - (top - vh * .5)) / (vh * .5), 0, 1);
+      if (sceneY > top) {
+        // Keep a completed slide still for a short stretch of native scroll.
+        // This also works with scrollbar dragging and non-cancelable inertia.
+        const completed = clamp(Math.floor((sceneY - top) / (entryDistance + readingDistance) + 1e-7), 0, scenes.length - 1);
+        index = completed;
+        rawProgress = 1;
+        const transitionStart = stops[completed] + readingDistance;
+        if (completed < scenes.length - 1 && sceneY > transitionStart) {
+          index = completed + 1;
+          rawProgress = clamp((sceneY - transitionStart) / entryDistance, 0, 1);
+        }
+      }
+      select(index);
+      const instantScene = instant || forcedVisible.has(index);
+      const progress = instantScene ? 1 : rawProgress;
+      const photoProgress = instantScene ? 1 : index === 0
+        ? clamp((sceneY - (top - vh * .85)) / (vh * .75), 0, 1)
+        : clamp(progress / .8, 0, 1);
+      const previousIndex = index > 0 && photoProgress < 1 ? index - 1 : -1;
+      scenes.forEach((scene, i) => scene.classList.toggle('is-previous', i === previousIndex));
+      if (previousIndex >= 0) {
+        const outgoingText = 1 - clamp(progress / .16, 0, 1);
+        paintText(previousIndex, 1, outgoingText);
+        paintPhoto(previousIndex, 1, outgoingText);
+        paintEyebrow(previousIndex, 1 - clamp(progress / .08, 0, 1));
+      }
+      // Finish the outgoing copy before introducing the next heading.
+      // The new copy and its section number rise/fade together, without overlap.
+      const textProgress = index === 0 || instantScene ? progress : clamp((progress - .2) / .8, 0, 1);
+      paintEyebrow(index, textProgress / .16);
+      present(index > 0 && progress < .2 - 1e-7 ? index - 1 : index);
+      paintText(index, textProgress);
+      paintPhoto(index, photoProgress, index === 0 ? clamp((photoProgress - .5) * 2, 0, 1) : clamp((progress - .4) / .4, 0, 1));
+      const before = index > 0 ? (index - 1) % 2 : 0;
+      setStyle(background, 'opacity', (before + ((index % 2) - before) * photoProgress).toFixed(3));
+      return;
+    }
+    textMotion.forEach((state, index) => {
+      paintEyebrow(index, 1);
+      if (state.top >= y + vh || state.top + state.height <= y) forcedVisible.delete(index);
+      if (instant || forcedVisible.has(index)) {
+        paintText(index, 1); paintPhoto(index, 1); return;
+      }
+      const start = state.top + state.travel - vh * .54;
+      paintText(index, (y - start) / Math.max(1, vh * .34 * 2));
+      // In stacked mobile layouts the photograph reaches the viewport first.
+      paintPhoto(index, (y - (state.photoTop - vh * .85)) / Math.max(1, vh * .4));
+    });
+  }
+
+  function releasePause() {
+    if (pause) releasedThrough = Math.max(releasedThrough, pause.index);
+    pause = null;
+    delete root.dataset.scrollPause;
+    delete root.dataset.scrollPauseStep;
+  }
+  function pauseAt(index, source, stamp, alreadySettled = false) {
+    // Arrival + inertia settle the slide. One further gesture is a reading
+    // pause; only the gesture after that is allowed to start the next slide.
+    pause = { index, source, stamp, startedAt: motionNow(), holdRemaining: alreadySettled ? 0 : 1 };
+    root.dataset.scrollPause = String(index + 1);
+    root.dataset.scrollPauseStep = alreadySettled ? 'hold' : 'settled';
+    lastScrollY = stops[index];
+    window.scrollTo({ top: stops[index], behavior: 'auto' });
+    requestRender();
+  }
+  function keepPaused(source, stamp, newGesture) {
+    if (!pause) return false;
+    if (motionNow() - pause.startedAt >= maxPauseMs) {
+      releasePause();
+      return false;
+    }
+    if (!newGesture) { pause.stamp = stamp; return true; }
+    if (pause.holdRemaining > 0) {
+      pause.holdRemaining--;
+      pause.source = source;
+      pause.stamp = stamp;
+      root.dataset.scrollPauseStep = 'hold';
+      return true;
+    }
+    releasePause();
+    return false;
+  }
+  function nextBarrier(y, delta) {
+    for (let i = releasedThrough + 1; i < stops.length; i++) {
+      if (stops[i] < y - .5) { releasedThrough = i; continue; }
+      if (y + delta >= stops[i] - .5) return i;
+      break;
+    }
+    return -1;
+  }
+  function handleWheel(event) {
+    if (!pinned || reduced.matches || event.ctrlKey || event.metaKey || event.defaultPrevented) return;
+    if (event.target?.closest?.('input, textarea, select, [role="dialog"], .ep1-overlay, .ep-brief')) return;
+    const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+    if (!Number.isFinite(delta) || delta === 0 || Math.abs(event.deltaX || 0) > Math.abs(event.deltaY)) return;
+    inputMode = 'wheel';
+    if (delta < 0) { releasePause(); return; }
+    // Native momentum cannot be canceled. Do not add a competing scroll jump.
+    if (event.cancelable === false) return;
+    const stamp = event.timeStamp || Date.now();
+    const newGesture = pause && (pause.source !== 'wheel' || stamp - pause.stamp > wheelGestureGap);
+    if (keepPaused('wheel', stamp, newGesture)) {
+      if (event.cancelable !== false) event.preventDefault();
+      return;
+    }
+    const y = window.scrollY;
+    if (y < entryStart - window.innerHeight || y > stops.at(-1) + 1) return;
+    const barrier = nextBarrier(y, delta);
+    if (barrier >= 0) {
+      if (event.cancelable !== false) event.preventDefault();
+      pauseAt(barrier, 'wheel', stamp, Math.abs(y - stops[barrier]) <= .5);
+    }
+  }
+  function handleScroll() {
+    const y = window.scrollY;
+    if (pinned) {
+      // Never rewind a scroll that the browser has already applied: that
+      // visibly jolts the last slide when the sticky stage starts releasing.
+      if (pause && (motionNow() - pause.startedAt >= maxPauseMs || Math.abs(y - stops[pause.index]) > 1)) releasePause();
+      if (['touch', 'wheel'].includes(inputMode) && y > lastScrollY) {
+        while (releasedThrough + 1 < stops.length && y > stops[releasedThrough + 1] + 1) releasedThrough++;
+      }
+      while (releasedThrough >= 0 && (y < stops[releasedThrough] - 1 || (y < lastScrollY - .5 && y <= stops[releasedThrough] + .5))) releasedThrough--;
+    }
+    lastScrollY = y;
+    requestRender();
+  }
+  function handleTouchStart(event) {
+    if (!pinned || event.touches?.length !== 1) return;
+    inputMode = 'touch'; touchY = event.touches[0].clientY; newTouchGesture = true;
+  }
+  function handleTouchMove(event) {
+    if (!pinned || reduced.matches || touchY === null || event.touches?.length !== 1 || event.cancelable === false) return;
+    const nextY = event.touches[0].clientY;
+    const delta = touchY - nextY;
+    touchY = nextY;
+    if (delta < 0) { releasePause(); newTouchGesture = false; return; }
+    if (delta === 0) return;
+    const blocked = keepPaused('touch', 0, newTouchGesture);
+    newTouchGesture = false;
+    if (blocked) { event.preventDefault(); return; }
+    const y = window.scrollY;
+    const barrier = nextBarrier(y, delta);
+    if (barrier >= 0) {
+      event.preventDefault();
+      pauseAt(barrier, 'touch', 0, Math.abs(y - stops[barrier]) <= .5);
+    }
+  }
+
+  function accessible(scene, visible) {
+    scene.inert = !visible;
+    if (visible) scene.removeAttribute('aria-hidden');
+    else scene.setAttribute('aria-hidden', 'true');
+    scene.querySelectorAll('a,button').forEach(control => {
+      if (visible) control.removeAttribute('tabindex');
+      else control.setAttribute('tabindex', '-1');
+    });
+  }
+
+  function select(index) {
+    index = clamp(index, 0, scenes.length - 1);
+    if (current === index) return;
+    forcedVisible.delete(current);
+    const old = scenes[current];
+    if (old && old.contains(document.activeElement)) root.focus({ preventScroll: true });
+    current = index;
+    scenes.forEach((scene, i) => {
+      scene.classList.toggle('is-current', i === current);
+      accessible(scene, i === current);
+    });
+    root.dataset.activeProduct = String(current + 1);
+  }
+
+  function flow() {
+    pinned = false;
+    current = -1;
+    presented = -1;
+    releasePause(); releasedThrough = -1;
+    root.classList.remove('is-pinned');
+    root.style.removeProperty('--epp-length');
+    root.style.removeProperty('--epp-vh');
+    scenes.forEach(scene => {
+      scene.classList.remove('is-current');
+      scene.classList.remove('is-previous');
+      accessible(scene, true);
+    });
+    measureText();
+  }
+
+  // Frame the two long interior screens within the oblique edge at each size.
+  function frameInterior() {
+    const figure = photos[2];
+    const image = figure.querySelector('img');
+    const w = figure.clientWidth, h = figure.clientHeight;
+    const iw = image.naturalWidth || Number(image.getAttribute('width'));
+    const ih = image.naturalHeight || Number(image.getAttribute('height'));
+    if (!w || !h || !iw || !ih) return;
+    const scale = Math.max(w / iw, h / ih);
+    const renderedWidth = iw * scale;
+    const overflow = renderedWidth - w;
+    if (overflow <= 1) return;
+    const maxOffset = .213 * renderedWidth - 8;
+    const minOffset = .915 * renderedWidth - .967 * w + 8;
+    const offset = clamp((minOffset + maxOffset) / 2, 0, overflow);
+    image.style.objectPosition = `${(offset / overflow * 100).toFixed(2)}% 50%`;
+  }
+
+  function fitTitles() {
+    root.style.removeProperty('--epp-title-fit');
+    const heading = scenes[1]?.querySelector('.epp-title');
+    const line = heading?.firstElementChild;
+    if (!line || !line.clientWidth || !window.getComputedStyle) return;
+    const available = line.clientWidth;
+    const textWidth = line.scrollWidth;
+    if (textWidth <= available) return;
+    const size = parseFloat(window.getComputedStyle(heading).fontSize);
+    if (!Number.isFinite(size) || size <= 0) return;
+    const fitted = Math.floor(size * (available - 2) / textWidth * 100) / 100;
+    root.style.setProperty('--epp-title-fit', `${fitted}px`);
+  }
+
+  function measure() {
+    resetTextMeasurement();
+    fitTitles();
+    const vh = window.innerHeight;
+    const y = window.scrollY;
+    top = root.getBoundingClientRect().top + y;
+    if (!layout.matches || reduced.matches) {
+      flow();
+      return;
+    }
+    step = Math.max(560, vh * .9);
+    entryDistance = step * .62;
+    readingDistance = clamp(vh * .2, 120, 200);
+    entryStart = top - vh * .85;
+    const held = pause;
+    const releasedBeforeMeasure = releasedThrough;
+    stops = scenes.map((_, i) => top + i * (entryDistance + readingDistance));
+    releasePause();
+    // Font/image loads must not silently remove a reading pause.
+    if (held && Math.abs(y - stops[held.index]) <= 1) {
+      pause = held;
+      root.dataset.scrollPause = String(held.index + 1);
+      root.dataset.scrollPauseStep = held.holdRemaining ? 'settled' : 'hold';
+    }
+    releasedThrough = Math.max(-1, stops.filter(stop => stop < y - 1).length - 1);
+    // A late image/font/resize notification must not rearm a released stop.
+    if (!held && releasedBeforeMeasure >= 0 && Math.abs(y - stops[releasedBeforeMeasure]) <= 1) {
+      releasedThrough = Math.max(releasedThrough, releasedBeforeMeasure);
+    }
+    root.style.setProperty('--epp-vh', `${vh}px`);
+    // The last slide gets the same fully settled interval before unpinning.
+    root.style.setProperty('--epp-length', `${vh + stops.at(-1) - top + readingDistance}px`);
+    root.classList.add('is-pinned');
+    // Text zoom and short landscape windows must never clip a paragraph or CTA.
+    const fits = copies.every((copy, i) => copy.scrollHeight <= copy.clientHeight + 1 && textLayers[i].scrollHeight <= textViewports[i].clientHeight + 1);
+    if (!fits) {
+      flow();
+      return;
+    }
+    pinned = true;
+    lastScrollY = y;
+    measureText();
+    
+    current = -1;
+  }
+
+  function render() {
+    raf = 0;
+    if (needsMeasure) {
+      needsMeasure = false;
+      measure();
+    }
+    renderTextFromScroll();
+  }
+  function requestRender() { if (!raf) raf = window.requestAnimationFrame(render); }
+  function requestMeasure() { needsMeasure = true; requestRender(); }
+  function go(index, event) {
+    if (!pinned) return;
+    index = clamp(index, 0, scenes.length - 1);
+    const keyboard = event.detail === 0;
+    if (keyboard) forceVisibleText(index);
+    root.classList.toggle('epp-instant', keyboard);
+    releasePause(); releasedThrough = index; inputMode = 'pointer';
+    window.scrollTo({ top: stops[index], behavior: keyboard ? 'auto' : 'smooth' });
+  }
+  previous.addEventListener('click', event => go(presented - 1, event));
+  next.addEventListener('click', event => go(presented + 1, event));
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+  root.addEventListener('touchstart', handleTouchStart, { passive: true });
+  root.addEventListener('touchmove', handleTouchMove, { passive: false });
+  root.addEventListener('touchend', () => { touchY = null; }, { passive: true });
+  root.addEventListener('touchcancel', () => { touchY = null; releasePause(); }, { passive: true });
+  window.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch') { releasePause(); inputMode = 'pointer'; }
+  }, { passive: true });
+  window.addEventListener('resize', requestMeasure, { passive: true });
+  window.addEventListener('load', requestMeasure);
+  window.addEventListener('pageshow', requestMeasure);
+  layout.addEventListener('change', requestMeasure);
+  reduced.addEventListener('change', requestMeasure);
+  window.addEventListener('keydown', event => {
+    if (['Tab', 'ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
+      releasePause(); inputMode = 'keyboard';
+      root.classList.add('epp-instant');
+      forceVisibleText();
+    }
+  }, true);
+  const pointerMode = () => {
+    if (root.classList.contains('epp-instant')) forceVisibleText();
+    root.classList.remove('epp-instant');
+    requestRender();
+  };
+  window.addEventListener('wheel', pointerMode, { passive: true });
+  window.addEventListener('touchstart', pointerMode, { passive: true });
+  root.addEventListener('pointerdown', pointerMode, { passive: true });
+  photos.forEach(photo => photo.querySelector('img').addEventListener('load', requestMeasure));
+  if (document.fonts?.ready) document.fonts.ready.then(requestMeasure);
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(() => {
+      const header = document.querySelector('.ep1-mainbar');
+      const hero = document.getElementById('ekranpro-first-screen');
+      const size = [window.innerWidth, window.innerHeight, header?.offsetHeight, hero?.offsetHeight].join(':');
+      if (size === lastSize) return;
+      lastSize = size;
+      requestMeasure();
+    });
+    const header = document.querySelector('.ep1-mainbar');
+    const hero = document.getElementById('ekranpro-first-screen');
+    if (header) observer.observe(header);
+    if (hero) observer.observe(hero);
+  }
+  copies.forEach((copy, index) => copy.addEventListener('focusin', event => {
+    if (root.classList.contains('epp-instant') || event.target?.matches?.(':focus-visible')) forceVisibleText(index);
+  }));
+  root.classList.add('epp-scroll-scrub');
+  requestMeasure();
+})();
+</script>
+<script src="/ekranpro-site/assets/section.js?v=5c5cd16b" defer></script>
+
 <script src="/ekranpro-site/assets/site-shell.js" defer></script>
-<script src="/ekranpro-site/assets/catalog.js?v=37a0617f" defer></script>
+<script src="/ekranpro-site/assets/catalog.js?v=68e2de93" defer></script>
 </body>
 </html>
