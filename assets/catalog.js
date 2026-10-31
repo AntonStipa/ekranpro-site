@@ -65,7 +65,9 @@
   const STEP = () => { if (!ROWS) return 24; const g = $('#ek-grid'); const cols = g ? getComputedStyle(g).gridTemplateColumns.split(' ').filter(x => x && x !== 'none').length : 1; return Math.max(1, cols) * ROWS; };
   if (root) {
     const DATA = JSON.parse($('#ek-data').textContent);
-    const P = DATA.products, SECTIONS = DATA.sections, APPS = DATA.apps;
+    // 31.10 пачка 3: data-only — из раздела в листинг идут не все модели: {"prozrachnye-ekrany":{"kind":["film","tmesh"]}}
+    let ONLY = {}; try { ONLY = JSON.parse(root.dataset.only || '{}'); } catch (e) { ONLY = {}; }
+    const P = DATA.products.filter(p => Object.entries(ONLY[p.section] || {}).every(([k, v]) => v.includes(p[k]))), SECTIONS = DATA.sections, APPS = DATA.apps;
     const inRange = (v, a, b) => v != null && v > a && v <= b;
     const GROUP = root.dataset.group || 'led';
     const LED_FILTERS = [
@@ -166,6 +168,9 @@
     const lockedSection = root.dataset.section || '';
     // 21.10: у прозрачных по умолчанию — перемешанный порядок каталога (одинаковые виды не рядом), сортировка по цене — в списке
     if (lockedSection === 'prozrachnye-ekrany' && GROUP !== 'lcd') { SORTS.unshift(['mix', 'рекомендуемые', (a, b) => a.id - b.id]); state.sort = 'mix'; }
+    // 31.10 пачка 3: data-kindorder — виды экранов в заданном порядке (плёночные впереди), внутри вида — дешевле
+    const KORDER = (root.dataset.kindorder || '').split(',').filter(Boolean);
+    if (KORDER.length && GROUP !== 'lcd') { const ki = p => { const i = KORDER.indexOf(p.kind); return i < 0 ? 99 : i; }; SORTS.unshift(['kind', 'рекомендуемые', (a, b) => (ki(a) - ki(b)) || ((a.price || 0) - (b.price || 0))]); state.sort = 'kind'; }
     // исходное состояние раздела: сам раздел; у панелей для видеостен сразу отмечен режим 24/7
     // перенесённые категории: data-section может перечислять несколько разделов через запятую, data-preset — JSON с начальным фильтром {"sel":{"pitch":["0","1"]},"pmax":"900000","q":"..."}
     let PRESET = {}; try { PRESET = JSON.parse(root.dataset.preset || '{}'); } catch (e) { PRESET = {}; }
