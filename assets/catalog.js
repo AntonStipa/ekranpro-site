@@ -176,7 +176,7 @@
     // 21.10: у прозрачных по умолчанию — перемешанный порядок каталога (одинаковые виды не рядом), сортировка по цене — в списке
     if (lockedSection === 'prozrachnye-ekrany' && GROUP !== 'lcd') { SORTS.unshift(['mix', 'рекомендуемые', (a, b) => a.id - b.id]); state.sort = 'mix'; }
     // 31.10 пачка 5: готовые изделия (билборды, видеопилоны) — по умолчанию «рекомендуемые»: по формату в порядке списка фильтра, внутри — дешевле
-    if ((DATA.formats || []).length && GROUP !== 'lcd') { const fi = p => { const i = DATA.formats.findIndex(f => f[0] === p.format); return i < 0 ? 99 : i; }; SORTS.unshift(['fmt', 'рекомендуемые', (a, b) => (fi(a) - fi(b)) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 9e12) - (b.price || 9e12))]); state.sort = 'fmt'; }
+    if ((DATA.formats || []).length && GROUP !== 'lcd') { const fi = p => { const i = DATA.formats.findIndex(f => f[0] === p.format); return i < 0 ? 99 : i; }; SORTS.unshift(['fmt', 'рекомендуемые', (a, b) => (a.ord != null && b.ord != null ? a.ord - b.ord : 0) || (fi(a) - fi(b)) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 9e12) - (b.price || 9e12))]); state.sort = 'fmt'; }   // 31.10: ord — порядок страницы (билборды вперемешку по форматам)
     // 31.10 пачка 3: data-kindorder — виды экранов в заданном порядке (плёночные впереди), внутри вида — дешевле
     const KORDER = (root.dataset.kindorder || '').split(',').filter(Boolean);
     if (KORDER.length && GROUP !== 'lcd') { const ki = p => { const i = KORDER.indexOf(p.kind); return i < 0 ? 99 : i; }; SORTS.unshift(['kind', 'рекомендуемые', (a, b) => (ki(a) - ki(b)) || ((a.price || 0) - (b.price || 0))]); state.sort = 'kind'; }

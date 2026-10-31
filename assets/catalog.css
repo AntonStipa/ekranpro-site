@@ -384,3 +384,15 @@ body{margin:0;background:#fff}
 
 /* 15.10: тип экрана над моделью в карточке листинга — часть названия (внутри ссылки), визуально мелко */
 .ek-card h3 .ek-kind{display:block;font-size:12px;line-height:1.3;font-weight:400;color:var(--ek-muted,#6b7280);letter-spacing:0;margin-bottom:3px}
+
+/* 31.10 пачка 7: SEO-блок «Описание» на карточке товара (текст старой страницы раскладки видеостены). Без скрипта текст показан целиком. */
+.ek-desc-body{max-width:780px;font-size:15.5px;line-height:1.65;color:var(--ek-ink)}
+.ek-desc-body p{margin:0 0 14px}
+.ek-desc-body ul{margin:0 0 14px;padding-left:1.15em}
+.ek-desc-body li{margin:0 0 6px}
+.ek-desc-body .ek-desc-t{margin:0 0 14px;font-size:clamp(20px,1.6vw,24px);font-weight:600;font-family:var(--ek-head);line-height:1.2;letter-spacing:-.02em}
+.ek-desc-body .ek-desc-t~.ek-desc-t{margin-top:34px}
+.ek-desc-body h4{margin:26px 0 10px;font-family:var(--ek-head);font-size:17px;font-weight:600;line-height:1.3}
+.ek-desc--js:not(.is-open) .ek-desc-body{max-height:440px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 0,#000 70%,transparent 100%);mask-image:linear-gradient(#000 0,#000 70%,transparent 100%)}
+.ek-desc-more{margin-top:20px}
+.ek-desc-more[hidden]{display:none}
