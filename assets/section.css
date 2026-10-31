@@ -589,3 +589,51 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 @media (max-width:1100px){.sx-proj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sx-proj-card figure{aspect-ratio:4/3}}
 @media (max-width:680px){.sx-proj-grid{grid-template-columns:minmax(0,1fr);gap:28px}}
 @media (prefers-reduced-motion:reduce){.sx-proj-card img{transition:none}.sx-proj-card:hover img{transform:none}}
+
+/* ---------- 31.10.2026, пачка 4: «Сравнение швов» LCD (макет Антона): кадр 2/3 слева, текст справа, на один экран ---------- */
+.sx-seams{padding-block:clamp(36px,4vw,72px)}
+.sx-seams-in{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:clamp(28px,3.4vw,64px);align-items:start}
+.sx-seams-media{width:min(100%,calc((100svh - 84px - 420px)*1.78));min-width:min(100%,560px)}
+.sx-seams-cap{display:flex;justify-content:space-between;gap:16px;margin-bottom:clamp(10px,1vw,16px);color:var(--ek-muted);font-size:clamp(11px,.88vw,15px);font-weight:500;letter-spacing:.09em;text-transform:uppercase}
+.sx-seams-cap b{color:var(--ek-ink);font-weight:500}
+.sx-seams-fig{position:relative;aspect-ratio:16/9;margin:0;background:#171a1c;overflow:hidden}
+.sx-seams-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.sx-seams-fig img[hidden]{display:block;opacity:0;visibility:hidden}
+.sx-seams-fig img{transition:opacity .25s ease,visibility .25s}
+.sx-seams-row{display:flex;justify-content:space-between;gap:16px;margin:clamp(14px,1.4vw,24px) 0 clamp(8px,.8vw,12px);color:var(--ek-muted);font-size:clamp(13px,.95vw,16px)}
+.sx-seams-pick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.4vw,24px)}
+.sx-seams-pick button{display:flex;flex-direction:column;gap:0;padding:0;border:0;background:none;color:var(--ek-ink);text-align:left;cursor:pointer;font:inherit}
+.sx-seams-mm{display:block;padding-bottom:clamp(8px,.8vw,14px);border-bottom:3px solid #c9cdc9;font-size:clamp(26px,2.3vw,44px);font-weight:500;line-height:1.05;letter-spacing:-.03em;transition:border-color .2s ease,color .2s ease}
+.sx-seams-mm small{font-size:.42em;font-weight:500;letter-spacing:0;color:var(--ek-muted)}
+.sx-seams-pick img{display:block;width:100%;height:auto!important;aspect-ratio:510/300;object-fit:cover;margin-top:clamp(10px,1vw,16px);transition:opacity .2s ease;opacity:.72}
+.sx-seams-n{display:block;margin-top:8px;color:var(--ek-muted);font-size:13px}
+.sx-seams-pick button[aria-pressed="true"] .sx-seams-mm{border-color:var(--ek-cta)}
+.sx-seams-pick button[aria-pressed="true"] img{opacity:1}
+@media (hover:hover){.sx-seams-pick button:hover .sx-seams-mm{color:var(--ek-cta)}.sx-seams-pick button:hover img{opacity:1}}
+.sx-seams-pick button:focus-visible{outline:2px solid var(--ek-cta);outline-offset:4px}
+.sx-seams-note{margin-top:clamp(12px,1.2vw,20px);color:var(--ek-muted);font-size:clamp(12px,.85vw,14px)}
+.cat-main .sx-seams h2:not(.sx-about-h){font-size:clamp(32px,3.4vw,64px);line-height:1.04}
+.sx-seams h2 span{display:block}
+.sx-seams-lead{margin-top:clamp(18px,2vw,34px);color:var(--ek-muted);font-size:clamp(15px,1.1vw,19px);line-height:1.6;max-width:28em}
+.sx-seams-sub{margin-top:clamp(22px,2.4vw,40px);padding-top:clamp(18px,2vw,32px);border-top:1px solid #c9cdc9;max-width:28em}
+.sx-seams-sub p{margin-top:10px;color:var(--ek-muted);font-size:clamp(14px,1vw,17px);line-height:1.55}
+.sx-seams-sub::after{content:"";display:block;width:64px;height:4px;margin-top:clamp(22px,2.4vw,40px);background:var(--ek-cta)}
+@media (max-width:1000px){.sx-seams-in{grid-template-columns:minmax(0,1fr)}.sx-seams-text{order:-1}.sx-seams-media{width:auto;min-width:0}.sx-seams-sub::after{display:none}}
+@media (max-width:560px){.sx-seams-row span:first-child{display:none}.sx-seams-row{justify-content:flex-start}}
+
+/* ---------- 31.10.2026, пачка 4: «Дополнительное оборудование для видеостен» ---------- */
+.sx-extras-grid{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:clamp(16px,1.6vw,28px)}
+.sx-extras-grid li{display:flex;flex-direction:column}
+.sx-extras-grid figure{margin:0;aspect-ratio:1;background:var(--ek-grey);display:grid;place-items:center;overflow:hidden}
+.sx-extras-grid figure img{width:78%;height:78%;object-fit:contain;mix-blend-mode:multiply}
+.sx-extras-kind{margin-top:14px;color:var(--ek-muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.cat-main .sx-extras h3{margin-top:6px;font-size:clamp(16px,1.15vw,19px)}
+.sx-extras-price{margin-top:auto;padding-top:12px;font-size:clamp(18px,1.4vw,23px);font-weight:500;letter-spacing:-.02em}
+.sx-extras-btn{align-self:flex-start;margin-top:10px;padding:0 0 3px;border:0;border-bottom:1px solid currentColor;background:none;color:var(--ek-ink);font:inherit;font-size:14px;cursor:pointer;transition:color .2s ease}
+.sx-extras-btn:hover,.sx-extras-btn:focus-visible{color:var(--ek-cta)}
+.sx-extras-note{margin-top:clamp(18px,1.8vw,30px);color:var(--ek-muted);font-size:14px}
+
+/* сравнение двух решений: подписи в два столбца */
+.sx-tri-notes--2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sx-tri-fig[data-two] .sx-tri-tag--2{left:calc((var(--p1) + 100%)/2)}
+@media (max-width:760px){.sx-tri-notes--2{grid-template-columns:minmax(0,1fr)}}

@@ -342,3 +342,9 @@ dialog.pb-dialog::backdrop{background:rgba(23,26,28,.55)}
 #ep-podbor.pb--tr .pb-places--mf{flex:none!important;grid-auto-rows:auto!important;gap:6px!important}
 #ep-podbor.pb--tr .pb-places--mf .pb-type{min-height:54px!important;max-height:none!important;padding:5px 12px 5px 6px!important;gap:12px!important}
 #ep-podbor.pb--tr .pb-places--mf .pb-type svg,#ep-podbor.is-pinned.pb--tr .pb-places--mf .pb-type svg{width:46px;height:41px;padding:2px}
+/* 31.10.2026, пачка 4 — подбор LCD: кнопки сеткой одинакового размера (до 5 в ряд), недоступный шов — не кликается */
+#ep-podbor .pl-grid{grid-auto-flow:row;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:1px;padding:1px;border:0;background:transparent}
+#ep-podbor .pl-grid button{border:0;outline:1px solid var(--pb-ink);min-height:38px;padding:4px 6px}
+#ep-podbor.is-pinned .pl-grid button{min-height:32px}
+#ep-podbor .pl-grid button:disabled{color:var(--pb-muted);background:var(--pb-soft,#eef0ee);cursor:not-allowed;opacity:.55}
+#ep-podbor .pl-grid button:disabled:hover{color:var(--pb-muted)}

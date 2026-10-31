@@ -190,19 +190,32 @@
     draw();
   });
 
+  // 31.10 пачка 4: «Сравнение швов» LCD — кнопка ширины шва меняет главный кадр и подпись «Шов … мм»
+  document.querySelectorAll('[data-seams]').forEach(box => {
+    const imgs = [...box.querySelectorAll('[data-seam-img]')], btns = [...box.querySelectorAll('[data-seam]')], out = box.querySelector('[data-seam-out]');
+    btns.forEach(b => b.addEventListener('click', () => {
+      const i = +b.dataset.seam;
+      btns.forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      imgs.forEach(im => { im.hidden = +im.dataset.seamImg !== i; });
+      if (out) out.textContent = b.querySelector('.sx-seams-mm').firstChild.textContent.trim();
+    }));
+  });
+
   // Сравнение трёх решений: два разделителя на одном кадре. Каждый доходит до любого края; встречаясь, один толкает другой.
   document.querySelectorAll('[data-tri]').forEach(fig => {
     const bars = [...fig.querySelectorAll('.sx-tri-bar')], tags = [...fig.querySelectorAll('.sx-tri-tag')];
-    if (bars.length !== 2) return;
-    const p = [100 / 3, 200 / 3];
+    if (!bars.length) return;
+    const one = bars.length === 1;                                   // 31.10 пачка 4: сравнение двух решений (мобильные видеостены: LCD и LED) — один разделитель
+    const p = one ? [50, 100] : [100 / 3, 200 / 3];
     const apply = () => {
       fig.style.setProperty('--p1', p[0].toFixed(3) + '%'); fig.style.setProperty('--p2', p[1].toFixed(3) + '%');
       bars.forEach((b, i) => b.setAttribute('aria-valuenow', Math.round(p[i])));
-      const w = fig.clientWidth, zone = [p[0], p[1] - p[0], 100 - p[1]];
+      const w = fig.clientWidth, zone = one ? [p[0], 100 - p[0]] : [p[0], p[1] - p[0], 100 - p[1]];
       tags.forEach((t, i) => { const z = zone[i] / 100 * w; t.style.maxWidth = Math.max(0, z - 12) + 'px'; t.classList.toggle('is-off', z < 76); });   // в узкой зоне подпись переносится на две строки, в совсем узкой — прячется
     };
     const set = (i, v) => {
-      v = Math.min(100, Math.max(0, v)); p[i] = v;
+      v = Math.min(100, Math.max(0, v)); if (one) i = 0; p[i] = v;
+      if (one) { p[1] = 100; apply(); return; }
       if (i === 0 && p[1] < v) p[1] = v;
       if (i === 1 && p[0] > v) p[0] = v;
       apply();
@@ -213,7 +226,7 @@
       if (e.button) return;
       const bar = e.target.closest('.sx-tri-bar'), v = at(e);
       if (!bar && e.pointerType === 'touch') return;             // пальцем двигаем только за ручку: касание кадра остаётся прокруткой страницы
-      drag = bar ? +bar.dataset.bar - 1 : p[0] === p[1] ? (v < p[0] ? 0 : 1) : Math.abs(v - p[0]) <= Math.abs(v - p[1]) ? 0 : 1;
+      drag = one ? 0 : bar ? +bar.dataset.bar - 1 : p[0] === p[1] ? (v < p[0] ? 0 : 1) : Math.abs(v - p[0]) <= Math.abs(v - p[1]) ? 0 : 1;
       off = bar ? v - p[drag] : 0;
       fig.setPointerCapture(e.pointerId); set(drag, v - off); e.preventDefault();
     });
