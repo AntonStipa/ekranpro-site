@@ -548,3 +548,44 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 .sx-cat-head .sx-crumbs li+li::before{color:#b9bfc6}
 .sx-cat-head .sx-crumbs a{color:inherit}
 .sx-cat-head .sx-crumbs [aria-current]{color:var(--ek-ink)}
+
+/* ---------- 31.10.2026: места размещения («Рекламные экраны в ТЦ»): 6 карточек 3 × 2 на всю ширину контента, весь блок — на один экран; подпись на фото ---------- */
+.sx-places-grid{--g:clamp(12px,1.4vw,24px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--g);margin:0;padding:0;list-style:none}
+.sx-places-grid figure{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--ek-grey);margin:0}
+.sx-places-grid img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.sx-places-grid li:hover img{transform:scale(1.03)}
+.sx-places-grid figcaption{position:absolute;inset:auto 0 0;display:flex;align-items:baseline;gap:10px;padding:26px clamp(12px,1.2vw,20px) clamp(10px,1vw,16px);background:linear-gradient(0deg,rgba(5,11,18,.78) 0,rgba(5,11,18,.45) 60%,rgba(5,11,18,0) 100%);color:#fff}   /* полоса подписи — тонкая, чтобы не закрывать экраны */
+.sx-places-grid img{object-position:var(--fp,50% 50%)}
+.sx-places-n{font-size:12px;letter-spacing:.06em;opacity:.75}
+.cat-main .sx-places-grid h3{margin:0;font-size:clamp(16px,1.3vw,22px);line-height:1.2;font-weight:500;color:#fff}
+@media (min-width:1101px) and (min-height:560px){
+  .sx-places{padding-block:clamp(16px,2.6svh,32px) clamp(16px,2.6svh,32px)}
+  .sx-places .sx-head{margin-bottom:clamp(10px,1.8svh,20px)}
+  .sx-places .sx-eyebrow{margin-bottom:clamp(6px,1svh,12px)!important}
+  /* высота карточки — половина того, что остаётся от окна под шапкой сайта (её реальная высота — --sx-head-h), но не выше 4:3 —
+     фото мест сняты в 4:3, так экраны на них почти не обрезаются; на широком окне карточка становится чуть шире 4:3 */
+  .sx-places-grid figure{aspect-ratio:auto;height:max(200px,min(calc((100vw - 2*var(--sx-pad) - 2*var(--g))/4),calc((100svh - var(--sx-head-h,84px) - 160px)/2)))}
+}
+@media (prefers-reduced-motion:reduce){.sx-places-grid img{transition:none}.sx-places-grid li:hover img{transform:none}}
+@media (max-width:760px){.sx-places-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* ---------- 31.10.2026: «Наши проекты» — три крупных фото на один экран, под фото название и строка параметров ---------- */
+.sx-proj-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.8vw,32px)}
+.sx-proj-card{display:flex;flex-direction:column;min-width:0}
+.sx-proj-card figure{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;background:var(--ek-grey)}
+.sx-proj-card img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.sx-proj-card:hover img{transform:scale(1.03)}
+.sx-proj-card figcaption{position:absolute;left:0;bottom:0;padding:7px 12px;background:rgba(5,11,18,.72);color:#fff;font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.cat-main .sx-proj-card h3{margin:16px 0 0;min-height:2.5em;font-size:clamp(17px,1.3vw,22px);line-height:1.25;font-weight:500;text-wrap:balance}   /* название в 1–2 строки: параметры у всех трёх карточек на одной линии */
+.sx-proj-facts{display:flex;flex-wrap:wrap;gap:6px 26px;margin:12px 0 0;padding-top:12px;border-top:1px solid var(--ek-line)}
+.sx-proj-facts div{display:flex;flex-direction:column-reverse;gap:2px}
+.sx-proj-facts dt{color:var(--ek-muted);font-size:12px;letter-spacing:.02em}
+.sx-proj-facts dd{margin:0;font-size:clamp(15px,1.1vw,18px);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (min-width:1101px) and (min-height:600px){
+  .sx-proj{padding-block:clamp(28px,5svh,56px) clamp(24px,4.4svh,48px)}
+  .sx-proj .sx-head{margin-bottom:clamp(16px,3svh,36px)}
+  .sx-proj .sx-eyebrow{margin-bottom:clamp(10px,1.8svh,20px)!important}
+  .sx-proj-card figure{aspect-ratio:auto;height:max(240px,calc(100svh - var(--sx-head-h,84px) - 330px))}   /* --sx-head-h — реальная высота шапки сайта */
+}
+@media (max-width:1100px){.sx-proj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.sx-proj-card figure{aspect-ratio:4/3}}
+@media (max-width:680px){.sx-proj-grid{grid-template-columns:minmax(0,1fr);gap:28px}}
+@media (prefers-reduced-motion:reduce){.sx-proj-card img{transition:none}.sx-proj-card:hover img{transform:none}}

@@ -193,11 +193,17 @@
     const countFor = (s, f, o) => P.filter(p => passes(p, s, f.key) && f.test(p, o[0], o)).length;
 
     const visibleFilters = () => FILTERS.filter(f => !(f.key === 'section' && lockedSection && !lockedSection.includes(',')));
-    const sidebarFilters = () => { const vf = visibleFilters().filter(f => !f.hidden); const map = GROUP === 'lcd' ? LCD_SIDEBAR : LED_SIDEBAR; return (map[lockedSection] || map['']).map(k => vf.find(f => f.key === k)).filter(Boolean); };
+    // 31.10: data-order — свой порядок фильтров страницы (перенесённые «Рекламные экраны для помещения», «в ТЦ»: сначала «Среда», потом «Раздел»)
+    const ORDER = (root.dataset.order || '').split(',').filter(Boolean);
+    // 31.10 (Антон): на всех страницах каталога первым идёт «Раздел» (у LCD — «Продукт»), вторым — «Среда» (у LED), дальше — набор раздела.
+    // «Раздел» виден и на странице одного раздела (отмечен он сам); в плашках выбранных фильтров такой раздел по-прежнему не показываем (visibleFilters).
+    const HEAD = GROUP === 'lcd' ? ['section'] : ['section', 'env'];
+    const sidebarFilters = () => { const vf = FILTERS.filter(f => !f.hidden); const map = GROUP === 'lcd' ? LCD_SIDEBAR : LED_SIDEBAR; const keys = HEAD.concat((ORDER.length ? ORDER : (map[lockedSection] || map[''])).filter(k => !HEAD.includes(k))); return keys.map(k => vf.find(f => f.key === k)).filter(Boolean); };
     function filterHTML(s) {
       return sidebarFilters().map(f => {
         let inner = '';
-        if (f.type === 'check') inner = f.opts().map(o => { const n = countFor(s, f, o); const on = s.sel[f.key].has(o[0]); return `<label class="ek-chk ${n === 0 ? 'off' : ''}"><input type="checkbox" data-k="${f.key}" data-v="${o[0]}" ${on ? 'checked' : ''} ${n === 0 && !on ? 'disabled' : ''}><span>${o[1]}</span><span class="c ek-num">${n}</span></label>`; }).join('');
+        if (f.type === 'check') inner = (f.key === 'section' ? f.opts().map((o, i) => [o, countFor(s, f, o) > 0 ? 0 : 1, i]).sort((x, y) => x[1] - y[1] || x[2] - y[2]).map(x => x[0]) : f.opts()).map(o => {   // 31.10: разделы выбранной среды — первыми
+ const n = countFor(s, f, o); const on = s.sel[f.key].has(o[0]); return `<label class="ek-chk ${n === 0 ? 'off' : ''}"><input type="checkbox" data-k="${f.key}" data-v="${o[0]}" ${on ? 'checked' : ''} ${n === 0 && !on ? 'disabled' : ''}><span>${o[1]}</span><span class="c ek-num">${n}</span></label>`; }).join('');
         else if (f.type === 'preset') inner = `<div class="ek-presets">${f.opts().map(o => { const n = countFor(s, f, o); const on = s.sel[f.key].has(o[0]); return `<button type="button" data-k="${f.key}" data-v="${o[0]}" aria-pressed="${on}" ${n === 0 && !on ? 'disabled' : ''}>${o[1]} <span class="ek-num" style="opacity:.55">${n}</span></button>`; }).join('')}</div>`;
         else inner = `<div class="ek-range"><input type="number" inputmode="numeric" data-k="pmin" placeholder="${f.ph[0]}" value="${s.pmin}" aria-label="Цена от"><span>—</span><input type="number" inputmode="numeric" data-k="pmax" placeholder="${f.ph[1]}" value="${s.pmax}" aria-label="Цена до"></div>`;
         return `<div class="ek-fgroup"><h3>${f.title}${f.hint ? `<span class="ek-hint" title="${f.hint}">?</span>` : ''}</h3>${inner}</div>`;
