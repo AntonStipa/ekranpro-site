@@ -77,11 +77,13 @@
           ? [['rack', 'Кабинетный'], ['tmesh', 'Сетка'], ['film', 'Плёнка'], ['glassy', 'Стеклянный']]   // 20.10: стеклянный = панель, фасадное стекло, ограждение, постер   // прозрачные: вид экрана
           : [['cabinet', 'Кабинетные'], ['mesh', 'Медиафасад'], ['flex', 'Гибкие'], ['glass', 'Прозрачные']], test: (p, v) => v === 'glass' ? p.section === 'prozrachnye-ekrany' : v === 'glassy' ? ['panel', 'facade', 'rail', 'poster'].includes(p.kind) : p.kind === v },
       { key: 'nit', type: 'preset', title: 'Яркость, нит', hint: 'В помещении достаточно 600–1 500 нит, на улице нужно от 5 000',
-        opts: () => lockedSection === 'ulichnye-ekrany'
+        opts: () => (lockedSection === 'ulichnye-ekrany' || lockedSection === 'bilbord-czifrovoj')   // 31.10 пачка 5: билборды — на уличных моделях
           ? [['0', 'до 5 500', 0, 5500], ['1', '6 000–6 500', 5500, 7000], ['2', '7 500–8 000', 7000, 8999], ['3', '10 000', 8999, 999999]]   // уличные: свои ступени яркости
           : lockedSection === 'prozrachnye-ekrany'
           ? [['0', 'до 1 500', 0, 1500], ['1', '1 500–4 000', 1500, 4000], ['2', 'от 4 500', 4000, 999999]]   // прозрачные: свои ступени яркости (21.10, решение Антона)
-          : lockedSection === 'interernye-ekrany'
+          : lockedSection === 'all-in-one'
+          ? [['0', '350', 0, 400], ['1', '500–600', 400, 650], ['2', '800', 650, 999999]]   // 31.10 пачка 5: экраны All-in-One
+          : (lockedSection === 'interernye-ekrany' || lockedSection === 'videopilony')   // 31.10 пачка 5: видеопилоны — на интерьерных моделях
           ? [['0', '600', 0, 700], ['1', '800', 700, 900], ['2', '1 000', 900, 1250], ['3', '1 500', 1250, 1500], ['4', 'более 1 500', 1500, 999999]]   // интерьерные: свои ступени яркости
           : lockedSection === 'mediafasady'
           ? [['0', 'до 7 500', 0, 7999], ['1', '8 000', 7999, 8999], ['2', '10 000', 8999, 999999]]   // медиафасады: свои ступени яркости
@@ -103,6 +105,8 @@
       { key: 'weight', type: 'preset', title: 'Вес, кг/м²', opts: () => [['0', 'до 13', 0, 13], ['1', '15', 13, 16], ['2', 'от 17', 16, 999]], test: (p, v, o) => inRange(p.weight, o[2], o[3]) },
       { key: 'ipx', type: 'check', title: 'Степень защиты', opts: () => [['IP65', 'IP65'], ['IP68', 'IP68']], test: (p, v) => (p.ip || '').indexOf(v) === 0 },
       { key: 'cabw', type: 'check', title: 'Ширина кабинета, мм', opts: () => [['500', '500'], ['1000', '1 000']], test: (p, v) => (p.size || '').split('×')[0] === v },
+      // 31.10 пачка 5: готовые изделия — формат билборда / высота видеопилона (список и заголовок приходят в данных страницы)
+      { key: 'format', type: 'check', title: DATA.formatTitle || 'Формат', opts: () => DATA.formats || [], test: (p, v) => p.format === v },
       { key: 'price', type: 'range', title: 'Цена, ₽ с НДС', ph: ['от 50 000', 'до 2 500 000'] },
       { key: 'apps', hidden: true, type: 'check', title: 'Применение', opts: () => Object.keys(APPS).map(a => [a, APPS[a]]), test: (p, v) => p.apps.includes(v) },
     ];
@@ -113,6 +117,9 @@
       'interernye-ekrany': ['env', 'coating', 'nit', 'pitch', 'pixel', 'body', 'svc', 'price'],
       'mediafasady': ['nit', 'pitch', 'transp', 'weight', 'ipx', 'pixel', 'cabw', 'price'],
       'prozrachnye-ekrany': ['kind', 'env', 'transp', 'pitch', 'nit', 'price'],   // 21.10: цены появились — фильтр цены вернули
+      'bilbord-czifrovoj': ['format', 'nit', 'pitch', 'svc', 'price'],   // 31.10 пачка 5: электронные билборды готовых форматов
+      'videopilony': ['format', 'pitch', 'nit', 'coating', 'price'],     // 31.10 пачка 5: видеопилоны
+      'all-in-one': ['format', 'pitch', 'nit', 'price'],                  // 31.10 пачка 5: экраны All-in-One (диагональ)
     };
     const LCD_WALL = ['lcd-videosteny', 'lcd-paneli-dlya-videosten'];
     // состав и порядок фильтров LCD: общий раздел ('') и каждый продукт отдельно
@@ -139,7 +146,7 @@
       { key: 'price', type: 'range', title: 'Цена, ₽', ph: ['от 90 000', 'до 5 000 000'] },
     ];
     const FILTERS = GROUP === 'lcd' ? LCD_FILTERS : LED_FILTERS;
-    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', material: 'Материал', coating: 'Покрытие', body: 'Тип экрана', transp: 'Прозрачность', weight: 'Вес', ipx: 'Защита', cabw: 'Кабинет', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим', sensor: 'Сенсор' };
+    const CHIP = { kind: 'Тип экрана', section: 'Раздел', apps: 'Применение', env: 'Среда', pitch: 'Шаг', nit: 'Яркость', price: 'Цена', series: 'Класс', brand: 'Бренд', svc: 'Обслуживание', material: 'Материал', coating: 'Покрытие', body: 'Тип экрана', transp: 'Прозрачность', weight: 'Вес', ipx: 'Защита', cabw: 'Кабинет', format: DATA.formatTitle || 'Формат', pixel: 'Пиксель', diag: 'Диагональ', layout: 'Конфигурация', bezel: 'Шов', res: 'Разрешение', mode: 'Режим', sensor: 'Сенсор' };
     // по умолчанию: сначала модели с фото, внутри — от дешёвых к дорогим
     const noPhoto = p => /\.svg$/.test(p.photo || '') ? 1 : 0;
     const byPrice = (a, b) => (noPhoto(a) - noPhoto(b)) || ((a.price || 1e12) - (b.price || 1e12));
@@ -168,6 +175,8 @@
     const lockedSection = root.dataset.section || '';
     // 21.10: у прозрачных по умолчанию — перемешанный порядок каталога (одинаковые виды не рядом), сортировка по цене — в списке
     if (lockedSection === 'prozrachnye-ekrany' && GROUP !== 'lcd') { SORTS.unshift(['mix', 'рекомендуемые', (a, b) => a.id - b.id]); state.sort = 'mix'; }
+    // 31.10 пачка 5: готовые изделия (билборды, видеопилоны) — по умолчанию «рекомендуемые»: по формату в порядке списка фильтра, внутри — дешевле
+    if ((DATA.formats || []).length && GROUP !== 'lcd') { const fi = p => { const i = DATA.formats.findIndex(f => f[0] === p.format); return i < 0 ? 99 : i; }; SORTS.unshift(['fmt', 'рекомендуемые', (a, b) => (fi(a) - fi(b)) || ((a.diag || 0) - (b.diag || 0)) || ((a.price || 9e12) - (b.price || 9e12))]); state.sort = 'fmt'; }
     // 31.10 пачка 3: data-kindorder — виды экранов в заданном порядке (плёночные впереди), внутри вида — дешевле
     const KORDER = (root.dataset.kindorder || '').split(',').filter(Boolean);
     if (KORDER.length && GROUP !== 'lcd') { const ki = p => { const i = KORDER.indexOf(p.kind); return i < 0 ? 99 : i; }; SORTS.unshift(['kind', 'рекомендуемые', (a, b) => (ki(a) - ki(b)) || ((a.price || 0) - (b.price || 0))]); state.sort = 'kind'; }
@@ -235,7 +244,7 @@
     const ARW = cls => `<span class="ek-arw" aria-hidden="true">${ARROW.replace('<svg', `<svg class="${cls}-out"`)}${ARROW.replace('<svg', `<svg class="${cls}-in"`)}</span>`;
     function cardHTML(p) {
       const url = `${BASE}/catalog/tovar/${p.slug}/`;
-      const unit = p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : p.section === 'prozrachnye-ekrany' ? 'за шт, с НДС' : 'за табло, с НДС') : 'за м², с НДС';
+      const unit = p.unitLabel || (p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : p.section === 'prozrachnye-ekrany' ? 'за шт, с НДС' : 'за табло, с НДС') : 'за м², с НДС');   // 31.10 пачка 5: unitLabel — «за экран», «за пилон»
       const price = p.price ? `<b class="ek-num">${p.priceUnit === 'м²' ? 'от ' : ''}${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
       const cmp = cmpGet().includes(p.sku) ? 'checked' : '';
       const frames = (p.frames && p.frames.length ? p.frames : [p.photo]);
