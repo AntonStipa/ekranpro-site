@@ -65,9 +65,9 @@
         var hh=(document.querySelector('.ep1-header')||{offsetHeight:0}).offsetHeight; window.scrollTo({top:t.getBoundingClientRect().top+scrollY-hh+1,behavior:'smooth'});});
     }
 
-    // Шапка (на тёмном фоне) и нижняя панель появляются, когда пролистаны первый и второй экраны
+    // Шапка (на тёмном фоне) и нижняя панель появляются вместе, когда первый экран ушёл и наверх подошли «Уличные экраны»
     var heroEl=document.querySelector('#ekranpro-first-screen .ep1-hero'), root=document.documentElement, past=null;
-    var checkPast=function(){var t=heroEl?heroEl.getBoundingClientRect().bottom+scrollY+innerHeight*.9:innerHeight*2; var p=scrollY>t; if(p!==past){past=p; root.classList.toggle('ep-m-past',p)}};
+    var checkPast=function(){var t=heroEl?heroEl.getBoundingClientRect().bottom+scrollY-60:innerHeight; var p=scrollY>t; if(p!==past){past=p; root.classList.toggle('ep-m-past',p)}};
     addEventListener('scroll',checkPast,{passive:true}); addEventListener('resize',checkPast); checkPast();
 
     // Кадр фото на телефоне: экран — по центру. cx, cy — центр экрана в долях ширины и высоты исходного фото, z — увеличение
@@ -94,6 +94,14 @@
     // 3. Подбор: выбор качества — отдельной строкой во всю ширину, между «Шаг · Разрешение» и бюджетом
     var pq=document.getElementById('pb-q'), pout=document.querySelector('#ep-podbor .pb-out');
     if(pq&&pout&&!pout.querySelector('.pb-qrow')){var row=document.createElement('div'); row.className='pb-qrow'; row.appendChild(pq); pout.insertBefore(row,pout.children[2]||null);}
+
+    // 8. Карта: стартовое положение — самый левый город (Эр-Рияд) у левого края, дальше видны Москва, Казань, Тольятти
+    var mv=document.querySelector('#ep-page-end .ep-map-viewport');
+    if(mv){var mapStart=function(){var pts=[].slice.call(mv.querySelectorAll('.ep-map-point')); if(!pts.length||mv.scrollLeft>0&&mv.__user)return;
+        var vl=mv.getBoundingClientRect().left, min=Infinity; pts.forEach(function(p){var l=p.getBoundingClientRect().left-vl+mv.scrollLeft; if(l<min)min=l});
+        if(isFinite(min))mv.scrollLeft=Math.max(0,min-14);};
+      ['touchstart','pointerdown','wheel'].forEach(function(e){mv.addEventListener(e,function(){mv.__user=true},{passive:true})});
+      mapStart(); addEventListener('load',mapStart); setTimeout(mapStart,600);}
 
     // 6. Инженерная ответственность: карточки свёрнуты, открываются по заголовку
     var en=document.getElementById('ep-engineering');
