@@ -15,27 +15,17 @@
       var p=document.createElement('p'); p.className='ep1-hero-price'; p.innerHTML='<b>от '+(window.EP_HOME_PRICE||'34 052 ₽')+'</b>за м², с НДС'; h1.insertAdjacentElement('afterend',p);
     }
 
-    // 1а. Под текстом первого экрана — то же фото, размытое (сам фон задан в CSS)
-    var hero=document.querySelector('#ekranpro-first-screen .ep1-hero'), hp=hero&&hero.querySelector('.ep1-hero-photo');
-    if(hero&&hp&&!hero.querySelector('.ep-hero-bg')){
-      var bg=document.createElement('div'); bg.className='ep-hero-bg'; bg.setAttribute('aria-hidden','true'); hero.insertBefore(bg,hero.firstChild);
-      var setBg=function(){var u=hp.currentSrc||hp.getAttribute('src'); if(u)bg.style.backgroundImage='url("'+u+'")'};
-      setBg(); hp.addEventListener('load',setBg);
-    }
-
     // 2. Виды экранов: без проявления текста при прокрутке
     var pc=document.getElementById('ep-products-compare'); if(pc)pc.classList.add('epp-instant');
 
-    // 4. Решения для бизнеса: плашки-навигация + лента карточек (фото, название, две кнопки), следующая видна справа — как в отзывах
+    // 4. Решения для бизнеса: лента карточек (фото, название, две кнопки), листаются пальцем; следующая видна справа — как в отзывах
     var bs=document.getElementById('ep-business-solutions');
-    if(bs&&!bs.querySelector('.epbs-tabs')){
+    if(bs&&!bs.querySelector('.epbs-track')){
       var cards=[].slice.call(bs.querySelectorAll('.epbs-card')), grid=bs.querySelector('.epbs-grid');
       bs.querySelectorAll('.epbs-card h3, .epbs-description').forEach(function(e){e.innerHTML=e.innerHTML.replace(/<br\s*\/?>/g,' ').replace(/\s+/g,' ')});
-      var tabs=document.createElement('div'); tabs.className='epbs-tabs'; tabs.setAttribute('role','tablist');
       var track=document.createElement('div'); track.className='epbs-track';
       cards.forEach(function(c,i){
         var t=c.querySelector('h3'), d=c.querySelector('.epbs-description'), name=t?t.textContent.trim():'Решение '+(i+1);
-        var b=document.createElement('button'); b.type='button'; b.setAttribute('role','tab'); b.textContent=name; b.setAttribute('aria-selected',String(i===0)); b.dataset.i=i; tabs.appendChild(b);
         var sl=document.createElement('div'); sl.className='epbs-slide'; sl.appendChild(c);
         var m=document.createElement('div'); m.className='epbs-m';
         m.innerHTML='<h3></h3><p></p><div class="ep-mbtns"><button class="ep-mbtn" type="button">Получить расчёт</button><a class="ep-mbtn ep-mbtn-line">Подробнее</a></div>';
@@ -44,14 +34,6 @@
         sl.appendChild(m); track.appendChild(sl);
       });
       grid.appendChild(track);
-      var cur=0;
-      function mark(i){ if(i===cur)return; cur=i;
-        [].forEach.call(tabs.children,function(b,k){b.setAttribute('aria-selected',String(k===i)); if(k===i)tabs.scrollTo({left:b.offsetLeft-(tabs.clientWidth-b.offsetWidth)/2,behavior:'smooth'})});
-      }
-      var step=function(){var s=track.children; return s.length>1?s[1].offsetLeft-s[0].offsetLeft:track.clientWidth};
-      track.addEventListener('scroll',function(){mark(Math.max(0,Math.min(cards.length-1,Math.round(track.scrollLeft/step()))))},{passive:true});
-      tabs.addEventListener('click',function(e){var b=e.target.closest('button[role=tab]'); if(!b)return; track.scrollTo({left:+b.dataset.i*step(),behavior:'smooth'})});
-      bs.querySelector('.epbs-header').insertAdjacentElement('afterend',tabs);
     }
 
     var base=document.querySelector('a.ep1-logo')?document.querySelector('a.ep1-logo').getAttribute('href').replace(/\/$/,''):'';
@@ -63,7 +45,7 @@
     var rv=document.getElementById('ep-reviews');
     if(rv&&CARDS.length&&!document.getElementById('ep-home-catalog')){
       var s=document.createElement('section'); s.id='ep-home-catalog'; s.setAttribute('aria-labelledby','ehc-title');
-      s.innerHTML='<div class="ep-eyebrow">Каталог</div><div class="ehc-head"><h2 id="ehc-title">Каталог светодиодных экранов</h2><a class="ehc-filter" href="'+base+'/catalog/led-ekrany/#catalog" aria-label="Фильтры каталога"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></a></div>'+
+      s.innerHTML='<div class="ehc-head"><h2 id="ehc-title">Каталог светодиодных экранов</h2><a class="ehc-filter" href="'+base+'/catalog/led-ekrany/#catalog" aria-label="Фильтры каталога"><svg viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></a></div>'+
         '<div class="ehc-grid">'+CARDS.map(function(c){var url=base+'/catalog/tovar/'+c.slug+'/', nm=esc(c.name);
           return '<article class="ehc-card"><a class="ehc-ph" href="'+url+'"><img src="'+imgBase+c.photo+'" alt="'+esc(c.typeName)+' '+nm+'" loading="lazy" width="480" height="360"><span class="ehc-badge">'+esc(c.badges&&c.badges[0]||c.sectionName)+'</span></a>'+
             '<div class="ehc-b"><a class="ehc-n" href="'+url+'">'+nm+'</a><div class="ehc-s">'+esc(c.specs.slice(0,2).map(function(x){return x[1]}).join(' · '))+'</div>'+
@@ -82,6 +64,11 @@
       bar.addEventListener('click',function(e){var a=e.target.closest('[data-scroll]'); if(!a)return; var t=document.getElementById(a.dataset.scroll); if(!t)return; e.preventDefault();
         var hh=(document.querySelector('.ep1-header')||{offsetHeight:0}).offsetHeight; window.scrollTo({top:t.getBoundingClientRect().top+scrollY-hh+1,behavior:'smooth'});});
     }
+
+    // Шапка (на тёмном фоне) и нижняя панель появляются, когда пролистаны первый и второй экраны
+    var heroEl=document.querySelector('#ekranpro-first-screen .ep1-hero'), root=document.documentElement, past=null;
+    var checkPast=function(){var t=heroEl?heroEl.getBoundingClientRect().bottom+scrollY+innerHeight*.9:innerHeight*2; var p=scrollY>t; if(p!==past){past=p; root.classList.toggle('ep-m-past',p)}};
+    addEventListener('scroll',checkPast,{passive:true}); addEventListener('resize',checkPast); checkPast();
 
     // Кадр фото на телефоне: экран — по центру. cx, cy — центр экрана в долях ширины и высоты исходного фото, z — увеличение
     var FRAMES=[['outdoor-orenznak',.52,.36,1.15],['mediafacade-samara',.8,.37,1.6],['indoor-metropolis',.5,.32,1],['led-conference',.53,.4,1.25],
