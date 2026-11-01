@@ -34,6 +34,7 @@
   #ekranpro-first-screen .ep-hero-bg{display:none!important}
   /* фото от самого верха; высота подобрана так, чтобы куб помещался целиком */
   #ekranpro-first-screen .ep1-hero-photo{position:absolute!important;top:0!important;left:0!important;right:auto!important;bottom:auto!important;z-index:1!important;width:100%!important;height:calc(24px + 111.11vw)!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:100% 50%!important;transform:none!important;-webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%)!important;mask-image:linear-gradient(180deg,#000 78%,transparent 100%)!important}
+  #ekranpro-first-screen .ep1-hero-photo.ep-hero-m{object-position:50% 0!important}
   #ekranpro-first-screen .ep1-hero::before{display:none!important}
   /* сверху лёгкая тень под шапку; снизу вверх — от чёрного к полупрозрачному чёрному до верха заголовка */
   #ekranpro-first-screen .ep1-hero::after{display:block!important;content:""!important;position:absolute!important;inset:0!important;z-index:2!important;pointer-events:none!important;backdrop-filter:none!important;background:linear-gradient(180deg,rgba(6,8,10,.55) 0,rgba(6,8,10,0) 90px,rgba(6,8,10,0) calc(calc(46px + 111.11vw) - 110px),rgba(6,8,10,.5) calc(46px + 111.11vw),rgba(6,8,10,.88) calc(calc(46px + 111.11vw) + 130px),#06080a 100%)!important}

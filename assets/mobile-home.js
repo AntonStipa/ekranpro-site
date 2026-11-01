@@ -5,6 +5,7 @@
   var mq=matchMedia('(max-width:760px)');
   var CARDS=window.EP_HOME_CARDS||[];
   var done=false;
+  function base0(){var a=document.querySelector('a.ep1-logo'); return a?a.getAttribute('href').replace(/\/$/,''):''}
   function init(){
     if(done||!mq.matches)return; done=true;
 
@@ -14,6 +15,11 @@
       h1.innerHTML=h1.innerHTML.replace(/<br\s*\/?>/g,' ');
       var p=document.createElement('p'); p.className='ep1-hero-price'; p.innerHTML='<b>от '+(window.EP_HOME_PRICE||'34 052 ₽')+'</b>за м², с НДС'; h1.insertAdjacentElement('afterend',p);
     }
+
+    // 1б. Отдельное фото первого экрана для телефона (эксперимент 01.11.2026; убрать строку HERO_M — вернётся медиакуб)
+    var HERO_M='m-outdoor-orenznak.webp';
+    var hp=document.querySelector('#ekranpro-first-screen .ep1-hero-photo');
+    if(HERO_M&&hp&&!hp.__m){hp.__m=1; hp.removeAttribute('srcset'); hp.removeAttribute('sizes'); hp.src=base0()+'/assets/'+HERO_M; hp.classList.add('ep-hero-m');}
 
     // 2. Виды экранов: без проявления текста при прокрутке
     var pc=document.getElementById('ep-products-compare'); if(pc)pc.classList.add('epp-instant');
@@ -83,7 +89,7 @@
       img.sizes=Math.round(w)+'px';
     }
     // Отдельные фото для телефона (вертикальные, готовятся под мобильную версию): показываются целиком, без кадрирования
-    var MOBILE_PHOTOS={'outdoor-orenznak':['m-outdoor-orenznak.webp',1190,1322]};
+    var MOBILE_PHOTOS={};
     document.querySelectorAll('#ep-products-compare .epp-photo img, #ep-business-solutions .epbs-photo').forEach(function(img){
       var s0=img.getAttribute('src')||'';
       for(var key in MOBILE_PHOTOS) if(s0.indexOf(key)>=0){var mp=MOBILE_PHOTOS[key];
