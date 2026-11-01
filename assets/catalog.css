@@ -407,11 +407,16 @@ body{margin:0;background:#fff}
 @container (max-width:300px){.ek-order,.ek-details{font-size:12px;letter-spacing:.05em}.ek-order{padding:12px 10px}.ek-actions{gap:8px}}
 @container (max-width:250px){.ek-details .ek-arw{display:none}}
 /* «Похожие модели»: снизу место под раскрытые кнопки, чтобы они не ложились на следующий блок */
-.ek-related{padding-bottom:132px}
+.ek-related{padding-bottom:94px}
 @media (hover:none){.ek-related{padding-bottom:56px}}
 .ek-grid.list .ek-actions{flex-direction:column;align-items:stretch}
-/* 01.11: при наведении слово «Цена» видно всегда: у него своя колонка 40px, сумма уходит вправо; если места мало — подпись единицы («за видеостену», «за м², с НДС») переносится под сумму, а не выдавливает «Цена» */
-.ek-price{grid-template-columns:0px minmax(0,1fr)}
-.ek-card:hover .ek-price,.ek-card:focus-within .ek-price{grid-template-columns:40px minmax(0,1fr)}
-.ek-price .val{white-space:normal;row-gap:0}
-.ek-price .val>*{white-space:nowrap}
+/* 01.11, 09:26 (Антон): цена в карточке — в покое слева, «сумма + подпись» в строку; при наведении сумма уходит вправо, подпись («за видеостену», «за м², с НДС») — под сумму, тоже по правому краю, слева появляется «Цена».
+   Одинаково в листингах и «Похожих моделях». Карточки в ряду — одной высоты, цена прижата к низу. */
+.ek-price .val{justify-content:flex-start}
+.ek-card:hover .ek-price .val,.ek-card:focus-within .ek-price .val{flex-direction:column;align-items:flex-end;gap:2px}
+.ek-grid:not(.list){align-items:stretch}
+/* 01.11: параметры в карточке — каждая строка в одну строку и на узких карточках (листинг 2–3 в ряд на 1180–1280 px, «Похожие модели» 4 в ряд) */
+@container (max-width:290px){.ek-specs{font-size:12.5px}.ek-specs div{gap:8px}.ek-specs dd{white-space:nowrap}}
+@container (max-width:270px){.ek-specs{font-size:12px}.ek-specs div{gap:6px}.ek-specs dt{white-space:nowrap}}
+/* 01.11: высота блока цены не меняется при наведении (подпись уходит под сумму) — карточки в ряду не «прыгают» */
+@media (hover:hover){.ek-grid:not(.list) .ek-price{min-height:64px;align-content:end}}
