@@ -420,3 +420,26 @@ body{margin:0;background:#fff}
 @container (max-width:270px){.ek-specs{font-size:12px}.ek-specs div{gap:6px}.ek-specs dt{white-space:nowrap}}
 /* 01.11: высота блока цены не меняется при наведении (подпись уходит под сумму) — карточки в ряду не «прыгают» */
 @media (hover:hover){.ek-grid:not(.list) .ek-price{min-height:64px;align-content:end}}
+
+/* ---------- мобильная приёмка 01.11.2026 (390 / 768 px) ---------- */
+/* карточка в узкой колонке (лента раздела, «Похожие модели», телефон): фото сверху на всю ширину карточки.
+   Раньше на ≤860 px карточка шла строкой с миниатюрой 112–128 px; в колонке ~300 px текст переносился под фото,
+   и миниатюра оставалась одна в пустом углу */
+@media (max-width:600px){
+  .ek-grid:not(.list) .ek-card{flex-direction:column;flex-wrap:nowrap}
+  .ek-grid:not(.list) .ek-card .ek-img{width:auto;align-self:stretch;aspect-ratio:2/1;padding:12px 14px 10px;border-bottom:1px solid var(--ek-line-2)}
+}
+@media (max-width:860px){
+  .ek-badge{font-size:11.5px}                                   /* было 10,5 px */
+  .ek-chip small{font-size:12px}                                /* «Раздел:» в плашке фильтра — было 10,8 px */
+  #ep-page-end .ep-faq .ep-faq-number{font-size:11px}           /* номер вопроса — было 10 px */
+}
+/* сенсорные экраны: зона нажатия не меньше 32–44 px и поля ввода 16 px (iPhone не увеличивает страницу при вводе) */
+@media (pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=hidden]),select,textarea{font-size:16px!important}
+  .ek-search{padding-block:0}
+  .ek-search input{padding-block:11px;align-self:stretch}
+  .ek-chip button{width:36px;height:36px;margin:-8px -8px -8px -4px}
+  .ek-chips .ek-clear{display:inline-block;padding:10px 4px;margin:-10px -4px}
+  .ek-crumbs a,.sx-crumbs a{display:inline-block;padding-block:7px;margin-block:-7px}
+}

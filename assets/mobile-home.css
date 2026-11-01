@@ -1,0 +1,173 @@
+/* Мобильная главная, 01.11.2026 — правила для ширины до 760 px по замечаниям Антона.
+   Десктоп не затронут: всё внутри одного медиазапроса. */
+@media (max-width:760px){
+  :root{--ep-header-height:56px}
+
+  /* ---------- 1. Шапка: логотип, три мессенджера, телефон-иконка, бургер ---------- */
+  #ekranpro-first-screen .ep1-mainbar{height:56px!important;padding-block:0!important;display:flex!important;align-items:center!important;gap:8px!important;grid-template-areas:none!important}
+  #ekranpro-first-screen .ep1-logo{margin-right:auto!important}
+  #ekranpro-first-screen .ep1-logo img{height:30px!important;width:auto!important}
+  #ekranpro-first-screen .ep1-search,#ekranpro-first-screen .ep1-email{display:none!important}
+  #ekranpro-first-screen .ep1-contacts{order:2!important;margin:0 2px 0 0!important;width:36px!important;height:36px!important;display:block!important}
+  #ekranpro-first-screen .ep1-socials{order:1!important;gap:6px!important}
+  #ekranpro-first-screen .ep1-socials a{width:36px!important;height:36px!important;border-radius:8px!important}
+  #ekranpro-first-screen .ep1-socials img{width:22px!important;height:22px!important}
+  #ekranpro-first-screen .ep1-phone{display:block!important;width:36px!important;height:36px!important;border-radius:8px!important;overflow:hidden!important;font-size:0!important;line-height:0!important;color:transparent!important;background:rgba(255,255,255,.1) no-repeat center/20px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2'/%3E%3C/svg%3E")!important}
+  #ekranpro-first-screen .ep1-menu-toggle{order:3!important;width:40px!important;height:40px!important;padding:0!important;font-size:0!important;border-radius:8px!important;background:rgba(255,255,255,.1) no-repeat center/22px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 7h16M4 12h16M4 17h16'/%3E%3C/svg%3E")!important}
+  #ekranpro-first-screen .ep1-header.is-nav-open .ep1-menu-toggle{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E")!important}
+  #ekranpro-first-screen .ep1-nav{max-height:calc(100dvh - 56px)!important}
+
+  /* ---------- 1. Первый экран: фото медиакуба целиком, под ним заголовок, цена, две кнопки ---------- */
+  /* первый экран: шапка прозрачная; фото куба в том же масштабе, что и раньше (целиком, под шапкой), снизу плавно уходит
+     в своё же размытое продолжение с затемнением; заголовок и кнопки — ниже фото, на прежнем месте */
+  #ekranpro-first-screen .ep1-header:not(.is-docked){background:transparent!important;box-shadow:none!important}
+  #ekranpro-first-screen .ep1-header.is-docked{background:rgba(21,25,28,.94)!important}
+  #ekranpro-first-screen .ep1-hero{position:relative!important;overflow:hidden!important;min-height:0!important;padding:calc(56px + 111.11vw - 28px) 0 0!important;display:block!important;background:#15191c!important;isolation:isolate!important}
+  #ekranpro-first-screen .ep-hero-bg{position:absolute!important;inset:-40px!important;z-index:0!important;background-size:cover!important;background-position:80% 60%!important;filter:blur(24px) brightness(.55) saturate(1.1)!important;pointer-events:none!important}
+  #ekranpro-first-screen .ep1-hero-photo{position:absolute!important;top:56px!important;left:0!important;right:auto!important;bottom:auto!important;z-index:1!important;width:100%!important;height:auto!important;aspect-ratio:9/10!important;object-fit:cover!important;object-position:100% 50%!important;transform:none!important;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 34px,#000 66%,transparent 100%)!important;mask-image:linear-gradient(180deg,transparent 0,#000 34px,#000 66%,transparent 100%)!important}
+  #ekranpro-first-screen .ep1-hero::before{display:none!important}
+  #ekranpro-first-screen .ep1-hero::after{display:block!important;content:""!important;position:absolute!important;inset:0!important;z-index:2!important;pointer-events:none!important;backdrop-filter:none!important;background:linear-gradient(180deg,rgba(5,11,18,.6) 0,rgba(5,11,18,0) 90px,rgba(5,11,18,0) 48%,rgba(5,11,18,.45) 62%,rgba(5,11,18,.7) 100%)!important}
+  #ekranpro-first-screen .ep1-hero-content{position:relative!important;z-index:3!important}
+  #ekranpro-first-screen .ep1-hero h1,#ekranpro-first-screen .ep1-hero-price{text-shadow:0 2px 18px rgba(0,0,0,.45)!important}
+  #ekranpro-first-screen .ep1-hero-content{padding:18px 16px 22px!important;flex:none!important}
+  #ekranpro-first-screen .ep1-eyebrow,#ekranpro-first-screen .ep1-hero-copy,#ekranpro-first-screen .ep1-hero-bottom{display:none!important}
+  #ekranpro-first-screen .ep1-hero h1{font-size:clamp(32px,9.2vw,38px)!important;line-height:1.04!important;letter-spacing:-.03em!important;margin:0 0 6px!important}
+  #ekranpro-first-screen .ep1-hero h1 br{display:none!important}
+  #ekranpro-first-screen .ep1-hero-price{margin:0 0 18px!important;font-size:15px!important;color:#cfd3d6!important}
+  #ekranpro-first-screen .ep1-hero-price b{font-size:24px!important;font-weight:500!important;color:#fff!important;letter-spacing:-.02em!important;margin-right:4px!important}
+  #ekranpro-first-screen .ep1-hero-actions{position:static!important;width:100%!important;gap:12px!important;margin:0!important;display:flex!important;flex-direction:column!important}
+  #ekranpro-first-screen .ep1-hero-content{padding:18px 16px 24px!important;margin:0!important;width:auto!important;max-width:none!important}
+  #ekranpro-first-screen .ep1-hero .ep1-hero-cta{max-width:none!important}
+
+  /* ---------- 2. Виды экранов: заголовок → фото → 4 преимущества → две кнопки, один блок — один экран ---------- */
+  #ep-products-compare .epp-scene{display:flex!important;flex-direction:column!important;padding:22px 16px 26px!important;min-height:0!important}
+  #ep-products-compare .epp-copy{display:contents!important}
+  #ep-products-compare .epp-eyebrow{order:1!important;margin:0 0 6px!important;opacity:1!important}
+  #ep-products-compare .epp-text-viewport{display:contents!important}
+  #ep-products-compare .epp-text-motion{display:contents!important;opacity:1!important;transform:none!important}
+  #ep-products-compare .epp-title{order:2!important;margin:0 0 14px!important;font-size:clamp(28px,8.5vw,34px)!important;line-height:1.04!important}
+  #ep-products-compare .epp-title span{display:inline!important}
+  #ep-products-compare .epp-title span+span::before{content:" "}
+  #ep-products-compare .epp-photo{order:3!important;margin:0 0 14px!important;width:100%!important;aspect-ratio:4/3!important;opacity:1!important;transform:none!important;clip-path:none!important;-webkit-clip-path:none!important;position:relative!important;overflow:hidden!important}
+  #ep-products-compare .epp-photo img{width:100%!important;height:100%!important;object-fit:cover!important;transform:none!important}
+  #ep-products-compare .epp-photo figcaption{opacity:1!important;z-index:2!important}
+  #ep-products-compare .epp-description,#ep-products-compare .epp-text-motion>p{display:none!important}
+  #ep-products-compare .epp-features{order:4!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 14px!important;margin:0 0 16px!important}
+  #ep-products-compare .epp-feature{font-size:13px!important;line-height:1.3!important}
+  #ep-products-compare .epp-actions{order:5!important;display:grid!important;gap:10px!important;margin:0!important}
+  #ep-products-compare .epp-actions .epp-quote{background:#15191c!important;color:#fff!important}
+  #ep-products-compare .epp-background,#ep-products-compare .epp-pagination{display:none!important}
+  #ep-products-compare .epp-stage,#ep-products-compare .epp-scenes{position:static!important;height:auto!important;overflow:visible!important}
+  #ep-products-compare{height:auto!important}
+
+
+  img.ep-framed{position:absolute!important;max-width:none!important;max-height:none!important;object-fit:fill!important;transform:none!important;right:auto!important;bottom:auto!important;margin:0!important}
+  #ep-business-solutions .epbs-card{overflow:hidden!important}
+
+  /* ---------- 3. Подбор (правки 01.11, 17:00): без нижней приписки, схема компактнее, крупные цифры результата ---------- */
+  #ep-podbor .pb-foot{display:none!important}
+  #ep-podbor .pb-scene{min-height:250px!important}
+  #ep-podbor .pb-out{grid-template-columns:1fr 1fr!important}
+  #ep-podbor .pb-cell{padding:14px 16px 12px!important;border-top:0!important}
+  #ep-podbor .pb-out>.pb-cell:nth-child(2){border-left:1px solid var(--pb-line)!important}
+  #ep-podbor .pb-out>.pb-cell:last-child{grid-column:1/-1!important;border-top:1px solid var(--pb-line)!important;padding:16px 16px 14px!important}
+  #ep-podbor .pb-v{font-size:clamp(22px,6.6vw,27px)!important;margin:6px 0 2px!important}
+  #ep-podbor .pb-v.pb-v--money{font-size:clamp(30px,9.4vw,38px)!important;white-space:normal!important;line-height:1.05!important;margin:8px 0 8px!important}
+  #ep-podbor .pb-k{font-size:11.5px!important}
+  #ep-podbor .pb-s{font-size:12.5px!important}
+  #ep-podbor .pb-qrow{grid-column:1/-1!important;padding:0 16px 14px!important}
+  #ep-podbor .pb-qrow .pb-q{margin:0!important}
+  #ep-podbor .pb-qrow .pb-q button{min-height:50px!important;font-size:12.5px!important}
+  #ep-podbor #pb-res-s{display:none!important}
+  #ep-podbor .pb-cta .pb-link{padding-inline:18px!important;box-sizing:border-box!important;width:100%!important}
+  #ep-podbor .pb-cta .pb-cat-base{font-size:13px!important;letter-spacing:.06em!important}
+
+  /* кнопки мобильных блоков: чёрная и подчёркнутая, как в «Видах экранов» */
+  .ep-mbtn{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;min-height:50px!important;padding:12px 18px!important;background:#15191c!important;color:#fff!important;font:400 13px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:.06em!important;text-transform:uppercase!important;border:0!important;text-decoration:none!important;width:100%!important;box-sizing:border-box!important;cursor:pointer!important}
+  .ep-mbtn::after{content:"→";font-size:18px}
+  .ep-mbtn.ep-mbtn-line{background:transparent!important;color:#171a1c!important;border-bottom:1px solid #171a1c!important}
+  .ep-mbtn.ep-mbtn-cta{background:#f36b52!important}
+
+  /* ---------- 4. Решения для бизнеса: заголовок, плашки-навигация, одно фото, название, две кнопки ---------- */
+  #ep-business-solutions .epbs-header{display:block!important}
+  #ep-business-solutions #epbs-title{white-space:nowrap!important;font-size:clamp(24px,7.6vw,30px)!important}
+  #ep-business-solutions .epbs-all{display:none!important}
+  .epbs-tabs{display:flex!important;gap:8px!important;overflow-x:auto!important;margin:14px -16px 14px!important;padding:0 16px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important}
+  .epbs-tabs::-webkit-scrollbar{display:none!important}
+  .epbs-tabs button{flex:none!important;padding:9px 14px!important;border:1px solid #d8dad7!important;border-radius:999px!important;background:#fff!important;font:inherit!important;font-size:14px!important;color:#171a1c!important;white-space:nowrap!important;cursor:pointer!important}
+  .epbs-tabs button[aria-selected="true"]{background:#171a1c!important;color:#fff!important;border-color:#171a1c!important}
+  #ep-business-solutions .epbs-grid{display:block!important;overflow:visible!important}
+  .epbs-track{display:flex!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;margin:0 -20px!important;padding:0 20px 4px!important;scroll-padding-inline:20px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important}
+  .epbs-track::-webkit-scrollbar{display:none!important}
+  .epbs-slide{flex:0 0 calc(100% - 26px)!important;scroll-snap-align:start!important;display:flex!important;flex-direction:column!important;min-width:0!important}
+  .epbs-slide .ep-mbtns{margin-top:auto!important}
+  #ep-business-solutions .epbs-card{display:block!important;position:relative!important;aspect-ratio:4/3!important;min-height:0!important;width:100%!important;height:auto!important}
+  #ep-business-solutions .epbs-copy,#ep-business-solutions .epbs-project-footer .epbs-card-arrow{display:none!important}
+  #ep-business-solutions .epbs-project-footer{left:12px!important;bottom:12px!important;right:auto!important}
+  #ep-business-solutions .epbs-project-caption{display:inline-block!important;background:#15191c!important;color:#fff!important;font-size:11px!important;letter-spacing:.06em!important;text-transform:uppercase!important;padding:5px 9px!important;margin:0!important}
+  .epbs-m{margin-top:14px!important;display:flex!important;flex-direction:column!important;flex:1 1 auto!important}
+  .epbs-m h3{font:400 24px/1.1 Inter,Arial,sans-serif!important;letter-spacing:-.02em!important;margin:0 0 4px!important}
+  .epbs-m p{margin:0 0 14px!important;color:#60656a!important;font-size:14px!important}
+  .epbs-m .ep-mbtns{display:grid!important;gap:10px!important}
+
+  /* ---------- 10. Листинг на главной: лента в 2 ряда, на экране 4 карточки, листается вправо; «Заказать» на каждой ---------- */
+  #ep-home-catalog{padding:28px 0 26px!important;background:#fff!important;font-family:Inter,Arial,sans-serif!important;color:#171a1c!important}
+  #ep-home-catalog .ep-eyebrow,#ep-home-catalog .ehc-head,#ep-home-catalog .ehc-foot{margin-inline:16px!important}
+  #ep-home-catalog .ep-eyebrow{margin-bottom:8px!important}
+  #ep-home-catalog .ehc-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-bottom:14px!important}
+  #ep-home-catalog h2{font:400 26px/1.08 Inter,Arial,sans-serif!important;letter-spacing:-.025em!important;margin:0!important}
+  #ep-home-catalog .ehc-filter{box-sizing:border-box!important;flex:none!important;display:grid!important;place-items:center!important;width:48px!important;height:48px!important;padding:0!important;border:0!important;background:#f1f2f0!important;color:#171a1c!important;text-decoration:none!important}
+  #ep-home-catalog .ehc-filter svg{width:24px!important;height:24px!important;stroke:currentColor!important;fill:none!important;stroke-width:1.8!important;stroke-linecap:round!important}
+  #ep-home-catalog .ehc-grid{display:grid!important;grid-template-rows:repeat(2,auto)!important;grid-auto-flow:column!important;grid-auto-columns:calc((100% - 32px)/2)!important;gap:10px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:16px!important;padding:0 16px 6px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important}
+  #ep-home-catalog .ehc-grid::-webkit-scrollbar{display:none!important}
+  #ep-home-catalog .ehc-card{scroll-snap-align:start!important;border:1px solid #d8dad7!important;background:#fff!important;display:flex!important;flex-direction:column!important;min-width:0!important}
+  #ep-home-catalog .ehc-ph{aspect-ratio:4/3!important;background:#e8ebe8!important;display:grid!important;place-items:center!important;padding:8px!important;position:relative!important;text-decoration:none!important}
+  #ep-home-catalog .ehc-ph img{max-width:88%!important;max-height:100%!important;width:auto!important;height:auto!important}
+  #ep-home-catalog .ehc-badge{position:absolute!important;left:6px!important;top:6px!important;font-size:10.5px!important;padding:2px 6px!important;background:#fff!important;border:1px solid #d8dad7!important;color:#171a1c!important}
+  #ep-home-catalog .ehc-b{padding:8px 9px 10px!important;display:flex!important;flex-direction:column!important;flex:1!important;min-width:0!important}
+  #ep-home-catalog .ehc-n{display:block!important;font-size:15px!important;font-weight:500!important;letter-spacing:-.01em!important;margin:0 0 3px!important;color:#171a1c!important;text-decoration:none!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #ep-home-catalog .ehc-s{font-size:11.5px!important;color:#60656a!important;line-height:1.3!important;margin-bottom:6px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #ep-home-catalog .ehc-pr{font-size:14.5px!important;font-weight:500!important;margin-top:auto!important;white-space:nowrap!important}
+  #ep-home-catalog .ehc-pr small{color:#60656a!important;font-weight:400!important;font-size:11px!important}
+  #ep-home-catalog .ehc-btn{text-decoration:none!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;margin-top:8px!important;min-height:42px!important;padding:6px 8px!important;border:0!important;background:#f36b52!important;color:#fff!important;font:400 12.5px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:.06em!important;text-transform:uppercase!important;white-space:nowrap!important;cursor:pointer!important}
+  #ep-home-catalog .ehc-foot{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-top:12px!important}
+  #ep-home-catalog .ehc-count{font-size:13px!important;color:#60656a!important;font-variant-numeric:tabular-nums!important}
+  #ep-home-catalog .ehc-all{display:inline-flex!important;align-items:center!important;gap:8px!important;font:400 13px/1 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:.06em!important;text-transform:uppercase!important;color:#171a1c!important;text-decoration:none!important;border-bottom:1px solid #171a1c!important;padding:8px 0!important}
+  #ep-home-catalog .ehc-all::after{content:"→";font-size:16px}
+
+  /* ---------- нижняя панель: Каталог · Подобрать экран · Получить расчёт ---------- */
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom,0px))!important}
+  .ep-mbar{box-sizing:border-box!important;position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:60!important;display:flex!important;background:#2d3a43!important;padding:0 0 env(safe-area-inset-bottom,0px)!important;box-shadow:0 -6px 18px rgba(0,0,0,.18)!important;font-family:Inter,Arial,sans-serif!important}
+  .ep-mbar a,.ep-mbar button{flex:1 1 auto!important;position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;height:60px!important;padding:0 4px!important;white-space:nowrap!important;border:0!important;background:transparent!important;color:#fff!important;font:400 13px/1.15 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:0!important;text-decoration:none!important;cursor:pointer!important;box-sizing:border-box!important}
+  .ep-mbar>*+*::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;background:rgba(255,255,255,.55)}
+  .ep-mbar .ep-mbar-cta::before{display:none}
+  .ep-mbar svg{flex:none!important;width:19px!important;height:19px!important;stroke:currentColor!important;fill:none!important;stroke-width:1.7!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+  .ep-mbar .ep-mbar-cta{background:#f36b52!important}
+  html[style*="overflow: hidden"] .ep-mbar{display:none!important}
+
+  /* ---------- 6. Инженерная ответственность: карточки свёрнуты, раскрываются стрелкой ---------- */
+  #ep-engineering .epeng-fact:not(.epeng-experience){padding-block:14px!important}
+  #ep-engineering .epeng-fact:not(.epeng-experience) h3{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;cursor:pointer!important;margin:0!important}
+  #ep-engineering .epeng-fact:not(.epeng-experience) h3::after{content:"";flex:none!important;width:12px!important;height:12px!important;border-right:1.5px solid #fff!important;border-bottom:1.5px solid #fff!important;transform:rotate(45deg) translate(-2px,-2px)!important;transition:transform .25s!important}
+  #ep-engineering .epeng-fact.is-open h3::after{transform:rotate(225deg) translate(-2px,-2px)!important}
+  #ep-engineering .epeng-fact:not(.epeng-experience) h3~*{display:none!important}
+  #ep-engineering .epeng-fact.is-open h3~*{display:block!important}
+  #ep-engineering .epeng-fact.is-open h3{margin-bottom:10px!important}
+
+  /* ---------- 7. Директор: заголовок → фото → имя и должность → кнопка ---------- */
+  #ep-director{display:flex!important;flex-direction:column!important}
+  #ep-director .ep-director-copy{display:contents!important}
+  #ep-director .ep-eyebrow{order:1!important}
+  #ep-director h2{order:2!important;margin-bottom:14px!important}
+  #ep-director .ep-director-description{display:none!important}
+  #ep-director .ep-director-portrait{order:3!important;margin:0 0 16px!important}
+  #ep-director .ep-action{order:4!important;width:100%!important}
+
+  /* ---------- 8. Карта: вся ширина экрана, без прокрутки; подписи городов спрятаны, точки крупнее ---------- */
+  #ep-page-end .ep-map-viewport{overflow:visible!important}
+  #ep-page-end .ep-map{width:100%!important;min-width:0!important;max-width:none!important}
+  #ep-page-end .ep-map svg{width:100%!important;height:auto!important;display:block!important}
+  #ep-page-end .ep-map-label{display:none!important}
+  #ep-page-end .ep-map-point{width:22px!important;height:22px!important}
+  #ep-page-end .ep-map-point::before{width:9px!important;height:9px!important}
+}

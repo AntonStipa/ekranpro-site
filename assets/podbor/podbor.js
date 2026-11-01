@@ -173,7 +173,7 @@
     var p=place(), narrow=VW<520;
     var c={w:st.w,h:st.h,lift:st.lift,d:st.d,ctx:p.ctx,mount:p.ctx==='room'?(st.mount||'wall'):null,furn:p.furn,nav:!!p.nav};
     var capA=['Расстояние','просмотра'], capH=['Силуэт','175 см'], wA=textW(capA[0],'500 13px Inter,Arial,sans-serif'), wH=textW(capH[0],'400 12px Inter,Arial,sans-serif'); // подписи у шкалы — в две строки
-    var padL=narrow?46:64, padR=narrow?30:Math.max(52,wH+26), top=30, gy=VH-(narrow?74:52);
+    var padL=narrow?46:64, padR=narrow?30:Math.max(52,wH+26), top=30, gy=VH-(narrow?44:52); // 01.11: на телефоне подпись «Расстояние просмотра» — на уровне шкалы, схема ниже на 30 px
     var hung=c.mount==='suspended', ceilM=c.ctx==='room'?(hung?c.lift+c.h+1:Math.max(c.lift+c.h+0.6,3)):0;
     var mL=0,mR=0,ctxH=c.lift+c.h;
     var floors=Math.max(2,Math.ceil((c.lift+c.h+0.6)/3)), sideCols=c.w>12?2:1;
@@ -196,7 +196,7 @@
     var hx=sx-6-(c.ctx==='road'?Math.max(0.3*s,4):0); leftMost=Math.min(leftMost,hx-40); // подпись высоты экрана — слева от него
     var plantX=c.lift>0?lx-44-0.5*s:sx-0.95*s, plant=(c.furn==='office'||c.furn==='plant')&&plantX-0.5*s>padL-40; // растение левее размерной линии
     if(plant) leftMost=Math.min(leftMost,plantX-0.5*s);
-    var capL=sx+sw-12-wA, needL=narrow?0:Math.max(0,8-Math.min(capL-6,leftMost)); // сколько места занимает всё, что левее поля схемы
+    var capL=sx+sw-12-wA, wN0=textW(capA.join(' '),'500 12px Inter,Arial,sans-serif'), needL=Math.max(0,8-Math.min((narrow?sx+sw-10-wN0:capL)-6,leftMost)); // 01.11: на телефоне подпись шкалы тоже занимает место слева // сколько места занимает всё, что левее поля схемы
     var want=sx+sw+c.d*s, maxX=VW-padR-needL, px=Math.min(Math.max(want,sx+sw+44),maxX), broken=want>maxX+1;
     var ph=1.75*s, o='', i;
     function R(x,y,w,h,fill,stroke,extra){return '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+Math.max(w,0).toFixed(1)+'" height="'+Math.max(h,0).toFixed(1)+'" fill="'+(fill||'none')+'"'+(stroke?' stroke="'+stroke+'" stroke-width="1"':'')+(extra||'')+'/>'}
@@ -341,10 +341,16 @@
     o+=Tx(midx,ay+4,fmt(c.d,1)+' м','middle',T.text,600,12);
     // центровка: вся композиция (здание или стена, экран, человек) встаёт по середине схемы
     var x0=Math.min(c.ctx==='stage'?padL-0.4*s-8:padL-10,leftMost), x1=px+hw+10; if(!narrow){ x0=Math.min(x0,capL-6); x1=Math.max(x1,px+12+wH+6); }
+    // телефон: подпись шкалы одной строкой слева от неё; «Силуэт 175 см» не пишем
+    var capN=capA.join(' '), wN=textW(capN,'500 12px Inter,Arial,sans-serif'), capNL=sx+sw-10-wN, capTwo=false;
+    var capF=12;
+    if(narrow){ // 01.11, 17:05: всегда одной строкой; не помещается — шрифт 11 px, справа схема не обрезается
+      if(x1-Math.min(x0,capNL-6)>VW-12){capF=11; wN=textW(capN,'500 11px Inter,Arial,sans-serif'); capNL=sx+sw-10-wN;}
+      x0=Math.min(x0,capNL-6); }
     var dx=Math.max(8-x0,(VW-(x1-x0))/2-x0);
     if(uid==='pb') sceneGeom={k:(px-(sx+sw))/c.d,broken:broken,x:sx+dx,y:sy,w:sw,h:sh};
     // подписи у шкалы: слева — что она показывает, справа — рост человека; на узком экране — строкой под шкалой
-    if(narrow) bg+='<text x="'+(VW/2).toFixed(1)+'" y="'+(ay+30).toFixed(1)+'" font-size="12" font-weight="500" text-anchor="middle" fill="'+T.text+'">'+capA.join(' ')+' <tspan font-weight="400" fill="'+T.mute+'">· '+capH.join(' ').toLowerCase()+'</tspan></text>';
+    if(narrow) o+=capTwo?Tx(sx+sw-10,ay-3,capA[0],'end',T.text,500,12)+Tx(sx+sw-10,ay+11,capA[1],'end',T.text,500,12):Tx(sx+sw-10,ay+4,capN,'end',T.text,500,capF);
     else o+=Tx(sx+sw-12,ay-3,capA[0],'end',T.text,500,13)+Tx(sx+sw-12,ay+12.5,capA[1],'end',T.text,500,13)+Tx(px+12,ay-3,capH[0],'start',T.mute,400,12)+Tx(px+12,ay+12,capH[1],'start',T.mute,400,12);
     return bg+'<g transform="translate('+dx.toFixed(1)+' 0)">'+o+'</g>';
   }

@@ -637,3 +637,14 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 .sx-tri-notes--2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .sx-tri-fig[data-two] .sx-tri-tag--2{left:calc((var(--p1) + 100%)/2)}
 @media (max-width:760px){.sx-tri-notes--2{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- мобильная приёмка 01.11.2026 (390 / 768 px) ---------- */
+/* планшет 681–1023 px: вторая кнопка первого экрана стояла справа поверх светлой части фото и не читалась —
+   кнопки друг под другом слева, на затемнённой части */
+@media (min-width:681px) and (max-width:1023px){
+  .sx-hero-actions{flex-direction:column;align-items:flex-start;gap:12px}
+  .sx-hero-actions>*{flex:none;width:min(340px,100%)}
+}
+@media (max-width:680px){
+  .sx-tri-tag{font-size:11px}                                   /* подписи на фото «Сравнения» — было 9,5 px */
+}
