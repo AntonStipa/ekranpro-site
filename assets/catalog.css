@@ -396,3 +396,22 @@ body{margin:0;background:#fff}
 .ek-desc--js:not(.is-open) .ek-desc-body{max-height:440px;overflow:hidden;-webkit-mask-image:linear-gradient(#000 0,#000 70%,transparent 100%);mask-image:linear-gradient(#000 0,#000 70%,transparent 100%)}
 .ek-desc-more{margin-top:20px}
 .ek-desc-more[hidden]{display:none}
+
+/* 01.11: кнопки «Заказать» / «Подробнее» под карточкой — в границах карточки: «Заказать» по левому краю, «Подробнее» — по правому краю таблицы параметров.
+   Раньше колонки 1fr 1fr не сжимались меньше содержимого, и «Подробнее» выходила за правый край. На узких карточках шрифт и отступы чуть меньше. */
+.ek-card{container-type:inline-size}
+.ek-actions{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ek-order{gap:8px;padding:12px}
+.ek-details{gap:8px}
+.ek-order,.ek-details{flex:0 1 auto;min-width:0}
+@container (max-width:300px){.ek-order,.ek-details{font-size:12px;letter-spacing:.05em}.ek-order{padding:12px 10px}.ek-actions{gap:8px}}
+@container (max-width:250px){.ek-details .ek-arw{display:none}}
+/* «Похожие модели»: снизу место под раскрытые кнопки, чтобы они не ложились на следующий блок */
+.ek-related{padding-bottom:132px}
+@media (hover:none){.ek-related{padding-bottom:56px}}
+.ek-grid.list .ek-actions{flex-direction:column;align-items:stretch}
+/* 01.11: при наведении слово «Цена» видно всегда: у него своя колонка 40px, сумма уходит вправо; если места мало — подпись единицы («за видеостену», «за м², с НДС») переносится под сумму, а не выдавливает «Цена» */
+.ek-price{grid-template-columns:0px minmax(0,1fr)}
+.ek-card:hover .ek-price,.ek-card:focus-within .ek-price{grid-template-columns:40px minmax(0,1fr)}
+.ek-price .val{white-space:normal;row-gap:0}
+.ek-price .val>*{white-space:nowrap}
