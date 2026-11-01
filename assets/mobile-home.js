@@ -82,7 +82,14 @@
       var st=img.style; st.setProperty('width',w+'px','important'); st.setProperty('height',h+'px','important'); st.setProperty('left',l+'px','important'); st.setProperty('top',t+'px','important');
       img.sizes=Math.round(w)+'px';
     }
+    // Отдельные фото для телефона (вертикальные, готовятся под мобильную версию): показываются целиком, без кадрирования
+    var MOBILE_PHOTOS={'outdoor-orenznak':['m-outdoor-orenznak.webp',1190,1322]};
     document.querySelectorAll('#ep-products-compare .epp-photo img, #ep-business-solutions .epbs-photo').forEach(function(img){
+      var s0=img.getAttribute('src')||'';
+      for(var key in MOBILE_PHOTOS) if(s0.indexOf(key)>=0){var mp=MOBILE_PHOTOS[key];
+        img.removeAttribute('srcset'); img.removeAttribute('sizes'); img.src=base+'/assets/'+mp[0]; img.setAttribute('width',mp[1]); img.setAttribute('height',mp[2]); img.loading='eager';
+        img.classList.add('ep-mphoto'); img.parentElement.classList.add('ep-mphoto-box'); img.__m=1; break}
+      if(img.__m)return;
       var src=img.getAttribute('src')||''; for(var k=0;k<FRAMES.length;k++) if(src.indexOf(FRAMES[k][0])>=0){img.__f=FRAMES[k];break}
       if(!img.__f)return; img.classList.add('ep-framed'); img.loading='eager'; framed.push(img); frame(img);
     });

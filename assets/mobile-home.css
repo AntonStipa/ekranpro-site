@@ -60,6 +60,8 @@
   #ep-products-compare .epp-title span+span::before{content:" "}
   #ep-products-compare .epp-photo{order:3!important;margin:0 0 14px!important;width:100%!important;aspect-ratio:4/3!important;opacity:1!important;transform:none!important;clip-path:none!important;-webkit-clip-path:none!important;position:relative!important;overflow:hidden!important}
   #ep-products-compare .epp-photo img{width:100%!important;height:100%!important;object-fit:cover!important;transform:none!important}
+  #ep-products-compare .epp-photo.ep-mphoto-box{aspect-ratio:auto!important;height:auto!important}
+  #ep-products-compare .epp-photo img.ep-mphoto{position:static!important;display:block!important;width:100%!important;height:auto!important;aspect-ratio:1190/1322!important;object-fit:cover!important;transform:none!important;margin:0!important;max-width:none!important}
   #ep-products-compare .epp-photo figcaption{opacity:1!important;z-index:2!important}
   #ep-products-compare .epp-description,#ep-products-compare .epp-text-motion>p{display:none!important}
   #ep-products-compare .epp-features{order:4!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px 14px!important;margin:0 0 16px!important}
