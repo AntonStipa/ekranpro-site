@@ -222,4 +222,6 @@
   #ep1-catalog .ms-acc .ep1-brands-list li::before,#ep1-catalog .ms-acc .ep1-brands-list li::after,#ep1-catalog .ms-acc .ep1-brands-list a::before,#ep1-catalog .ms-acc .ep1-brands-list a::after{content:none!important;display:none!important}
   #ep1-catalog .ms-acc .ep1-brands-list a{display:block!important;padding:11px 0!important}
   #ep1-catalog .ms-acc li.ms-all a{font-weight:500!important}
+  #ep1-catalog .ep1-catalog-footer>span{display:none!important}
+  #ep1-catalog .ep1-catalog-footer{justify-content:flex-start!important}
 }
