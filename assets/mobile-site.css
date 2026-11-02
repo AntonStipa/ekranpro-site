@@ -153,9 +153,8 @@
   html.ep-ms #ep-products-compare .ms-track .epp-eyebrow{order:2!important}
   html.ep-ms #ep-products-compare .ms-track .epp-title{order:3!important;font-size:clamp(24px,7.2vw,28px)!important}
   html.ep-ms #ep-products-compare .ms-track .epp-actions{display:none!important}
-  html.ep-ms #ep-products-compare .ms-acts{display:grid!important;gap:10px!important;margin:18px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-acts{display:grid!important;gap:10px!important;margin:14px 0 0!important}
   html.ep-ms #ep-products-compare .ms-acts .epp-quote{background:#15191c!important;color:#fff!important}
-  html.ep-ms #ep-products-compare .ms-count{margin:12px 0 0!important;font-size:13px!important;color:#60656a!important;font-variant-numeric:tabular-nums!important}
 
   /* ---------- 02.11: «Какой шаг пикселя нужен» — картинка с тремя зонами во всю ширину экрана, без прокрутки вбок ---------- */
   html.ep-ms .sx-pitch-scroll{overflow:visible!important;margin:0 calc(50% - 50vw)!important;width:100vw!important;max-width:100vw!important;padding:0!important}
@@ -163,7 +162,7 @@
   html.ep-ms .sx-pitch-zones li b{font-size:11.5px!important;line-height:1.2!important;white-space:normal!important}
 
   /* ---------- 02.11: «Привезём оборудование до покупки» — как на главной: заголовок, подпись, фото, кнопка; без списка ---------- */
-  html.ep-ms .sx-demo-in{display:flex!important;flex-direction:column!important}
+  html.ep-ms .sx-demo-in{display:flex!important;flex-direction:column!important;gap:0!important;row-gap:0!important}
   html.ep-ms .sx-demo-copy{display:contents!important}
   html.ep-ms .sx-demo-copy h2{order:1!important}
   html.ep-ms .sx-demo-lead{order:2!important;margin:8px 0 16px!important;font-size:14px!important}
@@ -176,4 +175,56 @@
   html.ep-ms .sx-extras .sx-head .sx-lead{margin-top:10px!important}
   html.ep-ms .sx-extras-grid>li{display:flex!important;flex-direction:column!important}
   html.ep-ms .sx-extras-grid .sx-extras-btn{margin-top:auto!important;width:100%!important;min-height:46px!important;font:400 13px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:.06em!important;text-transform:uppercase!important}
+
+  /* ---------- 02.11 (2): первый экран — до верха нижней строки браузера (как на главной) ---------- */
+  html.ep-ms .cat-main .sx-hero{min-height:calc(100svh + 40px)!important}
+  html.ep-ms .sx-hero-in{padding-bottom:48px!important}
+
+  /* ---------- 02.11 (2): ленты разделов — у соседних карточек только фото и заголовок; последняя встаёт на место остальных ---------- */
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track){padding-right:0!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track)::after{content:""!important;flex:0 0 28px!important}
+  html.ep-ms.sx-js #ek-listing:not([data-rows]) #ek-grid.ek-grid,html.ep-ms #ek-related .ek-grid{padding-right:38px!important}
+  html.ep-ms .sx-proj-grid>.ms-off :is(.sx-proj-facts,figcaption),
+  html.ep-ms .gl-cards.gl-ust>.ms-off :is(.sx-case-city,.sx-case-text),
+  html.ep-ms .sx-extras-grid>.ms-off :is(.sx-extras-kind,.sx-extras-price,.sx-extras-btn),
+  html.ep-ms #ep-products-compare .ms-track>.ms-off :is(.epp-eyebrow,.sx-scene-stats,.sx-scene-points,.sx-scene-vars,.sx-scene-icons,.epp-features,.epp-description){opacity:0!important;visibility:hidden!important;transition:opacity .25s ease,visibility 0s .25s!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track)>.ms-cur *{transition:opacity .25s ease!important}
+
+  /* ---------- 02.11 (2): «Преимущества …» — заголовок блока; цифры — списком с точками, друг под другом ---------- */
+  html.ep-ms #ep-products-compare .ms-tech-h{margin:0 0 16px!important;font:500 clamp(26px,7.4vw,30px)/1.08 Inter,Arial,sans-serif!important;letter-spacing:-.03em!important;color:#171a1c!important;text-wrap:balance}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;margin:4px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats>div{display:block!important;position:relative!important;padding:0 0 0 18px!important;margin:0!important;border:0!important;min-width:0!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats>div::before{content:""!important;position:absolute!important;left:2px!important;top:.55em!important;width:7px!important;height:7px!important;border-radius:50%!important;background:#f36b52!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats dt{display:inline!important;font-size:22px!important;line-height:1.2!important;margin:0 6px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats dd{display:inline!important;margin:0!important;font-size:13px!important;color:#60656a!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats>div.ms-hide{display:none!important}
+
+  /* ---------- 02.11 (2): ползунок «до / после» в ленте: белую ручку можно тянуть пальцем (лента при этом не листается) ---------- */
+  html.ep-ms .sx-cmp .sx-cmp-bar{z-index:4!important}
+  html.ep-ms .sx-cmp .sx-cmp-bar i{pointer-events:auto!important;touch-action:none!important;cursor:ew-resize!important}
+  html.ep-ms .sx-cmp .sx-cmp-bar i::before{content:""!important;position:absolute!important;inset:-14px!important}
+
+  /* ---------- 02.11 (2): листинг — «Сортировка» справа под «Фильтрами», поле сортировки ровно под поиском ---------- */
+  html.ep-ms .ek-toolbar{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;gap:10px!important;align-items:center!important}
+  html.ep-ms .ek-toolbar .ek-sort{display:contents!important}
+  html.ep-ms .ek-toolbar .ek-sort>span{grid-column:1!important;justify-self:end!important;text-align:right!important;margin:0!important;white-space:nowrap!important}
+  html.ep-ms .ek-toolbar .ek-sort .ek-dd{grid-column:2!important;width:100%!important;min-width:0!important}
+  html.ep-ms .ek-toolbar .ek-sort .ek-dd-btn{width:100%!important;justify-content:space-between!important}
+  html.ep-ms .ek-toolbar .ek-search{grid-column:2!important;width:100%!important;min-width:0!important;margin:0!important}
+  html.ep-ms .ek-toolbar .ek-fbtn{grid-column:1!important;margin:0!important}
+  html.ep-ms .ek-toolbar .ek-viewsw{display:none!important}
+
+  /* ---------- 02.11 (2): «Привезём оборудование до покупки» — плотнее; фото крупнее, поля слева и справа одинаковые ---------- */
+  html.ep-ms .sx-demo-copy h2{white-space:nowrap!important;font-size:min(30px,7.6vw)!important;margin:0!important}
+  html.ep-ms .sx-demo-copy h2>span{display:inline!important}
+  html.ep-ms .sx-demo-copy h2>span:last-of-type{display:block!important}
+  html.ep-ms .sx-demo-lead{margin:6px 0 10px!important}
+  html.ep-ms .sx-demo-photo{aspect-ratio:965/1024!important;overflow:hidden!important;margin:0 0 14px!important}
+  html.ep-ms .sx-demo-photo img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:62.2% 50%!important;max-width:none!important}
+  html.ep-ms .sx-demo-eyebrow{margin-bottom:10px!important}
+
+  /* ---------- 02.11 (2): меньше пустоты после «Наших проектов» и после «Этапов» ---------- */
+  html.ep-ms .sx-band.sx-proj{padding-bottom:28px!important}
+  html.ep-ms .sx-band.sx-steps{padding-top:32px!important;padding-bottom:28px!important}
+  html.ep-ms .sx-band.sx-steps+.sx-band{padding-top:32px!important}
 }

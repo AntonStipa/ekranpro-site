@@ -185,4 +185,23 @@
   #ekranpro-first-screen .ep1-hero{min-height:100svh!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;padding:calc(56px + 52vw) 0 0!important;box-sizing:border-box!important}
   #ekranpro-first-screen .ep1-hero-photo{height:calc(100% - var(--m-ch,340px) + 70px)!important;object-position:50% 50%!important;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important;mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important}
   #ekranpro-first-screen .ep1-hero::after{background:linear-gradient(180deg,rgba(6,8,10,.55) 0,rgba(6,8,10,0) 90px),linear-gradient(0deg,#06080a 0,rgba(6,8,10,.92) calc(var(--m-ch,340px) - 130px),rgba(6,8,10,.5) var(--m-ch,340px),rgba(6,8,10,0) calc(var(--m-ch,340px) + 110px))!important}
+
+  /* ---------- 02.11 (2): первый экран доходит до верха нижней строки браузера: фон продлён на 40 px под неё, кнопки — вплотную к ней.
+     На телефонах, где строка браузера сверху, эти 40 px просто уходят за нижний край экрана ---------- */
+  #ekranpro-first-screen .ep1-hero{min-height:calc(100svh + 40px)!important}
+  #ekranpro-first-screen .ep1-hero-content{padding-bottom:48px!important}
+
+  /* ---------- 02.11 (2): шапка после первого экрана всегда на месте — не прячется при прокрутке вниз ---------- */
+  html.ep-m-past:root:root #ekranpro-first-screen .ep1-header.is-docked.ep-mh.ep-mh.ep-mh.ep-mh.ep-mh{transform:none!important;opacity:1!important;pointer-events:auto!important}
+
+  /* ---------- 02.11 (2): ленты (решения, отзывы и ленты разделов): у соседних карточек видно только фото и заголовок,
+     текст и кнопки — только у текущей (класс ms-off ставит mobile-home.js). Последняя карточка встаёт на то же место, что и остальные:
+     в конце ленты запас, равный краю следующей карточки ---------- */
+  .epbs-track{padding-right:0!important}
+  .epbs-track::after{content:""!important;flex:0 0 28px!important}
+  #ep-reviews .eprv-track{padding-right:42px!important}
+  .epbs-track>.ms-off :is(.epbs-m p,.epbs-m .ep-mbtns),
+  #ep-reviews .eprv-track>.ms-off :is(.eprv-city,.eprv-person){opacity:0!important;visibility:hidden!important;transition:opacity .25s ease,visibility 0s .25s!important}
+  .epbs-track>.ms-cur :is(.epbs-m p,.epbs-m .ep-mbtns),
+  #ep-reviews .eprv-track>.ms-cur :is(.eprv-city,.eprv-person){opacity:1!important;visibility:visible!important;transition:opacity .25s ease!important}
 }

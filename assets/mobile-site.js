@@ -19,9 +19,8 @@
     if(d!==docked){docked=d; h.classList.remove('ep-msa'); h.classList.toggle('ep-msd',d); if(d){h.getBoundingClientRect(); h.classList.add('ep-msa');}}
     var dy=y-lastY; lastY=y;
     if(!d||open||Date.now()-rz<350){acc=0; if(!d||open)hid=false;}
-    else{ if(dy>0&&acc<0||dy<0&&acc>0)acc=0; acc+=dy; if(acc>24)hid=true; else if(acc<-24)hid=false; }
+    else{ hid=false; }   // 02.11 (2): после первого экрана шапка всегда на месте (Антон: «исчезает шапка»)
     h.classList.toggle('ep-msh',hid);
-    if(h.classList.contains('ep-mh'))h.classList.remove('ep-mh');   // старая логика сборки (MENU_LINK_JS) на этих страницах не нужна
   }
   addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(dock)},{passive:true});
   addEventListener('resize',function(){rz=Date.now(); dock()}); dock();
@@ -35,21 +34,35 @@
 
   function init(){
     if(!mq.matches)return;   // на компьютере ничего не меняем
-    // «Технологии» / «Преимущества»: лента карточек, общие кнопки под ней (заявка — по текущей карточке)
-    var pc=document.getElementById('ep-products-compare'), scenes=pc&&pc.querySelector('.epp-scenes');
-    if(scenes&&!scenes.classList.contains('ms-track')&&scenes.querySelectorAll('.epp-scene').length>1){
+    // «Преимущества …» (блок технологий уличных и интерьерных экранов): лента карточек, заголовок блока, общие кнопки под лентой.
+    // Блоки «видов» (медиафасады, бренды) остаются столбиком, как на главной.
+    var pc=document.getElementById('ep-products-compare'), scenes=pc&&pc.querySelector('.epp-scenes'), lab=pc&&pc.getAttribute('aria-label')||'';
+    var slug=(location.pathname.replace(/\/$/,'').split('/').pop())||'';
+    var HEAD={'besshovnye-videosteny':'Преимущества бесшовных видеостен','interernye-ekrany':'Преимущества интерьерных экранов','multimedijnye-ekrany':'Преимущества мультимедийных экранов'};
+    var head=HEAD[slug]||(/уличных экранов/.test(lab)?'Преимущества профессиональных экранов':/интерьерных экранов/.test(lab)?'Преимущества интерьерных экранов':'');
+    if(head&&scenes&&!scenes.classList.contains('ms-track')&&scenes.querySelectorAll('.epp-scene').length>1){
       pc.classList.add('ms-swipe'); scenes.classList.add('ms-track');
+      var hh=document.createElement('h2'); hh.className='ms-tech-h'; hh.textContent=head; scenes.before(hh);
+      scenes.querySelectorAll('.sx-scene-stats>div').forEach(function(d){if(/\d+\s*из\s*\d+/.test(d.textContent))d.classList.add('ms-hide')});
       var first=scenes.querySelector('.epp-actions');
       if(first){
         var acts=first.cloneNode(true); acts.classList.add('ms-acts'); scenes.after(acts);
-        var cnt=document.createElement('p'); cnt.className='ms-count'; acts.before(cnt);
         var all=[].slice.call(scenes.querySelectorAll('.epp-scene'));
-        var cur=function(){var w=all[0].getBoundingClientRect().width+14, i=Math.max(0,Math.min(all.length-1,Math.round(scenes.scrollLeft/w)));
-          var q=all[i].querySelector('.epp-quote'), mq2=acts.querySelector('.epp-quote'); if(q&&mq2)mq2.setAttribute('data-quote',q.getAttribute('data-quote')||'');
-          cnt.textContent=(i+1)+' из '+all.length+' · листайте вправо';};
-        scenes.addEventListener('scroll',function(){requestAnimationFrame(cur)},{passive:true}); cur();
+        var cur=function(){var c=scenes.querySelector('.ms-cur')||all[0], q=c.querySelector('.epp-quote'), q2=acts.querySelector('.epp-quote'); if(q&&q2)q2.setAttribute('data-quote',q.getAttribute('data-quote')||'');};
+        scenes.addEventListener('scroll',function(){requestAnimationFrame(cur)},{passive:true});
+        if(window.epInitTracks)window.epInitTracks(); cur();
       }
     }
+    // ползунок «до / после»: ручку тянут пальцем
+    [].slice.call(document.querySelectorAll('.sx-cmp')).forEach(function(fig){
+      var range=fig.querySelector('.sx-cmp-range'), knob=fig.querySelector('.sx-cmp-bar i'); if(!range||!knob||knob.__ms)return; knob.__ms=1; var drag=false;
+      var mv=function(e){var r=fig.getBoundingClientRect(), mn=+range.min||0, mx=+range.max||100; var v=mn+(mx-mn)*Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)); range.value=v; range.dispatchEvent(new Event('input',{bubbles:true}));};
+      knob.addEventListener('pointerdown',function(e){drag=true; try{knob.setPointerCapture(e.pointerId)}catch(_){} e.preventDefault(); e.stopPropagation(); mv(e);});
+      knob.addEventListener('pointermove',function(e){if(drag){e.preventDefault(); mv(e);}});
+      ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){knob.addEventListener(t,function(){drag=false})});
+      ['touchstart','touchmove'].forEach(function(t){knob.addEventListener(t,function(e){e.stopPropagation()},{passive:true})});
+    });
+    if(window.epInitTracks)window.epInitTracks();
     // «Получить расчёт» в нижней панели: в форме — тема страницы (как у кнопки первого экрана)
     var hq=document.querySelector('.cat-main .sx-hero [data-quote]'), mc=document.querySelector('.ep-mbar-cta');
     if(hq&&mc)mc.setAttribute('data-quote',hq.getAttribute('data-quote'));

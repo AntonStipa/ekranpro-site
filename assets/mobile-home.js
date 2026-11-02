@@ -71,6 +71,18 @@
         var hh=(document.querySelector('.ep1-header')||{offsetHeight:0}).offsetHeight; window.scrollTo({top:t.getBoundingClientRect().top+scrollY-hh+1,behavior:'smooth'});});
     }
 
+    // 02.11 (2): ленты — текущая карточка (ms-cur) и соседние (ms-off: видно только фото и заголовок)
+    var TRACKS='.epbs-track, #ep-reviews .eprv-track, .sx-proj-grid, .gl-cards.gl-ust, .sx-extras-grid, #ep-products-compare .ms-track';
+    var markCur=window.epMarkCur=function(t){var kids=[].slice.call(t.children); if(!kids.length)return; var x0=t.getBoundingClientRect().left+20, best=0, bd=1e9;
+      kids.forEach(function(k,i){var d=Math.abs(k.getBoundingClientRect().left-x0); if(d<bd){bd=d;best=i}});
+      kids.forEach(function(k,i){k.classList.toggle('ms-cur',i===best); k.classList.toggle('ms-off',i!==best)});};
+    var initTracks=window.epInitTracks=function(){[].slice.call(document.querySelectorAll(TRACKS)).forEach(function(t){if(t.__ms)return; t.__ms=1; var r=0;
+      t.addEventListener('scroll',function(){if(!r)r=requestAnimationFrame(function(){r=0;markCur(t)})},{passive:true}); markCur(t);});};
+    initTracks(); addEventListener('load',function(){[].slice.call(document.querySelectorAll(TRACKS)).forEach(markCur)});
+
+    // 02.11 (2): вопросы-ответы на телефоне — все закрыты
+    [].slice.call(document.querySelectorAll('.ep-faq details[open], .ek-faq details[open]')).forEach(function(d){d.open=false});
+
     // 02.11: высота от верха заголовка первого экрана до низа экрана — для кадра фото и градиента (CSS --m-ch)
     var heroCH=window.epHeroCH=function(){var hero=document.querySelector('#ekranpro-first-screen .ep1-hero')||document.querySelector('.cat-main .sx-hero'); if(!hero||!mq.matches)return; var t=hero.querySelector('h1'); if(!t)return;
       var c=hero.getBoundingClientRect().bottom-t.getBoundingClientRect().top; if(c>0)hero.style.setProperty('--m-ch',Math.round(c)+'px');};
