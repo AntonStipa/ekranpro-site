@@ -80,6 +80,15 @@
       t.addEventListener('scroll',function(){if(!r)r=requestAnimationFrame(function(){r=0;markCur(t)})},{passive:true}); markCur(t);});};
     initTracks(); addEventListener('load',function(){[].slice.call(document.querySelectorAll(TRACKS)).forEach(markCur)});
 
+    // 02.11 (3): меню «Каталог» — группы свёрнуты, раскрываются нажатием на заголовок группы; у групп со своей страницей первым пунктом «Все …»
+    [].slice.call(document.querySelectorAll('#ep1-catalog [data-ep-menu-page="catalog"] .ep1-menu-group')).forEach(function(g){
+      var hd=g.querySelector(':scope>h2, :scope>h3'), ul=g.querySelector(':scope>ul'); if(!hd||!ul||g.classList.contains('ms-acc'))return;
+      g.classList.add('ms-acc'); hd.setAttribute('role','button'); hd.setAttribute('tabindex','0'); hd.setAttribute('aria-expanded','false');
+      var a=hd.querySelector('a[href]'); if(a&&!ul.querySelector('.ms-all')){var li=document.createElement('li'); li.className='ms-all'; li.innerHTML='<a></a>'; li.firstChild.href=a.getAttribute('href'); li.firstChild.textContent='Все '+a.textContent.trim().replace(/^LED/,'LED').replace(/^LCD панели/,'LCD-панели'); ul.insertBefore(li,ul.firstChild);}
+      var tg=function(e){if(e){e.preventDefault(); e.stopPropagation();} var o=g.classList.toggle('ms-open'); hd.setAttribute('aria-expanded',String(o));};
+      hd.addEventListener('click',tg); hd.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')tg(e)});
+    });
+
     // 02.11 (2): вопросы-ответы на телефоне — все закрыты
     [].slice.call(document.querySelectorAll('.ep-faq details[open], .ek-faq details[open]')).forEach(function(d){d.open=false});
 

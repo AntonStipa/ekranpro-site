@@ -204,4 +204,22 @@
   #ep-reviews .eprv-track>.ms-off :is(.eprv-city,.eprv-person){opacity:0!important;visibility:hidden!important;transition:opacity .25s ease,visibility 0s .25s!important}
   .epbs-track>.ms-cur :is(.epbs-m p,.epbs-m .ep-mbtns),
   #ep-reviews .eprv-track>.ms-cur :is(.eprv-city,.eprv-person){opacity:1!important;visibility:visible!important;transition:opacity .25s ease!important}
+
+  /* ---------- 02.11 (3): меню «Каталог» на телефоне — группы свёрнуты (LED-экраны, Готовые LED-продукты, LCD, Бренды),
+     раскрываются нажатием на строку со стрелкой; бренды — столбиком. Классы ставит mobile-home.js ---------- */
+  #ep1-catalog .ms-acc>:is(h2,h3){display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;cursor:pointer!important;margin:0!important;padding:14px 0!important;border-bottom:1px solid #dcddd8!important;-webkit-tap-highlight-color:transparent}
+  #ep1-catalog .ms-acc>:is(h2,h3)::after{content:""!important;flex:none!important;width:9px!important;height:9px!important;border-right:1.6px solid #171a1c!important;border-bottom:1.6px solid #171a1c!important;transform:rotate(45deg) translate(-2px,-2px)!important;transition:transform .2s!important}
+  #ep1-catalog .ms-acc.ms-open>:is(h2,h3)::after{transform:rotate(225deg) translate(-2px,-2px)!important}
+  #ep1-catalog .ms-acc>:is(h2,h3) a{pointer-events:none!important;text-decoration:none!important;color:inherit!important}
+  #ep1-catalog .ms-acc>ul{display:none!important}
+  #ep1-catalog .ms-acc.ms-open>ul{display:block!important;margin:4px 0 8px!important}
+  #ep1-catalog .ms-acc{margin:0!important;padding:0!important;border:0!important}
+  #ep1-catalog .ep1-catalog-grid{gap:0!important;row-gap:0!important}
+  #ep1-catalog .ep1-menu-brands.ms-acc{margin-top:0!important;padding-top:0!important;border-top:0!important}
+  #ep1-catalog .ms-acc .ep1-brands-list{flex-direction:column!important;padding-left:0!important;margin-left:0!important}
+  #ep1-catalog .ms-acc.ms-open .ep1-brands-list{display:block!important}
+  #ep1-catalog .ms-acc .ep1-brands-list li{display:block!important;margin:0!important;padding:0!important}
+  #ep1-catalog .ms-acc .ep1-brands-list li::before,#ep1-catalog .ms-acc .ep1-brands-list li::after,#ep1-catalog .ms-acc .ep1-brands-list a::before,#ep1-catalog .ms-acc .ep1-brands-list a::after{content:none!important;display:none!important}
+  #ep1-catalog .ms-acc .ep1-brands-list a{display:block!important;padding:11px 0!important}
+  #ep1-catalog .ms-acc li.ms-all a{font-weight:500!important}
 }
