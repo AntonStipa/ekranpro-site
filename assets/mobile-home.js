@@ -17,7 +17,7 @@
     }
 
     // 1б. Отдельное фото первого экрана для телефона (эксперимент 01.11.2026; убрать строку HERO_M — вернётся медиакуб)
-    var HERO_M='';
+    var HERO_M='';   // 02.11: фото для телефона подставляет сборка (<picture> в mobile_home.py), здесь не нужно
     var hp=document.querySelector('#ekranpro-first-screen .ep1-hero-photo');
     if(HERO_M&&hp&&!hp.__m){hp.__m=1; hp.removeAttribute('srcset'); hp.removeAttribute('sizes'); hp.src=base0()+'/assets/'+HERO_M; hp.classList.add('ep-hero-m');}
 
@@ -70,6 +70,11 @@
       bar.addEventListener('click',function(e){var a=e.target.closest('[data-scroll]'); if(!a)return; var t=document.getElementById(a.dataset.scroll); if(!t)return; e.preventDefault();
         var hh=(document.querySelector('.ep1-header')||{offsetHeight:0}).offsetHeight; window.scrollTo({top:t.getBoundingClientRect().top+scrollY-hh+1,behavior:'smooth'});});
     }
+
+    // 02.11: высота от верха заголовка первого экрана до низа экрана — для кадра фото и градиента (CSS --m-ch)
+    var heroCH=window.epHeroCH=function(){var hero=document.querySelector('#ekranpro-first-screen .ep1-hero')||document.querySelector('.cat-main .sx-hero'); if(!hero||!mq.matches)return; var t=hero.querySelector('h1'); if(!t)return;
+      var c=hero.getBoundingClientRect().bottom-t.getBoundingClientRect().top; if(c>0)hero.style.setProperty('--m-ch',Math.round(c)+'px');};
+    heroCH(); addEventListener('resize',heroCH); addEventListener('load',heroCH); if(document.fonts&&document.fonts.ready)document.fonts.ready.then(heroCH);
 
     // Шапка (на тёмном фоне) и нижняя панель появляются вместе, когда первый экран ушёл и наверх подошли «Уличные экраны»
     var heroEl=document.querySelector('#ekranpro-first-screen .ep1-hero')||document.querySelector('.cat-main .sx-hero'), root=document.documentElement, past=null;

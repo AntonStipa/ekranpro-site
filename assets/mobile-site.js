@@ -7,19 +7,27 @@
   root.classList.add('ep-ms');
   if(!document.querySelector('.cat-main .sx-hero')) root.classList.add('ep-ms-nohero');
   var h=document.querySelector('#ekranpro-first-screen .ep1-header');
-  var docked=false, raf=0;
+  // Шапка (02.11): одна логика для всех внутренних страниц. Пока первый экран на месте — шапка поверх фото.
+  // Дальше — закреплённая тёмная: прячется при прокрутке вниз, показывается при прокрутке вверх (порог 24 px).
+  // Пружина у краёв страницы и скачки высоты окна (панели Safari) не считаются движением.
+  var docked=false, raf=0, lastY=Math.max(0,scrollY), acc=0, hid=false, rz=0;
+  function maxY(){return Math.max(0,document.documentElement.scrollHeight-innerHeight)}
   function dock(){
     raf=0; if(!h)return;
-    var d=mq.matches&&(scrollY>(h.offsetHeight||56)||h.classList.contains('is-nav-open')&&scrollY>0);
-    if(d===docked)return; docked=d;
-    h.classList.remove('ep-msa'); h.classList.toggle('ep-msd',d);
-    if(d){h.getBoundingClientRect(); h.classList.add('ep-msa');}
+    var y=Math.min(Math.max(0,scrollY),maxY()), open=h.classList.contains('is-nav-open');
+    var d=mq.matches&&(y>(h.offsetHeight||56)||open&&y>0);
+    if(d!==docked){docked=d; h.classList.remove('ep-msa'); h.classList.toggle('ep-msd',d); if(d){h.getBoundingClientRect(); h.classList.add('ep-msa');}}
+    var dy=y-lastY; lastY=y;
+    if(!d||open||Date.now()-rz<350){acc=0; if(!d||open)hid=false;}
+    else{ if(dy>0&&acc<0||dy<0&&acc>0)acc=0; acc+=dy; if(acc>24)hid=true; else if(acc<-24)hid=false; }
+    h.classList.toggle('ep-msh',hid);
+    if(h.classList.contains('ep-mh'))h.classList.remove('ep-mh');   // старая логика сборки (MENU_LINK_JS) на этих страницах не нужна
   }
   addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(dock)},{passive:true});
-  addEventListener('resize',dock); dock();
+  addEventListener('resize',function(){rz=Date.now(); dock()}); dock();
   // высота шапки над липкими плашками (вкладки карточки товара): 56 px, когда шапка на экране, иначе 0
   function hdrTop(){
-    if(!h)return; var on=mq.matches&&h.classList.contains('ep-msd')&&(root.classList.contains('ep-m-past')||h.classList.contains('is-nav-open'))&&!h.classList.contains('ep-mh');
+    if(!h)return; var on=mq.matches&&h.classList.contains('ep-msd')&&(root.classList.contains('ep-m-past')||h.classList.contains('is-nav-open'))&&!h.classList.contains('ep-msh');
     root.style.setProperty('--ms-top',on?(h.offsetHeight||56)+'px':'0px');
   }
   if(h&&window.MutationObserver){var mo=new MutationObserver(hdrTop); mo.observe(h,{attributes:true,attributeFilter:['class']}); mo.observe(root,{attributes:true,attributeFilter:['class']});}
@@ -27,6 +35,21 @@
 
   function init(){
     if(!mq.matches)return;   // на компьютере ничего не меняем
+    // «Технологии» / «Преимущества»: лента карточек, общие кнопки под ней (заявка — по текущей карточке)
+    var pc=document.getElementById('ep-products-compare'), scenes=pc&&pc.querySelector('.epp-scenes');
+    if(scenes&&!scenes.classList.contains('ms-track')&&scenes.querySelectorAll('.epp-scene').length>1){
+      pc.classList.add('ms-swipe'); scenes.classList.add('ms-track');
+      var first=scenes.querySelector('.epp-actions');
+      if(first){
+        var acts=first.cloneNode(true); acts.classList.add('ms-acts'); scenes.after(acts);
+        var cnt=document.createElement('p'); cnt.className='ms-count'; acts.before(cnt);
+        var all=[].slice.call(scenes.querySelectorAll('.epp-scene'));
+        var cur=function(){var w=all[0].getBoundingClientRect().width+14, i=Math.max(0,Math.min(all.length-1,Math.round(scenes.scrollLeft/w)));
+          var q=all[i].querySelector('.epp-quote'), mq2=acts.querySelector('.epp-quote'); if(q&&mq2)mq2.setAttribute('data-quote',q.getAttribute('data-quote')||'');
+          cnt.textContent=(i+1)+' из '+all.length+' · листайте вправо';};
+        scenes.addEventListener('scroll',function(){requestAnimationFrame(cur)},{passive:true}); cur();
+      }
+    }
     // «Получить расчёт» в нижней панели: в форме — тема страницы (как у кнопки первого экрана)
     var hq=document.querySelector('.cat-main .sx-hero [data-quote]'), mc=document.querySelector('.ep-mbar-cta');
     if(hq&&mc)mc.setAttribute('data-quote',hq.getAttribute('data-quote'));
@@ -48,6 +71,12 @@
       if(txt){var b=document.createElement('b'); b.className='ep-ms-num'; b.textContent=txt.textContent.trim(); pr.replaceChild(b,txt); pr.insertBefore(document.createTextNode(' '),b); b.after(document.createTextNode(' '));}
       var u=smalls[smalls.length-1]; if(u&&/м²/.test(u.textContent)&&!/НДС/.test(u.textContent)) u.textContent=u.textContent.trim()+', с НДС';
     }
+    // заголовки, где длинное слово не помещается в ширину экрана: шрифт уменьшается, пока слово не влезет (без переносов по слогам)
+    [].slice.call(document.querySelectorAll('.cat-main h1, .cat-main h2, .cat-main h3, #ep-page-end h2')).forEach(function(t){
+      if(!t.offsetWidth)return; var f=parseFloat(getComputedStyle(t).fontSize), n=0;
+      while(t.scrollWidth>t.clientWidth+1&&f>18&&n++<20){f-=1; t.style.setProperty('font-size',f+'px','important');}
+    });
+    if(window.epHeroCH)window.epHeroCH();
   }
   // нижняя панель на карточке товара: «Получить расчёт» — заявка на эту модель (как кнопка карточки)
   document.addEventListener('click',function(e){

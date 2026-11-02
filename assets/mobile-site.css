@@ -11,19 +11,20 @@
   html.ep-ms.ep-ms-nohero.ep-ms #ekranpro-first-screen .ep1-header:not(.ep-msd){background:rgba(21,25,28,.94)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
   html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header.ep-msd{position:fixed!important;background:rgba(21,25,28,.94)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;opacity:0!important;transform:translate3d(0,-100%,0)!important;pointer-events:none!important}
   html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header.ep-msd.ep-msa{transition:transform .45s cubic-bezier(.23,1,.32,1),opacity .45s ease!important}
-  html.ep-ms.ep-ms.ep-m-past #ekranpro-first-screen .ep1-header.ep-msd,html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header.ep-msd.is-nav-open{opacity:1!important;transform:none!important;pointer-events:auto!important}
-  html.ep-ms.ep-ms:root #ekranpro-first-screen .ep1-header.ep-msd.ep-mh.ep-mh.ep-mh.ep-mh:not(.is-nav-open){opacity:0!important;transform:translate3d(0,-100%,0)!important;pointer-events:none!important}
+  html.ep-ms.ep-ms.ep-ms.ep-m-past:root #ekranpro-first-screen .ep1-header.ep-msd.ep-msd.ep-msd.ep-msd:not(.ep-msh),html.ep-ms.ep-ms.ep-ms:root #ekranpro-first-screen .ep1-header.ep-msd.ep-msd.ep-msd.ep-msd.is-nav-open{opacity:1!important;transform:none!important;pointer-events:auto!important;visibility:visible!important}
+  html.ep-ms.ep-ms.ep-ms:root #ekranpro-first-screen .ep1-header.ep-msd.ep-msd.ep-msd.ep-msd.ep-msh:not(.is-nav-open){opacity:0!important;transform:translate3d(0,-100%,0)!important;pointer-events:none!important}
   html.ep-ms #ekranpro-first-screen .ep1-header .ep1-mainbar{background:transparent!important}
 
-  /* ---------- Первый экран раздела: фото от самого верха, главный объект по центру, снизу градиент; заголовок, цена, две кнопки ---------- */
-  html.ep-ms .cat-main .sx-hero{--m-ph:calc(24px + 104vw);position:relative!important;display:block!important;min-height:0!important;padding:0!important;background:#06080a!important;isolation:isolate!important;overflow:hidden!important}
+  /* ---------- Первый экран раздела (02.11): ровно в высоту экрана, как на главной. Фото от верха до заголовка (+70 px под градиентом),
+     кадр по центру; снизу вверх до заголовка — градиент; заголовок, цена, две кнопки — внизу, всегда видны над панелью браузера ---------- */
+  html.ep-ms .cat-main .sx-hero{position:relative!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;min-height:100svh!important;padding:calc(56px + 52vw) 0 0!important;box-sizing:border-box!important;background:#06080a!important;isolation:isolate!important;overflow:hidden!important}
   html.ep-ms .sx-hero::before{display:none!important}
-  html.ep-ms .sx-hero::after{display:block!important;content:""!important;position:absolute!important;inset:0!important;height:auto!important;z-index:1!important;pointer-events:none!important;background:linear-gradient(180deg,rgba(6,8,10,.55) 0,rgba(6,8,10,0) 90px,rgba(6,8,10,0) calc(var(--m-ph) - 130px),rgba(6,8,10,.5) calc(var(--m-ph) + 22px),rgba(6,8,10,.88) calc(var(--m-ph) + 150px),#06080a 100%)!important}
-  html.ep-ms .sx-hero .sx-hero-img{position:absolute!important;inset:0 auto auto 0!important;z-index:0!important;width:100%!important;height:var(--m-ph)!important;max-width:none!important;object-fit:cover!important;object-position:50% 50%!important;transform:none!important;-webkit-mask-image:linear-gradient(180deg,#000 78%,transparent 100%)!important;mask-image:linear-gradient(180deg,#000 78%,transparent 100%)!important}
-  html.ep-ms .sx-hero-in{position:relative!important;z-index:2!important;display:block!important;padding:calc(var(--m-ph) + 4px) 16px 24px!important;margin:0!important;max-width:none!important}
-  html.ep-ms .cat-main .sx-hero h1{font-size:clamp(32px,9.2vw,38px)!important;line-height:1.04!important;letter-spacing:-.03em!important;font-weight:500!important;margin:0 0 6px!important;max-width:none!important;text-shadow:0 2px 18px rgba(0,0,0,.45)!important}
+  html.ep-ms .sx-hero::after{display:block!important;content:""!important;position:absolute!important;inset:0!important;height:auto!important;z-index:1!important;pointer-events:none!important;background:linear-gradient(180deg,rgba(6,8,10,.55) 0,rgba(6,8,10,0) 90px),linear-gradient(0deg,#06080a 0,rgba(6,8,10,.92) calc(var(--m-ch,340px) - 130px),rgba(6,8,10,.5) var(--m-ch,340px),rgba(6,8,10,0) calc(var(--m-ch,340px) + 110px))!important}
+  html.ep-ms .sx-hero .sx-hero-img{position:absolute!important;inset:0 auto auto 0!important;z-index:0!important;width:100%!important;height:calc(100% - var(--m-ch,340px) + 70px)!important;max-width:none!important;object-fit:cover!important;object-position:50% 50%!important;transform:none!important;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important;mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important}
+  html.ep-ms .sx-hero-in{position:relative!important;z-index:2!important;display:block!important;padding:18px 16px 24px!important;margin:0!important;max-width:none!important;flex:none!important}
+  html.ep-ms .cat-main .sx-hero h1{font-size:clamp(30px,8.6vw,38px)!important;line-height:1.05!important;letter-spacing:-.03em!important;font-weight:500!important;margin:0 0 6px!important;max-width:none!important;text-shadow:0 2px 18px rgba(0,0,0,.45)!important;overflow-wrap:break-word!important;-webkit-hyphens:manual!important;hyphens:manual!important}
   html.ep-ms .cat-main .sx-hero h1 br{display:none!important}
-  html.ep-ms .cat-main .sx-hero .sx-h1-price{display:block!important;margin:8px 0 0!important;font-size:15px!important;line-height:1.3!important;letter-spacing:0!important;color:#cfd3d6!important;font-weight:400!important;white-space:normal!important}
+  html.ep-ms .cat-main .sx-hero .sx-h1-price{display:block!important;margin:8px 0 0!important;font-size:15px!important;line-height:1.3!important;letter-spacing:0!important;color:#cfd3d6!important;font-weight:400!important;white-space:normal!important;-webkit-hyphens:manual!important;hyphens:manual!important}
   html.ep-ms .cat-main .sx-hero .sx-h1-price small{font-size:15px!important;color:#cfd3d6!important;font-weight:400!important;letter-spacing:0!important;vertical-align:baseline!important}
   html.ep-ms .cat-main .sx-hero .sx-h1-price b.ep-ms-num{font-size:24px!important;font-weight:500!important;color:#fff!important;letter-spacing:-.02em!important}
   html.ep-ms .cat-main .sx-hero-lead{display:none!important}
@@ -96,9 +97,9 @@
   html.ep-ms .ek-layout{padding-bottom:20px!important}
 
   /* ---------- Листаемые ленты разделов (как «Решения» и «Отзывы» на главной): первая с отступом 20 px, следующая выглядывает на 28 px ---------- */
-  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust){display:flex!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;grid-template-columns:none!important}
-  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust)::-webkit-scrollbar{display:none!important}
-  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust)>*{flex:0 0 calc(100vw - 62px)!important;min-width:0!important;scroll-snap-align:start!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid){display:flex!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;grid-template-columns:none!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)::-webkit-scrollbar{display:none!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)>*{flex:0 0 calc(100vw - 62px)!important;min-width:0!important;scroll-snap-align:start!important}
 
   /* ---------- Этапы: свёрнутый список, номер и название; описание открывается стрелкой ---------- */
   html.ep-ms .sx-steps{min-height:0!important}
@@ -121,4 +122,58 @@
   html.ep-ms .ek-mob-cta{display:none!important}
   html:has(dialog[open]) .ep-mbar,html:has(.ep1-nav.is-open) .ep-mbar{display:none!important}
 
+
+  /* ---------- 02.11: над листингом только заголовок, сразу — «Фильтры» и поиск (без «01 / Каталог», «Найдено…» и текста о ценах) ---------- */
+  html.ep-ms .sx-cat-head .sx-eyebrow,html.ep-ms .ek-intro,html.ep-ms .sx-transfer-note,html.ep-ms .ek-head .ek-count{display:none!important}
+  html.ep-ms .ek-head{margin-bottom:14px!important}
+  /* поиск, «Фильтры» и сортировка — одной высоты, 44 px */
+  html.ep-ms .ek-toolbar .ek-fbtn{height:44px!important;min-height:44px!important;box-sizing:border-box!important}
+  html.ep-ms .ek-toolbar .ek-search{height:44px!important;min-height:44px!important;box-sizing:border-box!important;padding-block:0!important;align-items:center!important}
+  html.ep-ms .ek-toolbar .ek-search input{height:42px!important;min-height:0!important;padding-block:0!important;box-sizing:border-box!important}
+  html.ep-ms .ek-toolbar .ek-dd-btn{height:44px!important;min-height:44px!important;box-sizing:border-box!important}
+
+  /* ---------- 02.11: карточки в ряду одной высоты: ряд растягивает карточки до самой высокой, а параметры, цена и «Посмотреть»
+     прижаты к низу карточки — у соседей они на одном уровне, сколько бы строк ни занимало название ---------- */
+  html.ep-ms :is(#ek-grid,#ek-related .ek-grid).ek-grid{align-items:stretch!important}
+  html.ep-ms :is(#ek-grid,#ek-related) .ek-card{height:auto!important;align-self:stretch!important}
+  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-body>div:first-child{margin-bottom:6px!important}
+  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs{margin-top:auto!important}
+  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price{margin-top:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-actions{flex:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-img{flex:none!important}
+
+  /* ---------- 02.11: «Технологии» / «Преимущества» (блок «Виды экранов» главной на внутренних страницах): листаются только карточки
+     (фото, подпись, заголовок, цифры), кнопки стоят под лентой на месте. Ленту собирает mobile-site.js (класс ms-track) ---------- */
+  html.ep-ms #ep-products-compare.ms-swipe{padding:26px 0 26px!important;background:#f6f6f3!important}
+  html.ep-ms #ep-products-compare.ms-swipe .epp-stage{position:static!important;height:auto!important;overflow:visible!important;padding:0 20px!important}
+  html.ep-ms #ep-products-compare .epp-scenes.ms-track{display:flex!important;align-items:stretch!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 -20px!important;padding:0 20px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;position:static!important;height:auto!important}
+  html.ep-ms #ep-products-compare .epp-scenes.ms-track::-webkit-scrollbar{display:none!important}
+  html.ep-ms #ep-products-compare .ms-track>.epp-scene{flex:0 0 calc(100vw - 62px)!important;min-width:0!important;scroll-snap-align:start!important;padding:0!important;margin:0!important;background:transparent!important;position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important;display:flex!important;flex-direction:column!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-photo{order:1!important;aspect-ratio:1/1!important;margin:0 0 14px!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-eyebrow{order:2!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-title{order:3!important;font-size:clamp(24px,7.2vw,28px)!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-actions{display:none!important}
+  html.ep-ms #ep-products-compare .ms-acts{display:grid!important;gap:10px!important;margin:18px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-acts .epp-quote{background:#15191c!important;color:#fff!important}
+  html.ep-ms #ep-products-compare .ms-count{margin:12px 0 0!important;font-size:13px!important;color:#60656a!important;font-variant-numeric:tabular-nums!important}
+
+  /* ---------- 02.11: «Какой шаг пикселя нужен» — картинка с тремя зонами во всю ширину экрана, без прокрутки вбок ---------- */
+  html.ep-ms .sx-pitch-scroll{overflow:visible!important;margin:0 calc(50% - 50vw)!important;width:100vw!important;max-width:100vw!important;padding:0!important}
+  html.ep-ms .sx-pitch-stage{width:100vw!important;min-width:0!important;max-width:100vw!important;margin:0!important}
+  html.ep-ms .sx-pitch-zones li b{font-size:11.5px!important;line-height:1.2!important;white-space:normal!important}
+
+  /* ---------- 02.11: «Привезём оборудование до покупки» — как на главной: заголовок, подпись, фото, кнопка; без списка ---------- */
+  html.ep-ms .sx-demo-in{display:flex!important;flex-direction:column!important}
+  html.ep-ms .sx-demo-copy{display:contents!important}
+  html.ep-ms .sx-demo-copy h2{order:1!important}
+  html.ep-ms .sx-demo-lead{order:2!important;margin:8px 0 16px!important;font-size:14px!important}
+  html.ep-ms .sx-demo-points{display:none!important}
+  html.ep-ms .sx-demo-photo{order:3!important;margin:0 0 16px!important;width:100%!important}
+  html.ep-ms .sx-demo-foot{order:4!important;margin:0!important}
+
+  /* ---------- 02.11: «Дополнительное оборудование» — лента, как «Решения» на главной: карточка целиком (фото, тип, название, цена, кнопка) ---------- */
+  html.ep-ms .sx-extras-grid{list-style:none!important}
+  html.ep-ms .sx-extras .sx-head .sx-lead{margin-top:10px!important}
+  html.ep-ms .sx-extras-grid>li{display:flex!important;flex-direction:column!important}
+  html.ep-ms .sx-extras-grid .sx-extras-btn{margin-top:auto!important;width:100%!important;min-height:46px!important;font:400 13px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:.06em!important;text-transform:uppercase!important}
 }

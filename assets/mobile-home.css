@@ -179,4 +179,10 @@
   #ep-director .ep-director-portrait{order:3!important;margin:0 0 16px!important}
   #ep-director .ep-action{order:4!important;width:100%!important}
 
+
+  /* ---------- 02.11: первый экран ровно в высоту экрана (100svh — с открытыми панелями браузера), кнопки всегда видны.
+     Фото — от верха до заголовка (+70 px под градиентом); --m-ch — высота от верха заголовка до низа экрана, её ставит mobile-home.js ---------- */
+  #ekranpro-first-screen .ep1-hero{min-height:100svh!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;padding:calc(56px + 52vw) 0 0!important;box-sizing:border-box!important}
+  #ekranpro-first-screen .ep1-hero-photo{height:calc(100% - var(--m-ch,340px) + 70px)!important;object-position:50% 50%!important;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important;mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important}
+  #ekranpro-first-screen .ep1-hero::after{background:linear-gradient(180deg,rgba(6,8,10,.55) 0,rgba(6,8,10,0) 90px),linear-gradient(0deg,#06080a 0,rgba(6,8,10,.92) calc(var(--m-ch,340px) - 130px),rgba(6,8,10,.5) var(--m-ch,340px),rgba(6,8,10,0) calc(var(--m-ch,340px) + 110px))!important}
 }
