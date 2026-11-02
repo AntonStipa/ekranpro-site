@@ -150,3 +150,12 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
   if(mq.addEventListener)mq.addEventListener('change',init);
 })();
+/* 02.11: листинг на главной на компьютере — стрелки листают ленту на 4 карточки */
+(function(){
+  function go(){var s=document.getElementById('ep-home-catalog'); if(!s)return; var g=s.querySelector('.ehc-grid'), pv=s.querySelector('.ehc-prev'), nx=s.querySelector('.ehc-next'); if(!g||!pv||!nx)return;
+    var upd=function(){pv.disabled=g.scrollLeft<4; nx.disabled=g.scrollLeft+g.clientWidth>=g.scrollWidth-4};
+    var step=function(d){var c=g.querySelector('.ehc-card'); var gap=parseFloat(getComputedStyle(g).columnGap)||0; var n=Math.max(1,Math.round(g.clientWidth/((c?c.offsetWidth:g.clientWidth)+gap))); g.scrollBy({left:d*n*((c?c.offsetWidth:0)+gap),behavior:'smooth'})};
+    pv.addEventListener('click',function(){step(-1)}); nx.addEventListener('click',function(){step(1)});
+    g.addEventListener('scroll',function(){requestAnimationFrame(upd)},{passive:true}); addEventListener('resize',upd); upd();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go); else go();
+})();

@@ -225,3 +225,42 @@
   #ep1-catalog .ep1-catalog-footer>span{display:none!important}
   #ep1-catalog .ep1-catalog-footer{justify-content:flex-start!important}
 }
+/* 02.11 (Антон): листинг на главной — после «Видов экранов», перед «Подбором». Разметку вставляет сборка (mobile_home.listing), на телефоне — лента в 2 ряда (правила выше) */
+@media (max-width:760px){
+  #ep-home-catalog .ehc-nav,#ep-home-catalog .ehc-t{display:none!important}
+  #ep-home-catalog .ep-eyebrow{display:block!important;font:500 11px/1.4 Inter,Arial,sans-serif!important;letter-spacing:.09em!important;text-transform:uppercase!important;color:#60656a!important}
+}
+@media (min-width:761px){
+  #ep-home-catalog{--ehc-gap:clamp(14px,1.4vw,28px);background:#fff;color:#171a1c;font-family:Inter,Arial,sans-serif;padding:clamp(72px,7vw,140px) 4.8% clamp(40px,3.6vw,72px);box-sizing:border-box}
+  #ep-home-catalog *{box-sizing:border-box}
+  #ep-home-catalog .ep-eyebrow{margin:0 0 clamp(20px,1.8vw,36px);color:#60656a;font-size:clamp(11px,.88vw,18px);font-weight:500;letter-spacing:.09em;text-transform:uppercase}
+  #ep-home-catalog .ehc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:clamp(30px,2.7vw,54px)}
+  #ep-home-catalog h2{margin:0;font-size:clamp(32px,4.02vw,80px);font-weight:500;line-height:1.07;letter-spacing:-.045em}
+  #ep-home-catalog .ehc-filter,#ep-home-catalog .ehc-foot{display:none}
+  #ep-home-catalog .ehc-nav{display:flex;align-items:center;gap:10px;flex:none}
+  #ep-home-catalog .ehc-all{display:inline-flex;align-items:center;gap:14px;margin-right:clamp(12px,1.6vw,32px);padding:12px 0;border-bottom:1px solid #171a1c;color:#171a1c;text-decoration:none;font:400 clamp(13px,.95vw,18px)/1 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase}
+  #ep-home-catalog .ehc-all::after{content:"→";font-size:1.25em;line-height:1;transition:transform .2s}
+  #ep-home-catalog .ehc-all:hover::after{transform:translateX(4px)}
+  #ep-home-catalog .ehc-arr{display:grid;place-items:center;width:clamp(44px,3.1vw,60px);aspect-ratio:1;padding:0;border:1px solid #171a1c;background:#fff;color:#171a1c;cursor:pointer;transition:background .2s,color .2s,opacity .2s}
+  #ep-home-catalog .ehc-arr svg{width:44%;height:44%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  #ep-home-catalog .ehc-prev svg{transform:scaleX(-1)}
+  #ep-home-catalog .ehc-arr:hover:not(:disabled){background:#171a1c;color:#fff}
+  #ep-home-catalog .ehc-arr:disabled{opacity:.3;cursor:default}
+  #ep-home-catalog .ehc-grid{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3 * var(--ehc-gap)) / 4);gap:var(--ehc-gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain}
+  #ep-home-catalog .ehc-grid::-webkit-scrollbar{display:none}
+  #ep-home-catalog .ehc-card{scroll-snap-align:start;display:flex;flex-direction:column;min-width:0;border:1px solid #d8dad7;background:#fff;transition:border-color .2s}
+  #ep-home-catalog .ehc-card:hover{border-color:#171a1c}
+  #ep-home-catalog .ehc-ph{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:#eef0ee}
+  #ep-home-catalog .ehc-ph img{position:absolute;inset:8% 8% 6%;width:84%;height:86%;object-fit:contain;mix-blend-mode:multiply;transition:transform .35s}
+  #ep-home-catalog .ehc-card:hover .ehc-ph img{transform:scale(1.03)}
+  #ep-home-catalog .ehc-badge{position:absolute;left:12px;top:12px;padding:4px 9px;border:1px solid #d8dad7;background:#fff;font-size:12px;line-height:1.3;color:#171a1c}
+  #ep-home-catalog .ehc-b{display:flex;flex-direction:column;flex:1;padding:clamp(16px,1.3vw,26px)}
+  #ep-home-catalog .ehc-n{color:#171a1c;text-decoration:none;font-size:clamp(19px,1.5vw,30px);font-weight:500;letter-spacing:-.02em;line-height:1.15}
+  #ep-home-catalog .ehc-t{margin-top:4px;color:#60656a;font-size:clamp(13px,.95vw,18px);line-height:1.35}
+  #ep-home-catalog .ehc-s{margin:10px 0 18px;color:#171a1c;font-size:clamp(13px,.95vw,18px);line-height:1.35}
+  #ep-home-catalog .ehc-pr{margin-top:auto;font-size:clamp(18px,1.4vw,28px);font-weight:500;letter-spacing:-.02em;white-space:nowrap}
+  #ep-home-catalog .ehc-pr small{font-size:.62em;font-weight:400;color:#60656a;letter-spacing:0}
+  #ep-home-catalog .ehc-btn{display:flex;align-items:center;justify-content:space-between;margin-top:16px;min-height:clamp(48px,3.5vw,64px);padding:0 20px;background:#f36b52;color:#fff;text-decoration:none;font:400 clamp(13px,.95vw,18px)/1 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;transition:background .2s}
+  #ep-home-catalog .ehc-btn::after{content:"→";font-size:1.3em}
+  #ep-home-catalog .ehc-btn:hover{background:#171a1c}
+}
