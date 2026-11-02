@@ -648,3 +648,19 @@ html.sx-hdr .sx-hero::after{content:"";position:absolute;inset:0 0 auto;z-index:
 @media (max-width:680px){
   .sx-tri-tag{font-size:11px}                                   /* подписи на фото «Сравнения» — было 9,5 px */
 }
+
+/* 02.11: тендер — ОКПД 2 и амортизационная группа: строка раскрывается стрелкой, внутри — все варианты с пояснениями */
+.sx-kv>div.sx-kv-multi{flex-wrap:wrap;align-items:baseline}
+.sx-kv-multi dd{flex:1 1 auto;min-width:0}
+.sx-kv-acc summary{display:inline-flex;align-items:center;gap:10px;cursor:pointer;list-style:none;font-weight:500}
+.sx-kv-acc summary::-webkit-details-marker{display:none}
+.sx-kv-acc summary::after{content:"";width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .2s}
+.sx-kv-acc[open] summary::after{transform:rotate(225deg) translate(-2px,-1px)}
+.sx-kv-list{list-style:none;margin:12px 0 2px;padding:0;text-align:left;font-weight:400}
+.sx-kv-list li{padding:10px 0;border-top:1px solid var(--ek-line)}
+.sx-kv-list b{font-weight:500;font-variant-numeric:tabular-nums}
+.sx-kv-list span{color:var(--ek-muted);margin-left:6px}
+.sx-kv-list p{margin:4px 0 0;color:#3d4246;font-size:14px;line-height:1.5;max-width:46em}
+.sx-kv-multi details[open]{width:100%}
+.sx-kv>div.sx-kv-multi:has(details[open]){flex-direction:column;gap:4px}
+.sx-kv>div.sx-kv-multi:has(details[open]) dd{text-align:left}
