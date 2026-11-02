@@ -17,7 +17,7 @@
     }
 
     // 1б. Отдельное фото первого экрана для телефона (эксперимент 01.11.2026; убрать строку HERO_M — вернётся медиакуб)
-    var HERO_M='m-outdoor-orenznak.webp';
+    var HERO_M='';
     var hp=document.querySelector('#ekranpro-first-screen .ep1-hero-photo');
     if(HERO_M&&hp&&!hp.__m){hp.__m=1; hp.removeAttribute('srcset'); hp.removeAttribute('sizes'); hp.src=base0()+'/assets/'+HERO_M; hp.classList.add('ep-hero-m');}
 
@@ -72,8 +72,9 @@
     }
 
     // Шапка (на тёмном фоне) и нижняя панель появляются вместе, когда первый экран ушёл и наверх подошли «Уличные экраны»
-    var heroEl=document.querySelector('#ekranpro-first-screen .ep1-hero'), root=document.documentElement, past=null;
-    var checkPast=function(){var t=heroEl?heroEl.getBoundingClientRect().bottom+scrollY-60:innerHeight; var p=scrollY>t; if(p!==past){past=p; root.classList.toggle('ep-m-past',p)}};
+    var heroEl=document.querySelector('#ekranpro-first-screen .ep1-hero')||document.querySelector('.cat-main .sx-hero'), root=document.documentElement, past=null;
+    // внутренние страницы (01.11): первый экран раздела — .sx-hero; без фото (каталог, карточка товара) — после 160 px прокрутки
+    var checkPast=function(){var t=heroEl?heroEl.getBoundingClientRect().bottom+scrollY-60:(root.classList.contains('ep-ms')?160:innerHeight); var p=scrollY>t; if(p!==past){past=p; root.classList.toggle('ep-m-past',p)}};
     addEventListener('scroll',checkPast,{passive:true}); addEventListener('resize',checkPast); checkPast();
 
     // Кадр фото на телефоне: экран — по центру. cx, cy — центр экрана в долях ширины и высоты исходного фото, z — увеличение
