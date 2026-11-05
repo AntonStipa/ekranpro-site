@@ -731,7 +731,7 @@
 
   // ——— Закрепление: блок занимает ровно один экран и держится, пока не прокрутят дальше ———
   function pin(){
-    var on=window.innerWidth>=1000&&window.innerHeight>=600;
+    var on=window.innerWidth>=1000&&window.innerHeight>=600&&!root.closest('.sol-podbor'); // 05.11 (Антон): на страницах решений подбор не закрепляется — обычный блок с ровными отступами
     root.classList.toggle('is-pinned',on);
     root.style.setProperty('--pb-vh',window.innerHeight+'px');
     var hdr=document.querySelector('#ekranpro-first-screen .ep1-header'); // закреплённая шапка сайта перекрывает верх экрана

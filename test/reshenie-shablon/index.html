@@ -547,7 +547,7 @@
   #ep-products-compare .epp-copy > :not(.epp-text-viewport) { visibility: visible !important; }
 }
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://antonstipa.github.io/ekranpro-site/"}, {"@type": "ListItem", "position": 2, "name": "Решения", "item": "https://antonstipa.github.io/ekranpro-site/solutions/"}, {"@type": "ListItem", "position": 3, "name": "Светодиодные экраны и LCD-панели для кафе и ресторанов", "item": "https://antonstipa.github.io/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/"}]}, {"@type": "WebPage", "@id": "https://antonstipa.github.io/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/", "url": "https://antonstipa.github.io/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/", "name": "Светодиодные экраны и LCD-панели для кафе и ресторанов", "description": "Светодиодные экраны и LCD панели для кафе и ресторанов ✔Собственное производство ✔Гарантия от 2 лет ✔Установка под ключ в любой точке России", "dateModified": "2026-11-02"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Главная", "item": "https://antonstipa.github.io/ekranpro-site/"}, {"@type": "ListItem", "position": 2, "name": "Решения", "item": "https://antonstipa.github.io/ekranpro-site/solutions/"}, {"@type": "ListItem", "position": 3, "name": "Светодиодные экраны и LCD-панели для кафе и ресторанов", "item": "https://antonstipa.github.io/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/"}]}, {"@type": "WebPage", "@id": "https://antonstipa.github.io/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/", "url": "https://antonstipa.github.io/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/", "name": "Светодиодные экраны и LCD-панели для кафе и ресторанов", "description": "Светодиодные экраны и LCD панели для кафе и ресторанов ✔Собственное производство ✔Гарантия от 2 лет ✔Установка под ключ в любой точке России", "dateModified": "2026-11-05"}]}</script>
 
 <link rel="stylesheet" href="/ekranpro-site/assets/mobile-home.css?v=bdf2143e">
 <link rel="stylesheet" href="/ekranpro-site/assets/mobile-site.css?v=bdf2143e">
@@ -618,6 +618,17 @@
 
 </div>
 
+<style>
+/* 05.11.2026 (Антон): на решении блоки идут с одинаковым отступом, без «одноэкранных» высот (отзывы, вопросы, демонстрация, справка),
+   фон чередуется: зоны — белый, модели — серый, подбор — белый, что учесть — серый, проекты — белый, этапы — серый, демонстрация — тёмный,
+   отзывы — серый, вопросы — белый, справка — серый, консультация — белый, другие решения — серый. Стиль только на страницах решений. */
+:root{--sol-v:clamp(40px,5vw,80px)}
+#vidy,#models,#criteria,#cases,#process,#demo,#ep-reviews,#faq,#about,.ep-director,#related{padding-top:var(--sol-v)!important;padding-bottom:var(--sol-v)!important;min-height:0!important}
+.sol-podbor #ep-podbor .pb-pin{padding-top:var(--sol-v);padding-bottom:var(--sol-v)}
+#vidy,#faq,.ep-director{background:#fff!important}
+#models,#criteria,#process,#related{background:#e8ebe8!important}
+#process .sx-steps-grid>li,#related .sx-rel-list a{background:#fff!important}
+</style>
 
 <style>
 .gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
@@ -693,7 +704,7 @@
   </div>
 </section>
 
-<div class="sx-podbor"><!-- PODBOR_START -->
+<div class="sol-podbor"><div class="sx-podbor"><!-- PODBOR_START -->
 <section id="ep-podbor" aria-labelledby="pb-title">
   <div class="pb-pin">
     <div class="pb-head">
@@ -790,10 +801,10 @@
 <img id="pb-img-plain" alt="" hidden>
 <img id="pb-img-board" src="/ekranpro-site/assets/podbor/viewing-board.webp" alt="" hidden>
 <img id="pb-img-logo" src="/ekranpro-site/assets/podbor/logo-white.png" alt="" hidden>
-<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=9b26cae2">
-<script src="/ekranpro-site/assets/podbor/podbor.js?v=9b26cae2" defer></script>
+<link rel="stylesheet" href="/ekranpro-site/assets/podbor/podbor.css?v=7c8407d5">
+<script src="/ekranpro-site/assets/podbor/podbor.js?v=7c8407d5" defer></script>
 <!-- PODBOR_END -->
-</div>
+</div></div>
 
 <style>
 .sol-crit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,1.6vw,28px);margin:0;padding:0;list-style:none}
