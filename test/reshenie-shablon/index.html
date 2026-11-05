@@ -620,15 +620,15 @@
 
 <style>
 /* 05.11.2026 (Антон): на решении блоки идут с одинаковым отступом, без «одноэкранных» высот (отзывы, вопросы, демонстрация, справка),
-   фон чередуется: зоны — белый, модели — серый, подбор — белый, что учесть — серый, проекты — белый, этапы — серый, демонстрация — тёмный,
-   отзывы — серый, вопросы — белый, справка — серый, консультация — белый, другие решения — серый. Стиль только на страницах решений. */
+   фон — см. ниже. Стиль только на страницах решений. */
 :root{--sol-v:clamp(40px,5vw,80px)}
 #vidy,#models,#criteria,#cases,#process,#demo,#ep-reviews,#faq,#about,.ep-director,#related{padding-top:var(--sol-v)!important;padding-bottom:var(--sol-v)!important;min-height:0!important}
 .sol-podbor #ep-podbor .pb-pin{padding-top:var(--sol-v);padding-bottom:var(--sol-v)}
-#vidy,#faq,.ep-director{background:#fff!important}
-#models,#criteria,#process,#related{background:#e8ebe8!important}
-#process .sx-steps-grid>li,#related .sx-rel-list a{background:#fff!important}
-#process .sx-steps-n{color:#e8ebe8}#process .sx-steps-grid li:is(:hover,:focus-visible) .sx-steps-n{color:var(--ek-cta)}   /* 05.11 (Антон): карточки белые — цифры серые (раньше белые на сером), при наведении — коралловые, как было */
+#models,#faq,.ep-director{background:#fff!important}
+#vidy,#criteria,#related{background:#e8ebe8!important}
+#related .sx-rel-list a{background:#fff!important}
+/* 05.11, 2-й вариант (Антон): зоны серый, модели белый, подбор белый, что учесть серый, проекты белый, этапы белый (как на других страницах: серые карточки, белые цифры),
+   демонстрация тёмный, отзывы серый, вопросы белый, справка серый, консультация белый, другие решения серый */
 </style>
 
 <style>
