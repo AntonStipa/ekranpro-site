@@ -1,0 +1,234 @@
+/* Мобильная версия внутренних страниц, 01.11.2026 — по образцу мобильной главной (static/mobile-home/).
+   Всё внутри одного медиазапроса до 760 px: компьютерная версия не меняется. Стили главной (mobile-home.css) подключены
+   на этих страницах тоже — здесь только то, чего на главной нет, и отличия внутренних страниц. */
+@media (max-width:760px){
+  /* ---------- Шапка: на первом экране полупрозрачная поверх фото; после первого экрана выезжает тёмная ---------- */
+  html.ep-ms #ekranpro-first-screen{position:relative!important}
+  html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header{position:absolute!important;top:0!important;left:0!important;right:0!important;z-index:70!important;opacity:1!important;transform:none!important;pointer-events:auto!important;transition:none!important}
+  html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header:not(.ep-msd){background:rgba(6,8,10,.38)!important;-webkit-backdrop-filter:blur(6px)!important;backdrop-filter:blur(6px)!important;box-shadow:none!important}
+  /* страницы без фото на первом экране (каталог, карточка товара, сравнение): шапка сразу тёмная, контент под ней */
+  html.ep-ms.ep-ms-nohero #ekranpro-first-screen{padding-top:56px!important}
+  html.ep-ms.ep-ms-nohero.ep-ms #ekranpro-first-screen .ep1-header:not(.ep-msd){background:rgba(21,25,28,.94)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header.ep-msd{position:fixed!important;background:rgba(21,25,28,.94)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;opacity:0!important;transform:translate3d(0,-100%,0)!important;pointer-events:none!important}
+  html.ep-ms.ep-ms #ekranpro-first-screen .ep1-header.ep-msd.ep-msa{transition:transform .45s cubic-bezier(.23,1,.32,1),opacity .45s ease!important}
+  html.ep-ms.ep-ms.ep-ms.ep-m-past:root #ekranpro-first-screen .ep1-header.ep-msd.ep-msd.ep-msd.ep-msd:not(.ep-msh),html.ep-ms.ep-ms.ep-ms:root #ekranpro-first-screen .ep1-header.ep-msd.ep-msd.ep-msd.ep-msd.is-nav-open{opacity:1!important;transform:none!important;pointer-events:auto!important;visibility:visible!important}
+  html.ep-ms.ep-ms.ep-ms:root #ekranpro-first-screen .ep1-header.ep-msd.ep-msd.ep-msd.ep-msd.ep-msh:not(.is-nav-open){opacity:0!important;transform:translate3d(0,-100%,0)!important;pointer-events:none!important}
+  html.ep-ms #ekranpro-first-screen .ep1-header .ep1-mainbar{background:transparent!important}
+
+  /* ---------- Первый экран раздела (02.11): ровно в высоту экрана, как на главной. Фото от верха до заголовка (+70 px под градиентом),
+     кадр по центру; снизу вверх до заголовка — градиент; заголовок, цена, две кнопки — внизу, всегда видны над панелью браузера ---------- */
+  html.ep-ms .cat-main .sx-hero{position:relative!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;min-height:100svh!important;padding:calc(56px + 52vw) 0 0!important;box-sizing:border-box!important;background:#06080a!important;isolation:isolate!important;overflow:hidden!important}
+  html.ep-ms .sx-hero::before{display:none!important}
+  html.ep-ms .sx-hero::after{display:block!important;content:""!important;position:absolute!important;inset:0!important;height:auto!important;z-index:1!important;pointer-events:none!important;background:linear-gradient(180deg,rgba(6,8,10,.55) 0,rgba(6,8,10,0) 90px),linear-gradient(0deg,#06080a 0,rgba(6,8,10,.92) calc(var(--m-ch,340px) - 130px),rgba(6,8,10,.5) var(--m-ch,340px),rgba(6,8,10,0) calc(var(--m-ch,340px) + 110px))!important}
+  html.ep-ms .sx-hero .sx-hero-img{position:absolute!important;inset:0 auto auto 0!important;z-index:0!important;width:100%!important;height:calc(100% - var(--m-ch,340px) + 70px)!important;max-width:none!important;object-fit:cover!important;object-position:50% 50%!important;transform:none!important;-webkit-mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important;mask-image:linear-gradient(180deg,#000 calc(100% - 110px),transparent 100%)!important}
+  html.ep-ms .sx-hero-in{position:relative!important;z-index:2!important;display:block!important;padding:18px 16px 24px!important;margin:0!important;max-width:none!important;flex:none!important}
+  html.ep-ms .cat-main .sx-hero h1{font-size:clamp(30px,8.6vw,38px)!important;line-height:1.05!important;letter-spacing:-.03em!important;font-weight:500!important;margin:0 0 6px!important;max-width:none!important;text-shadow:0 2px 18px rgba(0,0,0,.45)!important;overflow-wrap:break-word!important;-webkit-hyphens:manual!important;hyphens:manual!important}
+  html.ep-ms .cat-main .sx-hero h1 br{display:none!important}
+  html.ep-ms .cat-main .sx-hero .sx-h1-price{display:block!important;margin:8px 0 0!important;font-size:15px!important;line-height:1.3!important;letter-spacing:0!important;color:#cfd3d6!important;font-weight:400!important;white-space:normal!important;-webkit-hyphens:manual!important;hyphens:manual!important}
+  html.ep-ms .cat-main .sx-hero .sx-h1-price small{font-size:15px!important;color:#cfd3d6!important;font-weight:400!important;letter-spacing:0!important;vertical-align:baseline!important}
+  html.ep-ms .cat-main .sx-hero .sx-h1-price b.ep-ms-num{font-size:24px!important;font-weight:500!important;color:#fff!important;letter-spacing:-.02em!important}
+  html.ep-ms .cat-main .sx-hero-lead{display:none!important}
+  html.ep-ms .sx-hero-actions{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:12px!important;margin:18px 0 0!important}
+  html.ep-ms .sx-hero-actions>*{flex:none!important;width:100%!important;max-width:none!important}
+  html.ep-ms .sx-hero-foot{display:none!important}
+
+  /* ---------- Кнопки сайта: шрифт кнопок, 13 px, заглавные; текст пар кнопок с одного отступа ---------- */
+  html.ep-ms .ep-btn,html.ep-ms .ep-link{font-family:"EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-size:13px!important;font-weight:400!important;letter-spacing:.06em!important;text-transform:uppercase!important}
+  html.ep-ms .ep-btn,html.ep-ms .ep-link{padding-left:20px!important;padding-right:20px!important;box-sizing:border-box!important}
+
+  /* ---------- Листинг каталога: карточки как на главной — 2 в ряд, фото на сером без белой подложки, «Посмотреть» ----------
+     Страницы разделов (лента section.js): 2 ряда, листается вправо, первая карточка с отступом 20 px, следующая выглядывает на 28 px.
+     «LED-экраны» и списки без ленты: сетка в 2 колонки и «Показать ещё». */
+  html.ep-ms #ek-grid.ek-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-flow:row!important;gap:10px!important;padding:0!important;margin:0!important;overflow:visible!important}
+  html.ep-ms.sx-js #ek-listing:not([data-rows]) #ek-grid.ek-grid{grid-template-columns:none!important;grid-template-rows:repeat(2,auto)!important;grid-auto-flow:column!important;grid-auto-columns:calc((100% - 28px)/2)!important;gap:10px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 6px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important}
+  /* 05.11 (Антон): «Рекомендованные модели» на решениях — карточки как в листинге, сеткой в 2 колонки */
+  html.ep-ms .sx-models-grid.ek-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-flow:row!important;gap:10px!important;padding:0!important;margin:0!important;overflow:visible!important}
+  html.ep-ms #ek-grid.ek-grid::-webkit-scrollbar{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card{position:relative!important;display:flex!important;flex-direction:column!important;min-width:0!important;padding:0!important;border:1px solid #d8dad7!important;background:#fff!important;grid-template-columns:none!important;scroll-snap-align:start!important;box-shadow:none!important;transform:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-img{position:relative!important;aspect-ratio:1/1!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;background:#e8ebe8!important;overflow:hidden!important;border:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-frames{position:absolute!important;inset:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-img img{position:absolute!important;top:14px!important;left:12px!important;width:calc(100% - 24px)!important;height:calc(100% - 22px)!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:50% 50%!important;mix-blend-mode:multiply!important;transform:none!important;background:transparent!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-frames img:not(.on){opacity:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-dots,html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-cmp{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-badges{left:6px!important;top:6px!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-badge{font-size:10.5px!important;padding:2px 6px!important;background:#fff!important;border:1px solid #d8dad7!important;color:#171a1c!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-body{display:flex!important;flex-direction:column!important;flex:1!important;padding:8px 9px 0!important;gap:0!important;min-width:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card h3{font-size:15px!important;line-height:1.2!important;font-weight:500!important;margin:0 0 3px!important;letter-spacing:-.01em!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card h3 a{color:#171a1c!important;text-decoration:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-kind{display:block!important;font-size:11px!important;line-height:1.25!important;font-weight:400!important;color:#60656a!important;margin:0 0 2px!important;letter-spacing:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-sku{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs{display:block!important;margin:2px 0 6px!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:11.5px!important;line-height:1.35!important;color:#60656a!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs>div{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs>div:nth-child(-n+2){display:inline!important;padding:0!important;border:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs>div:nth-child(2)::before{content:" · "}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs dt{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs dd{display:inline!important;margin:0!important;color:#60656a!important;font-size:11.5px!important;font-weight:400!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price{margin-top:auto!important;padding:0!important;border:0!important;display:block!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price .pl{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price .val{display:block!important;transform:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price b{display:block!important;font-size:14.5px!important;font-weight:500!important;white-space:nowrap!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price span:not(.val){display:block!important;font-size:11px!important;color:#60656a!important}
+  /* действия карточки: на телефоне одна кнопка «Посмотреть» (ведёт на карточку товара) */
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-actions{position:static!important;display:block!important;padding:8px 9px 10px!important;margin:0!important;opacity:1!important;transform:none!important;visibility:visible!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-order{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-details{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:42px!important;padding:6px 8px!important;margin:0!important;background:#f36b52!important;color:#fff!important;border:0!important;text-decoration:none!important;box-sizing:border-box!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-details>*{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-details::before{content:"Посмотреть";font:400 12.5px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#fff}
+  html.ep-ms .sx-rail .sx-rail-btns{display:none!important}
+
+  /* ---------- «Технологии» на страницах разделов (тот же блок, что «Виды экранов» на главной): цифры — на месте преимуществ ---------- */
+  html.ep-ms #ep-products-compare :is(.sx-scene-stats,.sx-scene-points,.sx-scene-vars,.sx-scene-icons){order:4!important;margin:0 0 16px!important;opacity:1!important;transform:none!important}
+
+  /* ---------- Карточка товара: «Похожие модели» — лента в один ряд, 2 карточки и край третьей ---------- */
+  html.ep-ms #ek-related{padding:32px 0 36px!important}
+  html.ep-ms #ek-related .ek-grid{display:grid!important;grid-template-columns:none!important;grid-template-rows:none!important;grid-auto-flow:column!important;grid-auto-columns:calc((100% - 28px)/2)!important;gap:10px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 6px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important}
+  html.ep-ms #ek-related .ek-grid::-webkit-scrollbar{display:none!important}
+
+  /* ---------- Каталог: разделы плитками по 2 в ряд, фото на сером ---------- */
+  html.ep-ms .ek-tiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  html.ep-ms .ek-tile{display:flex!important;flex-direction:column!important;min-width:0!important}
+  html.ep-ms .ek-tile .ek-ph{aspect-ratio:1/1!important;height:auto!important;background:#e8ebe8!important;position:relative!important;overflow:hidden!important}
+  html.ep-ms .ek-tile .ek-ph img{position:absolute!important;top:12px!important;left:10px!important;width:calc(100% - 20px)!important;height:calc(100% - 20px)!important;max-width:none!important;object-fit:contain!important;mix-blend-mode:multiply!important}
+  html.ep-ms .ek-tile .ek-t{padding:9px 10px 12px!important}
+  html.ep-ms .ek-tile h3{font-size:15px!important;line-height:1.2!important;margin:0 0 4px!important}
+  html.ep-ms .ek-tile h3 .ek-num{display:block!important;font-size:12px!important;margin-top:2px!important}
+  html.ep-ms .ek-tile p{font-size:12.5px!important;line-height:1.35!important;margin:0!important;display:-webkit-box!important;-webkit-line-clamp:3!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
+  html.ep-ms .ek-task-row{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+
+  /* ---------- Листинг: меньше пустоты под лентой ---------- */
+  html.ep-ms .ek-layout{padding-bottom:20px!important}
+
+  /* ---------- Листаемые ленты разделов (как «Решения» и «Отзывы» на главной): первая с отступом 20 px, следующая выглядывает на 28 px ---------- */
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid){display:flex!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;grid-template-columns:none!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)::-webkit-scrollbar{display:none!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)>*{flex:0 0 calc(100vw - 84px)!important;min-width:0!important;scroll-snap-align:start!important}
+
+  /* ---------- Этапы: свёрнутый список, номер и название; описание открывается стрелкой ---------- */
+  html.ep-ms .sx-steps{min-height:0!important}
+  html.ep-ms .sx-steps-grid{display:block!important;grid-template-rows:none!important}
+  html.ep-ms .sx-steps-grid li{display:grid!important;grid-template-columns:44px minmax(0,1fr) 20px!important;align-items:center!important;column-gap:10px!important;padding:14px 16px!important;margin:0 0 8px!important;cursor:pointer!important;overflow:visible!important}
+  html.ep-ms .sx-steps-grid .sx-steps-big{display:none!important}
+  html.ep-ms .sx-steps-grid .sx-steps-n{grid-column:1!important;margin:0!important;padding:0!important;font-size:30px!important;line-height:1!important;color:#fff!important}
+  html.ep-ms .sx-steps-grid li.is-open .sx-steps-n{color:#f36b52!important}
+  html.ep-ms .cat-main .sx-steps-grid h3{grid-column:2!important;margin:0!important;font-size:18px!important;line-height:1.2!important;opacity:1!important;transform:none!important}
+  html.ep-ms .sx-steps-grid li::after{content:"";grid-column:3!important;grid-row:1!important;width:10px;height:10px;border-right:1.5px solid #171a1c;border-bottom:1.5px solid #171a1c;transform:rotate(45deg) translate(-2px,-2px);transition:transform .25s;justify-self:center}
+  html.ep-ms .sx-steps-grid li.is-open::after{transform:rotate(225deg) translate(-2px,-2px)}
+  html.ep-ms .sx-steps-grid .sx-steps-more{grid-column:1/-1!important;display:none!important;opacity:1!important;transform:none!important}
+  html.ep-ms .sx-steps-grid li.is-open .sx-steps-more{display:block!important}
+  html.ep-ms .sx-steps-grid .sx-steps-more p{font-size:14px!important}
+
+  /* ---------- Липкие плашки страниц: под шапкой, когда она на экране; над нижней панелью ---------- */
+  html.ep-ms .ek-anchors{top:var(--ms-top,0px)!important;transition:top .3s ease!important}
+  /* карточка товара: своя нижняя плашка «цена + Получить расчёт» не нужна — одна нижняя панель на всём сайте;
+     «Получить расчёт» в панели открывает форму с этой моделью (mobile-site.js) */
+  html.ep-ms .ek-mob-cta{display:none!important}
+  html:has(dialog[open]) .ep-mbar,html:has(.ep1-nav.is-open) .ep-mbar{display:none!important}
+
+
+  /* ---------- 02.11: над листингом только заголовок, сразу — «Фильтры» и поиск (без «01 / Каталог», «Найдено…» и текста о ценах) ---------- */
+  html.ep-ms .sx-cat-head .sx-eyebrow,html.ep-ms .ek-intro,html.ep-ms .sx-transfer-note,html.ep-ms .ek-head .ek-count{display:none!important}
+  html.ep-ms .ek-head{margin-bottom:14px!important}
+  /* поиск, «Фильтры» и сортировка — одной высоты, 44 px */
+  html.ep-ms .ek-toolbar .ek-fbtn{height:44px!important;min-height:44px!important;box-sizing:border-box!important}
+  html.ep-ms .ek-toolbar .ek-search{height:44px!important;min-height:44px!important;box-sizing:border-box!important;padding-block:0!important;align-items:center!important}
+  html.ep-ms .ek-toolbar .ek-search input{height:42px!important;min-height:0!important;padding-block:0!important;box-sizing:border-box!important}
+  html.ep-ms .ek-toolbar .ek-dd-btn{height:44px!important;min-height:44px!important;box-sizing:border-box!important}
+
+  /* ---------- 02.11: карточки в ряду одной высоты: ряд растягивает карточки до самой высокой, а параметры, цена и «Посмотреть»
+     прижаты к низу карточки — у соседей они на одном уровне, сколько бы строк ни занимало название ---------- */
+  html.ep-ms :is(#ek-grid,#ek-related .ek-grid).ek-grid{align-items:stretch!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card{height:auto!important;align-self:stretch!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-body>div:first-child{margin-bottom:6px!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs{margin-top:auto!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price{margin-top:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-actions{flex:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-img{flex:none!important}
+
+  /* ---------- 02.11: «Технологии» / «Преимущества» (блок «Виды экранов» главной на внутренних страницах): листаются только карточки
+     (фото, подпись, заголовок, цифры), кнопки стоят под лентой на месте. Ленту собирает mobile-site.js (класс ms-track) ---------- */
+  html.ep-ms #ep-products-compare.ms-swipe{padding:26px 0 26px!important;background:#f6f6f3!important}
+  html.ep-ms #ep-products-compare.ms-swipe .epp-stage{position:static!important;height:auto!important;overflow:visible!important;padding:0 20px!important}
+  html.ep-ms #ep-products-compare .epp-scenes.ms-track{display:flex!important;align-items:stretch!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 -20px!important;padding:0 20px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;position:static!important;height:auto!important}
+  html.ep-ms #ep-products-compare .epp-scenes.ms-track::-webkit-scrollbar{display:none!important}
+  html.ep-ms #ep-products-compare .ms-track>.epp-scene{flex:0 0 calc(100vw - 62px)!important;min-width:0!important;scroll-snap-align:start!important;padding:0!important;margin:0!important;background:transparent!important;position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important;display:flex!important;flex-direction:column!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-photo{order:1!important;aspect-ratio:1/1!important;margin:0 0 14px!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-eyebrow{order:2!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-title{order:3!important;font-size:clamp(24px,7.2vw,28px)!important}
+  html.ep-ms #ep-products-compare .ms-track .epp-actions{display:none!important}
+  html.ep-ms #ep-products-compare .ms-acts{display:grid!important;gap:10px!important;margin:14px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-acts .epp-quote{background:#15191c!important;color:#fff!important}
+
+  /* ---------- 02.11: «Какой шаг пикселя нужен» — картинка с тремя зонами во всю ширину экрана, без прокрутки вбок ---------- */
+  html.ep-ms .sx-pitch-scroll{overflow:visible!important;margin:0 calc(50% - 50vw)!important;width:100vw!important;max-width:100vw!important;padding:0!important}
+  html.ep-ms .sx-pitch-stage{width:100vw!important;min-width:0!important;max-width:100vw!important;margin:0!important}
+  html.ep-ms .sx-pitch-zones li b{font-size:11.5px!important;line-height:1.2!important;white-space:normal!important}
+
+  /* ---------- 02.11: «Привезём оборудование до покупки» — как на главной: заголовок, подпись, фото, кнопка; без списка ---------- */
+  html.ep-ms .sx-demo-in{display:flex!important;flex-direction:column!important;gap:0!important;row-gap:0!important}
+  html.ep-ms .sx-demo-copy{display:contents!important}
+  html.ep-ms .sx-demo-copy h2{order:1!important}
+  html.ep-ms .sx-demo-lead{order:2!important;margin:8px 0 16px!important;font-size:14px!important}
+  html.ep-ms .sx-demo-points{display:none!important}
+  html.ep-ms .sx-demo-photo{order:3!important;margin:0 0 16px!important;width:100%!important}
+  html.ep-ms .sx-demo-foot{order:4!important;margin:0!important}
+
+  /* ---------- 02.11: «Дополнительное оборудование» — лента, как «Решения» на главной: карточка целиком (фото, тип, название, цена, кнопка) ---------- */
+  html.ep-ms .sx-extras-grid{list-style:none!important}
+  html.ep-ms .sx-extras .sx-head .sx-lead{margin-top:10px!important}
+  html.ep-ms .sx-extras-grid>li{display:flex!important;flex-direction:column!important}
+  html.ep-ms .sx-extras-grid .sx-extras-btn{margin-top:auto!important;width:100%!important;min-height:46px!important;font:400 13px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif!important;letter-spacing:.06em!important;text-transform:uppercase!important}
+
+  /* ---------- 02.11 (2): первый экран — до верха нижней строки браузера (как на главной) ---------- */
+  html.ep-ms .cat-main .sx-hero{min-height:calc(100svh + 40px)!important}
+  html.ep-ms .sx-hero-in{padding-bottom:48px!important}
+
+  /* ---------- 02.11 (2): ленты разделов — у соседних карточек только фото и заголовок; последняя встаёт на место остальных ---------- */
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track){padding-right:0!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track)::after{content:""!important;flex:0 0 28px!important}
+  /* 05.11 (Антон): проекты, способы установки, доп. оборудование — та же ширина карточки, что у отзывов: соседняя высовывается на одинаковые 50 px; запас в конце — под ширину */
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)::after{flex:0 0 50px!important}
+  html.ep-ms.sx-js #ek-listing:not([data-rows]) #ek-grid.ek-grid,html.ep-ms #ek-related .ek-grid{padding-right:38px!important}
+  html.ep-ms .sx-proj-grid>.ms-off :is(.sx-proj-facts,figcaption),
+  html.ep-ms .gl-cards.gl-ust>.ms-off :is(.sx-case-city,.sx-case-text),
+  html.ep-ms .sx-extras-grid>.ms-off :is(.sx-extras-kind,.sx-extras-price,.sx-extras-btn),
+  html.ep-ms #ep-products-compare .ms-track>.ms-off :is(.epp-eyebrow,.sx-scene-stats,.sx-scene-points,.sx-scene-vars,.sx-scene-icons,.epp-features,.epp-description){opacity:0!important;visibility:hidden!important;transition:opacity .25s ease,visibility 0s .25s!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track)>.ms-cur *{transition:opacity .25s ease!important}
+
+  /* ---------- 02.11 (2): «Преимущества …» — заголовок блока; цифры — списком с точками, друг под другом ---------- */
+  html.ep-ms #ep-products-compare .ms-tech-h{margin:0 0 16px!important;font:500 clamp(26px,7.4vw,30px)/1.08 Inter,Arial,sans-serif!important;letter-spacing:-.03em!important;color:#171a1c!important;text-wrap:balance}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;margin:4px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats>div{display:block!important;position:relative!important;padding:0 0 0 18px!important;margin:0!important;border:0!important;min-width:0!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats>div::before{content:""!important;position:absolute!important;left:2px!important;top:.55em!important;width:7px!important;height:7px!important;border-radius:50%!important;background:#f36b52!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats dt{display:inline!important;font-size:22px!important;line-height:1.2!important;margin:0 6px 0 0!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats dd{display:inline!important;margin:0!important;font-size:13px!important;color:#60656a!important}
+  html.ep-ms #ep-products-compare .ms-track .sx-scene-stats>div.ms-hide{display:none!important}
+
+  /* ---------- 02.11 (2): ползунок «до / после» в ленте: белую ручку можно тянуть пальцем (лента при этом не листается) ---------- */
+  html.ep-ms .sx-cmp .sx-cmp-bar{z-index:4!important}
+  html.ep-ms .sx-cmp .sx-cmp-bar i{pointer-events:auto!important;touch-action:none!important;cursor:ew-resize!important}
+  html.ep-ms .sx-cmp .sx-cmp-bar i::before{content:""!important;position:absolute!important;inset:-14px!important}
+
+  /* ---------- 02.11 (2): листинг — «Сортировка» справа под «Фильтрами», поле сортировки ровно под поиском ---------- */
+  html.ep-ms .ek-toolbar{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;gap:10px!important;align-items:center!important}
+  html.ep-ms .ek-toolbar .ek-sort{display:contents!important}
+  html.ep-ms .ek-toolbar .ek-sort>span{grid-column:1!important;justify-self:end!important;text-align:right!important;margin:0!important;white-space:nowrap!important}
+  html.ep-ms .ek-toolbar .ek-sort .ek-dd{grid-column:2!important;width:100%!important;min-width:0!important}
+  html.ep-ms .ek-toolbar .ek-sort .ek-dd-btn{width:100%!important;justify-content:space-between!important}
+  html.ep-ms .ek-toolbar .ek-search{grid-column:2!important;width:100%!important;min-width:0!important;margin:0!important}
+  html.ep-ms .ek-toolbar .ek-fbtn{grid-column:1!important;margin:0!important}
+  html.ep-ms .ek-toolbar .ek-viewsw{display:none!important}
+
+  /* ---------- 02.11 (2): «Привезём оборудование до покупки» — плотнее; фото крупнее, поля слева и справа одинаковые ---------- */
+  html.ep-ms .sx-demo-copy h2{white-space:nowrap!important;font-size:min(30px,7.6vw)!important;margin:0!important}
+  html.ep-ms .sx-demo-copy h2>span{display:inline!important}
+  html.ep-ms .sx-demo-copy h2>span:last-of-type{display:block!important}
+  html.ep-ms .sx-demo-lead{margin:6px 0 10px!important}
+  html.ep-ms .sx-demo-photo{aspect-ratio:965/1024!important;overflow:hidden!important;margin:0 0 14px!important}
+  html.ep-ms .sx-demo-photo img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:62.2% 50%!important;max-width:none!important}
+  html.ep-ms .sx-demo-eyebrow{margin-bottom:10px!important}
+
+  /* ---------- 02.11 (2): меньше пустоты после «Наших проектов» и после «Этапов» ---------- */
+  html.ep-ms .sx-band.sx-proj{padding-bottom:28px!important}
+  html.ep-ms .sx-band.sx-steps{padding-top:32px!important;padding-bottom:28px!important}
+  html.ep-ms .sx-band.sx-steps+.sx-band{padding-top:32px!important}
+}
