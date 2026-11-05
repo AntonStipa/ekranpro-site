@@ -41,37 +41,39 @@
      «LED-экраны» и списки без ленты: сетка в 2 колонки и «Показать ещё». */
   html.ep-ms #ek-grid.ek-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-flow:row!important;gap:10px!important;padding:0!important;margin:0!important;overflow:visible!important}
   html.ep-ms.sx-js #ek-listing:not([data-rows]) #ek-grid.ek-grid{grid-template-columns:none!important;grid-template-rows:repeat(2,auto)!important;grid-auto-flow:column!important;grid-auto-columns:calc((100% - 28px)/2)!important;gap:10px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 6px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important}
+  /* 05.11 (Антон): «Рекомендованные модели» на решениях — карточки как в листинге, сеткой в 2 колонки */
+  html.ep-ms .sx-models-grid.ek-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:none!important;grid-auto-flow:row!important;gap:10px!important;padding:0!important;margin:0!important;overflow:visible!important}
   html.ep-ms #ek-grid.ek-grid::-webkit-scrollbar{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card{position:relative!important;display:flex!important;flex-direction:column!important;min-width:0!important;padding:0!important;border:1px solid #d8dad7!important;background:#fff!important;grid-template-columns:none!important;scroll-snap-align:start!important;box-shadow:none!important;transform:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-img{position:relative!important;aspect-ratio:1/1!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;background:#e8ebe8!important;overflow:hidden!important;border:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-frames{position:absolute!important;inset:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-img img{position:absolute!important;top:14px!important;left:12px!important;width:calc(100% - 24px)!important;height:calc(100% - 22px)!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:50% 50%!important;mix-blend-mode:multiply!important;transform:none!important;background:transparent!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-frames img:not(.on){opacity:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-dots,html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-cmp{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-badges{left:6px!important;top:6px!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-badge{font-size:10.5px!important;padding:2px 6px!important;background:#fff!important;border:1px solid #d8dad7!important;color:#171a1c!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-body{display:flex!important;flex-direction:column!important;flex:1!important;padding:8px 9px 0!important;gap:0!important;min-width:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card h3{font-size:15px!important;line-height:1.2!important;font-weight:500!important;margin:0 0 3px!important;letter-spacing:-.01em!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card h3 a{color:#171a1c!important;text-decoration:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-kind{display:block!important;font-size:11px!important;line-height:1.25!important;font-weight:400!important;color:#60656a!important;margin:0 0 2px!important;letter-spacing:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-sku{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs{display:block!important;margin:2px 0 6px!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:11.5px!important;line-height:1.35!important;color:#60656a!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs>div{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs>div:nth-child(-n+2){display:inline!important;padding:0!important;border:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs>div:nth-child(2)::before{content:" · "}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs dt{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs dd{display:inline!important;margin:0!important;color:#60656a!important;font-size:11.5px!important;font-weight:400!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price{margin-top:auto!important;padding:0!important;border:0!important;display:block!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price .pl{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price .val{display:block!important;transform:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price b{display:block!important;font-size:14.5px!important;font-weight:500!important;white-space:nowrap!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price span:not(.val){display:block!important;font-size:11px!important;color:#60656a!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card{position:relative!important;display:flex!important;flex-direction:column!important;min-width:0!important;padding:0!important;border:1px solid #d8dad7!important;background:#fff!important;grid-template-columns:none!important;scroll-snap-align:start!important;box-shadow:none!important;transform:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-img{position:relative!important;aspect-ratio:1/1!important;width:100%!important;height:auto!important;margin:0!important;padding:0!important;background:#e8ebe8!important;overflow:hidden!important;border:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-frames{position:absolute!important;inset:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-img img{position:absolute!important;top:14px!important;left:12px!important;width:calc(100% - 24px)!important;height:calc(100% - 22px)!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:50% 50%!important;mix-blend-mode:multiply!important;transform:none!important;background:transparent!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-frames img:not(.on){opacity:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-dots,html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-cmp{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-badges{left:6px!important;top:6px!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-badge{font-size:10.5px!important;padding:2px 6px!important;background:#fff!important;border:1px solid #d8dad7!important;color:#171a1c!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-body{display:flex!important;flex-direction:column!important;flex:1!important;padding:8px 9px 0!important;gap:0!important;min-width:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card h3{font-size:15px!important;line-height:1.2!important;font-weight:500!important;margin:0 0 3px!important;letter-spacing:-.01em!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card h3 a{color:#171a1c!important;text-decoration:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-kind{display:block!important;font-size:11px!important;line-height:1.25!important;font-weight:400!important;color:#60656a!important;margin:0 0 2px!important;letter-spacing:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-sku{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs{display:block!important;margin:2px 0 6px!important;padding:0!important;border:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;font-size:11.5px!important;line-height:1.35!important;color:#60656a!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs>div{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs>div:nth-child(-n+2){display:inline!important;padding:0!important;border:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs>div:nth-child(2)::before{content:" · "}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs dt{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs dd{display:inline!important;margin:0!important;color:#60656a!important;font-size:11.5px!important;font-weight:400!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price{margin-top:auto!important;padding:0!important;border:0!important;display:block!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price .pl{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price .val{display:block!important;transform:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price b{display:block!important;font-size:14.5px!important;font-weight:500!important;white-space:nowrap!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price span:not(.val){display:block!important;font-size:11px!important;color:#60656a!important}
   /* действия карточки: на телефоне одна кнопка «Посмотреть» (ведёт на карточку товара) */
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-actions{position:static!important;display:block!important;padding:8px 9px 10px!important;margin:0!important;opacity:1!important;transform:none!important;visibility:visible!important;background:transparent!important;border:0!important;box-shadow:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-order{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-details{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:42px!important;padding:6px 8px!important;margin:0!important;background:#f36b52!important;color:#fff!important;border:0!important;text-decoration:none!important;box-sizing:border-box!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-details>*{display:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-details::before{content:"Посмотреть";font:400 12.5px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#fff}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-actions{position:static!important;display:block!important;padding:8px 9px 10px!important;margin:0!important;opacity:1!important;transform:none!important;visibility:visible!important;background:transparent!important;border:0!important;box-shadow:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-order{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-details{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;min-height:42px!important;padding:6px 8px!important;margin:0!important;background:#f36b52!important;color:#fff!important;border:0!important;text-decoration:none!important;box-sizing:border-box!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-details>*{display:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-details::before{content:"Посмотреть";font:400 12.5px/1.2 "EP HelveticaNeueCyr Roman","Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:#fff}
   html.ep-ms .sx-rail .sx-rail-btns{display:none!important}
 
   /* ---------- «Технологии» на страницах разделов (тот же блок, что «Виды экранов» на главной): цифры — на месте преимуществ ---------- */
@@ -99,7 +101,7 @@
   /* ---------- Листаемые ленты разделов (как «Решения» и «Отзывы» на главной): первая с отступом 20 px, следующая выглядывает на 28 px ---------- */
   html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid){display:flex!important;gap:14px!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-padding-inline:20px!important;margin:0 calc(50% - 50vw)!important;padding:0 20px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;grid-template-columns:none!important}
   html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)::-webkit-scrollbar{display:none!important}
-  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)>*{flex:0 0 calc(100vw - 62px)!important;min-width:0!important;scroll-snap-align:start!important}
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)>*{flex:0 0 calc(100vw - 84px)!important;min-width:0!important;scroll-snap-align:start!important}
 
   /* ---------- Этапы: свёрнутый список, номер и название; описание открывается стрелкой ---------- */
   html.ep-ms .sx-steps{min-height:0!important}
@@ -135,12 +137,12 @@
   /* ---------- 02.11: карточки в ряду одной высоты: ряд растягивает карточки до самой высокой, а параметры, цена и «Посмотреть»
      прижаты к низу карточки — у соседей они на одном уровне, сколько бы строк ни занимало название ---------- */
   html.ep-ms :is(#ek-grid,#ek-related .ek-grid).ek-grid{align-items:stretch!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card{height:auto!important;align-self:stretch!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-body>div:first-child{margin-bottom:6px!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-specs{margin-top:auto!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-price{margin-top:0!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-actions{flex:none!important}
-  html.ep-ms :is(#ek-grid,#ek-related) .ek-card .ek-img{flex:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card{height:auto!important;align-self:stretch!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-body>div:first-child{margin-bottom:6px!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-specs{margin-top:auto!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-price{margin-top:0!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-actions{flex:none!important}
+  html.ep-ms :is(#ek-grid,#ek-related,.sx-models-grid) .ek-card .ek-img{flex:none!important}
 
   /* ---------- 02.11: «Технологии» / «Преимущества» (блок «Виды экранов» главной на внутренних страницах): листаются только карточки
      (фото, подпись, заголовок, цифры), кнопки стоят под лентой на месте. Ленту собирает mobile-site.js (класс ms-track) ---------- */
@@ -183,6 +185,8 @@
   /* ---------- 02.11 (2): ленты разделов — у соседних карточек только фото и заголовок; последняя встаёт на место остальных ---------- */
   html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track){padding-right:0!important}
   html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid,#ep-products-compare .ms-track)::after{content:""!important;flex:0 0 28px!important}
+  /* 05.11 (Антон): проекты, способы установки, доп. оборудование — та же ширина карточки, что у отзывов: соседняя высовывается на одинаковые 50 px; запас в конце — под ширину */
+  html.ep-ms :is(.sx-proj-grid,.gl-cards.gl-ust,.sx-extras-grid)::after{flex:0 0 50px!important}
   html.ep-ms.sx-js #ek-listing:not([data-rows]) #ek-grid.ek-grid,html.ep-ms #ek-related .ek-grid{padding-right:38px!important}
   html.ep-ms .sx-proj-grid>.ms-off :is(.sx-proj-facts,figcaption),
   html.ep-ms .gl-cards.gl-ust>.ms-off :is(.sx-case-city,.sx-case-text),
