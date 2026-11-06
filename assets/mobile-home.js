@@ -45,7 +45,7 @@
     var base=document.querySelector('a.ep1-logo')?document.querySelector('a.ep1-logo').getAttribute('href').replace(/\/$/,''):'';
     var esc=function(x){return String(x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
     var imgBase=(window.EP_HOME_IMG_BASE!=null)?window.EP_HOME_IMG_BASE:base+'/';
-    var price=function(v){return Math.round(v).toLocaleString('ru-RU').replace(/\s/g,' ')+' ₽'};
+    var price=function(v){return Math.round(v).toLocaleString('ru-RU').replace(/\s/g,'\u00a0')+' ₽'};
 
     // 10. Листинг на главной: лента в 2 ряда (на экране 4 карточки), листается вправо; «Заказать» открывает форму заявки
     var rv=document.getElementById('ep-reviews');

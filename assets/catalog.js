@@ -3,7 +3,7 @@
   'use strict';
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-  const fmt = n => Math.round(n).toLocaleString('ru-RU');
+  const fmt = n => Math.round(n).toLocaleString('ru-RU').replace(/\s/g, '\u00a0');   // 06.11 (Антон): разряды — неразрывный пробел обычной ширины, как в карточках со сборки
   const wordFor = n => (n % 10 === 1 && n % 100 !== 11) ? 'модель' : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 'модели' : 'моделей';
   const BASE = document.documentElement.dataset.base || '';
   const FORM_ENDPOINT = ''; // адрес обработчика формы (Formspree / свой бэкенд); пусто = демонстрационный режим
@@ -244,8 +244,8 @@
     const ARW = cls => `<span class="ek-arw" aria-hidden="true">${ARROW.replace('<svg', `<svg class="${cls}-out"`)}${ARROW.replace('<svg', `<svg class="${cls}-in"`)}</span>`;
     function cardHTML(p) {
       const url = `${BASE}/catalog/tovar/${p.slug}/`;
-      const unit = p.unitLabel || (p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : p.section === 'prozrachnye-ekrany' ? 'за шт, с НДС' : 'за табло, с НДС') : 'за м², с НДС');   // 31.10 пачка 5: unitLabel — «за экран», «за пилон»
-      const price = p.price ? `<b class="ek-num">${p.priceUnit === 'м²' ? 'от ' : ''}${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
+      const unit = p.unitLabel || (p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : p.section === 'prozrachnye-ekrany' ? 'за шт' : 'за табло') : 'за м²');   // 06.11 (Антон): «с НДС» в карточке не пишем   // 31.10 пачка 5: unitLabel — «за экран», «за пилон»
+      const price = p.price ? `<b class="ek-num">от ${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
       const cmp = cmpGet().includes(p.sku) ? 'checked' : '';
       const frames = (p.frames && p.frames.length ? p.frames : [p.photo]);
       const imgs = frames.map((f, i) => `<img src="${BASE}/${f}" alt="${i ? '' : (p.fullName || p.name)}" loading="lazy" width="480" height="360" class="${i ? '' : 'on'}" ${i ? 'aria-hidden="true"' : ''}>`).join('');
