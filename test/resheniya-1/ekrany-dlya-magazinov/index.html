@@ -622,9 +622,10 @@
 /* 05.11.2026 (Антон): на решении блоки идут с одинаковым отступом, без «одноэкранных» высот (отзывы, вопросы, демонстрация, справка),
    фон — см. ниже. Стиль только на страницах решений. */
 :root{--sol-v:clamp(40px,5vw,80px)}
-#vidy,#models,#criteria,#cases,#process,#demo,#ep-reviews,#faq,#about,.ep-director,#related{padding-top:var(--sol-v)!important;padding-bottom:var(--sol-v)!important;min-height:0!important}
+#vidy,#models,#extras,#criteria,#cases,#process,#demo,#ep-reviews,#faq,#about,.ep-director,#related{padding-top:var(--sol-v)!important;padding-bottom:var(--sol-v)!important;min-height:0!important}
 .sol-podbor #ep-podbor .pb-pin{padding-top:var(--sol-v);padding-bottom:var(--sol-v)}
-#models,#faq,.ep-director{background:#fff!important}
+#models,#extras,#faq,.ep-director{background:#fff!important}
+#models+#extras{padding-top:0!important}   /* доп. оборудование продолжает блок моделей (тот же белый фон) */
 #vidy,#criteria,#related{background:#e8ebe8!important}
 #related .sx-rel-list a{background:#fff!important}
 /* 06.11 (Антон): модели — над карточкой зона; заголовки разной длины не сдвигают карточки (subgrid на 2 строки) */
@@ -735,6 +736,8 @@
     <div class="sx-models-foot"><a href="/ekranpro-site/catalog/professionalnye-displei/" class="ep-link ep-link--ink"><span class="ep-link__label"><span>Каталог: профессиональные дисплеи</span><span aria-hidden="true">Каталог: профессиональные дисплеи</span></span><span class="ep-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ep-link__line" aria-hidden="true"><i></i><i></i></span></a><a href="/ekranpro-site/catalog/prozrachnye-ekrany/" class="ep-link ep-link--ink"><span class="ep-link__label"><span>Каталог: прозрачные экраны</span><span aria-hidden="true">Каталог: прозрачные экраны</span></span><span class="ep-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ep-link__line" aria-hidden="true"><i></i><i></i></span></a><a href="/ekranpro-site/catalog/interernye-ekrany/" class="ep-link ep-link--ink"><span class="ep-link__label"><span>Каталог: интерьерные экраны</span><span aria-hidden="true">Каталог: интерьерные экраны</span></span><span class="ep-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ep-link__line" aria-hidden="true"><i></i><i></i></span></a><a href="/ekranpro-site/catalog/informaczionnye-paneli/" class="ep-link ep-link--ink"><span class="ep-link__label"><span>Каталог: информационные панели</span><span aria-hidden="true">Каталог: информационные панели</span></span><span class="ep-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ep-link__line" aria-hidden="true"><i></i><i></i></span></a></div>
   </div>
 </section>
+
+
 
 <div class="sol-podbor"><div class="sx-podbor"><!-- PODBOR_START -->
 <section id="ep-podbor" aria-labelledby="pb-title">

@@ -625,9 +625,10 @@
 /* 05.11.2026 (Антон): на решении блоки идут с одинаковым отступом, без «одноэкранных» высот (отзывы, вопросы, демонстрация, справка),
    фон — см. ниже. Стиль только на страницах решений. */
 :root{--sol-v:clamp(40px,5vw,80px)}
-#vidy,#models,#criteria,#cases,#process,#demo,#ep-reviews,#faq,#about,.ep-director,#related{padding-top:var(--sol-v)!important;padding-bottom:var(--sol-v)!important;min-height:0!important}
+#vidy,#models,#extras,#criteria,#cases,#process,#demo,#ep-reviews,#faq,#about,.ep-director,#related{padding-top:var(--sol-v)!important;padding-bottom:var(--sol-v)!important;min-height:0!important}
 .sol-podbor #ep-podbor .pb-pin{padding-top:var(--sol-v);padding-bottom:var(--sol-v)}
-#models,#faq,.ep-director{background:#fff!important}
+#models,#extras,#faq,.ep-director{background:#fff!important}
+#models+#extras{padding-top:0!important}   /* доп. оборудование продолжает блок моделей (тот же белый фон) */
 #vidy,#criteria,#related{background:#e8ebe8!important}
 #related .sx-rel-list a{background:#fff!important}
 /* 06.11 (Антон): модели — над карточкой зона; заголовки разной длины не сдвигают карточки (subgrid на 2 строки) */
@@ -733,12 +734,37 @@
   </div>
 </section>
 
+
+<section class="sx-band sx-extras" id="extras" aria-labelledby="sx-extras-h">
+  <div class="sx-in">
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">03 / Дополнительное оборудование</p><h2 id="sx-extras-h">Дополнительное оборудование для видеостен</h2><p class="sx-lead">Камеры, спикерфоны и пульты для переговорных и конференц-залов. Подберём комплект под видеостену и добавим в расчёт.</p></div>
+    <ul class="sx-extras-grid" role="list">
+      <li><figure><img src="/ekranpro-site/assets/section/xo-lideo-ptz-3a-1.webp" alt="Lideo PTZ-3A" width="600" height="600" loading="lazy" decoding="async"></figure>
+        <p class="sx-extras-kind">PTZ-камера</p><h3>Lideo PTZ-3A</h3><p class="sx-extras-price ek-num">33 365 ₽</p>
+        <button class="sx-extras-btn" type="button" data-quote="Дополнительное оборудование для видеостены: Lideo PTZ-3A">Добавить в расчёт</button></li>
+      <li><figure><img src="/ekranpro-site/assets/section/xo-prestel-hd-ptz1hu2-2.webp" alt="Prestel HD-PTZ1HU2W-B" width="600" height="600" loading="lazy" decoding="async"></figure>
+        <p class="sx-extras-kind">PTZ-камера</p><h3>Prestel HD-PTZ1HU2W-B</h3><p class="sx-extras-price ek-num">43 329 ₽</p>
+        <button class="sx-extras-btn" type="button" data-quote="Дополнительное оборудование для видеостены: Prestel HD-PTZ1HU2W-B">Добавить в расчёт</button></li>
+      <li><figure><img src="/ekranpro-site/assets/section/xo-lideo-spc-41u.webp" alt="Lideo SPC-41U, USB и Bluetooth" width="600" height="600" loading="lazy" decoding="async"></figure>
+        <p class="sx-extras-kind">Спикерфон</p><h3>Lideo SPC-41U, USB и Bluetooth</h3><p class="sx-extras-price ek-num">17 795 ₽</p>
+        <button class="sx-extras-btn" type="button" data-quote="Дополнительное оборудование для видеостены: Lideo SPC-41U, USB и Bluetooth">Добавить в расчёт</button></li>
+      <li><figure><img src="/ekranpro-site/assets/section/xo-5b7a88d3177861.webp" alt="Relacart CS-100D" width="600" height="600" loading="lazy" decoding="async"></figure>
+        <p class="sx-extras-kind">Пульт делегата</p><h3>Relacart CS-100D</h3><p class="sx-extras-price ek-num">21 709 ₽</p>
+        <button class="sx-extras-btn" type="button" data-quote="Дополнительное оборудование для видеостены: Relacart CS-100D">Добавить в расчёт</button></li>
+      <li><figure><img src="/ekranpro-site/assets/section/xo-prestel-vcs-s1-3.webp" alt="Prestel VCS-S1" width="600" height="600" loading="lazy" decoding="async"></figure>
+        <p class="sx-extras-kind">Саундбар</p><h3>Prestel VCS-S1</h3><p class="sx-extras-price ek-num">21 709 ₽</p>
+        <button class="sx-extras-btn" type="button" data-quote="Дополнительное оборудование для видеостены: Prestel VCS-S1">Добавить в расчёт</button></li>
+    </ul>
+    <p class="sx-extras-note">Актуальные цены уточняются при расчёте. Монтаж и настройка оборудования считаются отдельно.</p>
+  </div>
+</section>
+
 <div class="sol-podbor"><div class="sx-podbor"><!-- PODBOR_START -->
 <section id="ep-podbor" aria-labelledby="pb-title">
   <div class="pb-pin">
     <div class="pb-head">
       <div>
-        <p class="pb-eyebrow">03 / Подбор экрана</p>
+        <p class="pb-eyebrow">04 / Подбор экрана</p>
         <h2 id="pb-title">Подберите экран под ваш объект</h2>
       </div>
       <button class="pb-btn pb-btn--ink pb-btn--back" type="button" id="pb-back" hidden><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Назад к подбору</span></button>
@@ -852,7 +878,7 @@
 </style>
 <section class="sx-band" id="criteria" aria-labelledby="sol-crit-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">04 / Как выбрать</p><h2 id="sol-crit-h">Что учесть при выборе экрана</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">05 / Как выбрать</p><h2 id="sol-crit-h">Что учесть при выборе экрана</h2></div>
     <ul class="sol-crit sol-crit--3" role="list">
       <li><span class="sol-crit-big">Раскладка</span><p>Сначала соберите типовую раскладку камер и крупного тревожного окна. Проверьте ее в реальном разрешении.</p></li>
       <li><span class="sol-crit-big">Совместимость</span><p>Проверьте совместимость с системой видеонаблюдения.</p></li>
@@ -865,7 +891,7 @@
 
 <section class="sx-band sx-proj" id="cases" aria-labelledby="sx-cases-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">05 / Проекты</p><h2 id="sx-cases-h">Наши проекты</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">06 / Проекты</p><h2 id="sx-cases-h">Наши проекты</h2></div>
     <div class="sx-proj-grid">
       <article class="sx-proj-card">
         <figure><img src="/ekranpro-site/assets/section/case-zolotoe-yabloko-960.webp" alt="Москва — Сеть магазинов косметики «Золотое Яблоко»" loading="lazy" decoding="async" width="960" height="640">
@@ -891,7 +917,7 @@
 
 <section class="sx-band sx-steps" id="process" aria-labelledby="sx-process-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">06 / Этапы</p><h2 id="sx-process-h">Этапы работ: от расчёта до запуска</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">07 / Этапы</p><h2 id="sx-process-h">Этапы работ: от расчёта до запуска</h2></div>
     <ol class="sx-steps-grid"><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">01</span><p class="sx-steps-big" aria-hidden="true"><span>Расчёт</span><span>и подбор</span></p><h3>Расчёт и подбор</h3><div class="sx-steps-more"><div><p>По размерам помещения и расстоянию до зрителя готовим расчёт в трёх вариантах.</p><p class="sx-steps-t">24 часа</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">02</span><p class="sx-steps-big" aria-hidden="true"><span>Разработка</span><span>проекта</span></p><h3>Разработка проекта</h3><div class="sx-steps-more"><div><p>Несущая конструкция с расчётом нагрузок: на стену, на отдельную опору или на подвес. Силовые и слаботочные сети. Проектируем с СРО.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">03</span><p class="sx-steps-big" aria-hidden="true"><span>Поставка</span></p><h3>Поставка</h3><div class="sx-steps-more"><div><p>Прямые поставки с заводов, официальный ввоз с уплатой НДС и пошлин, страхование груза.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">04</span><p class="sx-steps-big" aria-hidden="true"><span>Монтаж</span></p><h3>Монтаж</h3><div class="sx-steps-more"><div><p>Собираем конструкцию и экран, выравниваем модули в одну плоскость, без зазоров и выступов. Работаем аккуратно, без пыли и грязи.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">05</span><p class="sx-steps-big" aria-hidden="true"><span>Запуск</span><span>и обучение</span></p><h3>Запуск и обучение</h3><div class="sx-steps-more"><div><p>Настройка, запуск контента, обучение вашего персонала.</p></div></div></li><li tabindex="0"><span class="sx-steps-n" aria-hidden="true">06</span><p class="sx-steps-big" aria-hidden="true"><span>Сервис</span></p><h3>Сервис</h3><div class="sx-steps-more"><div><p>Техническая поддержка 24/7, в том числе после окончания гарантии.</p><p class="sx-steps-t">до 5 лет гарантии</p></div></div></li></ol>
     
   </div>
@@ -900,7 +926,7 @@
 <section class="sx-demo" id="demo" aria-labelledby="sx-demo-h">
   <div class="sx-demo-backdrop" aria-hidden="true"></div>
   <div class="sx-in">
-    <p class="sx-demo-eyebrow">07 / Демонстрация</p>
+    <p class="sx-demo-eyebrow">08 / Демонстрация</p>
     <div class="sx-demo-in">
       <div class="sx-demo-copy">
         <h2 id="sx-demo-h"><span>Привезём</span> <span>оборудование</span> <span>до покупки</span> </h2>
@@ -1195,7 +1221,7 @@ html.eprv-dialog-open { overflow: hidden; }
 }
 </style>
   <header>
-    <p class="eprv-eyebrow">08 / Отзывы</p>
+    <p class="eprv-eyebrow">09 / Отзывы</p>
     <div class="eprv-heading">
       <h2 id="eprv-title">Клиенты о работе с ЭкранПро</h2>
       <p class="eprv-intro"><span>Руководители и специалисты —</span> <span>об опыте сотрудничества с нами.</span></p>
@@ -1527,13 +1553,13 @@ html.eprv-dialog-open { overflow: hidden; }
 <div id="ep-page-end">
 
 <section class="ep-section ep-faq ep-wrap" id="faq" aria-labelledby="sx-faq-h">
-  <div class="ep-faq-intro"><div class="ep-eyebrow">09 / Вопросы и ответы</div><h2 id="sx-faq-h">Вопросы и ответы</h2><p>Раздел заполняется: вопросов по этой странице на старом сайте не было.</p></div>
+  <div class="ep-faq-intro"><div class="ep-eyebrow">10 / Вопросы и ответы</div><h2 id="sx-faq-h">Вопросы и ответы</h2><p>Раздел заполняется: вопросов по этой странице на старом сайте не было.</p></div>
   <div class="ep-faq-list">
   </div>
 </section>
 <div class="cat-main"><section class="sx-band sx-band--grey" id="about" aria-labelledby="sx-about-h">
   <div class="sx-in sx-about">
-    <div class="sx-about-side"><p class="sx-eyebrow">10 / Справка</p><h2 id="sx-about-h">Видеостены для видеонаблюдения</h2></div>
+    <div class="sx-about-side"><p class="sx-eyebrow">11 / Справка</p><h2 id="sx-about-h">Видеостены для видеонаблюдения</h2></div>
     <div class="sx-about-main">
     <div class="sx-about-body" id="sx-about-body">
       <p>Главная LCD панели для видеостен Видеостены для видеонаблюдения Видеостены для видеонаблюдения Видеостена для видеонаблюдения — это большой экран, собранный из нескольких частей и объединяющий всю получаемую информацию с камер. Он позволяет удобно отслеживать происходящее в зоне визуальной защиты, дает возможность охраннику не переключаться между различными изображениями. Установленная на пункте службы безопасности видеостена делает защиту объекта более эффективной. Компания ЭкранПро реализует проекты любой сложности по установке видеостены для видеонаблюдения. Интегрируем оборудование в существующие системы безопасности, индивидуально настраиваем их, устанавливаем нужный софт. В течение трех лет после установки сервисно обслуживаем видеостены через удаленный доступ или офлайн. Получить расчет</p>
@@ -1546,7 +1572,7 @@ html.eprv-dialog-open { overflow: hidden; }
 <!-- DIRECTOR_START -->
   <section class="ep-director" id="ep-director" aria-labelledby="ep-director-title">
     <div class="ep-director-copy">
-      <p class="ep-eyebrow">11 / Консультация</p>
+      <p class="ep-eyebrow">12 / Консультация</p>
       <h2 id="ep-director-title"><span>Обсудите проект</span> <span>с техническим</span> <span>директором</span></h2>
       <p class="ep-director-description">Обсудим задачи проекта и ответим на технические вопросы.</p>
       <button class="ep-action ep-unified-cta" type="button" data-quote="Консультация технического директора: Видеостены для видеонаблюдения" data-brief-subject="Консультация с техническим директором." ><span class="epu-label">Обсудить проект</span><span class="epu-arrow" aria-hidden="true"><svg class="epu-arrow-out" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg class="epu-arrow-in" viewBox="0 0 24 24" fill="none"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
@@ -1562,7 +1588,7 @@ html.eprv-dialog-open { overflow: hidden; }
   
 <section class="sx-band sx-rel" id="related" aria-labelledby="sx-rel-h">
   <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">12 / Решения</p><h2 id="sx-rel-h">Другие решения</h2></div>
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">13 / Решения</p><h2 id="sx-rel-h">Другие решения</h2></div>
     <ul class="sx-rel-list" role="list"><li><a href="/ekranpro-site/solutions/ekrany-dlya-kafe-i-restoranov/"><span>Светодиодные экраны и LCD-панели для кафе и ресторанов</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="/ekranpro-site/solutions/ekrany-dlya-magazinov/"><span>Рекламные экраны для магазина</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="/ekranpro-site/solutions/led-ekrany-dlya-konferents-zala/"><span>LED-экран для конференц зала</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="/ekranpro-site/solutions/dlya-vystavok/"><span>Светодиодные экраны и видеостены для выставок</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="/ekranpro-site/solutions/dlya-kinoteatra/"><span>Экраны для кинотеатра</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li><li><a href="/ekranpro-site/solutions/dispetcherskie/"><span>Светодиодные экраны и видеостены для диспетчерских пунктов</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
   </div>
 </section>
