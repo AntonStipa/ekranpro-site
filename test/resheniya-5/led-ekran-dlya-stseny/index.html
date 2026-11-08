@@ -656,12 +656,89 @@
 
 </div>
 
+
+<style>
+.gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
+.gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
+.gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
+/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
+   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
+.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
+.gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
+.gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
+.gl-kinds-grid--rows{margin-bottom:calc(-1 * clamp(36px,3.2vw,56px))}
+/* 20.10: карточки на общей сетке строк (subgrid): фото, заголовок, текст и характеристики начинаются на одном уровне */
+.gl-kind4{display:grid;grid-row:span 4;grid-template-rows:subgrid;align-content:start}
+.gl-kind4 figure{margin:0;width:min(100%,max(220px,calc(100svh - 520px)));aspect-ratio:1/1;background:#fff;border:1px solid var(--ek-line);overflow:hidden}
+.gl-kind4 figure img{display:block;width:100%;height:100%;object-fit:contain;padding:4%;box-sizing:border-box}
+.gl-kind4-spec{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:1px solid #c9cdc9;display:grid;gap:2px;align-content:start;font-size:13.5px;line-height:1.4}
+.gl-kind4-spec li{position:relative;padding-left:14px}
+.gl-kind4-spec li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:#f36b52}
+.gl-kind4-spec b{font-weight:400;color:var(--ek-muted)}
+/* 06.11.2026, решения пачка 2: ссылка в карточке зоны на более узкое решение или раздел каталога (обзорная «для рекламы», спорт) */
+.gl-kind4-spec li.gl-kind4-go{padding:6px 0 0}.gl-kind4-spec li.gl-kind4-go::before{display:none}
+.gl-kind4-go a{display:inline-flex;align-items:center;gap:8px;color:var(--ek-ink,#171a1c);font-weight:500;text-decoration:none;border-bottom:1px solid #f36b52;padding-bottom:2px}
+.gl-kind4-go a svg{width:18px;height:18px;flex:none;color:#f36b52;transition:transform .3s ease}.gl-kind4-go a:hover svg,.gl-kind4-go a:focus-visible svg{transform:translateX(4px)}
+.gl-kind4-n{margin-right:6px;font-size:13px;letter-spacing:.08em;color:var(--ek-muted);font-weight:400;vertical-align:.15em}
+.gl-kind4 h3{margin:14px 0 0;font-size:clamp(18px,1.4vw,22px);font-weight:500;line-height:1.25}
+.gl-kind4-t{margin:8px 0 0!important;color:var(--ek-muted);font-size:14.5px;line-height:1.5}
+@media (max-width:1000px){.gl-kinds-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gl-kind4 figure{width:100%}.gl-kind4{margin-bottom:28px}}
+/* 08.11.2026, решения пачка 5: зоны установки на странице каталога (g.zones) — как на решениях: схема во всю ширину карточки без белого поля,
+   на телефоне по одной карточке во всю ширину (то же, что #vidy в solution.html) */
+.gl-kinds--zones .gl-kind4 figure{width:100%;border:0;background:#eceeec}.gl-kinds--zones .gl-kind4 figure img{padding:0}
+@media (max-width:760px){.gl-kinds--zones .gl-kinds-grid{grid-template-columns:minmax(0,1fr)!important;row-gap:32px}.gl-kinds--zones .gl-kind4{display:block;grid-row:auto;margin-bottom:0}}
+</style>
+<section class="sx-band sx-band--grey gl-kinds gl-kinds--zones" id="vidy" aria-labelledby="sx-kinds-h">
+  <div class="sx-in">
+    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">02 / Зоны установки</p><h2 id="sx-kinds-h">Где разместить LED-экраны на сценической площадке</h2></div>
+    <p class="gl-kinds-lead">Для сцены отдельно выбирают основной видеозадник, трансляционные экраны и поверхности декораций. Стационарная установка и гастрольный комплект требуют разных конструкций, способов обслуживания и перевозки.</p>
+    <div class="gl-kinds-grid gl-kinds-grid--3 gl-kinds-grid--rows">
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-1.svg?v=199db7fa" alt="Схема: задник сцены" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">01</span>Задник сцены</h3>
+        <p class="gl-kind4-t">Видеозадник собирают из LED-кабинетов под размеры сцены и видеокомпозицию. Детализацию выбирают с учетом ближайших зрителей и съемки исполнителей на фоне изображения.</p>
+        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте экран с реальным светом сцены и рабочими камерами.</li></ul>
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-2.svg?v=8ae9e7eb" alt="Схема: боковые экраны" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">02</span>Боковые экраны</h3>
+        <p class="gl-kind4-t">Боковые LED-экраны показывают крупный план исполнителя, когда аудитория не видит детали на сцене. Их размер и направление выбирают по обслуживаемым секторам зрителей.</p>
+        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте задержку видеотракта и режиссуру трансляции.</li></ul>
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-3.svg?v=0c44049a" alt="Схема: сценические башни и порталы" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">03</span>Сценические башни и порталы</h3>
+        <p class="gl-kind4-t">Для башен, порталов и фрагментов декораций применяют LED-конструкции подходящей формы. Контент заранее распределяют по отдельным поверхностям, чтобы они складывались в сценическую композицию.</p>
+        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте стыки изображения, углы обзора и крепления каждого элемента.</li></ul>
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-4.svg?v=ebea9034" alt="Схема: передняя часть подиума" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">04</span>Передняя часть подиума</h3>
+        <p class="gl-kind4-t">LED по фронту подиума используют для названия события, графики и материалов партнеров. Низкая вытянутая поверхность требует отдельной композиции, видимой из зрительного зала.</p>
+        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте, не перекрывается ли экран людьми и оборудованием.</li></ul>
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-5.svg?v=3b428731" alt="Схема: пол сцены" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">05</span>Пол сцены</h3>
+        <p class="gl-kind4-t">Для пола сцены используют специальные напольные LED-панели под предполагаемую нагрузку. Они продолжают видеоряд под исполнителями и требуют согласования поверхности, креплений и условий эксплуатации.</p>
+        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Уточните нагрузки, перемещение оборудования и замену поврежденной панели.</li></ul>
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-6.svg?v=bb5181f4" alt="Схема: удаленные зрительские зоны" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">06</span>Удаленные зрительские зоны</h3>
+        <p class="gl-kind4-t">Повторяющие LED-экраны размещают для удаленных зрительских секторов. Они нужны, если основная сцена недостаточно видна, и работают от отдельного распределения трансляционного сигнала.</p>
+        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте обзор каждого сектора и синхронность изображения со звуком.</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
 <div class="sx-podbor"><!-- PODBOR_START -->
 <section id="ep-podbor" aria-labelledby="pb-title">
   <div class="pb-pin">
     <div class="pb-head">
       <div>
-        <p class="pb-eyebrow">02 / Подбор экрана</p>
+        <p class="pb-eyebrow">03 / Подбор экрана</p>
         <h2 id="pb-title">Подберите экран под ваш объект</h2>
       </div>
       <button class="pb-btn pb-btn--ink pb-btn--back" type="button" id="pb-back" hidden><span class="pb-arw" aria-hidden="true"><svg class="pb-arw-out" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="pb-arw-in" viewBox="0 0 24 24" fill="none"><path d="M6 8L2 12L6 16M22 12H2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Назад к подбору</span></button>
@@ -761,92 +838,16 @@
 
 
 <style>
-.gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
-.gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
-.gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
-/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
-   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
-.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
-.gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
-/* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
-.gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
-.gl-kinds-grid--rows{margin-bottom:calc(-1 * clamp(36px,3.2vw,56px))}
-/* 20.10: карточки на общей сетке строк (subgrid): фото, заголовок, текст и характеристики начинаются на одном уровне */
-.gl-kind4{display:grid;grid-row:span 4;grid-template-rows:subgrid;align-content:start}
-.gl-kind4 figure{margin:0;width:min(100%,max(220px,calc(100svh - 520px)));aspect-ratio:1/1;background:#fff;border:1px solid var(--ek-line);overflow:hidden}
-.gl-kind4 figure img{display:block;width:100%;height:100%;object-fit:contain;padding:4%;box-sizing:border-box}
-.gl-kind4-spec{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:1px solid #c9cdc9;display:grid;gap:2px;align-content:start;font-size:13.5px;line-height:1.4}
-.gl-kind4-spec li{position:relative;padding-left:14px}
-.gl-kind4-spec li::before{content:"";position:absolute;left:0;top:.6em;width:5px;height:5px;border-radius:50%;background:#f36b52}
-.gl-kind4-spec b{font-weight:400;color:var(--ek-muted)}
-/* 06.11.2026, решения пачка 2: ссылка в карточке зоны на более узкое решение или раздел каталога (обзорная «для рекламы», спорт) */
-.gl-kind4-spec li.gl-kind4-go{padding:6px 0 0}.gl-kind4-spec li.gl-kind4-go::before{display:none}
-.gl-kind4-go a{display:inline-flex;align-items:center;gap:8px;color:var(--ek-ink,#171a1c);font-weight:500;text-decoration:none;border-bottom:1px solid #f36b52;padding-bottom:2px}
-.gl-kind4-go a svg{width:18px;height:18px;flex:none;color:#f36b52;transition:transform .3s ease}.gl-kind4-go a:hover svg,.gl-kind4-go a:focus-visible svg{transform:translateX(4px)}
-.gl-kind4-n{margin-right:6px;font-size:13px;letter-spacing:.08em;color:var(--ek-muted);font-weight:400;vertical-align:.15em}
-.gl-kind4 h3{margin:14px 0 0;font-size:clamp(18px,1.4vw,22px);font-weight:500;line-height:1.25}
-.gl-kind4-t{margin:8px 0 0!important;color:var(--ek-muted);font-size:14.5px;line-height:1.5}
-@media (max-width:1000px){.gl-kinds-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gl-kind4 figure{width:100%}.gl-kind4{margin-bottom:28px}}
-/* 08.11.2026, решения пачка 5: зоны установки на странице каталога (g.zones) — как на решениях: схема во всю ширину карточки без белого поля,
-   на телефоне по одной карточке во всю ширину (то же, что #vidy в solution.html) */
-.gl-kinds--zones .gl-kind4 figure{width:100%;border:0;background:#eceeec}.gl-kinds--zones .gl-kind4 figure img{padding:0}
-@media (max-width:760px){.gl-kinds--zones .gl-kinds-grid{grid-template-columns:minmax(0,1fr)!important;row-gap:32px}.gl-kinds--zones .gl-kind4{display:block;grid-row:auto;margin-bottom:0}}
-</style>
-<section class="sx-band sx-band--grey gl-kinds gl-kinds--zones" id="vidy" aria-labelledby="sx-kinds-h">
-  <div class="sx-in">
-    <div class="sx-head sx-head--solo"><p class="sx-eyebrow">03 / Зоны установки</p><h2 id="sx-kinds-h">Где разместить LED-экраны на сценической площадке</h2></div>
-    <p class="gl-kinds-lead">Для сцены отдельно выбирают основной видеозадник, трансляционные экраны и поверхности декораций. Стационарная установка и гастрольный комплект требуют разных конструкций, способов обслуживания и перевозки.</p>
-    <div class="gl-kinds-grid gl-kinds-grid--3 gl-kinds-grid--rows">
-      <article class="gl-kind4">
-        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-1.svg?v=199db7fa" alt="Схема: задник сцены" width="1000" height="1000" loading="lazy" decoding="async"></figure>
-        <h3><span class="gl-kind4-n">01</span>Задник сцены</h3>
-        <p class="gl-kind4-t">Видеозадник собирают из LED-кабинетов под размеры сцены и видеокомпозицию. Детализацию выбирают с учетом ближайших зрителей и съемки исполнителей на фоне изображения.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте экран с реальным светом сцены и рабочими камерами.</li></ul>
-      </article>
-      <article class="gl-kind4">
-        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-2.svg?v=8ae9e7eb" alt="Схема: боковые экраны" width="1000" height="1000" loading="lazy" decoding="async"></figure>
-        <h3><span class="gl-kind4-n">02</span>Боковые экраны</h3>
-        <p class="gl-kind4-t">Боковые LED-экраны показывают крупный план исполнителя, когда аудитория не видит детали на сцене. Их размер и направление выбирают по обслуживаемым секторам зрителей.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте задержку видеотракта и режиссуру трансляции.</li></ul>
-      </article>
-      <article class="gl-kind4">
-        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-3.svg?v=0c44049a" alt="Схема: сценические башни и порталы" width="1000" height="1000" loading="lazy" decoding="async"></figure>
-        <h3><span class="gl-kind4-n">03</span>Сценические башни и порталы</h3>
-        <p class="gl-kind4-t">Для башен, порталов и фрагментов декораций применяют LED-конструкции подходящей формы. Контент заранее распределяют по отдельным поверхностям, чтобы они складывались в сценическую композицию.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте стыки изображения, углы обзора и крепления каждого элемента.</li></ul>
-      </article>
-      <article class="gl-kind4">
-        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-4.svg?v=ebea9034" alt="Схема: передняя часть подиума" width="1000" height="1000" loading="lazy" decoding="async"></figure>
-        <h3><span class="gl-kind4-n">04</span>Передняя часть подиума</h3>
-        <p class="gl-kind4-t">LED по фронту подиума используют для названия события, графики и материалов партнеров. Низкая вытянутая поверхность требует отдельной композиции, видимой из зрительного зала.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте, не перекрывается ли экран людьми и оборудованием.</li></ul>
-      </article>
-      <article class="gl-kind4">
-        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-5.svg?v=3b428731" alt="Схема: пол сцены" width="1000" height="1000" loading="lazy" decoding="async"></figure>
-        <h3><span class="gl-kind4-n">05</span>Пол сцены</h3>
-        <p class="gl-kind4-t">Для пола сцены используют специальные напольные LED-панели под предполагаемую нагрузку. Они продолжают видеоряд под исполнителями и требуют согласования поверхности, креплений и условий эксплуатации.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Уточните нагрузки, перемещение оборудования и замену поврежденной панели.</li></ul>
-      </article>
-      <article class="gl-kind4">
-        <figure><img src="/ekranpro-site/test/resheniya-5/assets/section/sol-zone-led-ekran-dlya-stseny-6.svg?v=bb5181f4" alt="Схема: удаленные зрительские зоны" width="1000" height="1000" loading="lazy" decoding="async"></figure>
-        <h3><span class="gl-kind4-n">06</span>Удаленные зрительские зоны</h3>
-        <p class="gl-kind4-t">Повторяющие LED-экраны размещают для удаленных зрительских секторов. Они нужны, если основная сцена недостаточно видна, и работают от отдельного распределения трансляционного сигнала.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте обзор каждого сектора и синхронность изображения со звуком.</li></ul>
-      </article>
-    </div>
-  </div>
-</section>
-<style>
 .sol-crit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,1.6vw,28px);margin:0;padding:0;list-style:none}
 .sol-crit li{border-top:2px solid var(--ek-ink,#171a1c);padding-top:20px}
 .sol-crit-big{display:block;font-size:clamp(26px,2.2vw,36px);font-weight:500;line-height:1.1;letter-spacing:-.02em;color:#f36b52;overflow-wrap:anywhere}
 .sol-crit p{margin:12px 0 0;color:var(--ek-ink,#171a1c);font-size:clamp(16px,1.15vw,18px);line-height:1.5}
 .sol-crit--3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.sol-need{display:flex;align-items:center;justify-content:space-between;gap:clamp(20px,3vw,48px);margin-top:clamp(32px,3.2vw,56px);padding:clamp(20px,2vw,32px);background:#e8ebe8}
+.sol-need{display:flex;align-items:center;justify-content:space-between;gap:clamp(20px,3vw,48px);margin-top:clamp(32px,3.2vw,56px);padding:clamp(20px,2vw,32px);background:#fff}
 .sol-need p{margin:0;font-size:clamp(16px,1.15vw,18px);line-height:1.5;max-width:70ch}
 .sol-need b{font-weight:500}
 .sol-need .ep-btn{flex:none}
-#criteria{padding-block:clamp(40px,5vw,80px);background:#fff}
+#criteria{padding-block:clamp(40px,5vw,80px);background:#e8ebe8}
 @media (max-width:760px){.sol-need{flex-direction:column;align-items:stretch}.sol-need .ep-btn{width:100%}}
 @media (max-width:1000px){.sol-crit{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:32px}}
 @media (max-width:560px){.sol-crit{grid-template-columns:minmax(0,1fr)}}
