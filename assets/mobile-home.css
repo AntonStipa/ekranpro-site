@@ -102,9 +102,13 @@
   .ep-mbtn.ep-mbtn-cta{background:#f36b52!important}
 
   /* ---------- 4. Решения для бизнеса: заголовок, плашки-навигация, одно фото, название, две кнопки ---------- */
-  #ep-business-solutions .epbs-header{display:block!important;margin-bottom:18px!important}
-  #ep-business-solutions #epbs-title{white-space:nowrap!important;font-size:clamp(24px,7.6vw,30px)!important}
-  #ep-business-solutions .epbs-all{display:none!important}
+  /* 09.11.2026 (Антон): заголовок в две строки, справа — кнопка «Все решения» (на разводящую /solutions/) */
+  #ep-business-solutions .epbs-header{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:flex-end!important;justify-content:space-between!important;gap:14px!important;margin-bottom:18px!important}
+  #ep-business-solutions #epbs-title{white-space:normal!important;max-width:6.4em!important;font-size:clamp(24px,7.6vw,30px)!important;line-height:1.08!important}
+  #ep-business-solutions .epbs-all{display:inline-flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;flex:none!important;width:auto!important;min-width:0!important;height:44px!important;min-height:0!important;padding:0 14px!important;margin:0 0 2px!important;background:#171a1c!important;color:#fff!important;border:0!important;font-size:12px!important;letter-spacing:.06em!important;text-transform:uppercase!important;white-space:nowrap!important;text-decoration:none!important}
+  #ep-business-solutions .epbs-all .epu-arrow{position:relative!important;display:block!important;width:20px!important;height:20px!important;overflow:hidden!important;flex:none!important}
+  #ep-business-solutions .epbs-all .epu-arrow svg{position:absolute!important;inset:0!important;width:20px!important;height:20px!important}
+  #ep-business-solutions .epbs-all .epu-arrow-in{display:none!important}
   .epbs-tabs{display:flex!important;gap:8px!important;overflow-x:auto!important;margin:14px -16px 14px!important;padding:0 16px 4px!important;scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important}
   .epbs-tabs::-webkit-scrollbar{display:none!important}
   .epbs-tabs button{flex:none!important;padding:9px 14px!important;border:1px solid #d8dad7!important;border-radius:999px!important;background:#fff!important;font:inherit!important;font-size:14px!important;color:#171a1c!important;white-space:nowrap!important;cursor:pointer!important}

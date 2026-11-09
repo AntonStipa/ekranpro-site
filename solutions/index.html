@@ -28,13 +28,18 @@
 .sol-hub-n{flex:none;font-size:13px;letter-spacing:.08em;color:var(--ek-muted)}
 .sol-hub-t h2{margin:0;font-size:19px;font-weight:500;letter-spacing:-.02em;line-height:1.25}
 @media (max-width:1100px){.sol-hub-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:760px){.sol-hub-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.sol-hub-t{padding:10px 12px 12px;gap:6px}.sol-hub-t h2{font-size:15px}.sol-hub-n{font-size:11px}}
+/* 09.11 (Антон): на телефоне — лента, как листинг каталога: 2 ряда, на экране 4 карточки, следующие выглядывают справа; листается вправо и влево */
+@media (max-width:760px){.sol-hub-grid{grid-template-columns:none;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:calc((100% - 28px)/2);gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:20px;margin:0 -20px clamp(40px,5vw,80px);padding:0 20px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.sol-hub-grid::-webkit-scrollbar{display:none}.sol-hub-grid>li{scroll-snap-align:start;min-width:0}
+.sol-hub-t{padding:10px 12px 12px;gap:6px}.sol-hub-t h2{font-size:15px}.sol-hub-n{font-size:11px}
+.sol-hub-count{display:block!important}}
+.sol-hub-count{display:none;margin:-4px 0 12px;color:var(--ek-muted);font-size:13px}
 </style>
-<link rel="stylesheet" href="/ekranpro-site/assets/mobile-home.css?v=542d038b">
-<link rel="stylesheet" href="/ekranpro-site/assets/mobile-site.css?v=542d038b">
+<link rel="stylesheet" href="/ekranpro-site/assets/mobile-home.css?v=5bd3249f">
+<link rel="stylesheet" href="/ekranpro-site/assets/mobile-site.css?v=5bd3249f">
 <script>document.documentElement.classList.add("ep-ms");if(matchMedia("(max-width:760px)").matches)document.documentElement.classList.remove("sx-hdr")</script>
-<script src="/ekranpro-site/assets/mobile-home.js?v=542d038b" defer></script>
-<script src="/ekranpro-site/assets/mobile-site.js?v=542d038b" defer></script>
+<script src="/ekranpro-site/assets/mobile-home.js?v=5bd3249f" defer></script>
+<script src="/ekranpro-site/assets/mobile-site.js?v=5bd3249f" defer></script>
 </head>
 <body>
 <div id="ekranpro-first-screen"><div class="ep1-catalog-shade" hidden></div><header class="ep1-header">
@@ -77,6 +82,7 @@
 <nav class="ek-crumbs" aria-label="Хлебные крошки"><ol><li><a href="/ekranpro-site/">Главная</a></li><li><span aria-current="page">Решения</span></li></ol></nav>
 
 <div class="sol-hub-head"><h1>Решения</h1><p>Экраны под задачу объекта: где их разместить, какие модели подходят и что учесть при выборе. Выберите отрасль — покажем зоны установки, оборудование из каталога и проекты.</p></div>
+<p class="sol-hub-count">25 решений · листайте вправо →</p>
 <ul class="sol-hub-grid" role="list">
   <li><a class="sol-hub-card" href="/ekranpro-site/solutions/dlya-reklamy/"><figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-1.svg" alt="Схема: экраны для рекламы" width="1000" height="1000" loading="lazy" decoding="async"></figure>
     <div class="sol-hub-t"><span class="sol-hub-n">01</span><h2>Экраны для рекламы</h2></div></a></li>
