@@ -656,9 +656,9 @@
 .gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
 .gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
 .gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
-/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
-   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
-.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
+/* 09.11 (Антон): вводный текст — на всю ширину блока, чтобы карточки поднялись выше. 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
+   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд, 9 — 3 в ряд (09.11) (в 2 ряда, между рядами отступ) */
+.gl-kinds-lead{margin:0 0 clamp(20px,2vw,32px);max-width:none;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
 .gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 /* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
 .gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
@@ -703,12 +703,12 @@
 .gl-zline i{position:absolute;inset:0;background:currentColor;transition:transform .6s cubic-bezier(.77,0,.175,1)}
 .gl-zline i+i{transform:translateX(-102%)}
 .gl-zc:hover .gl-zline i:first-child,.gl-zc:focus-visible .gl-zline i:first-child{transform:translateX(102%)}.gl-zc:hover .gl-zline i+i,.gl-zc:focus-visible .gl-zline i+i{transform:translateX(0);transition-delay:70ms}
-/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия) */
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
+/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия). При 3 в ряд — со стрелками */
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
 @media (max-width:1200px) and (min-width:761px){.gl-kind4-acts{grid-template-columns:1fr}}
-@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kind4-acts .gl-zq,.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
+@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kinds-grid .gl-kind4-acts .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
 </style>
 <section class="sx-band sx-band--grey gl-kinds" id="vidy" aria-labelledby="sx-kinds-h">
   <div class="sx-in">
@@ -719,43 +719,81 @@
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-1.svg" alt="Схема: вдоль дорог" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">01</span>Вдоль дорог</h3>
         <p class="gl-kind4-t">Для придорожной рекламы используют уличный LED с крупным коротким сообщением. Размер текста и полотна выбирают по направлению потока и времени, за которое человек увидит рекламу.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте макет с маршрута аудитории и регулировку яркости.</li><li class="gl-kind4-go"><a href="/ekranpro-site/catalog/bilbord-czifrovoj/">Цифровые билборды<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: вдоль дорог"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/bilbord-czifrovoj/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-2.svg" alt="Схема: на фасадах зданий" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">02</span>На фасадах зданий</h3>
         <p class="gl-kind4-t">Фасадный LED подходит для большой рекламы, видимой с улицы. Сплошную, угловую или прозрачную поверхность выбирают по архитектуре и условиям просмотра.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте основной ракурс, крепление и доступ к обслуживанию.</li><li class="gl-kind4-go"><a href="/ekranpro-site/solutions/na-fasade/">Экраны на фасаде<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: на фасадах зданий"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/solutions/na-fasade/"><span>Подробнее</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-3.svg" alt="Схема: в пешеходных пространствах" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">03</span>В пешеходных пространствах</h3>
         <p class="gl-kind4-t">Для пешеходной рекламы подходят уличные LCD-пилоны или компактные LED-поверхности. Близкий просмотр позволяет показать больше деталей, если человек может остановиться у экрана.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Уточните погоду, антивандальное исполнение и свободный проход.</li><li class="gl-kind4-go"><a href="/ekranpro-site/catalog/videopilony/">Светодиодные видеопилоны<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: в пешеходных пространствах"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/videopilony/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-4.svg" alt="Схема: в витринах магазинов" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">04</span>В витринах магазинов</h3>
         <p class="gl-kind4-t">В витрине применяют яркий LCD или LED под нужный размер и прозрачность. Изображение проверяют через стекло при солнечном свете, когда обычный интерьерный дисплей может оказаться недостаточным.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте видимость контента, отражения и нагрев.</li><li class="gl-kind4-go"><a href="/ekranpro-site/solutions/ekrany-dlya-magazinov/">Экраны для магазинов<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: в витринах магазинов"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/solutions/ekrany-dlya-magazinov/"><span>Подробнее</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-5.svg" alt="Схема: в торговых центрах" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">05</span>В торговых центрах</h3>
         <p class="gl-kind4-t">В атриумах ТЦ LED работает на несколько уровней, а LCD-пилоны — на локальный поток в галерее. Рекламный формат выбирают по поверхности и месту контакта посетителя.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Для каждой поверхности нужен макет в ее реальных пропорциях.</li><li class="gl-kind4-go"><a href="/ekranpro-site/catalog/reklamnyye-ekrany-v-ts/">Рекламные экраны в ТЦ<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: в торговых центрах"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/reklamnyye-ekrany-v-ts/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-6.svg" alt="Схема: в транспортных терминалах" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">06</span>В транспортных терминалах</h3>
         <p class="gl-kind4-t">В транспортных терминалах LED подходит для крупных рекламных стен, LCD — для локальных экранов ожидания. Коммерческое размещение согласуют с пассажирской навигацией и работой терминала.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте видимость обязательной информации и доступ для ремонта.</li><li class="gl-kind4-go"><a href="/ekranpro-site/solutions/dlya-aeroportov/">Экраны для аэропортов<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: в транспортных терминалах"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/solutions/dlya-aeroportov/"><span>Подробнее</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-7.svg" alt="Схема: рядом с местом покупки" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">07</span>Рядом с местом покупки</h3>
         <p class="gl-kind4-t">Рядом с товаром или кассой обычно достаточно LCD-панели с конкретным предложением. Экран полезен, когда содержание связано с ассортиментом этой зоны и поддерживается в актуальном состоянии.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Определите, как меняется контент при изменении цены или наличия товара.</li><li class="gl-kind4-go"><a href="/ekranpro-site/catalog/informaczionnye-paneli/">Информационные панели<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: рядом с местом покупки"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/informaczionnye-paneli/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-reklamy-8.svg" alt="Схема: афиши в театрах и кинотеатрах" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">08</span>Афиши в театрах и кинотеатрах</h3>
+        <p class="gl-kind4-t">В фойе театров, кинотеатров и концертных залов экраны заменяют печатные афиши: на них анонсируют спектакли, премьеры, концерты и другие события. Программу обновляют без печати и монтажа новых плакатов.</p>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны и видеостены для рекламы: афиши в театрах и кинотеатрах"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/informaczionnye-paneli/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
     </div>
   </div>
@@ -780,7 +818,7 @@
         <div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/lcd-pro-ewin-dp55a/">Профессиональный дисплей EWIN DP55A</a></h3><div class="ek-sku">LCD-PRO-EWIN-DP55A</div></div><dl class="ek-specs"><div><dt>Диагональ</dt><dd class="ek-num">55″</dd></div><div><dt>Разрешение</dt><dd class="ek-num">3840 × 2160 (4K)</dd></div><div><dt>Яркость</dt><dd class="ek-num">700 нит</dd></div><div><dt>Режим работы</dt><dd class="ek-num">24/7</dd></div></dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val"><b class="ek-num">от 185 300 ₽</b><span>за панель</span></span></div></div>
         <div class="ek-actions"><button type="button" class="ek-order" data-order="Профессиональный дисплей EWIN DP55A (LCD-PRO-EWIN-DP55A)"><span class="lbl">Заказать</span><span class="ek-arw" aria-hidden="true"><svg class="ek-o-out" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="ek-o-in" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><a class="ek-details" href="/ekranpro-site/catalog/tovar/lcd-pro-ewin-dp55a/"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span><span class="ek-arw" aria-hidden="true"><svg class="ek-d-out" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="ek-d-in" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ek-line" aria-hidden="true"><i class="out"></i><i class="in"></i></span></a><a class="ek-cat" href="/ekranpro-site/catalog/professionalnye-displei/"><span class="lbl">Перейти в каталог</span><span class="ek-arw" aria-hidden="true"><svg class="ek-c-out" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="ek-c-in" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div></article></div>
-      <div class="sol-model"><div class="sol-model-for"><span>Для зоны 07</span><h3>Рядом с местом покупки</h3></div>
+      <div class="sol-model"><div class="sol-model-for"><span>Для зон 07, 08</span><h3>Рядом с местом покупки, афиши в театрах и кинотеатрах</h3></div>
       <article class="ek-card" data-sku="LCD-INFO-EWIN-DM43A"><div class="ek-img" data-frames="1"><div class="ek-frames"><img src="/ekranpro-site/assets/catalog/photos/LCD-INFO-EWIN-DM43A.webp" alt="Информационная панель EWIN DM43A" loading="lazy" width="480" height="360" class="on"></div><span class="ek-badges"><span class="ek-badge">24/7</span></span></div>
         <div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/lcd-info-ewin-dm43a/">Информационная панель EWIN DM43A</a></h3><div class="ek-sku">LCD-INFO-EWIN-DM43A</div></div><dl class="ek-specs"><div><dt>Диагональ</dt><dd class="ek-num">43″</dd></div><div><dt>Разрешение</dt><dd class="ek-num">3840 × 2160 (4K)</dd></div><div><dt>Яркость</dt><dd class="ek-num">500 нит</dd></div><div><dt>Режим работы</dt><dd class="ek-num">24/7</dd></div></dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val"><b class="ek-num">от 98 600 ₽</b><span>за панель</span></span></div></div>

@@ -656,9 +656,9 @@
 .gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
 .gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
 .gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
-/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
-   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
-.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
+/* 09.11 (Антон): вводный текст — на всю ширину блока, чтобы карточки поднялись выше. 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
+   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд, 9 — 3 в ряд (09.11) (в 2 ряда, между рядами отступ) */
+.gl-kinds-lead{margin:0 0 clamp(20px,2vw,32px);max-width:none;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
 .gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 /* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
 .gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
@@ -703,12 +703,12 @@
 .gl-zline i{position:absolute;inset:0;background:currentColor;transition:transform .6s cubic-bezier(.77,0,.175,1)}
 .gl-zline i+i{transform:translateX(-102%)}
 .gl-zc:hover .gl-zline i:first-child,.gl-zc:focus-visible .gl-zline i:first-child{transform:translateX(102%)}.gl-zc:hover .gl-zline i+i,.gl-zc:focus-visible .gl-zline i+i{transform:translateX(0);transition-delay:70ms}
-/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия) */
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
+/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия). При 3 в ряд — со стрелками */
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
 @media (max-width:1200px) and (min-width:761px){.gl-kind4-acts{grid-template-columns:1fr}}
-@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kind4-acts .gl-zq,.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
+@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kinds-grid .gl-kind4-acts .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
 </style>
 <section class="sx-band sx-band--grey gl-kinds" id="vidy" aria-labelledby="sx-kinds-h">
   <div class="sx-in">
@@ -719,49 +719,81 @@
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-1.svg" alt="Схема: общий зал вылета и прилета" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">01</span>Общий зал вылета и прилета</h3>
         <p class="gl-kind4-t">Для большого общего табло рассматривают LED, для отдельных групп рейсов — профессиональные LCD. Выбор проверяют по числу строк расписания и читаемости с нужных точек.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Сравните варианты на реальном макете рейсов и размере шрифта.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: общий зал вылета и прилета"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/interernye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-2.svg" alt="Схема: стойки регистрации" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">02</span>Стойки регистрации</h3>
         <p class="gl-kind4-t">Над одной стойкой удобна LCD-панель, над длинным рядом возможен LED-фриз с делением на зоны. Название авиакомпании и рейс привязывают к фактически обслуживающей их стойке.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте переназначение стоек, источник данных и сервисный доступ.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: стойки регистрации"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/tablo-navigatsii/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-3.svg" alt="Схема: зона контроля" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">03</span>Зона контроля</h3>
         <p class="gl-kind4-t">Перед досмотром LCD-панели показывают подготовку к процедуре и назначение проходов. Крупный LED уместен для общей информации над широкой зоной очереди.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Уточните, как меняются сообщения при открытии и закрытии проходов.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: зона контроля"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/professionalnye-displei/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-4.svg" alt="Схема: коридоры и переходы" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">04</span>Коридоры и переходы</h3>
         <p class="gl-kind4-t">На развилках подходят LCD-указатели, над широкими проходами — LED с крупной навигацией. Экраны ставят до выбора направления; в удаленных зонах повторяют данные о рейсах.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте видимость на ходу, языки и обновление направлений.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: коридоры и переходы"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/tablo-navigatsii/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-5.svg" alt="Схема: выходы на посадку" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">05</span>Выходы на посадку</h3>
         <p class="gl-kind4-t">У выхода подходит профессиональная LCD-панель с рейсом и статусом посадки. Связь с информационной системой позволяет своевременно показывать изменения в нужной зоне.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте источник статуса и поведение при потере данных.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: выходы на посадку"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/professionalnye-displei/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-6.svg" alt="Схема: выдача багажа" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">06</span>Выдача багажа</h3>
         <p class="gl-kind4-t">LCD-табло над лентой показывает рейс и номер выдачи, большой LED может служить отдельной рекламной поверхностью. Предусмотрите доступ для ремонта без длительного закрытия зоны.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Разделите пассажирские данные и рекламу; проверьте доступ к компонентам.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: выдача багажа"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/professionalnye-displei/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-7.svg" alt="Схема: рекламные поверхности терминала" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">07</span>Рекламные поверхности терминала</h3>
         <p class="gl-kind4-t">Для крупной рекламы подходит LED под размер стены и обзор пассажирского потока. Геометрию, формат роликов и способ замены модулей согласуют до монтажа.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте реальные ракурсы, дневной свет и обслуживание на высоте.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: рекламные поверхности терминала"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/interernye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-aeroportov-8.svg" alt="Схема: оперативный центр аэропорта" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">08</span>Оперативный центр аэропорта</h3>
         <p class="gl-kind4-t">LED или LCD-видеостена объединяет карты, камеры и состояние служб. Размер и раскладку выбирают по задачам операторов и требованиям к непрерывности работы.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Определите источники, рабочие места и допустимый перерыв в отображении.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны для аэропортов: оперативный центр аэропорта"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/lcd-videosteny/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
     </div>
   </div>

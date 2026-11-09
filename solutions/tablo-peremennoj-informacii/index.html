@@ -659,9 +659,9 @@
 .gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
 .gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
 .gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
-/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
-   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
-.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
+/* 09.11 (Антон): вводный текст — на всю ширину блока, чтобы карточки поднялись выше. 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
+   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд, 9 — 3 в ряд (09.11) (в 2 ряда, между рядами отступ) */
+.gl-kinds-lead{margin:0 0 clamp(20px,2vw,32px);max-width:none;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
 .gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 /* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
 .gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
@@ -706,12 +706,12 @@
 .gl-zline i{position:absolute;inset:0;background:currentColor;transition:transform .6s cubic-bezier(.77,0,.175,1)}
 .gl-zline i+i{transform:translateX(-102%)}
 .gl-zc:hover .gl-zline i:first-child,.gl-zc:focus-visible .gl-zline i:first-child{transform:translateX(102%)}.gl-zc:hover .gl-zline i+i,.gl-zc:focus-visible .gl-zline i+i{transform:translateX(0);transition-delay:70ms}
-/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия) */
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
+/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия). При 3 в ряд — со стрелками */
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
 @media (max-width:1200px) and (min-width:761px){.gl-kind4-acts{grid-template-columns:1fr}}
-@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kind4-acts .gl-zq,.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
+@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kinds-grid .gl-kind4-acts .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
 </style>
 <section class="sx-band sx-band--grey gl-kinds" id="vidy" aria-labelledby="sx-kinds-h">
   <div class="sx-in">
@@ -722,37 +722,61 @@
         <figure><img src="/ekranpro-site/assets/section/sol-zone-tablo-peremennoj-informacii-1.svg" alt="Схема: автомагистраль" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">01</span>Автомагистраль</h3>
         <p class="gl-kind4-t">На магистрали применяют специализированное LED-табло для сообщений о заторах, погоде и ограничениях. Размер поля и текста рассчитывают так, чтобы водитель успевал прочитать сообщение на подъезде.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Определите точку начала чтения и максимальную длину сообщения.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Дорожное табло переменной информации: автомагистраль"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-tablo-peremennoj-informacii-2.svg" alt="Схема: подъезд к развязке" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">02</span>Подъезд к развязке</h3>
         <p class="gl-kind4-t">Перед развязкой табло переменной информации показывает доступные направления и изменения маршрута. Место выбирают до разделения потоков, когда у водителя еще есть возможность выполнить указание.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте положение табло со схемой организации движения.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Дорожное табло переменной информации: подъезд к развязке"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-tablo-peremennoj-informacii-3.svg" alt="Схема: въезд в тоннель или на мост" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">03</span>Въезд в тоннель или на мост</h3>
         <p class="gl-kind4-t">Перед тоннелем или мостом используют табло режима проезда и отдельные указатели полос при необходимости. Информация должна поступать из системы, управляющей ограничениями на сооружении.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Задайте сценарии закрытия полос и подтверждение доставки команды.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Дорожное табло переменной информации: въезд в тоннель или на мост"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-tablo-peremennoj-informacii-4.svg" alt="Схема: пункт взимания платы" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">04</span>Пункт взимания платы</h3>
         <p class="gl-kind4-t">У пункта оплаты нужны компактные полосные табло и указатели назначения проездов. Они показывают доступность полосы и способ обслуживания до въезда автомобиля.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте набор символов и связь с оборудованием полосы.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Дорожное табло переменной информации: пункт взимания платы"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-tablo-peremennoj-informacii-5.svg" alt="Схема: участок дорожных работ" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">05</span>Участок дорожных работ</h3>
         <p class="gl-kind4-t">Для временных работ используют мобильное дорожное табло либо предусмотренное стационарное. Выбор зависит от длительности работ, питания и необходимости перемещать предупреждение вслед за участком.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Уточните автономность, удаленное управление и место установки.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Дорожное табло переменной информации: участок дорожных работ"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-tablo-peremennoj-informacii-6.svg" alt="Схема: подъезд к парковке" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">06</span>Подъезд к парковке</h3>
         <p class="gl-kind4-t">На подъезде к парковке достаточно специализированного табло свободных мест и направлений. Его подключают к системе учета занятости, чтобы водитель получал актуальную информацию.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте источник счетчиков и отображение при отсутствии данных.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Дорожное табло переменной информации: подъезд к парковке"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
     </div>
   </div>

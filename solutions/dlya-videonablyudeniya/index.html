@@ -17,7 +17,7 @@
 <script>document.documentElement.classList.add("sx-js","sx-hdr")</script>
 <link rel="stylesheet" href="/ekranpro-site/assets/buttons.css?v=84c4bcb9">
 <link rel="stylesheet" href="/ekranpro-site/assets/section.css?v=84c4bcb9">
-<link rel="preload" as="image" media="(min-width:681px)" href="/ekranpro-site/assets/section/hero-interernye-2836.webp?v=1793536070" imagesrcset="/ekranpro-site/assets/section/hero-interernye-1780.webp?v=1793536070 1780w, /ekranpro-site/assets/section/hero-interernye-2836.webp?v=1793536070 2836w" imagesizes="max(100vw, 250vh)">
+<link rel="preload" as="image" href="/ekranpro-site/assets/section/hero-sol-dlya-videonablyudeniya.webp?v=1794203987">
 <style data-ep-product-showcase>#ep-products-compare {
   --ep-ink: #171a1c;
   --ep-muted: #60656a;
@@ -593,10 +593,7 @@
 <main id="cat-main" class="cat-main">
 
 <section class="sx-hero" aria-labelledby="sx-h1">
-  <picture>
-    <source media="(max-width:760px)" srcset="/ekranpro-site/assets/section/hero-interernye-1780.webp?v=1793536070">
-    <img class="sx-hero-img sx-hero-img--own" src="/ekranpro-site/assets/section/hero-interernye-2836.webp?v=1793536070" srcset="/ekranpro-site/assets/section/hero-interernye-1780.webp?v=1793536070 1780w, /ekranpro-site/assets/section/hero-interernye-2836.webp?v=1793536070 2836w" sizes="max(100vw, 250vh)" alt="Трёхсторонний светодиодный экран высотой 20 м на лифтовой шахте в ТРЦ «Галерея», Санкт-Петербург" width="2836" height="1024" fetchpriority="high">
-  </picture>
+  <picture style="display:contents"><source media="(max-width:760px)" srcset="/ekranpro-site/assets/section/hero-sol-dlya-videonablyudeniya.webp?v=1794203987"><img class="sx-hero-img sx-hero-img--own" src="/ekranpro-site/assets/section/hero-sol-dlya-videonablyudeniya.webp?v=1794203987" alt="Видеостены для видеонаблюдения" fetchpriority="high" decoding="async"></picture>
   <div class="sx-hero-in">
     <div class="sx-hero-copy">
       <h1 id="sx-h1">Видеостены<br>для<br>видеонаблюдения</h1>
@@ -611,7 +608,7 @@
         <div><dt><small>До</small> 5 <small>лет</small></dt><dd>Гарантия и полное обслуживание<br>Выезды и ремонт за наш счёт</dd></div>
         <div><dt><small>от</small> 4 <small>дней</small></dt><dd>Интерьерные экраны и LCD-панели<br>при наличии</dd></div>
       </dl>
-      <p class="sx-hero-cap"><span>На фото интерьерный экран</span>ТРЦ «Галерея», г. Санкт-Петербург</p>
+      
     </div>
   </div>
 </section>
@@ -659,9 +656,9 @@
 .gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
 .gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
 .gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
-/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
-   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
-.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
+/* 09.11 (Антон): вводный текст — на всю ширину блока, чтобы карточки поднялись выше. 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
+   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд, 9 — 3 в ряд (09.11) (в 2 ряда, между рядами отступ) */
+.gl-kinds-lead{margin:0 0 clamp(20px,2vw,32px);max-width:none;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
 .gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 /* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
 .gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
@@ -706,12 +703,12 @@
 .gl-zline i{position:absolute;inset:0;background:currentColor;transition:transform .6s cubic-bezier(.77,0,.175,1)}
 .gl-zline i+i{transform:translateX(-102%)}
 .gl-zc:hover .gl-zline i:first-child,.gl-zc:focus-visible .gl-zline i:first-child{transform:translateX(102%)}.gl-zc:hover .gl-zline i+i,.gl-zc:focus-visible .gl-zline i+i{transform:translateX(0);transition-delay:70ms}
-/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия) */
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
+/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия). При 3 в ряд — со стрелками */
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
 @media (max-width:1200px) and (min-width:761px){.gl-kind4-acts{grid-template-columns:1fr}}
-@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kind4-acts .gl-zq,.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
+@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kinds-grid .gl-kind4-acts .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
 </style>
 <section class="sx-band sx-band--grey gl-kinds" id="vidy" aria-labelledby="sx-kinds-h">
   <div class="sx-in">
@@ -722,25 +719,41 @@
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-videonablyudeniya-1.svg" alt="Схема: центральный пост наблюдения" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">01</span>Центральный пост наблюдения</h3>
         <p class="gl-kind4-t">В общем зале LED дает единое поле для камер и планов, а LCD-видеостена позволяет распределять изображения по панелям. Выбор делают по раскладке: важные детали и тревожные окна должны оставаться читаемыми.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Задайте число камер на стене и размер изображения при тревоге.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Видеостены для видеонаблюдения: центральный пост наблюдения"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/lcd-videosteny/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-videonablyudeniya-2.svg" alt="Схема: локальный пост охраны" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">02</span>Локальный пост охраны</h3>
         <p class="gl-kind4-t">На небольшом посту начните с одной крупной LCD-панели или компактной видеостены. Увеличение поверхности оправдано, когда операторам действительно нужен одновременный обзор нескольких зон.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте, какие камеры нужно видеть постоянно, а какие — по событию.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Видеостены для видеонаблюдения: локальный пост охраны"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/lcd-videosteny/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-videonablyudeniya-3.svg" alt="Схема: комната разбора происшествий" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">03</span>Комната разбора происшествий</h3>
         <p class="gl-kind4-t">Для совместного разбора происшествий подходит LCD-видеостена или LED с несколькими окнами. На общий экран выводят архив камер, план объекта и сопутствующие материалы.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Нужны доступ к архиву и согласованное управление источниками.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Видеостены для видеонаблюдения: комната разбора происшествий"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/lcd-videosteny/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-dlya-videonablyudeniya-4.svg" alt="Схема: мобильный командный пункт" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">04</span>Мобильный командный пункт</h3>
         <p class="gl-kind4-t">В мобильном командном пункте используют компактные профессиональные дисплеи для выездного наблюдения. Систему подбирают вместе с креплениями, электропитанием и каналом получения видеопотоков.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте транспортные условия, размещение операторов и качество связи.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Видеостены для видеонаблюдения: мобильный командный пункт"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/professionalnye-displei/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
     </div>
   </div>

@@ -656,9 +656,9 @@
 .gl-kinds{padding-block:clamp(40px,4.5vw,72px)}
 .gl-kinds .sx-head{margin-bottom:clamp(16px,1.6vw,24px)}
 .gl-kinds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(16px,1.6vw,28px);row-gap:0}
-/* 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
-   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд (в 2 ряда, между рядами отступ) */
-.gl-kinds-lead{margin:0 0 clamp(24px,2.4vw,40px);max-width:62ch;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
+/* 09.11 (Антон): вводный текст — на всю ширину блока, чтобы карточки поднялись выше. 05.11.2026, решения пачка 1 (Антон): вводный текст под заголовком (необязательный g.lead); раскладка по числу карточек:
+   4 — 4 в ряд, 5–6 — 3 в ряд, 7–8 — 4 в ряд, 9 — 3 в ряд (09.11) (в 2 ряда, между рядами отступ) */
+.gl-kinds-lead{margin:0 0 clamp(20px,2vw,32px);max-width:none;color:var(--ek-muted);font-size:clamp(16px,1.15vw,18px);line-height:1.55}
 .gl-kinds-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 /* в 2 ряда: отступ между рядами — нижним полем карточки (row-gap сетки перешёл бы в subgrid и раздвинул фото, заголовок и текст) */
 .gl-kinds-grid--rows .gl-kind4{row-gap:0;padding-bottom:clamp(36px,3.2vw,56px)}
@@ -703,12 +703,12 @@
 .gl-zline i{position:absolute;inset:0;background:currentColor;transition:transform .6s cubic-bezier(.77,0,.175,1)}
 .gl-zline i+i{transform:translateX(-102%)}
 .gl-zc:hover .gl-zline i:first-child,.gl-zc:focus-visible .gl-zline i:first-child{transform:translateX(102%)}.gl-zc:hover .gl-zline i+i,.gl-zc:focus-visible .gl-zline i+i{transform:translateX(0);transition-delay:70ms}
-/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия) */
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
-.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
+/* две кнопки рядом в узкой карточке (4 в ряд): без стрелок, чтобы надписи помещались; эффекты наведения остаются (заливка, линия). При 3 в ряд — со стрелками */
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zarw{display:none}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{justify-content:center;padding:0 10px;letter-spacing:.04em}
+.gl-kinds-grid:not(.gl-kinds-grid--3) .gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zc{justify-content:center;letter-spacing:.04em}
 @media (max-width:1200px) and (min-width:761px){.gl-kind4-acts{grid-template-columns:1fr}}
-@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kind4-acts .gl-zq,.gl-kind4-acts:not(.gl-kind4-acts--one) .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
+@media (max-width:760px){.gl-kind4-acts,.gl-kind4-acts:not(.gl-kind4-acts--one){grid-template-columns:1fr;margin-top:18px}.gl-zc{display:none!important}.gl-kinds-grid .gl-kind4-acts .gl-zq{width:100%;height:56px;padding:0 20px;font-size:13px;letter-spacing:.06em;justify-content:space-between}.gl-kind4-acts .gl-zarw{display:block!important}}
 </style>
 <section class="sx-band sx-band--grey gl-kinds" id="vidy" aria-labelledby="sx-kinds-h">
   <div class="sx-in">
@@ -719,31 +719,61 @@
         <figure><img src="/ekranpro-site/assets/section/sol-zone-na-fasade-1.svg" alt="Схема: глухая стена" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">01</span>Глухая стена</h3>
         <p class="gl-kind4-t">На глухой стене устанавливают сплошной уличный LED для рекламы и событий. Его размеры и детализацию выбирают по ближайшим и основным точкам просмотра с улицы.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте доступ к модулям, питание и конструкцию крепления.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны на фасаде: глухая стена"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-na-fasade-2.svg" alt="Схема: угол здания" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">02</span>Угол здания</h3>
         <p class="gl-kind4-t">Угловой LED используют, когда поверхность должна работать на два направления. Для объемной визуальной иллюзии потребуется отдельный ролик, рассчитанный на геометрию экрана и выбранную точку наблюдения.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте основной ракурс и требования к подготовке контента.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны на фасаде: угол здания"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-na-fasade-3.svg" alt="Схема: над главным входом" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">03</span>Над главным входом</h3>
         <p class="gl-kind4-t">LED над входом подходит для афиши, названия объекта и коротких предложений. Формат часто получается вытянутым, поэтому текст и ролики готовят под фактические пропорции.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Проверьте обзор вблизи входа и высоту нижнего края конструкции.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны на фасаде: над главным входом"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/ulichnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-na-fasade-4.svg" alt="Схема: остекленный фасад" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">04</span>Остекленный фасад</h3>
         <p class="gl-kind4-t">Для остекленного фасада рассматривают прозрачный LED, если важно сохранить часть обзора и светопропускания. На такой поверхности лучше заранее проверить крупную графику и читаемость на фоне помещений.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Сравните прозрачность, видимость изображения и расположение несущих элементов.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны на фасаде: остекленный фасад"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/prozrachnye-ekrany/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
       <article class="gl-kind4">
         <figure><img src="/ekranpro-site/assets/section/sol-zone-na-fasade-5.svg" alt="Схема: протяженная поверхность здания" width="1000" height="1000" loading="lazy" decoding="async"></figure>
         <h3><span class="gl-kind4-n">05</span>Протяженная поверхность здания</h3>
         <p class="gl-kind4-t">Решетчатый медиафасад подходит для протяженного архитектурного изображения, которое смотрят с расстояния. Для мелкого текста или близкого просмотра детализацию нужно проверять отдельно.</p>
-        <ul class="gl-kind4-spec"><li><b>При подборе:</b> Согласуйте шаг элементов, точки обзора и реальный образец видеоряда.</li></ul>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны на фасаде: протяженная поверхность здания"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/mediafasady/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
+      </article>
+      <article class="gl-kind4">
+        <figure><img src="/ekranpro-site/assets/section/sol-zone-na-fasade-6.svg" alt="Схема: фасады спортивных арен" width="1000" height="1000" loading="lazy" decoding="async"></figure>
+        <h3><span class="gl-kind4-n">06</span>Фасады спортивных арен</h3>
+        <p class="gl-kind4-t">Фасад арены любой формы, в том числе овальной, закрывают LED-медиафасадом из реечных модулей с крупным шагом пикселя или из светодиодной сетки. Такая поверхность лёгкая и при этом яркая: изображение видно с подъездов и прилегающих улиц.</p>
+        <div class="gl-kind4-acts">
+          <button class="gl-zq" type="button" data-quote="Светодиодные экраны на фасаде: фасады спортивных арен"><span>Получить расчёт</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
+          <a class="gl-zc" href="/ekranpro-site/catalog/mediafasady/"><span>Перейти в каталог</span><span class="gl-zarw" aria-hidden="true"><svg class="gl-zo" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="gl-zi" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="gl-zline" aria-hidden="true"><i></i><i></i></span></a>
+        </div>
+        
       </article>
     </div>
   </div>
@@ -768,7 +798,7 @@
         <div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spg-208-facade/"><span class="ek-kind">Прозрачный светодиодный экран</span> SPG 20.8 FACADE</a></h3><div class="ek-sku">SPG-208-FACADE</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">20,84 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">6 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">96 %</dd></div><div><dt>Степень защиты</dt><dd class="ek-num">IP65 / IP50</dd></div></dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val"><b class="ek-num">от 558 268 ₽</b><span>за м²</span></span></div></div>
         <div class="ek-actions"><button type="button" class="ek-order" data-order="Прозрачный светодиодный экран SPG 20.8 FACADE (SPG-208-FACADE)"><span class="lbl">Заказать</span><span class="ek-arw" aria-hidden="true"><svg class="ek-o-out" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="ek-o-in" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button><a class="ek-details" href="/ekranpro-site/catalog/tovar/spg-208-facade/"><span class="ek-lbl2"><span class="base">Подробнее</span><span class="hov" aria-hidden="true">Подробнее</span></span><span class="ek-arw" aria-hidden="true"><svg class="ek-d-out" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="ek-d-in" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="ek-line" aria-hidden="true"><i class="out"></i><i class="in"></i></span></a><a class="ek-cat" href="/ekranpro-site/catalog/prozrachnye-ekrany/"><span class="lbl">Перейти в каталог</span><span class="ek-arw" aria-hidden="true"><svg class="ek-c-out" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg><svg class="ek-c-in" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 8L22 12L18 16M2 12H22" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div></article></div>
-      <div class="sol-model"><div class="sol-model-for"><span>Для зоны 05</span><h3>Протяженная поверхность здания</h3></div>
+      <div class="sol-model"><div class="sol-model-for"><span>Для зон 05, 06</span><h3>Протяженная поверхность здания, фасады спортивных арен</h3></div>
       <article class="ek-card" data-sku="SPT-156-PROX-F-8K"><div class="ek-img" data-frames="1"><div class="ek-frames"><img src="/ekranpro-site/assets/catalog/photos/SPT-156-PROX-F-8K.webp" alt="Медиафасад SPT 15.6 PROX 8K" loading="lazy" width="480" height="360" class="on"></div><span class="ek-badges"><span class="ek-badge">Улица</span></span></div>
         <div class="ek-body"><div><h3><a href="/ekranpro-site/catalog/tovar/spt-156-prox-f-8k/"><span class="ek-kind">Медиафасад</span> SPT 15.6 PROX 8K</a></h3><div class="ek-sku">SPT-156-PROX-F-8K</div></div><dl class="ek-specs"><div><dt>Шаг пикселя</dt><dd class="ek-num">15,6 мм</dd></div><div><dt>Яркость</dt><dd class="ek-num">8 000 нит</dd></div><div><dt>Прозрачность</dt><dd class="ek-num">71 %</dd></div><div><dt>Вес</dt><dd class="ek-num">15 кг/м²</dd></div></dl>
         <div class="ek-price"><span class="pl">Цена</span><span class="val"><b class="ek-num">от 132 751 ₽</b><span>за м²</span></span></div></div>
