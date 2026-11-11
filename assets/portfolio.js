@@ -32,7 +32,8 @@
       var keys=Object.keys(sel).filter(function(k){return sel[k].length});
       var match=items.filter(function(li){return keys.every(function(k){return has(li,k,sel[k])})});
       items.forEach(function(li){li.hidden=true});
-      match.forEach(function(li,i){var m=i%12;li.hidden=i>=shown;li.classList.toggle('pf-big',m===3||m===11);li.classList.toggle('pf-big-l',m===3);li.classList.toggle('pf-big-r',m===11);li.classList.toggle('pf-col1',m===9||m===10)});
+      var plain=feed.hasAttribute('data-plain');
+      match.forEach(function(li,i){var m=plain?-1:i%12;li.hidden=i>=shown;li.classList.toggle('pf-big',m===3||m===11);li.classList.toggle('pf-big-l',m===3);li.classList.toggle('pf-big-r',m===11);li.classList.toggle('pf-col1',m===9||m===10)});
       cnt.textContent=match.length;none.hidden=match.length>0;
       if(more)more.hidden=match.length<=shown;
       act.innerHTML='';
