@@ -21,7 +21,7 @@
     dlg.addEventListener('click',function(e){if(e.target===dlg||e.target.closest('[data-pf-close]'))close()});
   }
 
-  /* /portfolio/: фильтры (внутри группы — «или», между группами — «и»), счётчик, мозаика 3 + 2, «Показать ещё» */
+  /* /portfolio/: фильтры (внутри группы — «или», между группами — «и»), счётчик, мозаика (ряд из 3; большая + 2 маленькие), «Показать ещё» по 12 */
   var feed=document.querySelector('[data-pf-feed]'),bar=document.querySelector('[data-pf-fbar]');
   if(feed&&bar){
     var items=[].slice.call(feed.children),step=+feed.getAttribute('data-first')||12,shown=step,sel={};
@@ -32,7 +32,7 @@
       var keys=Object.keys(sel).filter(function(k){return sel[k].length});
       var match=items.filter(function(li){return keys.every(function(k){return has(li,k,sel[k])})});
       items.forEach(function(li){li.hidden=true});
-      match.forEach(function(li,i){li.hidden=i>=shown;li.classList.toggle('pf-w3',i%5>2);li.classList.toggle('pf-w2',i%5<=2)});
+      match.forEach(function(li,i){var m=i%12;li.hidden=i>=shown;li.classList.toggle('pf-big',m===3||m===11);li.classList.toggle('pf-big-l',m===3);li.classList.toggle('pf-big-r',m===11);li.classList.toggle('pf-col1',m===9||m===10)});
       cnt.textContent=match.length;none.hidden=match.length>0;
       if(more)more.hidden=match.length<=shown;
       act.innerHTML='';
@@ -60,7 +60,7 @@
   /* фото кейса: просмотр крупно, листание стрелками и клавишами */
   var z=document.getElementById('pf-zoom');
   if(z&&z.showModal){
-    var links=[].slice.call(document.querySelectorAll('[data-pf-zoom]')),img=document.getElementById('pf-zoom-img'),i=0;
+    var links=[].slice.call(document.querySelectorAll('a[data-pf-zoom]')),img=document.getElementById('pf-zoom-img'),i=0;
     var show=function(n){i=(n+links.length)%links.length;img.src=links[i].href;img.alt=links[i].querySelector('img').alt};
     links.forEach(function(a,n){a.addEventListener('click',function(e){e.preventDefault();show(n);z.showModal()})});
     z.addEventListener('click',function(e){var s=e.target.closest('[data-pf-step]');if(s){show(i+ +s.getAttribute('data-pf-step'));return}if(e.target===z||e.target.closest('[data-pf-close]'))z.close()});
