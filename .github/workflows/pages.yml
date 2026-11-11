@@ -1,6 +1,6 @@
 # Публикация тестового сайта на GitHub Pages (10.11.2026).
 # Встроенная публикация GitHub даёт на выкладку 10 минут и на нашем объёме (~320 МБ) иногда падает по тайм-ауту.
-# Здесь на выкладку — до 30 минут. Включается в Settings → Pages → Source: «GitHub Actions».
+# Лимит выкладки у GitHub — 10 минут; при сбое выкладка автоматически повторяется. Включается в Settings → Pages → Source: «GitHub Actions».
 name: Публикация сайта
 on:
   push:
@@ -19,14 +19,24 @@ jobs:
     timeout-minutes: 40
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.retry.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
+      # 11.11.2026: у GitHub лимит выкладки — 10 минут (больше не даёт), и иногда он сбоит
+      # («No artifacts named github-pages», «Fetching artifact metadata failed»). Поэтому вторая попытка — автоматически.
       - id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@v4
         with:
-          timeout: 1800000
+          timeout: 600000
+      - if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+      - id: retry
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
