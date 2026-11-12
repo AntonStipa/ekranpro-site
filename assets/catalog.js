@@ -63,8 +63,9 @@
   // 22.10.2026: data-rows — показывать N рядов карточек, «Показать ещё» добавляет ещё N рядов (страница «LED-экраны»)
   const ROWS = +(root && root.dataset.rows) || 0;
   const STEP = () => { if (!ROWS) return 24; const g = $('#ek-grid'); const cols = g ? getComputedStyle(g).gridTemplateColumns.split(' ').filter(x => x && x !== 'none').length : 1; return Math.max(1, cols) * ROWS; };
-  if (root) {
-    const DATA = JSON.parse($('#ek-data').textContent);
+  // 12.11.2026: данные листинга — в странице (#ek-data) или отдельным файлом (data-src у #ek-data: главная и страницы городов,
+  // один файл на весь сайт, кэшируется браузером). Пока файл грузится, видны карточки из HTML.
+  const initListing = DATA => {
     // 31.10 пачка 3: data-only — из раздела в листинг идут не все модели: {"prozrachnye-ekrany":{"kind":["film","tmesh"]}}
     let ONLY = {}; try { ONLY = JSON.parse(root.dataset.only || '{}'); } catch (e) { ONLY = {}; }
     const P = DATA.products.filter(p => Object.entries(ONLY[p.section] || {}).every(([k, v]) => v.includes(p[k]))), SECTIONS = DATA.sections, APPS = DATA.apps;
@@ -328,6 +329,11 @@
     $('#ek-close-drawer').addEventListener('click', () => drawer.close());
     $('#ek-drawer-apply').addEventListener('click', () => { Object.keys(dstate.sel).forEach(k => state.sel[k] = new Set(dstate.sel[k])); state.pmin = dstate.pmin; state.pmax = dstate.pmax; state.shown = 24; state.pages = 1; drawer.close(); render(); });
     render();
+  };
+  if (root) {
+    const src = $('#ek-data'), url = src && src.dataset.src;
+    if (url && !src.textContent.trim()) fetch(url).then(r => r.json()).then(initListing).catch(e => console.warn('ЭкранПро: каталог не загрузился', e));
+    else initListing(JSON.parse(src.textContent));
   }
 
   /* ---------- страница товара: галерея ---------- */

@@ -1,0 +1,40 @@
+/* Лента каталога: две карточки по высоте, листается вправо; стрелки, счётчик и полоса — static/listing-rail.js.
+   Общий блок: страницы разделов (section.html), главная и страницы городов. Вынесено из section.css 12.11.2026. */
+.ek-viewsw,#ek-more{display:none!important}
+#ek-grid.ek-grid{grid-template-columns:none;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/3);gap:22px 18px;align-items:stretch;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:2px 1px 104px;margin-bottom:-80px}
+#ek-grid .ek-card{scroll-snap-align:start}
+#ek-grid:has(.ek-empty){display:block;padding-bottom:0;margin-bottom:0}
+.sx-js #ek-grid{scrollbar-width:none}
+.sx-js #ek-grid::-webkit-scrollbar{display:none}
+.sx-rail{position:relative;z-index:1;display:flex;align-items:center;gap:20px clamp(20px,2.4vw,40px);margin-top:4px}
+.sx-rail[hidden]{display:none}
+.sx-rail-count{flex:none;min-width:8.5em;color:var(--ek-muted);font-size:14px;font-variant-numeric:tabular-nums}
+.sx-rail-count b{color:var(--ek-ink);font-weight:500}
+.sx-rail-bar{position:relative;flex:1;height:32px;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none}
+.sx-rail-bar::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--ek-line)}
+.sx-rail-bar i{position:absolute;top:50%;left:0;height:3px;width:20%;margin-top:-1.5px;background:var(--ek-ink);cursor:grab;transition:left .25s ease,width .25s ease,height .15s ease,margin-top .15s ease}
+.sx-rail-bar i::after{content:"";position:absolute;inset:-14px 0}
+.sx-rail-bar:hover i,.sx-rail-bar.is-drag i{height:5px;margin-top:-2.5px}
+.sx-rail-bar.is-drag,.sx-rail-bar.is-drag i{cursor:grabbing}
+.sx-rail-bar.is-drag i{transition:height .15s ease,margin-top .15s ease}
+.sx-rail-btns{display:flex;gap:8px;flex:none}
+.sx-rail-btns button{display:grid;place-items:center;width:52px;height:52px;border:1px solid var(--ek-ink);background:#fff;color:var(--ek-ink);transition:background-color .25s ease,color .25s ease,opacity .25s ease}
+.sx-rail-btns button:first-child svg{transform:scaleX(-1)}
+.sx-rail-btns svg{width:24px;height:24px}
+.sx-rail-btns button:not(:disabled):hover{background:var(--ek-ink);color:#fff}
+.sx-rail-btns button:disabled{opacity:.3;cursor:default}
+@media (max-width:1100px){
+  #ek-grid.ek-grid{grid-auto-columns:calc((100% - 18px)/2)}
+}
+@media (max-width:860px){
+  #ek-grid.ek-grid{grid-auto-columns:88%;gap:14px}
+  .sx-rail-count{min-width:0}
+}
+
+/* Каталог на главной и на страницах городов (templates/_home_catalog.html, 12.11.2026): заголовок — как у каталога разделов */
+.ep-cat{background:#fff;padding:clamp(72px,7vw,140px) 0 clamp(48px,4.4vw,88px)}
+.ep-cat .cat-wrap{max-width:none;padding-inline:4.8%}
+.ep-cat .ep-cat-eyebrow{margin:0 0 clamp(20px,1.8vw,36px);color:var(--ek-muted);font-size:clamp(11px,.88vw,18px);font-weight:500;letter-spacing:.09em;text-transform:uppercase}
+.ep-cat .ek-head h2{font-family:Inter,Arial,sans-serif;font-weight:500;font-size:clamp(32px,4.02vw,80px);line-height:1.07;letter-spacing:-.045em}
+.ep-cat .ek-intro{margin:0 0 clamp(28px,2.6vw,48px)}
+@media (max-width:760px){.ep-cat{padding:40px 0 32px}.ep-cat .cat-wrap{padding-inline:20px}}

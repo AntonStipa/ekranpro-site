@@ -1,0 +1,80 @@
+/* Страницы городов (templates/city.html, 12.11.2026): блоки «Работаем в городе», «Клиенты», SEO-текст.
+   Остальные блоки — общие с главной. Система главной: ink #171a1c, muted #60656a, line #d8dad7, grey #e8ebe8, paper #f6f6f3, CTA #f36b52; углы 0. */
+.ct{--ct-ink:#171a1c;--ct-muted:#60656a;--ct-line:#d8dad7;--ct-grey:#e8ebe8;--ct-paper:#f6f6f3;--ct-cta:#f36b52;
+  box-sizing:border-box;padding:clamp(72px,7vw,140px) 4.8%;background:#fff;color:var(--ct-ink);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.ct *,.ct *::before,.ct *::after{box-sizing:border-box}
+.ct h2,.ct h3,.ct p,.ct ul{margin:0}
+.ct a{color:inherit}
+.ct-eyebrow{margin:0 0 clamp(20px,1.8vw,36px)!important;color:var(--ct-muted);font-size:clamp(11px,.88vw,18px);font-weight:500;letter-spacing:.09em;text-transform:uppercase}
+.ct-head{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(24px,4vw,80px);align-items:end;margin-bottom:clamp(36px,3.6vw,64px)}
+.ct-head h2{font-size:clamp(32px,4.02vw,80px);font-weight:500;line-height:1.07;letter-spacing:-.045em}
+.ct-lead{max-width:34em;color:var(--ct-muted);font-size:clamp(16px,1.15vw,22px);line-height:1.5}
+
+/* Работаем в городе */
+.ct-cards{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.2vw,20px)}
+.ct-cards li{display:flex;flex-direction:column;gap:14px;min-height:clamp(240px,17vw,320px);padding:clamp(20px,1.8vw,32px);background:var(--ct-paper);border:1px solid var(--ct-line)}
+.ct-cards .ct-n{font-size:12px;color:var(--ct-muted);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.ct-cards h3{min-height:2.3em;margin-top:clamp(36px,3.6vw,72px)!important;font-size:clamp(20px,1.5vw,28px);font-weight:500;line-height:1.15;letter-spacing:-.02em}
+.ct-cards p{color:var(--ct-muted);font-size:clamp(14px,.95vw,17px);line-height:1.5}
+.ct-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 40px;margin-top:clamp(28px,2.6vw,48px);padding-top:clamp(20px,1.8vw,32px);border-top:1px solid var(--ct-line)}
+.ct-terms{display:flex;flex-wrap:wrap;gap:12px 40px;list-style:none;padding:0}
+.ct-terms li{font-size:clamp(14px,.95vw,17px);color:var(--ct-muted)}
+.ct-terms b{display:block;margin-bottom:2px;color:var(--ct-ink);font-size:clamp(20px,1.5vw,28px);font-weight:500;letter-spacing:-.02em}
+.ct-btn{display:inline-flex;align-items:center;gap:28px;min-height:56px;padding:0 22px 0 26px;border:0;background:var(--ct-cta);color:#fff;font:500 14px/1 Inter,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:background-color .25s ease}
+.ct-btn:hover{background:#d9533b}
+.ct-btn svg{width:24px;height:24px}
+.ct-btn:focus-visible{outline:2px solid var(--ct-ink);outline-offset:3px}
+
+/* Проекты в городе */
+.ct-proj{margin-top:clamp(48px,4.4vw,88px)}
+.ct-sub{margin-bottom:clamp(18px,1.6vw,28px)!important;font-size:clamp(22px,1.8vw,34px);font-weight:500;letter-spacing:-.025em}
+.ct-proj-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.2vw,20px)}
+.ct-pcard{display:flex;flex-direction:column;gap:10px;text-decoration:none}
+.ct-pcard img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--ct-grey)}
+.ct-pcard span{font-size:clamp(16px,1.15vw,21px);font-weight:500;line-height:1.25;letter-spacing:-.01em}
+.ct-pcard small{color:var(--ct-muted);font-size:14px}
+.ct-pcard:hover span{text-decoration:underline;text-underline-offset:3px}
+
+/* Клиенты */
+.ct-clients{background:var(--ct-paper)}
+.ct-cl{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ct-line);border-left:1px solid var(--ct-line)}
+.ct-cl li{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:clamp(120px,8.4vw,160px);padding:clamp(18px,1.6vw,28px);border-right:1px solid var(--ct-line);border-bottom:1px solid var(--ct-line);background:#fff}
+.ct-cl h3{font-size:clamp(17px,1.2vw,22px);font-weight:500;line-height:1.25;letter-spacing:-.015em}
+.ct-cl p{color:var(--ct-muted);font-size:14px}
+.ct-cl .is-local p{color:var(--ct-ink)}
+.ct-cl .is-local p::before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;background:var(--ct-cta);vertical-align:1px}
+
+/* SEO-текст (внутри #ep-page-end, после карты) */
+#ep-page-end .ct-seo{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(28px,6vw,120px);padding-block:clamp(72px,7vw,140px);background:#fff}
+#ep-page-end .ct-seo-intro{align-self:start;position:sticky;top:120px}
+#ep-page-end .ct-seo .ep-eyebrow{margin-bottom:clamp(20px,1.8vw,36px)}
+#ep-page-end .ct-seo-intro h2{font-size:clamp(30px,3.2vw,60px);font-weight:500;line-height:1.08;letter-spacing:-.04em}
+#ep-page-end .ct-seo-body{max-width:44em;font-size:clamp(16px,1.08vw,20px);line-height:1.6}
+#ep-page-end .ct-seo-body p{margin:0 0 1em}
+#ep-page-end .ct-seo-body h3{margin:1.7em 0 .6em;font-size:clamp(20px,1.45vw,27px);font-weight:500;line-height:1.2;letter-spacing:-.02em}
+#ep-page-end .ct-seo-body h3:first-child{margin-top:0}
+#ep-page-end .ct-seo-body ul{margin:0 0 1em;padding-left:1.15em}
+#ep-page-end .ct-seo-body li{margin-bottom:.45em}
+#ep-page-end .ct-seo-body a{color:inherit;text-decoration:underline;text-decoration-color:#b9bfc6;text-underline-offset:3px}
+#ep-page-end .ct-seo-body a:hover{text-decoration-color:currentColor}
+
+@media (max-width:1100px){
+  .ct-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ct-cl{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .ct{padding:44px 20px}
+  .ct-head{grid-template-columns:1fr;gap:16px;margin-bottom:28px}
+  .ct-head h2{font-size:clamp(30px,8.4vw,38px)}
+  .ct-cards,.ct-proj-grid{grid-template-columns:1fr}
+  .ct-cards li{min-height:0}
+  .ct-cards h3{min-height:0;margin-top:6px!important}
+  .ct-cl{grid-template-columns:1fr}
+  .ct-cl li{min-height:0}
+  .ct-btn{width:100%;justify-content:space-between}
+  #ep-page-end .ct-seo{grid-template-columns:1fr;gap:20px;padding:44px 20px}
+  #ep-page-end .ct-seo-intro{position:static}
+}
+
+/* Первый экран: H1 с городом длиннее, чем на главной — две строки шириной до 1120 px (на телефоне — как на главной) */
+@media (min-width:761px){#ekranpro-first-screen h1#ep1-main-title{font-size:clamp(38px,4.6vw,70px);max-width:980px}}
