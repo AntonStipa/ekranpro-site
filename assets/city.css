@@ -1,4 +1,4 @@
-/* Страницы городов (templates/city.html, 12.11.2026): блоки «Работаем в городе», «Клиенты», SEO-текст.
+/* Страницы городов (templates/city.html, 12.11.2026): блоки «Работаем в городе» и SEO-текст.
    Остальные блоки — общие с главной. Система главной: ink #171a1c, muted #60656a, line #d8dad7, grey #e8ebe8, paper #f6f6f3, CTA #f36b52; углы 0. */
 .ct{--ct-ink:#171a1c;--ct-muted:#60656a;--ct-line:#d8dad7;--ct-grey:#e8ebe8;--ct-paper:#f6f6f3;--ct-cta:#f36b52;
   box-sizing:border-box;padding:clamp(72px,7vw,140px) 4.8%;background:#fff;color:var(--ct-ink);font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
@@ -35,15 +35,6 @@
 .ct-pcard small{color:var(--ct-muted);font-size:14px}
 .ct-pcard:hover span{text-decoration:underline;text-underline-offset:3px}
 
-/* Клиенты */
-.ct-clients{background:var(--ct-paper)}
-.ct-cl{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ct-line);border-left:1px solid var(--ct-line)}
-.ct-cl li{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:clamp(120px,8.4vw,160px);padding:clamp(18px,1.6vw,28px);border-right:1px solid var(--ct-line);border-bottom:1px solid var(--ct-line);background:#fff}
-.ct-cl h3{font-size:clamp(17px,1.2vw,22px);font-weight:500;line-height:1.25;letter-spacing:-.015em}
-.ct-cl p{color:var(--ct-muted);font-size:14px}
-.ct-cl .is-local p{color:var(--ct-ink)}
-.ct-cl .is-local p::before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;background:var(--ct-cta);vertical-align:1px}
-
 /* SEO-текст (внутри #ep-page-end, после карты) */
 #ep-page-end .ct-seo{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.25fr);gap:clamp(28px,6vw,120px);padding-block:clamp(72px,7vw,140px);background:#fff}
 #ep-page-end .ct-seo-intro{align-self:start;position:sticky;top:120px}
@@ -60,7 +51,6 @@
 
 @media (max-width:1100px){
   .ct-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .ct-cl{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:760px){
   .ct{padding:44px 20px}
@@ -69,8 +59,6 @@
   .ct-cards,.ct-proj-grid{grid-template-columns:1fr}
   .ct-cards li{min-height:0}
   .ct-cards h3{min-height:0;margin-top:6px!important}
-  .ct-cl{grid-template-columns:1fr}
-  .ct-cl li{min-height:0}
   .ct-btn{width:100%;justify-content:space-between}
   #ep-page-end .ct-seo{grid-template-columns:1fr;gap:20px;padding:44px 20px}
   #ep-page-end .ct-seo-intro{position:static}

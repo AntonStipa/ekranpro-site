@@ -29,9 +29,9 @@
       {id:'road',ctx:'road',name:'Дорожное табло',w:7,h:3,d:10,lift:5,pool:'out',support:true,icon:'<rect x="6" y="5" width="22" height="9"/><path d="M17 14v12M3 26h28M10 9.5h10m-3-2.5 3 2.5-3 2.5"/>'}
     ],
     in:[
-      {id:'meeting',ctx:'room',furn:'office',name:'Переговорная / диспетчерская',w:3,h:1.7,d:2,lift:1,pool:'in',mounts:['wall','structure'],maxPitch:1.87,icon:'<rect x="7" y="4" width="20" height="11"/><path d="M5 21h24M9 21v5M25 21v5"/>'},
       {id:'lobby',ctx:'room',furn:'plant',name:'Холл / ресепшн',w:4,h:2.25,d:3,lift:1,pool:'in',icon:'<rect x="6" y="4" width="22" height="11"/><path d="M9 26v-6h16v6M4 26h26"/>'},
       {id:'retail',ctx:'room',furn:'plant',name:'Торговый зал',w:3,h:2,d:3,lift:1.5,pool:'in',icon:'<rect x="5" y="4" width="14" height="10"/><path d="M22 26V10h7v16M4 26h26M22 15h7M22 20h7"/>'},
+      {id:'meeting',ctx:'room',furn:'office',name:'Переговорная / диспетчерская',w:3,h:1.7,d:2,lift:1,pool:'in',mounts:['wall','structure'],maxPitch:1.87,icon:'<rect x="7" y="4" width="20" height="11"/><path d="M5 21h24M9 21v5M25 21v5"/>'},
       {id:'hall',ctx:'room',furn:'stage',name:'Зал / сцена',w:6,h:3.5,d:8,lift:1,pool:'in',mounts:['wall','suspended','structure'],icon:'<rect x="7" y="4" width="20" height="12"/><path d="M4 20h26v6H4z"/>'},
       {id:'nav',ctx:'room',name:'Навигационный указатель',w:1.92,h:0.48,d:3,lift:2.2,pool:'nav',mounts:['suspended'],fixedMount:'На подвесе, в метре от потолка',nav:true,icon:'<path d="M3 4h28M11 4v7M23 4v7"/><rect x="5" y="11" width="24" height="8"/><path d="M10 15h8m-3-2.5 3 2.5-3 2.5"/>'},
       {id:'transp',ctx:'room',furn:'plant',name:'Прозрачный экран',w:3,h:2,d:4,lift:0.5,pool:'transp',icon:'<rect x="5" y="5" width="24" height="16" stroke-dasharray="3 2.5"/><path d="M9 17l8-8M15 17l8-8M3 26h28"/>'}
