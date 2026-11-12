@@ -38,7 +38,7 @@
     // Блоки «видов» (медиафасады, бренды) остаются столбиком, как на главной.
     var pc=document.getElementById('ep-products-compare'), scenes=pc&&pc.querySelector('.epp-scenes'), lab=pc&&pc.getAttribute('aria-label')||'';
     var slug=(location.pathname.replace(/\/$/,'').split('/').pop())||'';
-    var HEAD={'besshovnye-videosteny':'Преимущества бесшовных видеостен','interernye-ekrany':'Преимущества интерьерных экранов','multimedijnye-ekrany':'Преимущества мультимедийных экранов'};
+    var HEAD={'besshovnye-ekrany':'Преимущества бесшовных экранов','interernye-ekrany':'Преимущества интерьерных экранов','multimedijnye-ekrany':'Преимущества мультимедийных экранов'};
     var head=HEAD[slug]||(/уличных экранов/.test(lab)?'Преимущества профессиональных экранов':/интерьерных экранов/.test(lab)?'Преимущества интерьерных экранов':'');
     if(head&&scenes&&!scenes.classList.contains('ms-track')&&scenes.querySelectorAll('.epp-scene').length>1){
       pc.classList.add('ms-swipe'); scenes.classList.add('ms-track');

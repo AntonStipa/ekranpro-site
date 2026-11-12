@@ -246,7 +246,7 @@
     function cardHTML(p) {
       const url = `${BASE}/catalog/tovar/${p.slug}/`;
       const unit = p.unitLabel || (p.priceUnit === 'стена' ? 'за видеостену' : p.priceUnit === 'шт' ? (GROUP === 'lcd' ? 'за панель' : p.section === 'prozrachnye-ekrany' ? 'за шт' : 'за табло') : 'за м²');   // 06.11 (Антон): «с НДС» в карточке не пишем   // 31.10 пачка 5: unitLabel — «за экран», «за пилон»
-      const price = p.price ? `<b class="ek-num">от ${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
+      const price = p.price ? `<b class="ek-num">${p.priceExact ? '' : 'от '}${fmt(p.price)} ₽</b><span>${unit}</span>` : `<b>по запросу</b>`;
       const cmp = cmpGet().includes(p.sku) ? 'checked' : '';
       const frames = (p.frames && p.frames.length ? p.frames : [p.photo]);
       const imgs = frames.map((f, i) => `<img src="${BASE}/${f}" alt="${i ? '' : (p.fullName || p.name)}" loading="lazy" width="480" height="360" class="${i ? '' : 'on'}" ${i ? 'aria-hidden="true"' : ''}>`).join('');
